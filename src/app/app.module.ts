@@ -39,6 +39,24 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { ProfileComponent } from './components/shared/profile/profile.component';
+import { SignupComponent } from './components/account/signup/signup.component';
+import { ResetpasswordComponent } from './components/account/resetpassword/resetpassword.component';
+import { AcademyadmindashboardComponent } from './components/users/academyadmin/academyadmindashboard/academyadmindashboard.component';
+import { TeacherdashboardComponent } from './components/users/teacher/teacherdashboard/teacherdashboard.component';
+import { StudentdashboardComponent } from './components/users/student/studentdashboard/studentdashboard.component';
+import { AcademydetailsComponent } from './components/shared/academydetails/academydetails.component';
+import { SubjectsComponent } from './components/subjects/subjects.component';
+import { SubjectdetailsComponent } from './components/shared/subjectdetails/subjectdetails.component';
+import { StudentsComponent } from './components/students/students.component';
+import { StudentdetailsComponent } from './components/shared/studentdetails/studentdetails.component';
+import { ClassroomsComponent } from './components/classrooms/classrooms.component';
+import { ClassdetailsComponent } from './components/shared/classdetails/classdetails.component';
+import { TeachersComponent } from './components/teachers/teachers.component';
+import { TeacherdetailsComponent } from './components/shared/teacherdetails/teacherdetails.component';
+import { TeacherrequestsComponent } from './components/requests/teacherrequests/teacherrequests.component';
+import { StudentrequestsComponent } from './components/requests/studentrequests/studentrequests.component';
 
 @NgModule({
   imports: [
@@ -60,7 +78,28 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    // *********************** my components ***********************
+    HomepageComponent,
+    ProfileComponent,
+    LoginComponent,
+    SignupComponent,
+    ResetpasswordComponent,
+    AcademyadmindashboardComponent,
+    TeacherdashboardComponent,
+    StudentdashboardComponent,
+    AcademydetailsComponent,
+    SubjectsComponent,
+    SubjectdetailsComponent,
+    StudentsComponent,
+    StudentdetailsComponent,
+    ClassroomsComponent,
+    ClassdetailsComponent,
+    TeachersComponent,
+    TeacherdetailsComponent,
+    TeacherrequestsComponent,
+    StudentrequestsComponent,
+    ClassroomsComponent,
   ],
   providers: [{
     provide: LocationStrategy,

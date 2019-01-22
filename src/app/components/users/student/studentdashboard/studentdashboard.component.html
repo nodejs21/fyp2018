@@ -1,0 +1,133 @@
+<div class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+          <div class="container">
+            <a class="navbar-brand" href="#">
+              <i class="fa d-inline fa-lg fa-stop-circle"></i> <b>Al-Taleem</b>
+            </a>
+            <button
+              class="navbar-toggler collapsed border-0"
+              type="button"
+              (click)="isCollapsed = !isCollapsed"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" [collapse]="isCollapsed">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+              </ul>
+              <a class="btn navbar-btn ml-md-2 btn-dark"
+                ><i class="fa fa-user fa-fw text-light"></i
+              ></a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="list-group">
+          <!-- Separator with title -->
+          <li
+            class="list-group-item sidebar-separator-title d-flex align-items-center menu-collapsed text-light bg-dark"
+          >
+            <small>STUDENT NAME</small>
+          </li>
+          <!-- /END Separator -->
+          <!-- Menu with submenu -->
+          <a
+            (click)="isCollapsed = !isCollapsed"
+            data-toggle="collapse"
+            aria-expanded="false"
+            class="bg-dark list-group-item list-group-item-action flex-column align-items-start collapsed"
+          >
+            <div
+              class="d-flex w-100 justify-content-start align-items-center text-light"
+            >
+              <span class="fa fa-dashboard fa-fw mr-3 text-white"></span>
+              <span class="menu-collapsed">Attendance</span>
+              <span class="submenu-icon ml-auto"></span>
+            </div>
+          </a>
+          <!-- Submenu content -->
+          <div class="sidebar-submenu collapse" [collapse]="isCollapsed">
+            <a
+              href="#"
+              class="list-group-item list-group-item-action bg-dark text-white"
+            >
+              <span class="menu-collapsed">Charts</span>
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action bg-dark text-white"
+            >
+              <span class="menu-collapsed">Reports</span>
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action bg-dark text-white"
+            >
+              <span class="menu-collapsed">Tables</span>
+            </a>
+          </div>
+          <!-- Submenu content -->
+          <!-- Separator with title -->
+          <!-- /END Separator -->
+          <a href="#" class="bg-dark list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+              <span class="fa fa-user fa-fw mr-3 text-white"></span>
+              <span class="menu-collapsed text-light">Subjects</span>
+            </div> </a
+          ><a href="#" class="bg-dark list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+              <span class="fa fa-fw mr-3 fa-film text-white"></span>
+              <span class="menu-collapsed text-light">Assignments</span>
+            </div> </a
+          ><a href="#" class="bg-dark list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+              <span class="fa fa-calendar fa-fw mr-3 text-white"></span>
+              <span class="menu-collapsed text-light">Quizzes</span>
+            </div> </a
+          ><a href="#" class="bg-dark list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+              <span class="fa fa-calendar fa-fw mr-3 text-white"></span>
+              <span class="menu-collapsed text-light">Results</span>
+            </div> </a
+          ><a href="#" class="bg-dark list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+              <span class="fa fa-calendar fa-fw mr-3 text-white"></span>
+              <span class="menu-collapsed text-light">Time Table</span>
+            </div> </a
+          ><a href="#" class="bg-dark list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+              <span class="fa fa-calendar fa-fw mr-3 text-white"></span>
+              <span class="menu-collapsed text-light">Fees</span>
+            </div>
+          </a>
+          <a href="#" class="bg-dark list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+              <span class="fa fa-envelope-o fa-fw mr-3 text-white"></span>
+              <span class="menu-collapsed text-light"
+                >Messages
+                <span class="badge badge-pill badge-primary ml-2">5</span></span
+              >
+            </div>
+          </a>
+          <!-- Separator without title -->
+          <!-- /END Separator -->
+          <!-- Logo -->
+        </ul>
+      </div>
+      <div class="col-md-9"></div>
+    </div>
+  </div>
+</div>

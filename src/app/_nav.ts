@@ -1,14 +1,14 @@
 export interface NavData {
-  name?: string,
-  url?: string,
-  icon?: string,
-  badge?: any,
-  title?: boolean,
-  children?: any,
-  variant?: string,
-  attributes?: object,
-  divider?: boolean,
-  class?: string,
+  name?: string;
+  url?: string;
+  icon?: string;
+  badge?: any;
+  title?: boolean;
+  children?: any;
+  variant?: string;
+  attributes?: object;
+  divider?: boolean;
+  class?: string;
 }
 
 export const navItems: NavData[] = [
@@ -199,7 +199,7 @@ export const navItems: NavData[] = [
   },
   {
     title: true,
-    name: 'Extras',
+    name: 'Extras'
   },
   {
     name: 'Pages',
@@ -236,7 +236,7 @@ export const navItems: NavData[] = [
       variant: 'secondary',
       text: 'NEW'
     },
-    attributes: { disabled: true },
+    attributes: { disabled: true }
   },
   {
     name: 'Download CoreUI',
