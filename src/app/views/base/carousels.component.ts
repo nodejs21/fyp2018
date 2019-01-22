@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
 
 @Component({
-  templateUrl: 'carousels.component.html',   providers: [
+  templateUrl: 'carousels.component.html',
+  providers: [
     { provide: CarouselConfig, useValue: { interval: 1500, noPause: true } }
   ]
 })
 export class CarouselsComponent {
-
-  myInterval: number = 6000;
+  myInterval = 6000;
   slides: any[] = [];
-  activeSlideIndex: number = 0;
-  noWrapSlides: boolean = false;
+  activeSlideIndex = 0;
+  noWrapSlides = false;
 
   constructor() {
     for (let i = 0; i < 4; i++) {
@@ -21,7 +21,10 @@ export class CarouselsComponent {
 
   addSlide(): void {
     this.slides.push({
-      image: `https://loremflickr.com/900/500/sailing?random=${this.slides.length % 8 + 1}/`
+      image: `https://loremflickr.com/900/500/sailing?random=${(this.slides
+        .length %
+        8) +
+        1}/`
     });
   }
 
@@ -29,5 +32,4 @@ export class CarouselsComponent {
     const toRemove = index ? index : this.activeSlideIndex;
     this.slides.splice(toRemove, 1);
   }
-
 }
