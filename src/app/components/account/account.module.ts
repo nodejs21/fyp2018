@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
+import { BsModalService } from 'ngx-bootstrap/modal/public_api';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,6 @@ import { AccountComponent } from './account.component';
     CommonModule,
     AccountRoutingModule
   ],
-  providers: []
+  providers: [BsModalService]
 })
 export class AccountModule { }

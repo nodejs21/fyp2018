@@ -37,6 +37,7 @@ import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -69,6 +70,7 @@ import { StudentrequestsComponent } from './components/requests/studentrequests/
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
+    CollapseModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule
   ],
@@ -82,7 +84,6 @@ import { StudentrequestsComponent } from './components/requests/studentrequests/
     // *********************** my components ***********************
     HomepageComponent,
     ProfileComponent,
-    LoginComponent,
     SignupComponent,
     ResetpasswordComponent,
     AcademyadmindashboardComponent,
