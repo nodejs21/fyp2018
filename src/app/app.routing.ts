@@ -180,6 +180,7 @@ export const routes: Routes = [
       { path: ':academyname/classrooms', component: ClassroomsComponent }
     ]
   }
+  
 ];
 
 @NgModule({

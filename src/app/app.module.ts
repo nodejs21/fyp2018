@@ -20,16 +20,14 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
+const APP_CONTAINERS = [DefaultLayoutComponent];
 
 import {
   AppAsideModule,
   AppBreadcrumbModule,
   AppHeaderModule,
   AppFooterModule,
-  AppSidebarModule,
+  AppSidebarModule
 } from '@coreui/angular';
 
 // Import routing module
@@ -58,6 +56,15 @@ import { TeachersComponent } from './components/teachers/teachers.component';
 import { TeacherdetailsComponent } from './components/shared/teacherdetails/teacherdetails.component';
 import { TeacherrequestsComponent } from './components/requests/teacherrequests/teacherrequests.component';
 import { StudentrequestsComponent } from './components/requests/studentrequests/studentrequests.component';
+import { AuthService } from './utils/services/auth/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import {
+  AngularFirestore,
+  FirestoreSettingsToken
+} from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -72,7 +79,9 @@ import { StudentrequestsComponent } from './components/requests/studentrequests/
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    // ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,
@@ -100,12 +109,18 @@ import { StudentrequestsComponent } from './components/requests/studentrequests/
     TeacherdetailsComponent,
     TeacherrequestsComponent,
     StudentrequestsComponent,
-    ClassroomsComponent,
+    ClassroomsComponent
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
-  bootstrap: [ AppComponent ]
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    },
+    { provide: FirestoreSettingsToken, useValue: {} },
+    AngularFireAuth,
+    AngularFirestore,
+    AuthService
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

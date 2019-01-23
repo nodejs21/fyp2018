@@ -11,6 +11,6 @@ export const environment = {
     databaseURL: 'https://fyp2018-6ddeb.firebaseio.com',
     projectId: 'fyp2018-6ddeb',
     storageBucket: 'fyp2018-6ddeb.appspot.com',
-    messagingSenderId: '3821117805'
+    messagingSenderId: '3821117805',
   }
 };

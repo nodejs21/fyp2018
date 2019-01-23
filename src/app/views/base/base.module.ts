@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
+import { RatingModule } from 'ngx-bootstrap/rating';
+
 import { CardsComponent } from './cards.component';
 
 // Forms Component
@@ -58,7 +60,8 @@ import { BaseRoutingModule } from './base-routing.module';
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
     ProgressbarModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    RatingModule.forRoot(),
   ],
   declarations: [
     CardsComponent,

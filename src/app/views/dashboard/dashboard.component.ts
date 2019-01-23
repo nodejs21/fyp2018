@@ -7,7 +7,7 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
   templateUrl: 'dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
-  radioModel: string = 'Month';
+  radioModel = 'Month';
 
   // lineChart1
   public lineChart1Data: Array<any> = [

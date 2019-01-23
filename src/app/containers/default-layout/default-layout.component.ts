@@ -6,7 +6,9 @@ import { navItems } from './../../_nav';
   templateUrl: './default-layout.component.html'
 })
 export class DefaultLayoutComponent implements OnDestroy {
-  public navItems = navItems;
+  // ngxs statemanagment c daikhna a k konsa user logged in a
+  // ta k uska relevant sidebar (navItems) display hojain
+  public navItems = navItems.originalNav;
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
