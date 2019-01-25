@@ -12,6 +12,8 @@ import { PaginationsComponent } from './paginations.component';
 import {PopoversComponent} from './popovers.component';
 import {ProgressComponent} from './progress.component';
 import {TooltipsComponent} from './tooltips.component';
+import { AssignmentsComponent } from './assignments/assignments.component';
+import { QuizzesComponent } from './quizzes/quizzes.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,20 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'cards'
+      },
+      {
+        path: 'assignments',
+        component: AssignmentsComponent,
+        data: {
+          title: 'Assignments'
+        }
+      },
+      {
+        path: 'quizzes',
+        component: QuizzesComponent,
+        data: {
+          title: 'Quizzes'
+        }
       },
       {
         path: 'cards',

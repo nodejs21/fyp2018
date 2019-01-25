@@ -1,0 +1,242 @@
+<!--********************************* ASSIGNMEN DETAILS PAGE STUDENT ***************************** -->
+<!--********************************* ASSIGNMEN DETAILS PAGE STUDENT ***************************** -->
+<!--********************************* ASSIGNMEN DETAILS PAGE STUDENT ***************************** -->
+<!--********************************* ASSIGNMEN DETAILS PAGE STUDENT ***************************** -->
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Assignment Details Page STUDENT</h3>
+      </div>
+    </div>
+    <div class="animated fadeIn">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsed = !isCollapsed">
+          <label for="className" class="font-weight-bold"
+            >Subject Name Here</label
+          >
+        </div>
+        <div
+          (collapsed)="collapsed($event)"
+          (expanded)="expanded($event)"
+          [collapse]="isCollapsed"
+        >
+          <table class="table table-striped table-hover table-responsive-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Added On</th>
+                <th>Due Date</th>
+                <th>Submitted On</th>
+                <th>Obtained Marks</th>
+                <th>Total Marks</th>
+                <th>Status</th>
+                <th class="text-center">Controls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Project Charter</td>
+                <td>2012/01/01</td>
+                <td>2012/01/01</td>
+                <td>2012/01/01</td>
+                <td>8</td>
+                <td>10</td>
+                <td><span class="badge badge-success">Submitted</span></td>
+                <td>
+                  <div class="pl-2 pr-2 text-center">
+                    <button
+                      class="btn p-0"
+                      popover="Upload"
+                      triggers="mouseenter:mouseleave"
+                    >
+                      <span><i class="text-info fa fa-upload"></i> </span>
+                    </button>
+                    <button
+                      class="btn p-0 ml-2"
+                      popover="Download"
+                      triggers="mouseenter:mouseleave"
+                    >
+                      <span> <i class="text-success fa fa-download"></i> </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Add Assignments Page TEACHER</h3>
+      </div>
+    </div>
+    <div class="animated fadeIn">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsed = !isCollapsed">
+          <label for="className" class="font-weight-bold"
+            >Subject Name Here</label
+          >
+          <button class="btn btn-oultine-warning float-right" popover="Add" triggers="mouseenter:mouseleave">
+            <span> <i class="text-warning fa fa-lg fa-plus"></i> </span>
+          </button>
+        </div>
+        <div
+          (collapsed)="collapsed($event)"
+          (expanded)="expanded($event)"
+          [collapse]="isCollapsed"
+        >
+          <table class="table table-striped table-hover table-responsive-sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Added On</th>
+                <th>Due Date</th>
+                <th>Total Marks</th>
+                <th class="text-center">Controls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Project Charter</td>
+                <td>2012/01/01</td>
+                <td>2012/01/01</td>
+                <td>10</td>
+                <td>
+                  <div class="pl-2 pr-2 text-center">
+                    <button class="btn p-0">
+                      <span popover="Edit" triggers="mouseenter:mouseleave">
+                        <i class="text-success fa fa-edit"></i
+                      ></span>
+                    </button>
+                    <button class="btn p-0 ml-2">
+                      <span popover="Delete" triggers="mouseenter:mouseleave">
+                        <i class="text-success fa fa-trash"></i>
+                      </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Submitted Assignments Page TEACHER</h3>
+      </div>
+    </div>
+    <div class="animated fadeIn">
+      <div class="card">
+        <div class="card-header">
+          <label
+            for="className"
+            class="font-weight-bold"
+            (click)="isCollapsed = !isCollapsed"
+            >Subject Name Here</label
+          >
+
+          <div class="btn-group float-right" dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-primary dropdown-toggle btn-sm"
+              aria-controls="dropdown-basic"
+            >
+              Assignment No <span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Action</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Another action</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#"
+                  >Something else here</a
+                >
+              </li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          (collapsed)="collapsed($event)"
+          (expanded)="expanded($event)"
+          [collapse]="isCollapsed"
+        >
+          <table class="table table-striped table-hover table-responsive-sm">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Title</th>
+                <th>Due Date</th>
+                <th>Submitted On</th>
+                <th>Obtained Marks</th>
+                <th>Total Marks</th>
+                <th>Status</th>
+                <th class="text-center">Controls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <td>Project Charter</td>
+                <td>2012/01/01</td>
+                <td>2012/01/01</td>
+                <td>8</td>
+                <td>10</td>
+                <td><span class="badge badge-success">Submitted</span></td>
+                <td>
+                  <div class="pl-2 pr-2 text-center">
+                    <button class="btn p-0"  popover="Download" triggers="mouseenter:mouseleave">
+                      <span> <i class="text-success fa fa-download"></i> </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -244,6 +244,16 @@ const studentNav: NavData[] = [
       icon: 'icon-puzzle',
       children: [
         {
+          name: 'Assignments',
+          url: '/base/assignments',
+          icon: 'icon-doc'
+        },
+        {
+          name: 'Quizzes',
+          url: '/base/quizzes',
+          icon: 'icon-note'
+        },
+        {
           name: 'Cards',
           url: '/base/cards',
           icon: 'icon-puzzle'
