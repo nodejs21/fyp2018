@@ -250,8 +250,19 @@ const studentNav: NavData[] = [
         },
         {
           name: 'Quizzes',
-          url: '/base/quizzes',
-          icon: 'icon-note'
+          icon: 'icon-note',
+          children: [
+            {
+              name: 'View Quizzes',
+              url: '/base/quizzes',
+              icon: 'icon-eyeglass'
+            },
+            {
+              name: 'Create Quiz',
+              url: '/base/createquiz',
+              icon: 'icon-pencil'
+            }
+          ]
         },
         {
           name: 'Cards',

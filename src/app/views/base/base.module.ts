@@ -49,6 +49,7 @@ import { TooltipsComponent } from './tooltips.component';
 import { BaseRoutingModule } from './base-routing.module';
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
+import { CreatequizComponent } from './createquiz/createquiz.component';
 
 @NgModule({
   imports: [
@@ -78,7 +79,8 @@ import { QuizzesComponent } from './quizzes/quizzes.component';
     ProgressComponent,
     TooltipsComponent,
     AssignmentsComponent,
-    QuizzesComponent
+    QuizzesComponent,
+    CreatequizComponent
   ]
 })
 export class BaseModule { }

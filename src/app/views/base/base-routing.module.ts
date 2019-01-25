@@ -14,6 +14,7 @@ import {ProgressComponent} from './progress.component';
 import {TooltipsComponent} from './tooltips.component';
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
+import { CreatequizComponent } from './createquiz/createquiz.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,13 @@ const routes: Routes = [
         component: QuizzesComponent,
         data: {
           title: 'Quizzes'
+        }
+      },
+      {
+        path: 'createquiz',
+        component: CreatequizComponent,
+        data: {
+          title: 'Create Quiz'
         }
       },
       {
