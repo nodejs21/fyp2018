@@ -65,6 +65,7 @@ import {
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -81,6 +82,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     TabsModule.forRoot(),
     ChartsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    BrowserAnimationsModule,
     // ReactiveFormsModule,
   ],
   declarations: [
