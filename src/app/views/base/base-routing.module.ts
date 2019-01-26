@@ -15,6 +15,7 @@ import {TooltipsComponent} from './tooltips.component';
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { CreatequizComponent } from './createquiz/createquiz.component';
+import { ClassroomdetailsComponent } from './classroomdetails/classroomdetails.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,13 @@ const routes: Routes = [
         component: CreatequizComponent,
         data: {
           title: 'Create Quiz'
+        }
+      },
+      {
+        path: 'classroomdetails',
+        component: ClassroomdetailsComponent,
+        data: {
+          title: 'Class Details'
         }
       },
       {

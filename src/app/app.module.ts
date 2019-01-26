@@ -111,7 +111,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TeacherdetailsComponent,
     TeacherrequestsComponent,
     StudentrequestsComponent,
-    ClassroomsComponent
+  
   ],
   providers: [
     {
