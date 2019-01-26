@@ -109,7 +109,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     TeacherdetailsComponent,
     TeacherrequestsComponent,
     StudentrequestsComponent,
-    ClassroomsComponent
+  
   ],
   providers: [
     {

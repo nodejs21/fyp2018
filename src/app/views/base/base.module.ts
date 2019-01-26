@@ -50,6 +50,18 @@ import { BaseRoutingModule } from './base-routing.module';
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { CreatequizComponent } from './createquiz/createquiz.component';
+import { StudentdetailsComponent } from './studentdetails/studentdetails.component';
+import { TeacherdetailsComponent } from './teacherdetails/teacherdetails.component';
+import { SubjectdetailsComponent } from './subjectdetails/subjectdetails.component';
+import { ClassroomdetailsComponent } from './classroomdetails/classroomdetails.component';
+import { AcademydetailsComponent } from './academydetails/academydetails.component';
+import { ClassroomsComponent } from './classrooms/classrooms.component';
+import { AcademycardComponent } from './shared/cards/academycard/academycard.component';
+import { ClassroomcardComponent } from './shared/cards/classroomcard/classroomcard.component';
+import { StudentcardComponent } from './shared/cards/studentcard/studentcard.component';
+import { SubjectcardComponent } from './shared/cards/subjectcard/subjectcard.component';
+import { TeachercardComponent } from './shared/cards/teachercard/teachercard.component';
+import { ClasscardComponent } from '../../view/base/shared/cards/classcard/classcard.component';
 
 @NgModule({
   imports: [
@@ -80,7 +92,19 @@ import { CreatequizComponent } from './createquiz/createquiz.component';
     TooltipsComponent,
     AssignmentsComponent,
     QuizzesComponent,
-    CreatequizComponent
+    CreatequizComponent,
+    StudentdetailsComponent,
+    TeacherdetailsComponent,
+    SubjectdetailsComponent,
+    ClassroomdetailsComponent,
+    AcademydetailsComponent,
+    ClassroomsComponent,
+    AcademycardComponent,
+    ClassroomcardComponent,
+    StudentcardComponent,
+    SubjectcardComponent,
+    TeachercardComponent,
+    ClasscardComponent,
   ]
 })
 export class BaseModule { }
