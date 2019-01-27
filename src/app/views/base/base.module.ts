@@ -1,6 +1,6 @@
 // Angular
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { RatingModule } from 'ngx-bootstrap/rating';
@@ -44,7 +44,6 @@ import { ProgressComponent } from './progress.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TooltipsComponent } from './tooltips.component';
 
-
 // Components Routing
 import { BaseRoutingModule } from './base-routing.module';
 import { AssignmentsComponent } from './assignments/assignments.component';
@@ -61,7 +60,7 @@ import { ClassroomcardComponent } from './shared/cards/classroomcard/classroomca
 import { StudentcardComponent } from './shared/cards/studentcard/studentcard.component';
 import { SubjectcardComponent } from './shared/cards/subjectcard/subjectcard.component';
 import { TeachercardComponent } from './shared/cards/teachercard/teachercard.component';
-import { ClasscardComponent } from '../../view/base/shared/cards/classcard/classcard.component';
+import { MaterialModule } from '../../material.module';
 
 @NgModule({
   imports: [
@@ -77,6 +76,8 @@ import { ClasscardComponent } from '../../view/base/shared/cards/classcard/class
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     RatingModule.forRoot(),
+    ReactiveFormsModule,
+    MaterialModule,
   ],
   declarations: [
     CardsComponent,
@@ -104,7 +105,7 @@ import { ClasscardComponent } from '../../view/base/shared/cards/classcard/class
     StudentcardComponent,
     SubjectcardComponent,
     TeachercardComponent,
-    ClasscardComponent,
-  ]
+  ],
+  providers: [FormBuilder]
 })
-export class BaseModule { }
+export class BaseModule {}

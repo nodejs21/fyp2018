@@ -1,7 +1,6 @@
 <!-- <div class="btn-group" dropdown>
   <button type="button" class="btn btn-danger">Islamiyat</button>
   <button
-    id="button-split"
     type="button"
     dropdownToggle
     class="btn btn-danger dropdown-toggle dropdown-toggle-split"
@@ -10,7 +9,6 @@
     <span class="caret"></span> <span class="sr-only">Split button!</span>
   </button>
   <ul
-    id="dropdown-split"
     *dropdownMenu
     class="dropdown-menu"
     role="menu"
@@ -24,11 +22,15 @@
   </ul>
 </div> -->
 
-<form>
+<form [formGroup]="quizForm">
+  <hr />
+  value: {{ quizForm.value | json }}
+  <hr />
+
   <div class="form-row">
     <div class="col-md-3">
       <label class="font-weight-bold">Subject</label>
-      <select class="custom-select">
+      <select class="custom-select" formControlName="subject">
         <option selected disabled="true">Choose Subject</option>
         <option value="Islamiyat">Islamiyat</option>
         <option value="Maths">Maths</option>
@@ -38,12 +40,7 @@
     </div>
     <div class="col-md-3">
       <label class="font-weight-bold">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Quiz Title"
-        required
-      />
+      <input type="text" class="form-control" formControlName="title" />
     </div>
     <div class="col-md-3">
       <label class="font-weight-bold">Duration</label>
@@ -51,9 +48,7 @@
         type="number"
         class="form-control"
         placeholder="Quiz Duration (min)"
-        min="5"
-        max="120"
-        required
+        formControlName="duration"
       />
     </div>
     <div class="col-md-3">
@@ -62,21 +57,16 @@
         type="number"
         class="form-control"
         placeholder="Total Marks"
-        min="5"
-        max="100"
-        required
+        formControlName="totalMarks"
       />
     </div>
   </div>
-
   <div class="row mt-4">
     <div class="col-sm-12">
       <div class="animated fadeIn">
         <div class="card">
           <div class="card-header">
-            <label for="className" class="font-weight-bold"
-              >Subject Name Here</label
-            >
+            <label class="font-weight-bold">Subject Name Here</label>
             <div class="pl-2 pr-2 float-right">
               <button
                 class="btn p-0"
@@ -101,64 +91,91 @@
               </button>
             </div>
           </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <!-- <ng-template #question> -->
-
-                <form>
-                  <div class="form-group">
+          <div class="card-body" formArrayName="questions">
+            <ol
+              class="p-0"
+              *ngFor="let question of questions.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <li>
+                <div>
+                  <div class="form-group mb-1">
                     <input
                       type="text"
                       class="form-control-plaintext border border-secondary rounded p-1"
                       placeholder="Type your question here..."
+                      formControlName="text"
                     />
                   </div>
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio1"
+                      formControlName="type"
                       value="mcq"
                     />
-                    <label class="form-check-label" for="inlineRadio1"
-                      >MCQ</label
-                    >
+                    <label class="form-check-label">MCQ</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio2"
+                      formControlName="type"
                       value="tf"
                     />
-                    <label class="form-check-label" for="inlineRadio2"
-                      >True/False</label
-                    >
+                    <label class="form-check-label">True/False</label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio3"
-                      value="option3"
-                      disabled
-                    />
-                    <label class="form-check-label" for="inlineRadio3"
-                      >Fill in the blanks</label
+                  {{ question.value | json }}
+                  <div
+                    *ngIf="question.value.type == 'mcq'"
+                    formArrayName="mcqOptions"
+                  >
+                    <ul
+                      *ngFor="
+                        let mcqOption of question.controls.mcqOptions.controls;
+                        let j = index
+                      "
+                      [formGroupName]="j"
                     >
+                      <li class="list-inline">
+                        <div class="form-check form-check-inline">
+                          <button class="btn btn-outline-dark">
+                            <span
+                              contenteditable="true"
+                              formControlName="option"
+                            >
+                            </span>
+                          </button>
+                          <!-- <input
+                            class="form-check-input"
+                            type="checkbox"
+                            formControlName="option"
+                            value="mcqOption.value.option"
+                          />
+                          <label
+                            class="form-check-label"
+                            contenteditable="true"
+                            >{{ mcqOption.value.option }}</label
+                          > -->
+                        </div>
+                      </li>
+                    </ul>
+
+                    <button
+                      class="btn ml-1 btn-sm btn-secondary"
+                      popover="Add Option"
+                      triggers="mouseenter:mouseleave"
+                    >
+                      <span><i class="text-dark fa fa-plus"></i></span>
+                    </button>
                   </div>
-                </form>
-                <!-- </ng-template> -->
-              </div>
-            </div>
+                </div>
+              </li>
+            </ol>
             <div class="row mt-4">
               <div class="col-sm-12">
                 <button
-                  class="btn btn-secondary btn-lg btn-block"
+                  class="btn btn-secondary btn-lg btn-block pt-0 pb-0"
                   popover="Add Question"
                   triggers="mouseenter:mouseleave"
                 >

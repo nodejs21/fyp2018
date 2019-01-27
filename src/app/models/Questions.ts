@@ -1,11 +1,12 @@
 export interface Question {
-    text: string;
-    type: 'MCQ' | 'T/F';
-    mcqOptions: [{
-        no: number;
-        option: string;
-    }];
-    tfOptions: true | false;
-    mcqCorrectOption: number;
-    tfCorrectOption: true | false;
+  text: string;
+  type: 'MCQ' | 'T/F';
+  mcqOptions: [
+    {
+      option: string;
+    }
+  ];
+  mcqCorrectOption: number;
+  tfOptions: true | false;
+  tfCorrectOption: true | false;
 }
