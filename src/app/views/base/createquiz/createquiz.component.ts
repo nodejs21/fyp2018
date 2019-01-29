@@ -10,96 +10,72 @@ import { Question } from '../../../models/Questions';
 })
 export class CreatequizComponent implements OnInit {
   quizForm: FormGroup;
-  quiz: Quiz;
-  question: Question[];
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.quizForm = this.formBuilder.group({
-      subject: 'Islamiyat',
-      title: 'Chapter 1',
+      subject: 'Islamiyat'.toLowerCase(),
+      title: 'Chapter 1'.toLowerCase(),
       duration: 10,
       totalMarks: 10,
-      status: 'Saved',
-      questions: this.formBuilder.array([
-        this.formBuilder.group({
-          text: 'What is the fitna of this period?',
-          type: 'mcq',
-          mcqOptions: this.formBuilder.array([
-            this.formBuilder.group({
-              option: 'Internet'
-            })
-          ]),
-          mcqCorrectOption: 3,
-          tfCorrectOption: true
-        })
-      ])
+      status: 'Saved'.toLowerCase(),
+      questions: this.formBuilder.array([this.initQuestion()])
     });
     console.log(this.quizForm.value);
-
-    // this.quizForm = this.formBuilder.group({
-    //   subject: 'Islamiyat',
-    //   title: 'Chapter 1',
-    //   duration: 10,
-    //   totalMarks: 10,
-    //   status: 'Saved',
-    //   questions: [
-    //     {
-    //       text: 'What is the fitna of this period?',
-    //       type: 'MCQ',
-    //       mcqOptions: [
-    //         {
-    //           no: 1,
-    //           opttion: 'Internet'
-    //         },
-    //         {
-    //           no: 2,
-    //           opttion: 'Social media'
-    //         },
-    //         {
-    //           no: 3,
-    //           opttion: 'Both'
-    //         }
-    //       ],
-    //       mcqCorrectOption: 3
-    //     }
-    //   ]
-    // });
   }
 
-  get questions() {
-    return this.quizForm.get('questions') as FormArray;
+  initQuestion() {
+    return this.formBuilder.group({
+      text: 'What is the fitna of this period?',
+      type: 'mcq'.toLowerCase(),
+      mcqOptions: this.formBuilder.array([
+        this.initMcqOption(),
+        this.initMcqOption()
+      ]),
+      mcqCorrectOption: 'internet'.toLowerCase(),
+      tfCorrectOption: 'false'.toLowerCase()
+    });
   }
 
-  get mcqOptions() {
-    return this.quizForm.get('mcqOptions') as FormArray;
+  initMcqOption() {
+    return this.formBuilder.group({
+      option: 'Internet'.toLowerCase()
+    });
+  }
+
+  getQuestions(form) {
+    return form.controls.questions.controls;
+  }
+  getMcqOptions(form) {
+    return form.controls.mcqOptions.controls;
   }
 
   addQuestion() {
-    const question = this.formBuilder.group({
-      text: 'Type your question here',
-      type: 'MCQ',
-      mcqOptions: this.formBuilder.array([
-        {
-          no: 1,
-          opttion: 'Option 1'
-        },
-        {
-          no: 2,
-          opttion: 'Option 2'
-        }
-      ]),
-      mcqCorrectOption: 0
-    });
-    this.questions.push(question);
+    const control = <FormArray>this.quizForm.get('questions');
+    control.push(this.initQuestion());
   }
 
-  addOption() {
-    const option = this.formBuilder.group({
-      no: 1,
-      opttion: 'Internet'
-    });
-    this.mcqOptions.push(option);
+  addMcqOption(questionNumber) {
+    const control = this.quizForm.get([
+      'questions',
+      questionNumber,
+      'mcqOptions'
+    ]) as FormArray;
+    control.push(this.initMcqOption());
+  }
+
+  deleteQuestion(questionNumber) {
+    const control = this.quizForm.get(['questions']) as FormArray;
+    control.removeAt(questionNumber);
+  }
+
+  deleteOption(questionNumber, optionNumber) {
+    const control = this.quizForm.get([
+      'questions',
+      questionNumber,
+      'mcqOptions'
+    ]) as FormArray;
+    control.removeAt(optionNumber);
   }
 }
