@@ -179,7 +179,19 @@ const studentNav: NavData[] = [
       {
         name: 'Students',
         url: '#',
-        icon: 'icon-user'
+        icon: 'icon-user',
+        children: [
+          {
+            name: 'Students',
+            url: '#',
+            icon: 'icon-user'
+          },
+          {
+            name: 'Teachers',
+            url: '#',
+            icon: 'icon-puzzle'
+          }
+        ]
       },
       {
         name: 'Teachers',

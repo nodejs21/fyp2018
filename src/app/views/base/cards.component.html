@@ -1,29 +1,418 @@
+<!-- Academy Admin Class Card -->
+<!-- Academy Admin Class Card -->
+<!-- Academy Admin Class Card -->
+<!-- Academy Admin Class Card -->
+
 <div class="animated fadeIn">
   <div class="row">
-      <div class="col-sm-6 col-md-4">
-          <div class="card text-white bg-success">
-            <div class="card-header h4">Card title</div>
-            <div class="card-body">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-success p-1">Teacher Name</li>
-                <li class="list-group-item bg-success p-1">Course Name</li>
-                <li class="list-group-item bg-success p-1">No of Students</li>
-                <li class="list-group-item bg-success p-1">Class Time</li>
-              </ul>
-              <!-- Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-              volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. -->
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          9th Class
+          <button
+            class="btn btn-outline-danger  float-right ml-2"
+            popover="Delete"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-trash"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> No of Subjects :
+                <strong> 7 </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Total Students :
+                <strong> 50 </strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Academy Admin Classroom Card -->
+<!-- Academy Admin Classroom Card -->
+<!-- Academy Admin Classroom Card -->
+<!-- Academy Admin Classroom Card -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Maths
+          <button
+            class="btn btn-outline-danger  float-right ml-2"
+            popover="Delete"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-trash"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Students : <strong> 50 </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-user"></i> Teacher : <strong> Safi </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">Performance Graph</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Academy Admin Teachers Card -->
+<!-- Academy Admin Teachers Card -->
+<!-- Academy Admin Teachers Card -->
+<!-- Academy Admin Teachers Card -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Safi
+          <button
+            class="btn btn-outline-danger  float-right ml-2"
+            popover="Delete"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-trash"></i> </span>
+          </button>
+          <rating
+            class="ml-3"
+            [(ngModel)]="rate"
+            [max]="max"
+            [readonly]="isReadonly"
+            (onHover)="hoveringOver($event)"
+            (onLeave)="resetStar()"
+            [titles]="['one', 'two', 'three']"
+            name="rate"
+          ></rating>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Classes :
+                <strong> 9<sup>th</sup>, 10<sup>th</sup> </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-user"></i> Subjects :
+                <strong> Maths, Physics </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-user"></i> Recorder Lectures :
+                <strong> 10 </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-user"></i> Live Lectures : <strong> 16 </strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Academy Admin Teacher Request Card -->
+<!--Academy Admin Teacher Request Card -->
+<!--Academy Admin Teacher Request Card -->
+<!--Academy Admin Teacher Request Card -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Teacher Name
+          <button
+            class="btn btn-outline-info  float-right ml-2"
+            popover="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-eye"></i> </span>
+          </button>
+          <rating
+            class="ml-3"
+            [(ngModel)]="rate"
+            [max]="max"
+            [readonly]="isReadonly"
+            (onHover)="hoveringOver($event)"
+            (onLeave)="resetStar()"
+            [titles]="['one', 'two', 'three']"
+            name="rate"
+          ></rating>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Applied For :
+                <strong>English</strong>
+              </li>
+            </ul>
+            <div class="row">
+              <div class="col-6">
+                <button
+                  class="btn btn-primary mt-2 ml-4"
+                  popover="Accept"
+                  triggers="mouseenter:mouseleave"
+                >
+                  <span><i class="fa fa-check"></i> </span>
+                </button>
+              </div>
+              <div class="col-6">
+                <button
+                  class="btn btn-danger mt-2 ml-4"
+                  popover="Reject"
+                  triggers="mouseenter:mouseleave"
+                >
+                  <span><i class="fa fa-times"></i> </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
   </div>
+</div>
 
+<!-- Acadmey Admin Students Request Card -->
+<!-- Acadmey Admin Students Request Card -->
+<!-- Acadmey Admin Students Request Card -->
+<!-- Acadmey Admin Students Request Card -->
 
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Student Name
+          <button
+            class="btn btn-outline-info  float-right ml-2"
+            popover="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-eye"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Applied For :
+                <strong>English</strong>
+              </li>
+            </ul>
+            <div class="row">
+              <div class="col-6">
+                <button
+                  class="btn btn-primary mt-2 ml-4"
+                  popover="Accept"
+                  triggers="mouseenter:mouseleave"
+                >
+                  <span><i class="fa fa-check"></i> </span>
+                </button>
+              </div>
+              <div class="col-6">
+                <button
+                  class="btn btn-danger mt-2 ml-4"
+                  popover="Reject"
+                  triggers="mouseenter:mouseleave"
+                >
+                  <span><i class="fa fa-times"></i> </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Teacher Acadmey Card -->
+<!-- Teacher Acadmey Card -->
+<!-- Teacher Acadmey Card -->
+<!-- Teacher Acadmey Card -->
 
-  
-  <!-- <div class="row">
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Academy Name
+          <button
+            class="btn btn-outline-info  float-right ml-2"
+            popover="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-eye"></i> </span>
+          </button>
+          <rating
+            class="ml-3"
+            [(ngModel)]="rate"
+            [max]="max"
+            [readonly]="isReadonly"
+            (onHover)="hoveringOver($event)"
+            (onLeave)="resetStar()"
+            [titles]="['one', 'two', 'three']"
+            name="rate"
+          ></rating>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">Performance Graph</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Teacher Classroom Card -->
+<!-- Teacher Classroom Card -->
+<!-- Teacher Classroom Card -->
+<!-- Teacher Classroom Card -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Classroom
+          <button
+            class="btn btn-warning  float-right ml-2"
+            popover="Announcement"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-bullhorn"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Students : <strong>50</strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Delivered Lectures :
+                <strong>15</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Student Academies Card -->
+<!-- Student Academies Card -->
+<!-- Student Academies Card -->
+<!-- Student Academies Card -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Academy Name
+          <button
+            class="btn btn-outline-info  float-right ml-2"
+            popover="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-eye"></i> </span>
+          </button>
+          <rating
+            class="ml-3"
+            [(ngModel)]="rate"
+            [max]="max"
+            [readonly]="isReadonly"
+            (onHover)="hoveringOver($event)"
+            (onLeave)="resetStar()"
+            [titles]="['one', 'two', 'three']"
+            name="rate"
+          ></rating>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                Subjects :
+                <ul>
+                  <li class="list-group-item bg-dark p-1">
+                    <i class="fa fa-book"></i> Maths
+                  </li>
+                  <li class="list-group-item bg-dark p-1">
+                    <i class="fa fa-book"></i> Chemistry
+                  </li>
+                  <li class="list-group-item bg-dark p-1">
+                    <i class="fa fa-book"></i> Physics
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Student Subject Card -->
+<!-- Student Subject Card -->
+<!-- Student Subject Card -->
+<!-- Student Subject Card -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">Classroom</div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Teacher : <strong>Tuba</strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Attendance : <strong>15/30</strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Assignments : <strong>2</strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Quizzes : <strong>2</strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">Performance Graph</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row">
     <div class="col-sm-6 col-md-4">
       <div class="card text-white bg-primary">
         <div class="card-header">Card title</div>
@@ -80,7 +469,7 @@
       </div>
     </div>
   </div> -->
-  <!-- <div class="row">
+<!-- <div class="row">
     <div class="col-sm-6 col-md-4">
       <div class="card">
         <div class="card-header">Card title</div>
@@ -392,4 +781,3 @@
       </div>
     </div>
   </div> -->
-</div>
