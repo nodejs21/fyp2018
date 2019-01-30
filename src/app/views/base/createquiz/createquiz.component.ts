@@ -15,11 +15,11 @@ export class CreatequizComponent implements OnInit {
 
   ngOnInit() {
     this.quizForm = this.formBuilder.group({
-      subject: 'Islamiyat'.toLowerCase(),
-      title: 'Chapter 1'.toLowerCase(),
+      subject: 'Islamiyat',
+      title: 'Chapter 1',
       duration: 10,
       totalMarks: 10,
-      status: 'Saved'.toLowerCase(),
+      status: 'Saved',
       questions: this.formBuilder.array([this.initQuestion()])
     });
     console.log(this.quizForm.value);
@@ -27,21 +27,22 @@ export class CreatequizComponent implements OnInit {
 
   initQuestion() {
     return this.formBuilder.group({
-      text: 'What is the fitna of this period?',
-      type: 'mcq'.toLowerCase(),
+      text: '',
+      type: '',
       mcqOptions: this.formBuilder.array([
         this.initMcqOption(),
         this.initMcqOption()
       ]),
-      mcqCorrectOption: 'internet'.toLowerCase(),
-      tfCorrectOption: 'false'.toLowerCase()
+      mcqCorrectOption: null,
+      tfCorrectOption: null
     });
   }
 
   initMcqOption() {
-    return this.formBuilder.group({
-      option: 'Internet'.toLowerCase()
+    const group = this.formBuilder.group({
+      option: ''
     });
+    return group;
   }
 
   getQuestions(form) {
@@ -54,6 +55,14 @@ export class CreatequizComponent implements OnInit {
   addQuestion() {
     const control = <FormArray>this.quizForm.get('questions');
     control.push(this.initQuestion());
+  }
+
+  updateCorrectMcqOption(questionNumber, correctOptionNumber) {
+    const question = this.quizForm.get([
+      'questions',
+      questionNumber
+    ]) as FormArray;
+    question.controls['mcqCorrectOption'].value = correctOptionNumber;
   }
 
   addMcqOption(questionNumber) {
@@ -77,5 +86,9 @@ export class CreatequizComponent implements OnInit {
       'mcqOptions'
     ]) as FormArray;
     control.removeAt(optionNumber);
+  }
+
+  saveQuiz() {
+    console.log(this.quizForm.value);
   }
 }

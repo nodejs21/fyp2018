@@ -23,9 +23,9 @@
 </div> -->
 
 <form [formGroup]="quizForm">
-  <hr />
-  value: {{ quizForm.value | json }}
-  <hr />
+  <!-- <hr />
+  <pre>value: {{ quizForm.value | json }}</pre>
+  <hr /> -->
 
   <div class="form-row">
     <div class="col-md-3">
@@ -79,6 +79,7 @@
                 class="btn p-0 ml-2"
                 popover="Save"
                 triggers="mouseenter:mouseleave"
+                (click)="saveQuiz()"
               >
                 <span> <i class="text-primary fa fa-save"></i> </span>
               </button>
@@ -103,7 +104,7 @@
               >
                 <div>
                   <div class="form-group mb-1 input-group">
-                    <inputg
+                    <input
                       type="text"
                       class="form-control-plaintext border border-secondary rounded p-1"
                       placeholder="Type your question here..."
@@ -138,11 +139,8 @@
                     />
                     <label class="form-check-label">True/False</label>
                   </div>
-                  <div
-                    *ngIf="question.value.type == 'mcq'"
-                    formArrayName="mcqOptions"
-                  >
-                    <ol class="list-inline mt-2">
+                  <div *ngIf="question.value.type == 'mcq'">
+                    <ol class="list-inline mt-2" formArrayName="mcqOptions">
                       <li
                         class="list-inline-item ml-4 mt-2"
                         *ngFor="
@@ -151,19 +149,28 @@
                         "
                         [formGroupName]="optionNumber"
                       >
-                        <!-- {{ question.value | json }} -->
                         <div class="input-group">
-                          <!-- formControlName="mcqCorrectOption" -->
                           <input
+                            #option
+                            value="{{ optionNumber }}"
+                            name="{{ questionNumber }}"
                             class="form-check-input"
                             type="radio"
-                            value="mcqCorrectOption"
+                            [checked]="
+                              optionNumber == question.value.mcqCorrectOption
+                            "
+                            (click)="
+                              updateCorrectMcqOption(
+                                questionNumber,
+                                option.value
+                              )
+                            "
                           />
-                          <!-- [formControlName]="mcqCorrectOption" -->
                           <input
                             class="form-control-plaintext input-sm border border-secondary rounded p-0 pl-1"
                             type="text"
-                            value="{{ mcqOption.value.option }}"
+                            formControlName="option"
+                            placeholder="Option {{ optionNumber + 1 }}"
                           />
                           <button
                             class="btn btn-sm border border-danger rounded py-0"
