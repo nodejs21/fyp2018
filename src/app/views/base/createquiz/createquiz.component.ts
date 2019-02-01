@@ -22,7 +22,6 @@ export class CreatequizComponent implements OnInit {
       status: 'Saved',
       questions: this.formBuilder.array([this.initQuestion()])
     });
-    console.log(this.quizForm.value);
   }
 
   initQuestion() {
@@ -89,6 +88,7 @@ export class CreatequizComponent implements OnInit {
   }
 
   saveQuiz() {
+    alert(JSON.stringify(this.quizForm.value));
     console.log(this.quizForm.value);
   }
 }

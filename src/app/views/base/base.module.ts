@@ -61,7 +61,7 @@ import { StudentcardComponent } from './shared/cards/studentcard/studentcard.com
 import { SubjectcardComponent } from './shared/cards/subjectcard/subjectcard.component';
 import { TeachercardComponent } from './shared/cards/teachercard/teachercard.component';
 import { MaterialModule } from '../../material.module';
-import { ModalModule } from 'ngx-bootstrap/modal/public_api';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
