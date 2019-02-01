@@ -6,7 +6,7 @@ export interface Question {
       option: string;
     }
   ];
-  mcqCorrectOption: number;
-  tfOptions: true | false;
-  tfCorrectOption: true | false;
+  mcqCorrectOption: string;
+  tfOptions: 'True' | 'False';
+  tfCorrectOption: 'True' | 'False';
 }
