@@ -14,18 +14,6 @@ import { ResetpasswordComponent } from './components/account/resetpassword/reset
 import { AcademyadmindashboardComponent } from './components/users/academyadmin/academyadmindashboard/academyadmindashboard.component';
 import { TeacherdashboardComponent } from './components/users/teacher/teacherdashboard/teacherdashboard.component';
 import { StudentdashboardComponent } from './components/users/student/studentdashboard/studentdashboard.component';
-import { AcademydetailsComponent } from './components/shared/academydetails/academydetails.component';
-import { SubjectsComponent } from './components/subjects/subjects.component';
-import { SubjectdetailsComponent } from './components/shared/subjectdetails/subjectdetails.component';
-import { StudentsComponent } from './components/students/students.component';
-import { StudentdetailsComponent } from './components/shared/studentdetails/studentdetails.component';
-import { ClassroomsComponent } from './components/classrooms/classrooms.component';
-import { ClassdetailsComponent } from './components/shared/classdetails/classdetails.component';
-import { TeachersComponent } from './components/teachers/teachers.component';
-import { TeacherdetailsComponent } from './components/shared/teacherdetails/teacherdetails.component';
-import { TeacherrequestsComponent } from './components/requests/teacherrequests/teacherrequests.component';
-import { StudentrequestsComponent } from './components/requests/studentrequests/studentrequests.component';
-import { ProfileComponent } from './components/shared/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -102,85 +90,84 @@ export const routes: Routes = [
         loadChildren: './views/widgets/widgets.module#WidgetsModule'
       }
     ]
-  },
-  // *******************my components routing*******************
-  {
-    path: 'my',
-    children: [
-      {path: '', component: HomepageComponent},
-      {
-        path: 'account',
-        children: [
-          { path: '', redirectTo: 'profile', pathMatch: 'full' },
-          { path: 'profile', component: ProfileComponent },
-          { path: 'login', component: LoginComponent },
-          { path: 'signup', component: SignupComponent },
-          { path: 'reset-password', component: ResetpasswordComponent },
-          { path: '**', redirectTo: 'profile', pathMatch: 'full' }
-        ]
-      },
-      {
-        path: 'dashboard',
-        children: [
-          { path: '', redirectTo: '/', pathMatch: 'full' },
-          {
-            path: 'academyadmin/:academyname',
-            component: AcademyadmindashboardComponent
-          },
-          {
-            path: 'teacher/:academyname/:teachername',
-            component: TeacherdashboardComponent
-          },
-          {
-            path: 'student/:academyname/:studentname',
-            component: StudentdashboardComponent
-          },
-          { path: '**', redirectTo: '/', pathMatch: 'full' }
-        ]
-      },
-      {
-        path: 'academy/:academyname',
-        component: AcademydetailsComponent,
-        children: [
-          {
-            path: 'subjects',
-            component: SubjectsComponent,
-            children: [
-              { path: ':subjectname', component: SubjectdetailsComponent }
-            ]
-          },
-          {
-            path: 'students',
-            component: StudentsComponent,
-            children: [
-              { path: ':studentname', component: StudentdetailsComponent }
-            ]
-          },
-          {
-            path: 'classrooms',
-            component: ClassroomsComponent,
-            children: [{ path: ':calssname', component: ClassdetailsComponent }]
-          },
-          {
-            path: 'teachers',
-            component: TeachersComponent,
-            children: [
-              { path: ':teacher:name', component: TeacherdetailsComponent }
-            ]
-          },
-          {
-            path: 'requests',
-            children: [
-              { path: 'teachers', component: TeacherrequestsComponent },
-              { path: 'students', component: StudentrequestsComponent }
-            ]
-          }
-        ]
-      },
-      { path: ':academyname/classrooms', component: ClassroomsComponent }
-    ]
   }
-  
+  // *******************my components routing*******************
+  // {
+  //   path: 'my',
+  //   children: [
+  //     { path: '', component: HomepageComponent },
+  //     {
+  //       path: 'account',
+  //       children: [
+  //         { path: '', redirectTo: 'profile', pathMatch: 'full' },
+  //         { path: 'profile', component: ProfileComponent },
+  //         { path: 'login', component: LoginComponent },
+  //         { path: 'signup', component: SignupComponent },
+  //         { path: 'reset-password', component: ResetpasswordComponent },
+  //         { path: '**', redirectTo: 'profile', pathMatch: 'full' }
+  //       ]
+  //     },
+  //     {
+  //       path: 'dashboard',
+  //       children: [
+  //         { path: '', redirectTo: '/', pathMatch: 'full' },
+  //         {
+  //           path: 'academyadmin/:academyname',
+  //           component: AcademyadmindashboardComponent
+  //         },
+  //         {
+  //           path: 'teacher/:academyname/:teachername',
+  //           component: TeacherdashboardComponent
+  //         },
+  //         {
+  //           path: 'student/:academyname/:studentname',
+  //           component: StudentdashboardComponent
+  //         },
+  //         { path: '**', redirectTo: '/', pathMatch: 'full' }
+  //       ]
+  //     },
+  //     {
+  //       path: 'academy/:academyname',
+  //       component: AcademydetailsComponent,
+  //       children: [
+  //         {
+  //           path: 'subjects',
+  //           component: SubjectsComponent,
+  //           children: [
+  //             { path: ':subjectname', component: SubjectdetailsComponent }
+  //           ]
+  //         },
+  //         {
+  //           path: 'students',
+  //           component: StudentsComponent,
+  //           children: [
+  //             { path: ':studentname', component: StudentdetailsComponent }
+  //           ]
+  //         },
+  //         {
+  //           path: 'classrooms',
+  //           component: ClassroomsComponent,
+  //           children: [{ path: ':calssname', component: ClassdetailsComponent }]
+  //         },
+  //         {
+  //           path: 'teachers',
+  //           component: TeachersComponent,
+  //           children: [
+  //             { path: ':teacher:name', component: TeacherdetailsComponent }
+  //           ]
+  //         },
+  //         {
+  //           path: 'requests',
+  //           children: [
+  //             { path: 'teachers', component: TeacherrequestsComponent },
+  //             { path: 'students', component: StudentrequestsComponent }
+  //           ]
+  //         }
+  //       ]
+  //     },
+  //     { path: ':academyname/classrooms', component: ClassroomsComponent }
+  //   ]
+  // }
 ];
 
 @NgModule({
