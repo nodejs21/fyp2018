@@ -1457,11 +1457,56 @@
 <!-- Academy Admin Add Class Page -->
 
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-12">
     <div class="card">
       <div class="card-header">
         <h3 class="d-inline">Academy Admin Add Class Page</h3>
       </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="btn-group" dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-primary dropdown-toggle btn-sm"
+              aria-controls="dropdown-basic"
+            >
+              Class <span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">9<sup>th</sup> </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">10<sup>th</sup> </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#"
+                  >1<sup>st</sup> Year
+                </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#"
+                  >2<sup>nd</sup> Year
+                </a>
+              </li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <div class="card-body">
         <form action="">
           <div class="form-group">
@@ -1480,40 +1525,6 @@
             </div>
           </div>
         </form>
-        <form action="">
-            <div class="form-group">
-              <label for="firstName" class="font-weight-bold">No of Subjects/Classrooms</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user"></i></span>
-                </div>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="name"
-                  class="form-control"
-                  placeholder="6"
-                />
-              </div>
-            </div>
-          </form>
-          <form action="">
-              <div class="form-group">
-                <label for="firstName" class="font-weight-bold">Max Students</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-user"></i></span>
-                  </div>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="name"
-                    class="form-control"
-                    placeholder="200"
-                  />
-                </div>
-              </div>
-            </form>
       </div>
     </div>
   </div>
@@ -1524,72 +1535,346 @@
 <!-- Academy Admin Add Teacher Page -->
 <!-- Academy Admin Add Teacher Page -->
 
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Academy Admin > Add Teacher Page</h3>
+      </div>
+      <div class="card-body">
+        <form action="">
+          <div class="form-group">
+            <label for="firstName" class="font-weight-bold">Teacher Name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+              </div>
+              <input
+                type="text"
+                id="firstName"
+                name="name"
+                class="form-control"
+                placeholder="Class Name e.g. 9th"
+              />
+            </div>
+          </div>
+        </form>
+        <form action="">
+          <div class="form-group">
+            <label for="firstName" class="font-weight-bold"
+              >Qualification</label
+            >
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+              </div>
+              <input
+                type="text"
+                id="firstName"
+                name="name"
+                class="form-control"
+                placeholder="Class Name e.g. 9th"
+              />
+            </div>
+          </div>
+        </form>
+        <form action="">
+          <div class="form-group">
+            <label for="firstName" class="font-weight-bold">Subject</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+              </div>
+              <input
+                type="text"
+                id="firstName"
+                name="name"
+                class="form-control"
+                placeholder="Class Name e.g. 9th"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Acadmey Admin Add Subject Page -->
+<!-- Acadmey Admin Add Subject Page -->
+<!-- Acadmey Admin Add Subject Page -->
+<!-- Acadmey Admin Add Subject Page -->
 
 <div class="row">
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="d-inline">Academy Admin > Add Teacher Page</h3>
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Academy Admin Add Subject Component</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="btn-group" dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-primary dropdown-toggle form-control"
+              aria-controls="dropdown-basic"
+            >
+              Class <span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">9<sup>th</sup> </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">10<sup>th</sup> </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#"
+                  >1<sup>st</sup> Year
+                </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#"
+                  >2<sup>nd</sup> Year
+                </a>
+              </li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="card-body">
-          <form action="">
-            <div class="form-group">
-              <label for="firstName" class="font-weight-bold">Teacher Name</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user"></i></span>
-                </div>
-                <input
-                  type="text"
-                  id="firstName"
-                  name="name"
-                  class="form-control"
-                  placeholder="Class Name e.g. 9th"
-                />
+      </div>
+
+      <div class="card-body">
+        <form action="">
+          <div class="form-group">
+            <label for="firstName" class="font-weight-bold">Subject Name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
               </div>
+              <input
+                type="text"
+                id="firstName"
+                name="name"
+                class="form-control"
+                placeholder="Subject Name e.g. Mathematics"
+              />
             </div>
-          </form>
-          <form action="">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Academy Admin Add Classroom Page -->
+<!-- Academy Admin Add Classroom Page -->
+<!-- Academy Admin Add Classroom Page -->
+<!-- Academy Admin Add Classroom Page -->
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Academy Admin Add Classroom Component</h3>
+        <button class="btn btn-oultine-danger float-right" popover="Close" triggers="mouseenter:mouseleave">
+            <span> <i class="text-danger fa fa-lg fa-times"></i> </span>
+          </button>
+        <button class="btn btn-oultine-success float-right" popover="Add Classroom" triggers="mouseenter:mouseleave">
+            <span> <i class="text-success fa fa-lg fa-check"></i> </span>
+          </button>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="btn-group" dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-primary dropdown-toggle form-control"
+              aria-controls="dropdown-basic"
+            >
+              Class <span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">9<sup>th</sup> </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">10<sup>th</sup> </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#"
+                  >1<sup>st</sup> Year
+                </a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#"
+                  >2<sup>nd</sup> Year
+                </a>
+              </li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="btn-group" dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-primary dropdown-toggle form-control"
+              aria-controls="dropdown-basic"
+            >
+              Subject <span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Mathematics</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Chemistry</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="btn-group" dropdown>
+            <button
+              id="button-basic"
+              dropdownToggle
+              type="button"
+              class="btn btn-primary dropdown-toggle form-control"
+              aria-controls="dropdown-basic"
+            >
+              Teacher <span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-basic"
+              *dropdownMenu
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Safi Ullah</a>
+              </li>
+
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Talha Khan</a>
+              </li>
+
+              <li role="menuitem">
+                <a class="dropdown-item p-1 pl-2" href="#">Tuba Azhar</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card-body">
+            <form action="">
               <div class="form-group">
-                <label for="firstName" class="font-weight-bold">Qualification</label>
+                <label for="firstName" class="font-weight-bold">Class</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    <span class="input-group-text"
+                      ><i class="fa fa-user"></i
+                    ></span>
                   </div>
                   <input
                     type="text"
                     id="firstName"
                     name="name"
                     class="form-control"
-                    placeholder="Class Name e.g. 9th"
+                    placeholder="Show Selected Class e.g 9th"
                   />
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card-body">
             <form action="">
-                <div class="form-group">
-                  <label for="firstName" class="font-weight-bold">Subject</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fa fa-user"></i></span>
-                    </div>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="name"
-                      class="form-control"
-                      placeholder="Class Name e.g. 9th"
-                    />
+              <div class="form-group">
+                <label for="firstName" class="font-weight-bold">Subject</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="fa fa-user"></i
+                    ></span>
                   </div>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="name"
+                    class="form-control"
+                    placeholder="Show Selected Subject e.g Mathematics"
+                  />
                 </div>
-              </form>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card-body">
+            <form action="">
+              <div class="form-group">
+                <label for="firstName" class="font-weight-bold"
+                  >Teacher Name</label
+                >
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"
+                      ><i class="fa fa-user"></i
+                    ></span>
+                  </div>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="name"
+                    class="form-control"
+                    placeholder="Show Selected Teacher e.g Talha Khan"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-
-
+</div>
 
 <!-- *****************************************CORE UI FORMS********************************************** -->
 <!-- 

@@ -53,13 +53,13 @@ const academyAdminNav: NavData[] = [
       }
     ]
   },
+  // {
+  //   name: 'Classes',
+  //   url: '/theme/typography',
+  //   icon: 'icon-pencil'
+  // },
   {
-    name: 'Classes',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
-  },
-  {
-    name: 'Courses',
+    name: 'Subjects',
     url: '/theme/typography',
     icon: 'icon-pencil'
   },
@@ -68,28 +68,28 @@ const academyAdminNav: NavData[] = [
     url: '/theme/typography',
     icon: 'icon-pencil'
   },
-  {
-    name: 'Fee',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
-  },
-  {
-    name: 'Teachers Salary',
-    url: '/theme/typography',
-    icon: 'icon-pencil',
-    children: [
-      {
-        name: 'Child 1',
-        url: '#',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Child 2',
-        url: '#',
-        icon: 'icon-puzzle'
-      }
-    ]
-  }
+  // {
+  //   name: 'Fee',
+  //   url: '/theme/typography',
+  //   icon: 'icon-pencil'
+  // },
+  // {
+  //   name: 'Teachers Salary',
+  //   url: '/theme/typography',
+  //   icon: 'icon-pencil',
+  //   children: [
+  //     {
+  //       name: 'Child 1',
+  //       url: '#',
+  //       icon: 'icon-puzzle'
+  //     },
+  //     {
+  //       name: 'Child 2',
+  //       url: '#',
+  //       icon: 'icon-puzzle'
+  //     }
+  //   ]
+  // }
 ];
 
 const teacherNav: NavData[] = [
