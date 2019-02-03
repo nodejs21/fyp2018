@@ -1,0 +1,293 @@
+<div id="board-menus">
+    <div class="toolbar__box--top-left flex--top mobile--hidden">
+        <div class="logo__box">
+            <img src="https://awwapp.com/static/site/app-assets/aww-logo-small.svg" alt="A Web Whiteboard" class="logo">
+            <img src="https://awwapp.com/static/site/app-assets/loader.gif" alt="A Web Whiteboard" class="loader">
+        </div>
+    </div>
+    <div class="toolbar__box--middle-left">
+        <div id="main-toolbar" class="toolbar toolbar--vertical fadeInUp--mobile mobile--hidden">
+            <ul class="tools__menu">
+                <li id="aww-toolbar-select" class="tools__item">
+                    <div data-tooltip="Select (V)" class="tools__item--button has--tooltip">
+                        <img src="https://awwapp.com/static/site/app-assets/ict-select.svg" alt="Select">
+                    </div>
+                </li>
+                <li id="aww-toolbar-undo" class="tools__item">
+                    <div data-tooltip="Undo (U)" class="tools__item--button has--tooltip">
+                        <img src="https://awwapp.com/static/site/app-assets/ict-undo.svg" alt="Undo">
+                    </div>
+                </li>
+                <li id="aww-toolbar-colors" class="tools__item has--toolbox">
+                    <div class="tools__item--button">
+                        <img src="https://awwapp.com/static/site/app-assets/ict-color.svg" alt="color">
+                        <div class="picked__color"></div>
+                    </div>
+                    <div class="toolbox fadeInLeft">
+                        <ul class="tools__menu tools__menu--inline tools__menu--colors">
+                            <li id="aww-toolbar-color-0" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #000000;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-color-1" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #f7412d;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-color-2" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #47b04b;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-color-3" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #1194f6;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-color-4" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #ffc200;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-color-5" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #9d1bb2;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-color-6" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #ec1561;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-color-7" class="tools__item">
+                                <div class="tools__item--button">
+                                    <div style="background-color: #7a5547;" class="predefined__color"></div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="toolbox__separator"></div>
+                        <ul id="custom-colors-row"
+                            class="tools__menu tools__menu--inlinefloat wrap--8 tools__menu--colors">
+                            <li id="aww-toolbar-add-color" class="tools__item">
+                                <div class="tools__item--button">
+                                    <img src="https://awwapp.com/static/site/app-assets/ict-upload.svg" alt="Add color"></div>
+                            </li>
+                        </ul>
+                        <div class="tools__colorwheel">
+                            <div class="tools__colorwheel--inner">
+                                <div class="tools__colorwheel--picker slide--dot"></div>
+                                <canvas width="260" height="260" style="width: 100%;"
+                                        class="tools__colorwheel--canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li id="aww-toolbar-draw" class="tools__item has--toolbox has--dropdown">
+                    <div class="tools__item--button"><img src="https://awwapp.com/static/site/app-assets/ict-pencil.svg" alt="Pen"></div>
+                    <div class="toolbox fadeInLeft">
+                        <ul class="tools__menu tools__menu--inline">
+                            <li id="aww-toolbar-pencil" class="tools__item">
+                                <div data-tooltip="Pen (P)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-pencil.svg" alt="Pen"></div>
+                            </li>
+                            <li id="aww-toolbar-marker" class="tools__item">
+                                <div data-tooltip="Marker (M)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-marker.svg" alt="Marker"></div>
+                            </li>
+                            <li id="aww-toolbar-lineStraight" class="tools__item">
+                                <div data-tooltip="Line (L)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-lineStraight.svg" alt="Linetool locker"></div>
+                            </li>
+                        </ul>
+                        <div class="toolbox__separator"></div>
+                        <div class="tools__bigtool"><p class="paragraph tools__bigtool--title">Pen size</p>
+                            <div class="tools__bigtool--slider cf flex--middle">
+                                <div class="tools__bigtool--value">1</div>
+                                <div class="tools__bigtool--slide">
+                                    <div class="slide--dot"></div>
+                                    <div class="slide--bg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li id="aww-toolbar-erase" class="tools__item has--toolbox has--dropdown">
+                    <div class="tools__item--button"><img src="https://awwapp.com/static/site/app-assets/ict-eraser.svg" alt="Eraser">
+                    </div>
+                    <div class="toolbox fadeInLeft">
+                        <ul class="tools__menu tools__menu--inline">
+                            <li id="aww-toolbar-eraser" class="tools__item">
+                                <div data-tooltip="Eraser (E)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-eraser.svg" alt="Eraser"></div>
+                            </li>
+                            <li id="aww-toolbar-eraserArea" class="tools__item">
+                                <div data-tooltip="Scissors (S)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-eraserArea.svg" alt="Scissors"></div>
+                            </li>
+                            <li id="aww-toolbar-trash" class="tools__item">
+                                <div data-tooltip="Clear (C)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-trash.svg" alt="Clear page"></div>
+                            </li>
+                        </ul>
+                        <div class="toolbox__separator"></div>
+                        <div class="tools__bigtool"><p class="paragraph tools__bigtool--title">Eraser size</p>
+                            <div class="tools__bigtool--slider">
+                                <div class="tools__bigtool--value">1</div>
+                                <div class="tools__bigtool--slide">
+                                    <div class="slide--dot"></div>
+                                    <div class="slide--bg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li id="aww-toolbar-shape" class="tools__item has--toolbox has--dropdown">
+                    <div class="tools__item--button"><img src="https://awwapp.com/static/site/app-assets/ict-rectangle.svg"
+                                                          alt="Rectangle"></div>
+                    <div class="toolbox fadeInLeft">
+                        <ul class="tools__menu tools__menu--inline">
+                            <li id="aww-toolbar-rectangle" class="tools__item">
+                                <div data-tooltip="Rectangle (R)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-rectangle.svg" alt="Rectangle"></div>
+                            </li>
+                            <li id="aww-toolbar-rectangleFilled" class="tools__item">
+                                <div data-tooltip="Filled rectangle (R)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-rectangleFilled.svg" alt="Filled rectangle">
+                                </div>
+                            </li>
+                            <li id="aww-toolbar-ellipse" class="tools__item">
+                                <div data-tooltip="Ellipse (B)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-ellipse.svg" alt="Ellipse"></div>
+                            </li>
+                            <li id="aww-toolbar-ellipseFilled" class="tools__item">
+                                <div data-tooltip="Filled ellipse (B)" class="tools__item--button has--tooltip"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-ellipseFilled.svg" alt="Filled ellipse"></div>
+                            </li>
+                        </ul>
+                        <div class="toolbox__separator"></div>
+                        <div class="tools__bigtool"><p class="paragraph tools__bigtool--title">Stroke thickness</p>
+                            <div class="tools__bigtool--slider">
+                                <div class="tools__bigtool--value">1</div>
+                                <div class="tools__bigtool--slide">
+                                    <div class="slide--dot"></div>
+                                    <div class="slide--bg"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li id="aww-toolbar-text" class="tools__item">
+                    <div data-tooltip="Text (T)" class="tools__item--button has--tooltip"><img
+                            src="https://awwapp.com/static/site/app-assets/ict-text.svg" alt="Text"></div>
+                </li>
+                <li id="aww-toolbar-postit" class="tools__item">
+                    <div data-tooltip="Postit (N)" class="tools__item--button has--tooltip"><img
+                            src="https://awwapp.com/static/site/app-assets/ict-postit.svg" alt="Post it"></div>
+                </li>
+                <li id="aww-toolbar-upload" class="tools__item has--toolbox">
+                    <div data-tooltip="Upload" class="tools__item--button has--tooltip"><img
+                            src="https://awwapp.com/static/site/app-assets/ict-upload.svg" alt="Add"></div>
+                    <div class="toolbox toolbox--flexible fadeInLeft">
+                        <ul class="tools__menu tools__menu--inline">
+                            <li id="aww-toolbar-image" class="tools__item">
+                                <div data-tooltip="Upload image" class="tools__item--button"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-upload-image.svg" alt="Upload image"></div>
+                            </li>
+                            <li id="aww-toolbar-presentation" class="tools__item">
+                                <div data-tooltip="Upload PDF" class="tools__item--button is--pro"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-upload-pdf.svg" alt="Upload pdf"></div>
+                            </li>
+                            <li id="aww-toolbar-presentation" class="tools__item">
+                                <div data-tooltip="Upload PPT" class="tools__item--button is--pro"><img
+                                        src="https://awwapp.com/static/site/app-assets/ict-upload-ppt.svg" alt="Upload ppt"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="multipage-nav" class="toolbar__box--bottom-left mobile--centering">
+        <div class="toolbar flex--middle">
+            <div class="pagination flex--middle">
+                <div id="prev-page" class="arrow arrow--left flex--middle is--disabled">
+                    <img src="https://awwapp.com/static/site/app-assets/ic-pages-left.svg" alt="Previous page">
+                </div>
+                <div class="pagination--numbers">
+                    <span class="pagination--boards">1/1</span>
+                </div>
+                <div id="next-page" class="arrow arrow--right flex--middle is--pro is--hidden">
+                    <img src="https://awwapp.com/static/site/app-assets/ic-pages-right.svg" alt="Next page">
+                </div>
+                <div id="new-page" class="arrow arrow--right flex--middle is--pro">
+                    <img src="https://awwapp.com/static/site/app-assets/ict-upload.svg" alt="New page">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toolbar__box--bottom-right">
+        <div class="chat chat__box fadeInUp is--visible">
+            <div class="chat__header chat__header--incall is--hidden">
+                <div class="grid grid--gapless">
+                    <div class="grid__column grid__column--middle">
+                        <div class="grid grid--gapless grid--middle">
+                            <div class="grid__column grid__column--shrink mr--1">
+                                <span class="chat__username--noneditable">undefined</span>
+                            </div>
+                            <div class="grid__column grid__column--stretch flex flex--middle flex--start">
+                                <img src="https://awwapp.com/static/site/app-assets/ic-voiceactive.svg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat__header chat__header--normal-state">
+                <div class="grid grid--gapless grid--middle">
+                    <div class="grid__column grid__column--shrink mr--1 flex">
+                        <img id="change-name-done-button" src="https://awwapp.com/static/site/app-assets/ic-confirm-change.svg" class="after--editing">
+                        <img id="change-name-button" src="https://awwapp.com/static/site/app-assets/ic-edit-name.svg" class="before--editing">
+                    </div>
+                    <div class="grid__column grid__column--middle">
+                        <input readonly="" value="Name" class="chat__username">
+                    </div>
+                </div>
+            </div>
+            <div class="chat__content">
+                <div class="chat__messages"></div>
+            </div>
+            <div style="height: 48px;" class="chat__footer">
+                <textarea placeholder="Type here" class="chat__input"></textarea>
+            </div>
+        </div>
+        <div id="chat-button" class="toolbar__button toolbar__button--boxsm">
+            <img src="https://awwapp.com/static/site/app-assets/ic-chat.svg" class="chat--closed">
+            <img src="https://awwapp.com/static/site/app-assets/ic-close-black.svg" class="chat--opened">
+        </div>
+    </div>
+    <div id="spinnable"
+         style="position:absolute;left:0;top:0;right:0;bottom:0;display:none;z-index: 100;touch-action: none;"
+         class="no--select">
+        <div style="transform-origin: center" class="drop drop--mini">
+            <div class="rotate--me">
+                <div class="drop__elements">
+                    <div class="rotator flex--middle"><img src="https://awwapp.com/static/site/app-assets/ic-rotate.svg" alt=""></div>
+                    <div class="grip grip--tl"></div>
+                    <div class="grip grip--tc"></div>
+                    <div class="grip grip--tr"></div>
+                    <div class="grip grip--ml"></div>
+                    <div class="grip grip--mr"></div>
+                    <div class="grip grip--bl"></div>
+                    <div class="grip grip--bc"></div>
+                    <div class="grip grip--br"></div>
+                </div>
+                <img style="touch-action: none;" class="no--select uploaded--img"></div>
+            <div class="drop__buttons">
+                <a href="#" class="button button--whitered button--big mr--1 js-cancel">
+                    <img src="https://awwapp.com/static/site/app-assets/ic-close-red.svg">
+                </a>
+                <a href="#" class="button js-ok button--big">Place image</a>
+            </div>
+        </div>
+    </div>
+</div>
