@@ -16,9 +16,10 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { TeachersComponent } from './teachers/teachers.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
     children: [
       { path: 'dashboard', component: AcademyadmindashboardComponent },
       { path: 'classrooms', component: ClassroomsComponent },
@@ -55,6 +56,7 @@ const routes: Routes = [
       { path: 'teachers', component: TeachersComponent }
     ]
   },
+
   { path: '**', redirectTo: 'profile', pathMatch: 'full' }
 ];
 
