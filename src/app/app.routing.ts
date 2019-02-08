@@ -49,15 +49,15 @@ export const routes: Routes = [
       title: 'Register Page'
     }
   },
-  // {
-  //   path: 'academyadmin',
-  //   loadChildren:
-  //     './components/users/academyadmin/academyadmin.module#AcademyadminModule'
-  // },
-  // {
-  //   path: 'teacher',
-  //   loadChildren: './components/users/teacher/teacher.module#TeacherModule'
-  // },
+  {
+    path: 'academyadmin',
+    loadChildren:
+      './components/users/academyadmin/academyadmin.module#AcademyadminModule'
+  },
+  {
+    path: 'teacher',
+    loadChildren: './components/users/teacher/teacher.module#TeacherModule'
+  },
   {
     path: 'student',
     loadChildren: './components/users/student/student.module#StudentModule'

@@ -15,9 +15,12 @@ import { ClassroomresultComponent } from './results/classroomresult/classroomres
 import { InviteteacherComponent } from './inviteteacher/inviteteacher.component';
 import { AcademydetailComponent } from './details/academydetail/academydetail.component';
 import { TeacherdetailComponent } from './details/teacherdetail/teacherdetail.component';
+import { AcademyadminRoutingModule } from './academyadmin-routing.module';
+import { AcademyadminComponent } from './academyadmin.component';
 
 @NgModule({
   declarations: [
+    AcademyadminComponent,
     AcademyadmindashboardComponent,
     StudentsComponent,
     TeachersComponent,
@@ -35,7 +38,7 @@ import { TeacherdetailComponent } from './details/teacherdetail/teacherdetail.co
     AcademydetailComponent,
     TeacherdetailComponent
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, AcademyadminRoutingModule],
   exports: [AcademyadmindashboardComponent]
 })
 export class AcademyadminModule {}

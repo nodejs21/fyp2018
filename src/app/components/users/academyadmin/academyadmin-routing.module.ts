@@ -14,19 +14,20 @@ import { StudentresultComponent } from './results/studentresult/studentresult.co
 import { StudentsComponent } from './students/students.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { TeachersComponent } from './teachers/teachers.component';
+import { AcademyadminComponent } from './academyadmin.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
+    component: AcademyadminComponent,
     children: [
       { path: 'dashboard', component: AcademyadmindashboardComponent },
       { path: 'classrooms', component: ClassroomsComponent },
       {
         path: 'detail',
-        redirectTo: 'academy',
-        pathMatch: 'full',
+        // redirectTo: 'academy',
+        // pathMatch: 'full',
         children: [
           { path: 'academy', component: AcademydetailComponent },
           { path: 'classroom', component: ClassroomdetailComponent },
@@ -37,7 +38,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       {
         path: 'requests',
-        redirectTo: 'student',
+        // redirectTo: 'student',
         children: [
           { path: 'student', component: StudentrequestsComponent },
           { path: 'teacher', component: TeacherrequestsComponent }
@@ -45,7 +46,7 @@ const routes: Routes = [
       },
       {
         path: 'results',
-        redirectTo: 'classroom',
+        // redirectTo: 'classroom',
         children: [
           { path: 'classroom', component: ClassroomresultComponent },
           { path: 'student', component: StudentresultComponent }

@@ -29,8 +29,6 @@ const routes: Routes = [
       { path: 'attemptquiz', component: AttemptquizComponent },
       {
         path: 'course',
-        redirectTo: 'assignments',
-        pathMatch: 'full',
         children: [
           { path: 'assignments', component: AssignmentsComponent },
           { path: 'attendance', component: AttendanceComponent },
@@ -40,18 +38,18 @@ const routes: Routes = [
       },
       {
         path: 'details',
-        redirectTo: 'assignments',
-        pathMatch: 'full',
+        // redirectTo: 'assignments',
+        // pathMatch: 'full',
         children: [
-          { path: 'academydetail', component: AcademydetailComponent },
-          { path: 'teacherdetail', component: TeacherdetailComponent }
+          { path: 'academy', component: AcademydetailComponent },
+          { path: 'teacher', component: TeacherdetailComponent }
         ]
       },
       { path: 'lectures', component: LecturesComponent },
       {
         path: 'liveclass',
-        redirectTo: 'videostream',
-        pathMatch: 'full',
+        // redirectTo: 'videostream',
+        // pathMatch: 'full',
         children: [
           { path: 'videostream', component: VideostreamComponent },
           { path: 'whiteboard', component: WhiteboardComponent }
