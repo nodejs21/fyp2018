@@ -89,10 +89,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StudentdashboardComponent
   ],
   providers: [
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    },
+    // {
+    //   provide: LocationStrategy,
+    //   useClass: HashLocationStrategy
+    // },
     { provide: FirestoreSettingsToken, useValue: {} },
     AngularFireAuth,
     AngularFirestore,
