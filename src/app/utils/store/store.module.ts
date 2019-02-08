@@ -27,4 +27,4 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
   declarations: [],
   exports: [NgxsModule]
 })
-export class StateModule {}
+export class StoreModule {}
