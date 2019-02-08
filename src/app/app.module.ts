@@ -83,10 +83,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ResetpasswordComponent
   ],
   providers: [
-    // {
-    //   provide: LocationStrategy,
-    //   useClass: HashLocationStrategy
-    // },
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    },
     { provide: FirestoreSettingsToken, useValue: {} },
     AngularFireAuth,
     AngularFirestore,
