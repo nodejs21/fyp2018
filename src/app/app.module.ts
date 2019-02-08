@@ -83,10 +83,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     // *********************** my components ***********************
     HomepageComponent,
     SignupComponent,
-    ResetpasswordComponent,
-    AcademyadmindashboardComponent,
-    TeacherdashboardComponent,
-    StudentdashboardComponent
+    ResetpasswordComponent
   ],
   providers: [
     {

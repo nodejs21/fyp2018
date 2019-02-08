@@ -50,6 +50,10 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'student',
+    loadChildren: './components/users/student/student.module#StudentModule'
+  },
+  {
     path: '',
     component: DefaultLayoutComponent,
     data: {
