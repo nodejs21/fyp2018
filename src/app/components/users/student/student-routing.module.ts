@@ -13,12 +13,18 @@ import { TeacherdetailComponent } from './details/teacherdetail/teacherdetail.co
 import { VideostreamComponent } from './liveclass/videostream/videostream.component';
 import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component';
 import { SubjectsComponent } from './subjects/subjects.component';
+import { StudentComponent } from './student.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full',
+    pathMatch: 'full'
+  },
+  // { path: 'profile', component: ProfileComponent },
+  {
+    path: '',
+    component: StudentComponent,
     children: [
       { path: 'attemptquiz', component: AttemptquizComponent },
       {
@@ -53,11 +59,10 @@ const routes: Routes = [
       },
       { path: 'profile', component: ProfileComponent },
       { path: 'dashboard', component: StudentdashboardComponent },
-      { path: 'subjects', component: SubjectsComponent },
+      { path: 'subjects', component: SubjectsComponent }
     ]
   },
-
-  { path: '**', redirectTo: 'profile', pathMatch: 'full' }
+  { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

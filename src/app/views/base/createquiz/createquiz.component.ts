@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { Quiz } from '../../../models/Quiz';
-import { Question } from '../../../models/Questions';
 
 @Component({
   selector: 'app-createquiz',

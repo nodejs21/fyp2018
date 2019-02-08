@@ -15,12 +15,13 @@ import { InvitationsComponent } from './requests/invitations/invitations.compone
 import { RequestssentComponent } from './requests/requestssent/requestssent.component';
 import { TeacherdashboardComponent } from './teacherdashboard/teacherdashboard.component';
 import { MakequizComponent } from './makequiz/makequiz.component';
+import { TeacherComponent } from './teacher.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
+    component: TeacherComponent,
     children: [
       { path: 'classrooms', component: ClassroomsComponent },
       {
@@ -57,12 +58,12 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       {
         path: 'requests',
-        redirectTo: 'invitations',  
+        redirectTo: 'invitations',
         pathMatch: 'full',
         children: [
           { path: 'invitations', component: InvitationsComponent },
           { path: 'requestssent', component: RequestssentComponent }
-          ]
+        ]
       },
       { path: 'dashboard', component: TeacherdashboardComponent }
     ]

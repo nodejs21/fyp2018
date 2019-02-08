@@ -41,9 +41,6 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { SignupComponent } from './components/account/signup/signup.component';
 import { ResetpasswordComponent } from './components/account/resetpassword/resetpassword.component';
-import { AcademyadmindashboardComponent } from './components/users/academyadmin/academyadmindashboard/academyadmindashboard.component';
-import { TeacherdashboardComponent } from './components/users/teacher/teacherdashboard/teacherdashboard.component';
-import { StudentdashboardComponent } from './components/users/student/studentdashboard/studentdashboard.component';
 import { AuthService } from './utils/services/auth/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
@@ -83,10 +80,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     // *********************** my components ***********************
     HomepageComponent,
     SignupComponent,
-    ResetpasswordComponent,
-    AcademyadmindashboardComponent,
-    TeacherdashboardComponent,
-    StudentdashboardComponent
+    ResetpasswordComponent
   ],
   providers: [
     // {

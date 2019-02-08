@@ -50,6 +50,19 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'academyadmin',
+    loadChildren:
+      './components/users/academyadmin/academyadmin.module#AcademyadminModule'
+  },
+  {
+    path: 'teacher',
+    loadChildren: './components/users/teacher/teacher.module#TeacherModule'
+  },
+  {
+    path: 'student',
+    loadChildren: './components/users/student/student.module#StudentModule'
+  },
+  {
     path: '',
     component: DefaultLayoutComponent,
     data: {
@@ -90,22 +103,7 @@ export const routes: Routes = [
         loadChildren: './views/widgets/widgets.module#WidgetsModule'
       }
     ]
-  },
-  {
-    path: 'academyadmin',
-    loadChildren:
-      './components/users/academyadmin/academyadmin.module#AcademyadminModule'
-  },
-  {
-    path: 'teacher',
-    loadChildren:
-      './components/users/teacher/teacher.module#TeacherModule'
-  },
-  {
-    path: 'student',
-    loadChildren:
-      './components/users/student/student.module#StudentModule'
-  },
+  }
   // *******************my components routing*******************
   // {
   //   path: 'my',
