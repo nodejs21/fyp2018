@@ -1,4 +1,55 @@
-<p>
+<!-- <p>
   Teacehrs k filters hongy, like poori academy k teacehrs daikhny an, ya class k teacehrs ya phr kisi subject k/ka teacehr daikhna a
 * Teacher Card
-</p>
+</p> -->
+
+
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-4">
+        <div class="card text-white bg-dark">
+          <div class="card-header h4 ">
+            Safi
+            <button
+              class="btn btn-sm btn-outline-danger  float-right ml-2"
+              popover="Delete"
+              triggers="mouseenter:mouseleave"
+            >
+              <span><i class="fa fa-trash"></i> </span>
+            </button>
+            <rating
+              class="ml-3"
+              [(ngModel)]="rate"
+              [max]="max"
+              [readonly]="isReadonly"
+              (onHover)="hoveringOver($event)"
+              (onLeave)="resetStar()"
+              [titles]="['one', 'two', 'three']"
+              name="rate"
+            ></rating>
+          </div>
+          <div class="card-body">
+            <div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark p-1">
+                  <i class="icon-people"></i> Classes :
+                  <strong> 9<sup>th</sup>, 10<sup>th</sup> </strong>
+                </li>
+                <li class="list-group-item bg-dark p-1">
+                  <i class="icon-user"></i> Subjects :
+                  <strong> Maths, Physics </strong>
+                </li>
+                <li class="list-group-item bg-dark p-1">
+                  <i class="icon-user"></i> Recorder Lectures :
+                  <strong> 10 </strong>
+                </li>
+                <li class="list-group-item bg-dark p-1">
+                  <i class="icon-user"></i> Live Lectures : <strong> 16 </strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
