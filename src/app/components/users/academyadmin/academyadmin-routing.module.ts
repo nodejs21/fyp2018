@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: 'dashboard', component: AcademyadmindashboardComponent },
       { path: 'classrooms', component: ClassroomsComponent },
       {
-        path: 'detail',
+        path: 'details',
         // redirectTo: 'academy',
         // pathMatch: 'full',
         children: [

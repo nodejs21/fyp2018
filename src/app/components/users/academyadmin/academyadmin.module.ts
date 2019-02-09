@@ -17,6 +17,9 @@ import { AcademydetailComponent } from './details/academydetail/academydetail.co
 import { TeacherdetailComponent } from './details/teacherdetail/teacherdetail.component';
 import { AcademyadminRoutingModule } from './academyadmin-routing.module';
 import { AcademyadminComponent } from './academyadmin.component';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,15 @@ import { AcademyadminComponent } from './academyadmin.component';
     AcademydetailComponent,
     TeacherdetailComponent
   ],
-  imports: [CommonModule, AcademyadminRoutingModule],
-  exports: [AcademyadmindashboardComponent]
+  imports: [
+    CommonModule,
+    AcademyadminRoutingModule,
+    RatingModule.forRoot(),
+    ProgressbarModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  exports: [AcademyadmindashboardComponent],
+  providers: [FormBuilder]
 })
 export class AcademyadminModule {}

@@ -1,4 +1,122 @@
-<p>
-  classroomdetail works!
-  * classroom detail page
-</p>
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="d-inline">Classroom Details Page</h3>
+          <button
+            class="btn btn-oultine-warning float-right"
+            popover="Edit"
+            triggers="mouseenter:mouseleave"
+          >
+            <span> <i class="text-warning fa fa-lg fa-pencil"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <form action="">
+            <div class="form-group">
+              <label for="className" class="font-weight-bold">Class Name</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                </div>
+                <input
+                  type="text"
+                  id="className"
+                  name="name"
+                  class="form-control"
+                  placeholder="Class Name"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subjectName" class="font-weight-bold"
+                >Subject Name</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                </div>
+                <input
+                  type="text"
+                  id="subjectName"
+                  name="name"
+                  class="form-control"
+                  placeholder="Subject Name"
+                />
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="teacherName" class="font-weight-bold"
+                >Teacher Name</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="teacherName"
+                  name="name"
+                  class="form-control"
+                  placeholder="Teacher Name"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="studentNo" class="font-weight-bold"
+                >No of Students</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="studentNo"
+                  name="name"
+                  class="form-control"
+                  placeholder="No of Students"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="classTime" class="font-weight-bold">Class Time</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="classTime"
+                  name="name"
+                  class="form-control"
+                  placeholder="Class Time"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="performance" class="font-weight-bold"
+                >Overall Performance</label
+              >
+              <div class="input-group">
+                <progressbar
+                  class="progress progress-striped"
+                  [value]="22"
+                  [max]="100"
+                  type="success"
+                  >22%</progressbar
+                >
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

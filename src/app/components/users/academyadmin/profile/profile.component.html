@@ -1,3 +1,335 @@
-<p>
-  Academy admin's profile...which is editable
-</p>
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="d-inline">Academy Admin Profile Page</h3>
+          <!-- <button
+            type="submit"
+            class="btn btn-warning float-right text-weight-bold d-inline"
+          >
+            Edit Profile
+          </button> -->
+          <button
+            class="btn btn-oultine-warning float-right"
+            popover="Edit"
+            triggers="mouseenter:mouseleave"
+          >
+            <span> <i class="text-warning fa fa-lg fa-pencil"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <form action="">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName" class="font-weight-bold"
+                    >First Name</label
+                  >
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fa fa-user"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="name"
+                      class="form-control"
+                      placeholder="First Name"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName" class="font-weight-bold">Last Name</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="fa fa-user"></i>
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="name"
+                      class="form-control"
+                      placeholder="Last Name"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="font-weight-bold">Email</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><i class="fa fa-envelope"></i
+                  ></span>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Email"
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="dob" class="font-weight-bold">Date of Birth</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input type="date" id="dob" name="dob" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="gender" class="font-weight-bold">Gender</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="dob"
+                  name="dob"
+                  class="form-control"
+                  placeholder="Gender"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="age" class="font-weight-bold">Age</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  class="form-control"
+                  disabled="true"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address" class="font-weight-bold">Address</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="dob"
+                  name="dob"
+                  class="form-control"
+                  placeholder="Address"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="city" class="font-weight-bold">City</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="dob"
+                  name="dob"
+                  class="form-control"
+                  placeholder="City"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="tel" class="font-weight-bold">Telephone</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="tel"
+                  id="dob"
+                  name="dob"
+                  class="form-control"
+                  placeholder="Telephone"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="qual" class="font-weight-bold">Qualification</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="dob"
+                  name="dob"
+                  class="form-control"
+                  placeholder="Qualification"
+                />
+              </div>
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header"><h3>Academy Details</h3></div>
+        <div class="card-body">
+          <form action="">
+            <div class="form-group">
+              <label class="font-weight-bold">Rating</label>
+              <div class="input-group">
+                <!-- Ratinng Start -->
+                <!-- Ratinng Start -->
+                <!-- Ratinng Start -->
+                <!-- Ratinng Start -->
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                </div>
+                <rating
+                  class="ml-3"
+                  [(ngModel)]="rate"
+                  [max]="max"
+                  [readonly]="isReadonly"
+                  (onHover)="hoveringOver($event)"
+                  (onLeave)="resetStar()"
+                  [titles]="['one', 'two', 'three']"
+                  name="rate"
+                ></rating>
+                <!-- <span
+                    class="label"
+                    [ngClass]="{
+                      'label-warning': percent < 30,
+                      'label-info': percent >= 30 && percent < 70,
+                      'label-success': percent >= 70
+                    }"
+                    [ngStyle]="{
+                      display: overStar && !isReadonly ? 'inline' : 'none'
+                    }"
+                    >{{ percent }}%</span
+                  >
+                  <div class="card">
+                    <pre
+                      class="card-block card-header"
+                    >Rate: <b>{{rate}}</b>;  Readonly is: <i>{{isReadonly}}</i>;  Hovering over: <b>{{overStar || "none"}}</b></pre>
+                  </div>
+  
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    (click)="rate = 0"
+                    [disabled]="isReadonly"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    (click)="isReadonly = !isReadonly"
+                  >
+                    Toggle Readonly
+                  </button> -->
+                <!-- Ratinng End -->
+                <!-- Ratinng End -->
+                <!-- Ratinng End -->
+                <!-- Ratinng End -->
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="totalSubjects" class="font-weight-bold"
+                >Total Subjects</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                </div>
+                <input type="number" id="asd" name="name" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="delivered" class="font-weight-bold"
+                >Delivered Lectures</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input
+                  type="number"
+                  id="lastName"
+                  name="name"
+                  class="form-control"
+                />
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="recLec" class="font-weight-bold"
+                >Recorded Lectures</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><i class="fa fa-envelope"></i
+                  ></span>
+                </div>
+                <input type="number" id="" name="email" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="liveLec" class="font-weight-bold">Live Lectures</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                    ><i class="fa fa-envelope"></i
+                  ></span>
+                </div>
+                <input type="number" id="" name="email" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Students" class="font-weight-bold"
+                >No of Students</label
+              >
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+                <input type="number" id="dob" name="dob" class="form-control" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
