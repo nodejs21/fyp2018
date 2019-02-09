@@ -16,6 +16,9 @@ import { QuizzesComponent } from './course/quizzes/quizzes.component';
 import { ResultComponent } from './course/result/result.component';
 import { VideostreamComponent } from './liveclass/videostream/videostream.component';
 import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,15 @@ import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component
     WhiteboardComponent,
     SubjectsComponent
   ],
-  imports: [CommonModule, StudentRoutingModule, CollapseModule.forRoot()],
+
+  imports: [
+    CommonModule,
+    StudentRoutingModule,
+    RatingModule.forRoot(),
+    ProgressbarModule.forRoot(),
+    CollapseModule.forRoot(),
+    FormsModule
+  ],
   exports: [StudentdashboardComponent]
 })
 export class StudentModule {}
