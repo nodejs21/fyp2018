@@ -16,32 +16,41 @@ import { ConfirmPasswordValidator } from './../../../utils/validators/confirm-pa
   ]
 })
 export class SignupComponent implements OnInit {
-  specificDataForm: FormGroup;
-
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
+  academyDetailsForm: FormGroup;
 
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.specificDataForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
     this.basicUserForm = this._formBuilder.group(
       {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        email: ['', Validators.required],
+        email: ['', Validators.required, Validators.email],
         imageUrl: [''],
         gender: [true],
         userType: ['teacher'.toLowerCase()],
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required]
+        password: [''],
+        confirmPassword: ['']
       },
       {
         validators: ConfirmPasswordValidator.MatchPassword
       }
     );
+    this.specificUserForm = this._formBuilder.group({
+      dob: [''],
+      address: [''],
+      city: [''],
+      telephone: [''],
+      qualification: ['']
+    });
+    this.academyDetailsForm = this._formBuilder.group({
+      
+      academyName: [''],
+      academyDescription: [''],
+      
+    });
   }
 
   printValues() {
