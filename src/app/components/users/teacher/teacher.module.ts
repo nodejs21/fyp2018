@@ -17,6 +17,10 @@ import { TeacherdashboardComponent } from './teacherdashboard/teacherdashboard.c
 import { MakequizComponent } from './makequiz/makequiz.component';
 import { TeacherComponent } from './teacher.component';
 import { TeacherRoutingModule } from './teacher-routing.module';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { FormsModule } from '@angular/forms';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,14 @@ import { TeacherRoutingModule } from './teacher-routing.module';
     RequestssentComponent,
     MakequizComponent
   ],
-  imports: [CommonModule, TeacherRoutingModule],
+  imports: [
+    CommonModule,
+    TeacherRoutingModule,
+    RatingModule.forRoot(),
+    ProgressbarModule.forRoot(),
+    CollapseModule.forRoot(),
+    FormsModule
+  ],
   exports: [TeacherdashboardComponent]
 })
 export class TeacherModule {}
