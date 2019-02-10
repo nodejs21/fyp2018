@@ -17,8 +17,8 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
+// import { LoginComponent } from './views/login/login.component';
+// import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [DefaultLayoutComponent];
 
@@ -37,6 +37,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { SignupComponent } from './components/account/signup/signup.component';
@@ -49,8 +50,11 @@ import {
 } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { LoginComponent } from './components/account/login/login.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   imports: [
@@ -65,22 +69,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
+    ButtonsModule.forRoot(),
+    TooltipModule.forRoot(),
     ChartsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    BrowserAnimationsModule
-    // ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    LoginComponent,
-    RegisterComponent,
+    // LoginComponent,
+    // RegisterComponent,
     // *********************** my components ***********************
     HomepageComponent,
-    SignupComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
+    LoginComponent,
+    SignupComponent
   ],
   providers: [
     {
@@ -90,7 +99,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     { provide: FirestoreSettingsToken, useValue: {} },
     AngularFireAuth,
     AngularFirestore,
-    AuthService
+    AuthService,
+    FormBuilder
   ],
   bootstrap: [AppComponent]
 })
