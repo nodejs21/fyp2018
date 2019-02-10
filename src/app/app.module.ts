@@ -17,7 +17,6 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-// import { LoginComponent } from './views/login/login.component';
 // import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [DefaultLayoutComponent];
@@ -56,6 +55,7 @@ import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/account/login/login.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AuthModule } from './utils/services/auth/auth.module';
+// import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
   imports: [
@@ -85,9 +85,6 @@ import { AuthModule } from './utils/services/auth/auth.module';
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    // LoginComponent,
-    // RegisterComponent,
-    // *********************** my components ***********************
     HomepageComponent,
     ResetpasswordComponent,
     LoginComponent,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../utils/services/auth/auth.service';
 // import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
@@ -10,7 +11,11 @@ import { Component, OnInit } from '@angular/core';
   // }]
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor(private _auth: AuthService) {}
 
   ngOnInit() {}
+
+  async googleLogin() {
+    await this._auth.googleLogin();
+  }
 }

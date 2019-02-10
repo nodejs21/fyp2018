@@ -15,7 +15,6 @@ import { AcademyadmindashboardComponent } from './components/users/academyadmin/
 import { TeacherdashboardComponent } from './components/users/teacher/teacherdashboard/teacherdashboard.component';
 import { StudentdashboardComponent } from './components/users/student/studentdashboard/studentdashboard.component';
 import { LoginComponent } from './components/account/login/login.component';
-
 export const routes: Routes = [
   {
     path: '',

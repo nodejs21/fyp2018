@@ -1,165 +1,164 @@
 <mat-horizontal-stepper [linear]="false" #stepper>
   <mat-step [stepControl]="basicUserForm">
     <ng-template matStepLabel>User Basic Info</ng-template>
-    <div class="app-body">
-      <main class="main d-flex align-items-center">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6 mx-auto">
-              <div class="card mx-4">
-                <div class="card-body p-4">
-                  <form [formGroup]="basicUserForm">
-                    <div class="row">
-                      <div class="col-md-9">
-                        <h1>Register</h1>
-                        <p class="text-muted">Create your account</p>
+    <div class="app">
+      <div class="app-body">
+        <main class="main d-flex align-items-center">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <div class="card mx-4">
+                  <div class="card-body p-4">
+                    <form [formGroup]="basicUserForm">
+                      <div class="row">
+                        <div class="col-md-9">
+                          <h1>Register</h1>
+                          <p class="text-muted">Create your account</p>
+                        </div>
+                        <div class="col-md-3">
+                          <img
+                            [(src)]="basicUserForm.value.imageUrl"
+                            class="rounded-circle img-fluid float-right embed-responsive-item"
+                          />
+                        </div>
                       </div>
-                      <div class="col-md-3">
-                        <img
-                          [(src)]="basicUserForm.value.imageUrl"
-                          class="rounded-circle img-fluid float-right embed-responsive-item"
-                        />
-                      </div>
-                    </div>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"
-                          ><i class="icon-user"></i
-                        ></span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="First Name"
-                        formControlName="firstName"
-                        />
-                        <!-- [(ngModel)]="basicUserForm.value.firstName" -->
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Last Name"
-                        formControlName="lastName"
-                        />
-                        <!-- [(ngModel)]="basicUserForm.value.lastName" -->
-                    </div>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Email"
-                        formControlName="email"
-                        />
-                        <!-- [(ngModel)]="basicUserForm.value.email" -->
-                    </div>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"
-                          ><i class="icon-lock"></i
-                        ></span>
-                      </div>
-                      <input
-                        type="password"
-                        class="form-control"
-                        placeholder="Password"
-                        formControlName="password"
-                      />
-                    </div>
-                    <div class="input-group mb-2">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"
-                          ><i class="icon-lock"></i
-                        ></span>
-                      </div>
-                      <input
-                        type="password"
-                        class="form-control"
-                        placeholder="Repeat password"
-                        formControlName="confirmPassword"
-                      />
-                    </div>
-                    <div
-                      class="input-group align-center d-flex justify-content-center"
-                    >
-                      <label
-                        class="switch switch-lg switch-label switch-outline-info"
-                        tooltip="Gender"
-                      >
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"
+                            ><i class="icon-user"></i
+                          ></span>
+                        </div>
                         <input
-                          type="checkbox"
-                          class="switch-input"
-                          formControlName="gender"
-                          checked="true"
+                          type="text"
+                          class="form-control"
+                          placeholder="First Name"
+                          formControlName="firstName"
                         />
-                        <span
-                          class="switch-slider"
-                          data-checked="👨‍🦱"
-                          data-unchecked="👩‍🦰"
-                        ></span>
-                      </label>
-                    </div>
-                    <div
-                      class="btn-group btn-group-sm d-flex mb-2"
-                      btnRadioGroup
-                      formControlName="userType"
-                      tooltip="User Type"
-                    >
-                      <label
-                        btnRadio="academyadmin"
-                        class="btn btn-outline-dark"
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Last Name"
+                          formControlName="lastName"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">@</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Email"
+                          formControlName="email"
+                        />
+                      </div>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"
+                            ><i class="icon-lock"></i
+                          ></span>
+                        </div>
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder="Password"
+                          formControlName="password"
+                        />
+                      </div>
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"
+                            ><i class="icon-lock"></i
+                          ></span>
+                        </div>
+                        <input
+                          type="password"
+                          class="form-control"
+                          placeholder="Repeat password"
+                          formControlName="confirmPassword"
+                        />
+                      </div>
+                      <div
+                        class="input-group align-center d-flex justify-content-center"
                       >
-                        Academy Admin
-                      </label>
-                      <label btnRadio="teacher" class="btn btn-outline-dark">
-                        Teacher
-                      </label>
-                      <label btnRadio="student" class="btn btn-outline-dark">
-                        Student
-                      </label>
-                    </div>
-                    <button class="btn btn-block btn-success" matStepperNext>
-                      Create Account
-                    </button>
-                  </form>
-                </div>
-                <div class="card-footer p-4">
-                  <div class="row">
-                    <div class="col-4">
-                      <button
-                        class="btn btn-block btn-facebook"
-                        type="button"
-                        (click)="printValues()"
+                        <label
+                          class="switch switch-lg switch-label switch-outline-info"
+                          tooltip="Gender"
+                        >
+                          <input
+                            type="checkbox"
+                            class="switch-input"
+                            formControlName="gender"
+                            checked="true"
+                          />
+                          <span
+                            class="switch-slider"
+                            data-checked="👨‍🦱"
+                            data-unchecked="👩‍🦰"
+                          ></span>
+                        </label>
+                      </div>
+                      <div
+                        class="btn-group btn-group-sm d-flex mb-2"
+                        btnRadioGroup
+                        formControlName="userType"
+                        tooltip="User Type"
                       >
-                        <i class="fa fa-facebook"></i>
-                        <!-- <span>Facebook</span> -->
+                        <label
+                          btnRadio="academyadmin"
+                          class="btn btn-outline-dark"
+                        >
+                          Academy Admin
+                        </label>
+                        <label btnRadio="teacher" class="btn btn-outline-dark">
+                          Teacher
+                        </label>
+                        <label btnRadio="student" class="btn btn-outline-dark">
+                          Student
+                        </label>
+                      </div>
+                      <button class="btn btn-block btn-success" matStepperNext>
+                        Create Account
                       </button>
-                    </div>
-                    <div class="col-4">
-                      <button
-                        class="btn btn-block btn-google-plus"
-                        type="button"
-                        (click)="googleLogin()"
-                      >
-                        <i class="fa fa-google"></i>
-                        <!-- <span>Google</span> -->
-                      </button>
-                    </div>
-                    <div class="col-4">
-                      <button class="btn btn-block btn-twitter" type="button">
-                        <i class="fa fa-twitter"></i>
-                        <!-- <span>Twitter</span> -->
-                      </button>
+                    </form>
+                  </div>
+                  <div class="card-footer p-4">
+                    <div class="row">
+                      <div class="col-4">
+                        <button
+                          class="btn btn-block btn-facebook"
+                          type="button"
+                          (click)="printValues()"
+                        >
+                          <i class="fa fa-facebook"></i>
+                          <!-- <span>Facebook</span> -->
+                        </button>
+                      </div>
+                      <div class="col-4">
+                        <button
+                          class="btn btn-block btn-google-plus"
+                          type="button"
+                          (click)="googleLogin()"
+                        >
+                          <i class="fa fa-google"></i>
+                          <!-- <span>Google</span> -->
+                        </button>
+                      </div>
+                      <div class="col-4">
+                        <button class="btn btn-block btn-twitter" type="button">
+                          <i class="fa fa-twitter"></i>
+                          <!-- <span>Twitter</span> -->
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <pre>{{ basicUserForm.value | json }}</pre>
             </div>
-            <pre>{{ basicUserForm.value | json }}</pre>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   </mat-step>
   <mat-step
@@ -169,259 +168,267 @@
     <ng-template matStepLabel
       >{{ basicUserForm.value.userType | titlecase }} Specific Info</ng-template
     >
-    <div class="app-body">
-      <main class="main d-flex align-items-center">
-        <div class="container">
-          <div class="row">
-            <pre>{{ specificUserForm.value | json }}</pre>
-            <div class="col-md-6 mx-auto">
-              <div class="card mx-4">
-                <div class="card-body p-4">
-                  <div [hidden]="basicUserForm.value.userType != 'student'">
-                    <form [formGroup]="specificUserForm">
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="dob"
-                          >Date of Birth</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"
-                              ><i class="fa fa-user"></i
-                            ></span>
+    <div class="app">
+      <div class="app-body">
+        <main class="main d-flex align-items-center">
+          <div class="container">
+            <div class="row">
+              <pre>{{ specificUserForm.value | json }}</pre>
+              <div class="col-md-6 mx-auto">
+                <div class="card mx-4">
+                  <div class="card-body p-4">
+                    <div [hidden]="basicUserForm.value.userType != 'student'">
+                      <form [formGroup]="specificUserForm">
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="dob"
+                            >Date of Birth</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"
+                                ><i class="fa fa-user"></i
+                              ></span>
+                            </div>
+                            <input
+                              class="form-control"
+                              formControlName="dob"
+                              type="date"
+                            />
                           </div>
-                          <input
-                            class="form-control"
-                            formControlName="dob"
-                            type="date"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="address"
-                          >Address</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"
-                              ><i class="fa fa-user"></i
-                            ></span>
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="address"
+                            >Address</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"
+                                ><i class="fa fa-user"></i
+                              ></span>
+                            </div>
+                            <input
+                              class="form-control"
+                              formControlName="address"
+                              placeholder="Address"
+                              type="text"
+                            />
                           </div>
-                          <input
-                            class="form-control"
-                            formControlName="address"
-                            placeholder="Address"
-                            type="text"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="city">City</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"
-                              ><i class="fa fa-user"></i
-                            ></span>
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="city"
+                            >City</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"
+                                ><i class="fa fa-user"></i
+                              ></span>
+                            </div>
+                            <input
+                              class="form-control"
+                              formControlName="city"
+                              placeholder="City"
+                              type="text"
+                            />
                           </div>
-                          <input
-                            class="form-control"
-                            formControlName="city"
-                            placeholder="City"
-                            type="text"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="font-weight-bold" for="tel"
-                          >Telephone</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"
-                              ><i class="fa fa-user"></i
-                            ></span>
+                        <div class="form-group">
+                          <label class="font-weight-bold" for="tel"
+                            >Telephone</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"
+                                ><i class="fa fa-user"></i
+                              ></span>
+                            </div>
+                            <input
+                              class="form-control"
+                              formControlName="telephone"
+                              placeholder="Telephone"
+                              type="tel"
+                            />
                           </div>
-                          <input
-                            class="form-control"
-                            formControlName="telephone"
-                            placeholder="Telephone"
-                            type="tel"
-                          />
                         </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div [hidden]="basicUserForm.value.userType != 'teacher'">
-                    <form [formGroup]="specificUserForm">
-                      <div class="form-group">
-                        <label for="dob" class="font-weight-bold"
-                          >Date of Birth</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                      </form>
+                    </div>
+                    <div [hidden]="basicUserForm.value.userType != 'teacher'">
+                      <form [formGroup]="specificUserForm">
+                        <div class="form-group">
+                          <label for="dob" class="font-weight-bold"
+                            >Date of Birth</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="date"
+                              formControlName="dob"
+                              class="form-control"
+                            />
                           </div>
-                          <input
-                            type="date"
-                            formControlName="dob"
-                            class="form-control"
-                          />
                         </div>
-                      </div>
 
-                      <div class="form-group">
-                        <label for="address" class="font-weight-bold"
-                          >Address</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                        <div class="form-group">
+                          <label for="address" class="font-weight-bold"
+                            >Address</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              formControlName="address"
+                              class="form-control"
+                              placeholder="Address"
+                            />
                           </div>
-                          <input
-                            type="text"
-                            formControlName="address"
-                            class="form-control"
-                            placeholder="Address"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="city" class="font-weight-bold">City</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                        <div class="form-group">
+                          <label for="city" class="font-weight-bold"
+                            >City</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              formControlName="city"
+                              class="form-control"
+                              placeholder="City"
+                            />
                           </div>
-                          <input
-                            type="text"
-                            formControlName="city"
-                            class="form-control"
-                            placeholder="City"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tel" class="font-weight-bold"
-                          >Telephone</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                        <div class="form-group">
+                          <label for="tel" class="font-weight-bold"
+                            >Telephone</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="tel"
+                              formControlName="telephone"
+                              class="form-control"
+                              placeholder="Telephone"
+                            />
                           </div>
-                          <input
-                            type="tel"
-                            formControlName="telephone"
-                            class="form-control"
-                            placeholder="Telephone"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tel" class="font-weight-bold"
-                          >Qualification</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                        <div class="form-group">
+                          <label for="tel" class="font-weight-bold"
+                            >Qualification</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="tel"
+                              formControlName="qualification"
+                              class="form-control"
+                              placeholder="E.g: Phd in Electronics [Yet to be decided]"
+                            />
                           </div>
-                          <input
-                            type="tel"
-                            formControlName="qualification"
-                            class="form-control"
-                            placeholder="E.g: Phd in Electronics [Yet to be decided]"
-                          />
                         </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div
-                    [hidden]="basicUserForm.value.userType != 'academyadmin'"
-                  >
-                    <form [formGroup]="specificUserForm">
-                      <div class="form-group">
-                        <label for="dob" class="font-weight-bold"
-                          >Date of Birth</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                      </form>
+                    </div>
+                    <div
+                      [hidden]="basicUserForm.value.userType != 'academyadmin'"
+                    >
+                      <form [formGroup]="specificUserForm">
+                        <div class="form-group">
+                          <label for="dob" class="font-weight-bold"
+                            >Date of Birth</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="date"
+                              formControlName="dob"
+                              class="form-control"
+                            />
                           </div>
-                          <input
-                            type="date"
-                            formControlName="dob"
-                            class="form-control"
-                          />
                         </div>
-                      </div>
 
-                      <div class="form-group">
-                        <label class="font-weight-bold">Address</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                        <div class="form-group">
+                          <label class="font-weight-bold">Address</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              formControlName="address"
+                              class="form-control"
+                              placeholder="Address"
+                            />
                           </div>
-                          <input
-                            type="text"
-                            formControlName="address"
-                            class="form-control"
-                            placeholder="Address"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="city" class="font-weight-bold">City</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                        <div class="form-group">
+                          <label for="city" class="font-weight-bold"
+                            >City</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              formControlName="city"
+                              class="form-control"
+                              placeholder="City"
+                            />
                           </div>
-                          <input
-                            type="text"
-                            formControlName="city"
-                            class="form-control"
-                            placeholder="City"
-                          />
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="tel" class="font-weight-bold"
-                          >Telephone</label
-                        >
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">
-                              <i class="fa fa-user"></i>
-                            </span>
+                        <div class="form-group">
+                          <label for="tel" class="font-weight-bold"
+                            >Telephone</label
+                          >
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="tel"
+                              formControlName="telephone"
+                              class="form-control"
+                              placeholder="Telephone"
+                            />
                           </div>
-                          <input
-                            type="tel"
-                            formControlName="telephone"
-                            class="form-control"
-                            placeholder="Telephone"
-                          />
                         </div>
-                      </div>
-                    </form>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
     <div>
       <button mat-button matStepperPrevious>Back</button>
@@ -430,70 +437,72 @@
   </mat-step>
   <mat-step *ngIf="basicUserForm.value.userType == 'academyadmin'">
     <ng-template matStepLabel>Academy Details</ng-template>
-    <div class="app-body">
-      <main class="main d-flex align-items-center">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6 mx-auto">
-              <div class="card mx-4">
-                <div class="card-body p-4">
-                  <form [formGroup]="academyDetailsForm">
-                    <div class="row">
-                      <div class="col-md-9">
-                        <label for="totalSubjects" class="font-weight-bold">
-                          Academy Logo
-                        </label>
-                      </div>
-                      <div class="col-md-3">
-                        <img
-                          src="./../../../../assets/img/avatars/8.jpg"
-                          class="rounded-circle img-fluid float-right embed-responsive-item"
-                          alt="Cinque Terre"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="totalSubjects" class="font-weight-bold"
-                        >Academy Name</label
-                      >
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"
-                            ><i class="fa fa-user"></i
-                          ></span>
+    <div class="app">
+      <div class="app-body">
+        <main class="main d-flex align-items-center">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <div class="card mx-4">
+                  <div class="card-body p-4">
+                    <form [formGroup]="academyDetailsForm">
+                      <div class="row">
+                        <div class="col-md-9">
+                          <label for="totalSubjects" class="font-weight-bold">
+                            Academy Logo
+                          </label>
                         </div>
-                        <input
-                          type="number"
-                          formControlName="academyName"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="totalSubjects" class="font-weight-bold"
-                        >Description</label
-                      >
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"
-                            ><i class="fa fa-user"></i
-                          ></span>
+                        <div class="col-md-3">
+                          <img
+                            src="./../../../../assets/img/avatars/8.jpg"
+                            class="rounded-circle img-fluid float-right embed-responsive-item"
+                            alt="Cinque Terre"
+                          />
                         </div>
-                        <input
-                          type="number"
-                          formControlName="academyDescription"
-                          class="form-control"
-                        />
                       </div>
-                    </div>
-                  </form>
+                      <div class="form-group">
+                        <label for="totalSubjects" class="font-weight-bold"
+                          >Academy Name</label
+                        >
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"
+                              ><i class="fa fa-user"></i
+                            ></span>
+                          </div>
+                          <input
+                            type="number"
+                            formControlName="academyName"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="totalSubjects" class="font-weight-bold"
+                          >Description</label
+                        >
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"
+                              ><i class="fa fa-user"></i
+                            ></span>
+                          </div>
+                          <input
+                            type="number"
+                            formControlName="academyDescription"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
+              <pre>{{ academyDetailsForm.value | json }}</pre>
             </div>
-            <pre>{{ academyDetailsForm.value | json }}</pre>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   </mat-step>
   <mat-step>
