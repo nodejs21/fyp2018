@@ -6,14 +6,15 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
+// import { LoginComponent } from './views/login/login.component';
+// import { RegisterComponent } from './views/register/register.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { SignupComponent } from './components/account/signup/signup.component';
 import { ResetpasswordComponent } from './components/account/resetpassword/resetpassword.component';
 import { AcademyadmindashboardComponent } from './components/users/academyadmin/academyadmindashboard/academyadmindashboard.component';
 import { TeacherdashboardComponent } from './components/users/teacher/teacherdashboard/teacherdashboard.component';
 import { StudentdashboardComponent } from './components/users/student/studentdashboard/studentdashboard.component';
+import { LoginComponent } from './components/account/login/login.component';
 
 export const routes: Routes = [
   {
@@ -44,7 +45,7 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent,
+    component: SignupComponent,
     data: {
       title: 'Register Page'
     }
