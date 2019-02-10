@@ -23,9 +23,9 @@
 </div> -->
 
 <form [formGroup]="quizForm">
-  <!-- <hr />
+  <hr />
   <pre>value: {{ quizForm.value | json }}</pre>
-  <hr /> -->
+  <hr />
 
   <div class="form-row">
     <div class="col-md-3">
@@ -122,7 +122,7 @@
                       </button>
                     </div>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <!-- <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
                       type="radio"
@@ -130,8 +130,8 @@
                       value="mcq"
                     />
                     <label class="form-check-label">MCQ</label>
-                  </div>
-                  <div class="form-check form-check-inline">
+                  </div> -->
+                  <!-- <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
                       type="radio"
@@ -139,9 +139,22 @@
                       value="tf"
                     />
                     <label class="form-check-label">True/False</label>
+                  </div> -->
+                  <div
+                    class="btn-group btn-group-sm d-flex"
+                    btnRadioGroup
+                    formControlName="type"
+                    tooltip="Question Type"
+                  >
+                    <label btnRadio="mcq" class="btn btn-outline-dark">
+                      MCQ
+                    </label>
+                    <label btnRadio="tf" class="btn btn-outline-dark">
+                      T/F
+                    </label>
                   </div>
                   <div *ngIf="question.value.type == 'mcq'">
-                    <ol class="list-inline mt-2" formArrayName="mcqOptions">
+                    <ol class="list-inline" formArrayName="mcqOptions">
                       <li
                         class="list-inline-item ml-4 mt-2"
                         *ngFor="
@@ -198,7 +211,7 @@
                     </ol>
                   </div>
                   <div *ngIf="question.value.type == 'tf'">
-                    <ol class="list-inline mt-2">
+                    <!-- <ol class="list-inline mt-2">
                       <li class="list-inline-item ml-4 mt-2">
                         <div class="input-group">
                           <input
@@ -221,7 +234,20 @@
                           <label class="form-check-label">False</label>
                         </div>
                       </li>
-                    </ol>
+                    </ol> -->
+                    <div
+                      class="btn-group btn-group-sm "
+                      btnRadioGroup
+                      formControlName="tfCorrectOption"
+                      tooltip="Correct Option"
+                    >
+                      <label btnRadio="true" class="btn btn-outline-primary">
+                        True
+                      </label>
+                      <label btnRadio="false" class="btn btn-outline-primary">
+                        False
+                      </label>
+                    </div>
                   </div>
                 </div>
               </li>

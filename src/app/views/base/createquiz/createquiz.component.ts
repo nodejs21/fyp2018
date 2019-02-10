@@ -25,7 +25,7 @@ export class CreatequizComponent implements OnInit {
   initQuestion() {
     return this.formBuilder.group({
       text: '',
-      type: '',
+      type: 'mcq',
       mcqOptions: this.formBuilder.array([
         this.initMcqOption(),
         this.initMcqOption()

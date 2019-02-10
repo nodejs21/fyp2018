@@ -62,6 +62,7 @@ import { SubjectcardComponent } from './shared/cards/subjectcard/subjectcard.com
 import { TeachercardComponent } from './shared/cards/teachercard/teachercard.component';
 import { MaterialModule } from '../../material.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   imports: [
@@ -78,6 +79,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TooltipModule.forRoot(),
     RatingModule.forRoot(),
     ModalModule.forRoot(),
+    ButtonsModule.forRoot(),
     ReactiveFormsModule,
     MaterialModule
   ],
