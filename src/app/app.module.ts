@@ -55,6 +55,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/account/login/login.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { AuthModule } from './utils/services/auth/auth.module';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AuthModule
   ],
   declarations: [
     AppComponent,

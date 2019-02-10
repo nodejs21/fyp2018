@@ -17,9 +17,8 @@
                       </div>
                       <div class="col-md-3">
                         <img
-                          src="./../../../../assets/img/avatars/8.jpg"
+                          [(src)]="basicUserForm.value.imageUrl"
                           class="rounded-circle img-fluid float-right embed-responsive-item"
-                          alt="Cinque Terre"
                         />
                       </div>
                     </div>
@@ -34,13 +33,15 @@
                         class="form-control"
                         placeholder="First Name"
                         formControlName="firstName"
-                      />
+                        />
+                        <!-- [(ngModel)]="basicUserForm.value.firstName" -->
                       <input
                         type="text"
                         class="form-control"
                         placeholder="Last Name"
                         formControlName="lastName"
-                      />
+                        />
+                        <!-- [(ngModel)]="basicUserForm.value.lastName" -->
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
@@ -51,7 +52,8 @@
                         class="form-control"
                         placeholder="Email"
                         formControlName="email"
-                      />
+                        />
+                        <!-- [(ngModel)]="basicUserForm.value.email" -->
                     </div>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
@@ -131,20 +133,24 @@
                         type="button"
                         (click)="printValues()"
                       >
-                        <span>Facebook</span>
+                        <i class="fa fa-facebook"></i>
+                        <!-- <span>Facebook</span> -->
                       </button>
                     </div>
                     <div class="col-4">
                       <button
                         class="btn btn-block btn-google-plus"
                         type="button"
+                        (click)="googleLogin()"
                       >
-                        <span>Google</span>
+                        <i class="fa fa-google"></i>
+                        <!-- <span>Google</span> -->
                       </button>
                     </div>
                     <div class="col-4">
                       <button class="btn btn-block btn-twitter" type="button">
-                        <span>Twitter</span>
+                        <i class="fa fa-twitter"></i>
+                        <!-- <span>Twitter</span> -->
                       </button>
                     </div>
                   </div>
