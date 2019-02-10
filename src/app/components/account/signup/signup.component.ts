@@ -19,6 +19,7 @@ import { AuthService } from '../../../utils/services/auth/auth.service';
 export class SignupComponent implements OnInit {
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
+  academyDetailsForm: FormGroup;
 
   constructor(private _formBuilder: FormBuilder, private _auth: AuthService) {
     this._auth.user.subscribe(user => {
@@ -40,13 +41,24 @@ export class SignupComponent implements OnInit {
         imageUrl: ['./../../../../assets/img/avatars/8.jpg'],
         gender: [true],
         userType: ['teacher'.toLowerCase()],
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required]
+        password: [''],
+        confirmPassword: ['']
       },
       {
         validators: ConfirmPasswordValidator.MatchPassword
       }
     );
+    this.specificUserForm = this._formBuilder.group({
+      dob: [''],
+      address: [''],
+      city: [''],
+      telephone: [''],
+      qualification: ['']
+    });
+    this.academyDetailsForm = this._formBuilder.group({
+      academyName: [''],
+      academyDescription: ['']
+    });
   }
 
   async googleLogin() {
