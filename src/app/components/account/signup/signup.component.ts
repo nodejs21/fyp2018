@@ -39,10 +39,10 @@ export class SignupComponent implements OnInit {
       {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
-        email: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         imageUrl: ['./../../../../assets/img/avatars/8.jpg'],
         gender: [true],
-        userType: ['teacher'.toLowerCase()],
+        userType: ['student'.toLowerCase()],
         password: ['jjjjjj', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['jjjjjj', Validators.required]
       },
@@ -53,7 +53,7 @@ export class SignupComponent implements OnInit {
     this.specificUserForm = this._formBuilder.group({
       dob: ['', Validators.required],
       address: ['', [Validators.required, Validators.minLength(5)]],
-      city: ['', Validators.required],
+      city: ['', [Validators.required, Validators.minLength(3)]],
       telephone: ['', Validators.required],
       qualification: ['', Validators.required]
     });
