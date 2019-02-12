@@ -102,7 +102,7 @@
                     class="invalid-feedback d-block"
                     *ngIf="password.errors && password.errors.minlength"
                   >
-                    Password must be greater than 6 digits.
+                    Password must be greater than 6 characters.
                   </div>
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -131,7 +131,7 @@
                       password.errors
                     "
                   >
-                    Passswords do not match.
+                    Passwords do not match.
                   </div>
                   <div
                     class="input-group align-center d-flex justify-content-center"
@@ -262,11 +262,19 @@
                       />
                     </div>
                   </div>
-                  <div
-                    class="invalid-feedback d-block"
-                    *ngIf="address.errors && address.touched"
-                  >
-                    Address is required.
+                  <div *ngIf="address.touched && address.errors">
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="address.errors.required"
+                    >
+                      Address is required.
+                    </div>
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="address.errors.minlength"
+                    >
+                      Address must have atleast 5 characters.
+                    </div>
                   </div>
                   <div class="form-group">
                     <label class="font-weight-bold">City</label>
@@ -363,8 +371,26 @@
                         type="text"
                         formControlName="address"
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !address.errors,
+                          'is-invalid': address.errors && address.touched
+                        }"
                         placeholder="Address"
                       />
+                    </div>
+                  </div>
+                  <div *ngIf="address.touched && address.errors">
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="address.errors.required"
+                    >
+                      Address is required.
+                    </div>
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="address.errors.minlength"
+                    >
+                      Address must have atleast 5 characters.
                     </div>
                   </div>
                   <div class="form-group">
@@ -379,8 +405,26 @@
                         type="text"
                         formControlName="city"
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !city.errors,
+                          'is-invalid': city.errors && city.touched
+                        }"
                         placeholder="City"
                       />
+                    </div>
+                  </div>
+                  <div *ngIf="city.touched && city.errors">
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="city.errors.required"
+                    >
+                      City is required.
+                    </div>
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="city.errors.minlength"
+                    >
+                      City must have atleast 3 characters.
                     </div>
                   </div>
                   <div class="form-group">
@@ -395,8 +439,20 @@
                         type="tel"
                         formControlName="telephone"
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !telephone.errors,
+                          'is-invalid': telephone.errors && telephone.touched
+                        }"
                         placeholder="Telephone"
                       />
+                    </div>
+                  </div>
+                  <div *ngIf="telephone.touched && telephone.errors">
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="telephone.errors.required"
+                    >
+                      Telephone is required.
                     </div>
                   </div>
                   <div class="form-group">
@@ -419,7 +475,11 @@
               </div>
               <div class="card-footer p-4">
                 <div class="row">
-                  <button class="btn btn-block btn-success" (click)="signUp()">
+                  <button
+                    class="btn btn-block btn-success"
+                    (click)="signUp()"
+                    [disabled]="!specificUserForm.valid"
+                  >
                     Create Account
                   </button>
                 </div>
@@ -458,8 +518,26 @@
                         type="text"
                         formControlName="address"
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !address.errors,
+                          'is-invalid': address.errors && address.touched
+                        }"
                         placeholder="Address"
                       />
+                    </div>
+                  </div>
+                  <div *ngIf="address.touched && address.errors">
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="address.errors.required"
+                    >
+                      Address is required.
+                    </div>
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="address.errors.minlength"
+                    >
+                      Address must have atleast 5 characters.
                     </div>
                   </div>
                   <div class="form-group">
@@ -474,8 +552,26 @@
                         type="text"
                         formControlName="city"
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !city.errors,
+                          'is-invalid': city.errors && city.touched
+                        }"
                         placeholder="City"
                       />
+                    </div>
+                  </div>
+                  <div *ngIf="city.touched && city.errors">
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="city.errors.required"
+                    >
+                      City is required.
+                    </div>
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="city.errors.minlength"
+                    >
+                      City must have atleast 3 characters.
                     </div>
                   </div>
                   <div class="form-group">
@@ -490,11 +586,23 @@
                         type="tel"
                         formControlName="telephone"
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !telephone.errors,
+                          'is-invalid': telephone.errors && telephone.touched
+                        }"
                         placeholder="Telephone"
                       />
                     </div>
                   </div>
                 </form>
+              </div>
+              <div *ngIf="telephone.touched && telephone.errors">
+                <div
+                  class="invalid-feedback d-block"
+                  *ngIf="telephone.errors.required"
+                >
+                  Telephone is required.
+                </div>
               </div>
               <div class="card-footer p-4">
                 <div class="row">

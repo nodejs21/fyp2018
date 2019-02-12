@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         imageUrl: ['./../../../../assets/img/avatars/8.jpg'],
         gender: [true],
-        userType: ['student'.toLowerCase()],
+        userType: ['teacher'.toLowerCase()],
         password: ['jjjjjj', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['jjjjjj', Validators.required]
       },
