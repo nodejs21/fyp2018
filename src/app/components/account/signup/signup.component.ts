@@ -77,6 +77,10 @@ export class SignupComponent implements OnInit {
     await this._auth.googleLogin();
   }
 
+  async facebookLogin() {
+    await this._auth.facebookLogin();
+  }
+
   printValues() {
     console.log(this.basicUserForm);
     console.log(this.basicUserForm.value);

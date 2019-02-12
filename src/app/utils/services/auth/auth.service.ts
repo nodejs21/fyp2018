@@ -47,6 +47,11 @@ export class AuthService {
     return this.oAuthLogin(provider);
   }
 
+  facebookLogin() {
+    const provider = new auth.FacebookAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then(credential => {
       // console.log(credential.user);
