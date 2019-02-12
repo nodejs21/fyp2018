@@ -55,7 +55,7 @@ export class SignupComponent implements OnInit {
       address: ['', [Validators.required, Validators.minLength(5)]],
       city: ['', [Validators.required, Validators.minLength(3)]],
       telephone: ['', Validators.required],
-      qualification: ['', Validators.required]
+      qualification: ['']
     });
     this.academyDetailsForm = this._formBuilder.group({
       academyName: ['', Validators.required],
