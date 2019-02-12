@@ -43,8 +43,8 @@ export class SignupComponent implements OnInit {
         imageUrl: ['./../../../../assets/img/avatars/8.jpg'],
         gender: [true],
         userType: ['teacher'.toLowerCase()],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', Validators.required]
+        password: ['jjjjjj', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['jjjjjj', Validators.required]
       },
       {
         validators: ConfirmPasswordValidator.MatchPassword
@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
     );
     this.specificUserForm = this._formBuilder.group({
       dob: ['', Validators.required],
-      address: ['', Validators.required],
+      address: ['', [Validators.required, Validators.minLength(5)]],
       city: ['', Validators.required],
       telephone: ['', Validators.required],
       qualification: ['', Validators.required]
@@ -108,24 +108,24 @@ export class SignupComponent implements OnInit {
     return this.basicUserForm.get('confirmPassword');
   }
   get dob() {
-    return this.basicUserForm.get('dob');
+    return this.specificUserForm.get('dob');
   }
   get address() {
-    return this.basicUserForm.get('address');
+    return this.specificUserForm.get('address');
   }
   get city() {
-    return this.basicUserForm.get('city');
+    return this.specificUserForm.get('city');
   }
   get telephone() {
-    return this.basicUserForm.get('telephone');
+    return this.specificUserForm.get('telephone');
   }
   get qualification() {
-    return this.basicUserForm.get('qualification');
+    return this.specificUserForm.get('qualification');
   }
   get academyName() {
-    return this.basicUserForm.get('academyName');
+    return this.academyDetailsForm.get('academyName');
   }
   get academyDescription() {
-    return this.basicUserForm.get('academyDescription');
+    return this.academyDetailsForm.get('academyDescription');
   }
 }

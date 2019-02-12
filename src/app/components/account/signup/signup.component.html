@@ -250,20 +250,22 @@
                           ><i class="fa fa-user"></i
                         ></span>
                       </div>
-                      <!-- [ngClass]="{
-                        'is-valid': !address.errors,
-                        'is-invalid': address.errors && address.touched
-                      }"
-                      placeholder="Address" -->
                       <input
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !address.errors,
+                          'is-invalid': address.errors && address.touched
+                        }"
+                        placeholder="Address"
                         formControlName="address"
                         type="text"
                       />
                     </div>
                   </div>
-                  <!-- *ngIf="address.errors && address.touched" -->
-                  <div class="invalid-feedback d-block">
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="address.errors && address.touched"
+                  >
                     Address is required.
                   </div>
                   <div class="form-group">
@@ -276,11 +278,21 @@
                       </div>
                       <input
                         class="form-control"
+                        [ngClass]="{
+                          'is-valid': !city.errors,
+                          'is-invalid': city.errors && city.touched
+                        }"
                         formControlName="city"
                         placeholder="City"
                         type="text"
                       />
                     </div>
+                  </div>
+                  <div
+                    class="invalid-feedback d-block"
+                    *ngIf="city.errors && city.touched"
+                  >
+                    City is required.
                   </div>
                   <div class="form-group">
                     <label class="font-weight-bold">Telephone</label>
