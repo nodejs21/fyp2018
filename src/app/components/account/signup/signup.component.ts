@@ -24,11 +24,13 @@ export class SignupComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private _auth: AuthService) {
     this._auth.user.subscribe(user => {
       console.log(user);
-      const splitName = user.displayName.split(' ');
-      this.basicUserForm.get('firstName').setValue(splitName[0]);
-      this.basicUserForm.get('lastName').setValue(splitName[1]);
-      this.basicUserForm.get('imageUrl').setValue(user.photoURL);
-      this.basicUserForm.get('email').setValue(user.email);
+      if (user) {
+        const splitName = user.displayName.split(' ');
+        this.firstName.setValue(splitName[0]);
+        this.lastName.setValue(splitName[1]);
+        this.imageUrl.setValue(user.photoURL);
+        this.email.setValue(user.email);
+      }
     });
   }
 
@@ -41,24 +43,34 @@ export class SignupComponent implements OnInit {
         imageUrl: ['./../../../../assets/img/avatars/8.jpg'],
         gender: [true],
         userType: ['teacher'.toLowerCase()],
-        password: [''],
-        confirmPassword: ['']
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required]
       },
       {
         validators: ConfirmPasswordValidator.MatchPassword
       }
     );
     this.specificUserForm = this._formBuilder.group({
-      dob: [''],
-      address: [''],
-      city: [''],
-      telephone: [''],
-      qualification: ['']
+      dob: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      telephone: ['', Validators.required],
+      qualification: ['', Validators.required]
     });
     this.academyDetailsForm = this._formBuilder.group({
-      academyName: [''],
-      academyDescription: ['']
+      academyName: ['', Validators.required],
+      academyDescription: ['', Validators.required]
     });
+  }
+
+  signUp() {
+    const user: any = {
+      userBasicInfo: this.basicUserForm.value,
+      userSpecificInfo: this.specificUserForm.value,
+      academyDetails: this.academyDetailsForm.value
+    };
+    console.log(user);
+    this._auth.customSignUp(user);
   }
 
   async googleLogin() {
@@ -69,5 +81,51 @@ export class SignupComponent implements OnInit {
     console.log(this.basicUserForm);
     console.log(this.basicUserForm.value);
     console.log(JSON.stringify(this.basicUserForm.value, undefined, 2));
+  }
+
+  get firstName() {
+    return this.basicUserForm.get('firstName');
+  }
+  get lastName() {
+    return this.basicUserForm.get('lastName');
+  }
+  get email() {
+    return this.basicUserForm.get('email');
+  }
+  get imageUrl() {
+    return this.basicUserForm.get('imageUrl');
+  }
+  get gender() {
+    return this.basicUserForm.get('gender');
+  }
+  get userType() {
+    return this.basicUserForm.get('userType');
+  }
+  get password() {
+    return this.basicUserForm.get('password');
+  }
+  get confirmPassword() {
+    return this.basicUserForm.get('confirmPassword');
+  }
+  get dob() {
+    return this.basicUserForm.get('dob');
+  }
+  get address() {
+    return this.basicUserForm.get('address');
+  }
+  get city() {
+    return this.basicUserForm.get('city');
+  }
+  get telephone() {
+    return this.basicUserForm.get('telephone');
+  }
+  get qualification() {
+    return this.basicUserForm.get('qualification');
+  }
+  get academyName() {
+    return this.basicUserForm.get('academyName');
+  }
+  get academyDescription() {
+    return this.basicUserForm.get('academyDescription');
   }
 }
