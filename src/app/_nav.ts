@@ -11,7 +11,7 @@ export interface NavData {
   class?: string;
 }
 
-const academyAdminNav: NavData[] = [
+const academyadmin: NavData[] = [
   {
     title: true,
     name: 'Academy Admin'
@@ -67,7 +67,7 @@ const academyAdminNav: NavData[] = [
     name: 'Time Table',
     url: '/theme/typography',
     icon: 'icon-pencil'
-  },
+  }
   // {
   //   name: 'Fee',
   //   url: '/theme/typography',
@@ -92,7 +92,7 @@ const academyAdminNav: NavData[] = [
   // }
 ];
 
-const teacherNav: NavData[] = [
+const teacher: NavData[] = [
   {
     title: true,
     name: 'Teacher'
@@ -146,7 +146,7 @@ const teacherNav: NavData[] = [
   }
 ];
 
-const studentNav: NavData[] = [
+const student: NavData[] = [
   {
     title: true,
     name: 'Student'
@@ -488,8 +488,8 @@ export const originalNav: NavData[] = [
 ];
 
 export const navItems = {
-  academyAdminNav,
-  studentNav,
-  teacherNav,
+  academyadmin,
+  student,
+  teacher,
   originalNav
 };

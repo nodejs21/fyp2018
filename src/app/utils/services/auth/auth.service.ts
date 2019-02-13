@@ -15,7 +15,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  user: Observable<any> = of(null);
+  user: Observable<any>;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -25,7 +25,7 @@ export class AuthService {
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          // console.log(user.uid);
+          console.log(user.uid);
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
@@ -83,7 +83,12 @@ export class AuthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  customSignUp(user, uid) {
+  async customSignUp(user, uid) {
+    await this.pushUserToDb(user, uid);
+    this.router.navigate(['/']);
+  }
+
+  private pushUserToDb(user, uid) {
     const basicData: any = {
       uid: uid,
       email: user.userBasicInfo.email,
@@ -94,7 +99,6 @@ export class AuthService {
       gender: user.userBasicInfo.gender,
       userType: user.userBasicInfo.userType
     };
-    console.log(basicData);
     const x = this.afs
       .collection('users')
       .doc(uid)
@@ -119,7 +123,18 @@ export class AuthService {
         .doc(uid)
         .set(user.userSpecificInfo);
     }
-    console.log(x);
+    return x;
+  }
+
+  signIn(email, password) {
+    this.afAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(user => {
+        console.log(user);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   signOut() {

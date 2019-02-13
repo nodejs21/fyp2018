@@ -20,7 +20,6 @@ export class SignupComponent implements OnInit {
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
   academyDetailsForm: FormGroup;
-  googleUser: any;
 
   constructor(private _formBuilder: FormBuilder, private _auth: AuthService) {}
 
@@ -59,20 +58,19 @@ export class SignupComponent implements OnInit {
       userSpecificInfo: this.specificUserForm.value,
       academyDetails: this.academyDetailsForm.value
     };
-    // console.log(this.googleUser.uid);
-    this._auth
-      .signupWithEmailPassword(this.email.value, this.password.value)
-      .then(res => {
-        // res contians user data i.e Email and Password
-        console.log(res.user.uid);
-        this._auth.customSignUp(user, res.user.uid);
-        // this._auth.customSignUp(user, this.googleUser.uid);
-      })
-      .catch(err => {
-        this._auth.customSignUp(user, this.googleUser.uid);
-        // err contians "Email is already occupied"
-        console.log(err);
-      });
+    if (this._auth.user['value']) {
+      this._auth.customSignUp(user, this._auth.user['value']['uid']);
+    } else {
+      this._auth
+        .signupWithEmailPassword(this.email.value, this.password.value)
+        .then(res => {
+          console.log(res.user.uid);
+          this._auth.customSignUp(user, res.user.uid);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 
   async googleLogin() {
@@ -80,7 +78,6 @@ export class SignupComponent implements OnInit {
     if (this._auth.user) {
       this._auth.user.subscribe(user => {
         if (user) {
-          this.googleUser = user;
           const splitName = user.displayName.split(' ');
           this.firstName.setValue(splitName[0]);
           this.lastName.setValue(splitName[1]);

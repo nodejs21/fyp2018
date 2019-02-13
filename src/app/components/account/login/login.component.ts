@@ -18,4 +18,6 @@ export class LoginComponent implements OnInit {
   async googleLogin() {
     await this._auth.googleLogin();
   }
+
+  // signIn() {}
 }
