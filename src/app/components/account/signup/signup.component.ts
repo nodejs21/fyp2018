@@ -20,19 +20,9 @@ export class SignupComponent implements OnInit {
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
   academyDetailsForm: FormGroup;
+  googleUser: any;
 
-  constructor(private _formBuilder: FormBuilder, private _auth: AuthService) {
-    this._auth.user.subscribe(user => {
-      console.log(user);
-      if (user) {
-        const splitName = user.displayName.split(' ');
-        this.firstName.setValue(splitName[0]);
-        this.lastName.setValue(splitName[1]);
-        this.imageUrl.setValue(user.photoURL);
-        this.email.setValue(user.email);
-      }
-    });
-  }
+  constructor(private _formBuilder: FormBuilder, private _auth: AuthService) {}
 
   ngOnInit() {
     this.basicUserForm = this._formBuilder.group(
@@ -40,26 +30,26 @@ export class SignupComponent implements OnInit {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        imageUrl: ['./../../../../assets/img/avatars/8.jpg'],
+        photoURL: ['./../../../../assets/img/avatars/8.jpg'],
         gender: [true],
         userType: ['teacher'.toLowerCase()],
         password: ['jjjjjj', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['jjjjjj', Validators.required]
       },
       {
-        validators: ConfirmPasswordValidator.MatchPassword
+        validators: [ConfirmPasswordValidator.MatchPassword]
       }
     );
     this.specificUserForm = this._formBuilder.group({
-      dob: ['', Validators.required],
-      address: ['', [Validators.required, Validators.minLength(5)]],
-      city: ['', [Validators.required, Validators.minLength(3)]],
-      telephone: ['', Validators.required],
-      qualification: ['']
+      dob: ['2019-02-07', Validators.required],
+      address: ['876545678', [Validators.required, Validators.minLength(5)]],
+      city: ['87654567', [Validators.required, Validators.minLength(3)]],
+      telephone: ['8765456', Validators.required],
+      qualification: ['765456']
     });
     this.academyDetailsForm = this._formBuilder.group({
-      academyName: ['', Validators.required],
-      academyDescription: ['', Validators.required]
+      academyName: ['34567876543456', Validators.required],
+      academyDescription: ['34567876543456', Validators.required]
     });
   }
 
@@ -69,12 +59,36 @@ export class SignupComponent implements OnInit {
       userSpecificInfo: this.specificUserForm.value,
       academyDetails: this.academyDetailsForm.value
     };
-    console.log(user);
-    this._auth.customSignUp(user);
+    // console.log(this.googleUser.uid);
+    this._auth
+      .signupWithEmailPassword(this.email.value, this.password.value)
+      .then(res => {
+        // res contians user data i.e Email and Password
+        console.log(res.user.uid);
+        this._auth.customSignUp(user, res.user.uid);
+        // this._auth.customSignUp(user, this.googleUser.uid);
+      })
+      .catch(err => {
+        this._auth.customSignUp(user, this.googleUser.uid);
+        // err contians "Email is already occupied"
+        console.log(err);
+      });
   }
 
   async googleLogin() {
     await this._auth.googleLogin();
+    if (this._auth.user) {
+      this._auth.user.subscribe(user => {
+        if (user) {
+          this.googleUser = user;
+          const splitName = user.displayName.split(' ');
+          this.firstName.setValue(splitName[0]);
+          this.lastName.setValue(splitName[1]);
+          this.photoURL.setValue(user.photoURL);
+          this.email.setValue(user.email);
+        }
+      });
+    }
   }
 
   async facebookLogin() {
@@ -82,9 +96,9 @@ export class SignupComponent implements OnInit {
   }
 
   printValues() {
-    console.log(this.basicUserForm);
-    console.log(this.basicUserForm.value);
-    console.log(JSON.stringify(this.basicUserForm.value, undefined, 2));
+    // console.log(this.basicUserForm);
+    // console.log(this.basicUserForm.value);
+    // console.log(JSON.stringify(this.basicUserForm.value, undefined, 2));
   }
 
   get firstName() {
@@ -96,8 +110,8 @@ export class SignupComponent implements OnInit {
   get email() {
     return this.basicUserForm.get('email');
   }
-  get imageUrl() {
-    return this.basicUserForm.get('imageUrl');
+  get photoURL() {
+    return this.basicUserForm.get('photoURL');
   }
   get gender() {
     return this.basicUserForm.get('gender');

@@ -11,19 +11,11 @@ import {
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-interface User {
-  uid: string;
-  email: string;
-  photoURL?: string;
-  displayName?: string;
-  favoriteColor?: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user: Observable<User>;
+  user: Observable<any> = of(null);
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -34,7 +26,7 @@ export class AuthService {
       switchMap(user => {
         if (user) {
           // console.log(user.uid);
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
@@ -54,28 +46,46 @@ export class AuthService {
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then(credential => {
-      // console.log(credential.user);
-      this.updateUserData(credential.user);
+      this.user = of(credential.user);
     });
+    // return this.afAuth.auth.signInWithPopup(provider).then(credential => {
+    //   // this.updateUserData(credential.user);
+    // });
   }
 
   private updateUserData(user) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
+    if (userRef.ref.id === 'undefined') {
+      return;
+    }
+    const splittedName = this.splitDisplayName(user.displayName);
 
-    const data: User = {
+    const data: any = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName,
+      firstName: splittedName[0],
+      lastName: splittedName[1],
       photoURL: user.photoURL
     };
+
+    console.log(data);
 
     return userRef.set(data, { merge: true });
   }
 
-  customSignUp(user) {
-    const data: any = {
+  splitDisplayName(displayName) {
+    return displayName.split(' ');
+  }
+
+  signupWithEmailPassword(email, password) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  customSignUp(user, uid) {
+    const basicData: any = {
+      uid: uid,
       email: user.userBasicInfo.email,
       firstName: user.userBasicInfo.firstName,
       lastName: user.userBasicInfo.lastName,
@@ -84,12 +94,32 @@ export class AuthService {
       gender: user.userBasicInfo.gender,
       userType: user.userBasicInfo.userType
     };
-
-    console.log(data);
-    // this.afs.collection('users').add(data);
-    // if (user.userType === 'teacher') {
-    //   this.afs.collection('teachers').add(data);
-    // }
+    console.log(basicData);
+    const x = this.afs
+      .collection('users')
+      .doc(uid)
+      .set(basicData);
+    if (basicData.userType === 'teacher') {
+      this.afs
+        .collection('teachers')
+        .doc(uid)
+        .set(user.userSpecificInfo);
+    } else if (basicData.userType === 'student') {
+      this.afs
+        .collection('students')
+        .doc(uid)
+        .set(user.userSpecificInfo);
+    } else if (basicData.userType === 'academyadmin') {
+      this.afs
+        .collection('academyadmins')
+        .doc(uid)
+        .set(user.userSpecificInfo);
+      this.afs
+        .collection('academies')
+        .doc(uid)
+        .set(user.userSpecificInfo);
+    }
+    console.log(x);
   }
 
   signOut() {

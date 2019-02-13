@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-md-3">
                       <img
-                        [(src)]="basicUserForm.value.imageUrl"
+                        [(src)]="basicUserForm.value.photoURL"
                         class="rounded-circle img-fluid float-right embed-responsive-item"
                       />
                     </div>
@@ -674,11 +674,7 @@
               </div>
               <div class="card-footer p-4">
                 <div class="row">
-                  <button
-                    class="btn btn-block btn-success"
-                    (click)="signUp()"
-                    (click)="signUp()"
-                  >
+                  <button class="btn btn-block btn-success" (click)="signUp()">
                     Create Account
                   </button>
                 </div>
