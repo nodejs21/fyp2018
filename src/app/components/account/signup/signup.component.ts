@@ -58,6 +58,7 @@ export class SignupComponent implements OnInit {
       userSpecificInfo: this.specificUserForm.value,
       academyDetails: this.academyDetailsForm.value
     };
+    delete user.userBasicInfo.confirmPassword;
     if (this._auth.user['value']) {
       this._auth.customSignUp(user, this._auth.user['value']['uid']);
     } else {
