@@ -85,35 +85,32 @@ export class AuthService {
 
   async customSignUp(user, uid) {
     await this.pushUserToDb(user, uid);
+    delete user.userBasicInfo.password;
+    this.user = of(user.userBasicInfo);
     this.router.navigate(['/']);
   }
 
   private pushUserToDb(user, uid) {
-    const basicData: any = {
-      uid: uid,
-      email: user.userBasicInfo.email,
-      firstName: user.userBasicInfo.firstName,
-      lastName: user.userBasicInfo.lastName,
-      photoURL: user.userBasicInfo.imageUrl ? user.userBasicInfo.imageUrl : '',
-      password: user.userBasicInfo.password,
-      gender: user.userBasicInfo.gender,
-      userType: user.userBasicInfo.userType
-    };
-    const x = this.afs
+    user.userBasicInfo.uid = uid;
+    user.userSpecificInfo.uid = uid;
+    user.userSpecificInfo.uid = uid;
+    console.log(user);
+    /* below if else statements ko refactor krna a */
+    this.afs
       .collection('users')
       .doc(uid)
-      .set(basicData);
-    if (basicData.userType === 'teacher') {
+      .set(user.userBasicInfo);
+    if (user.userBasicInfo.userType === 'teacher') {
       this.afs
         .collection('teachers')
         .doc(uid)
         .set(user.userSpecificInfo);
-    } else if (basicData.userType === 'student') {
+    } else if (user.userBasicInfo.userType === 'student') {
       this.afs
         .collection('students')
         .doc(uid)
         .set(user.userSpecificInfo);
-    } else if (basicData.userType === 'academyadmin') {
+    } else if (user.userBasicInfo.userType === 'academyadmin') {
       this.afs
         .collection('academyadmins')
         .doc(uid)
@@ -121,9 +118,8 @@ export class AuthService {
       this.afs
         .collection('academies')
         .doc(uid)
-        .set(user.userSpecificInfo);
+        .set(user.academyDetails);
     }
-    return x;
   }
 
   signIn(email, password) {
