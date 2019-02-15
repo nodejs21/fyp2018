@@ -7,7 +7,7 @@
             <div class="card-group">
               <div class="card">
                 <div class="card-body">
-                  <form>
+                  <form [formGroup]="loginForm">
                     <h1>Login</h1>
                     <p class="text-muted">Sign In to your account</p>
                     <div class="input-group mb-3">
@@ -19,9 +19,8 @@
                       <input
                         type="text"
                         class="form-control"
-                        placeholder="Username"
-                        autocomplete="username"
-                        required
+                        placeholder="Email"
+                        formControlName="email"
                       />
                     </div>
                     <div class="input-group mb-4">
@@ -34,13 +33,16 @@
                         type="password"
                         class="form-control"
                         placeholder="Password"
-                        autocomplete="current-password"
-                        required
+                        formControlName="password"
                       />
                     </div>
                     <div class="row">
                       <div class="col-6">
-                        <button type="button" class="btn btn-primary px-4">
+                        <button
+                          type="button"
+                          class="btn btn-primary px-4"
+                          (click)="login()"
+                        >
                           Login
                         </button>
                       </div>
@@ -51,6 +53,7 @@
                       </div>
                     </div>
                   </form>
+                  {{ loginForm.value | json }}
                 </div>
                 <div class="card-footer p-4">
                   <div class="row">

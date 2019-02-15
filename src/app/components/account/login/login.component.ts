@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../utils/services/auth/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
@@ -11,12 +12,41 @@ import { AuthService } from '../../../utils/services/auth/auth.service';
   // }]
 })
 export class LoginComponent implements OnInit {
-  constructor(private _auth: AuthService) {}
+  loginForm: FormGroup;
+  constructor(private _auth: AuthService, private _formBuilder: FormBuilder) {
+    this._auth.user.subscribe(user => {
+      console.log(user);
+    });
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loginForm = this._formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+  }
 
   async googleLogin() {
     await this._auth.googleLogin();
+  }
+
+  login() {
+    this._auth
+      .signIn(this.email.value, this.password.value)
+      .then(user => {
+        console.log(user);
+      })
+      .catch(err => {
+        console.log(err);
+        console.error(err);
+      });
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+  get password() {
+    return this.loginForm.get('password');
   }
 
   // signIn() {}

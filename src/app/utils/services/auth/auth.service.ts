@@ -123,14 +123,7 @@ export class AuthService {
   }
 
   signIn(email, password) {
-    this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
-        console.log(user);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
   signOut() {
