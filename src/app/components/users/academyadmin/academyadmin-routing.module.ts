@@ -20,41 +20,125 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: '',
+    data: {
+      title: 'Dashboard'
+    },
     component: AcademyadminComponent,
     children: [
-      { path: 'dashboard', component: AcademyadmindashboardComponent },
-      { path: 'classrooms', component: ClassroomsComponent },
+      {
+        path: 'dashboard',
+        component: AcademyadmindashboardComponent
+      },
+      {
+        path: 'classrooms',
+        component: ClassroomsComponent,
+        data: {
+          title: 'Classrooms'
+        }
+      },
       {
         path: 'details',
         // redirectTo: 'academy',
         // pathMatch: 'full',
         children: [
-          { path: 'academy', component: AcademydetailComponent },
-          { path: 'classroom', component: ClassroomdetailComponent },
-          { path: 'student', component: StudentdetailComponent },
-          { path: 'teacher', component: TeacherdetailComponent }
+          {
+            path: 'academy',
+            component: AcademydetailComponent,
+            data: {
+              title: 'Academy Details'
+            }
+          },
+          {
+            path: 'classroom',
+            component: ClassroomdetailComponent,
+            data: {
+              title: 'Calssroom Details'
+            }
+          },
+          {
+            path: 'student',
+            component: StudentdetailComponent,
+            data: {
+              title: 'Student Details'
+            }
+          },
+          {
+            path: 'teacher',
+            component: TeacherdetailComponent,
+            data: {
+              title: 'Teacher Details'
+            }
+          }
         ]
       },
-      { path: 'profile', component: ProfileComponent },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: {
+          title: 'Profile'
+        }
+      },
       {
         path: 'requests',
         // redirectTo: 'student',
         children: [
-          { path: 'student', component: StudentrequestsComponent },
-          { path: 'teacher', component: TeacherrequestsComponent }
+          {
+            path: 'student',
+            component: StudentrequestsComponent,
+            data: {
+              title: 'Student Requests'
+            }
+          },
+          {
+            path: 'teacher',
+            component: TeacherrequestsComponent,
+            data: {
+              title: 'Teacher Requests'
+            }
+          }
         ]
       },
       {
         path: 'results',
         // redirectTo: 'classroom',
         children: [
-          { path: 'classroom', component: ClassroomresultComponent },
-          { path: 'student', component: StudentresultComponent }
+          {
+            path: 'classroom',
+            component: ClassroomresultComponent,
+            data: {
+              title: 'Classroom Result'
+            }
+          },
+          {
+            path: 'student',
+            component: StudentresultComponent,
+            data: {
+              title: 'Student Result'
+            }
+          }
         ]
       },
-      { path: 'students', component: StudentsComponent },
-      { path: 'subjects', component: SubjectsComponent },
-      { path: 'teachers', component: TeachersComponent }
+      {
+        path: 'students',
+        component: StudentsComponent,
+        data: {
+          title: 'Students'
+        }
+      },
+      {
+        path: 'subjects',
+        component: SubjectsComponent,
+        data: {
+          title: 'Subjects'
+        }
+      },
+      {
+        path: 'teachers',
+        component: TeachersComponent,
+        data: {
+          title: 'Teachers'
+        }
+      }
     ]
   },
 

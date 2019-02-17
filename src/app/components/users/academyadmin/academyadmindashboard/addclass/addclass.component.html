@@ -1,0 +1,23 @@
+<div class="h4" mat-dialog-title>Add Class</div>
+<!-- <hr class="text-secondary" /> -->
+<div mat-dialog-content>
+  <!-- <p>What's your favorite animal?</p> -->
+  <!-- <mat-form-field> -->
+  <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="data.className"
+    placeholder="Class Name"
+  />
+  <!-- </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
+  <button
+    class="btn btn-outline-success btn-block"
+    [mat-dialog-close]="data.className"
+    cdkFocusInitial
+  >
+    Add
+  </button>
+</div>

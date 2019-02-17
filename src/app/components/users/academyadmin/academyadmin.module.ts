@@ -17,12 +17,16 @@ import { AcademydetailComponent } from './details/academydetail/academydetail.co
 import { TeacherdetailComponent } from './details/teacherdetail/teacherdetail.component';
 import { AcademyadminRoutingModule } from './academyadmin-routing.module';
 import { AcademyadminComponent } from './academyadmin.component';
+import { FormBuilder, FormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../material.module';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { RatingModule } from 'ngx-bootstrap/rating';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { AddclassComponent } from './academyadmindashboard/addclass/addclass.component';
 
 @NgModule({
   declarations: [
+    AddclassComponent,
     AcademyadminComponent,
     AcademyadmindashboardComponent,
     StudentsComponent,
@@ -39,17 +43,20 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
     ClassroomresultComponent,
     InviteteacherComponent,
     AcademydetailComponent,
-    TeacherdetailComponent
+    TeacherdetailComponent,
+    AddclassComponent
   ],
   imports: [
     CommonModule,
     AcademyadminRoutingModule,
+    TooltipModule.forRoot(),
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    MaterialModule
   ],
   exports: [AcademyadmindashboardComponent],
+  entryComponents: [AddclassComponent],
   providers: [FormBuilder]
 })
 export class AcademyadminModule {}

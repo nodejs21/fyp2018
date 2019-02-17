@@ -50,25 +50,25 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'academyadmin',
-    loadChildren:
-      './components/users/academyadmin/academyadmin.module#AcademyadminModule'
-  },
-  {
-    path: 'teacher',
-    loadChildren: './components/users/teacher/teacher.module#TeacherModule'
-  },
-  {
-    path: 'student',
-    loadChildren: './components/users/student/student.module#StudentModule'
-  },
-  {
     path: '',
     component: DefaultLayoutComponent,
-    data: {
-      title: 'Home'
-    },
+    // data: {
+    //   title: 'Home'
+    // },
     children: [
+      {
+        path: 'academyadmin',
+        loadChildren:
+          './components/users/academyadmin/academyadmin.module#AcademyadminModule'
+      },
+      {
+        path: 'teacher',
+        loadChildren: './components/users/teacher/teacher.module#TeacherModule'
+      },
+      {
+        path: 'student',
+        loadChildren: './components/users/student/student.module#StudentModule'
+      },
       {
         path: 'base',
         loadChildren: './views/base/base.module#BaseModule'
