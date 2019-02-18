@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AddclassComponent } from './addclass/addclass.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-academyadmindashboard',
@@ -8,7 +9,7 @@ import { AddclassComponent } from './addclass/addclass.component';
   styleUrls: ['./academyadmindashboard.component.css']
 })
 export class AcademyadmindashboardComponent implements OnInit {
-  constructor(private _dialog: MatDialog) {}
+  constructor(private _dialog: MatDialog, private _router: Router) {}
 
   className: any;
 

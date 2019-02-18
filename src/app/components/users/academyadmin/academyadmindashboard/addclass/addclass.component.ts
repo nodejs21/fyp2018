@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class AddclassComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddclassComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { className: string }
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   onNoClick(): void {
