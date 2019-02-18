@@ -8,10 +8,10 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          9th Class
+          9th Class - Admin Class Card
           <button
             class="btn btn-sm btn-outline-danger  float-right ml-2"
-            popover="Delete"
+            matTooltip="Delete"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-trash"></i> </span>
@@ -21,12 +21,20 @@
           <div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> No of Subjects :
+                <i class="icon-people"></i> Total Subjects :
                 <strong> 7 </strong>
               </li>
               <li class="list-group-item bg-dark p-1">
                 <i class="icon-people"></i> Total Students :
-                <strong> 50 </strong>
+                <strong> 150 </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Total Classrooms :
+                <strong> 7 </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Total Teachers :
+                <strong> 7 </strong>
               </li>
             </ul>
           </div>
@@ -46,10 +54,10 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Maths
+          Maths - Admin Classroom Card
           <button
             class="btn btn-sm btn-outline-danger  float-right ml-2"
-            popover="Delete"
+            matTooltip="Delete"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-trash"></i> </span>
@@ -64,7 +72,43 @@
               <li class="list-group-item bg-dark p-1">
                 <i class="icon-user"></i> Teacher : <strong> Safi </strong>
               </li>
-              <li class="list-group-item bg-dark p-1">Performance Graph</li>
+              <li class="list-group-item bg-dark p-1">
+                Performance Graph (Optional)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Academy Admin Subject Card -->
+<!-- Academy Admin Subject Card -->
+<!-- Academy Admin Subject Card -->
+<!-- Academy Admin Subject Card -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Physics - Admin Subject Card
+          <button
+            class="btn btn-sm btn-outline-danger  float-right ml-2"
+            matTooltip="Delete"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-trash"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Subject Name
+                <strong> Physics </strong>
+              </li>
             </ul>
           </div>
         </div>
@@ -83,13 +127,20 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Safi
+          Safi - Admin Teachers Card
           <button
             class="btn btn-sm btn-outline-danger  float-right ml-2"
-            popover="Delete"
+            matTooltip="Delete"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-trash"></i> </span>
+          </button>
+          <button
+            class="btn btn-sm btn-outline-primary  float-right ml-2"
+            matTooltip="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-user-circle"></i> </span>
           </button>
           <rating
             class="ml-3"
@@ -138,10 +189,10 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Teacher Name
+          Teacher Name - Admin Teacher Request Card
           <button
             class="btn btn-sm btn-outline-info float-right ml-2"
-            popover="View Profile"
+            matTooltip="View Profile"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-eye"></i> </span>
@@ -169,7 +220,7 @@
               <div class="col-6">
                 <button
                   class="btn btn-sm btn-success form-control"
-                  popover="Accept"
+                  matTooltip="Accept"
                   triggers="mouseenter:mouseleave"
                 >
                   <span><i class="fa fa-check"></i> </span>
@@ -178,7 +229,7 @@
               <div class="col-6">
                 <button
                   class="btn btn-sm btn-danger form-control"
-                  popover="Reject"
+                  matTooltip="Reject"
                   triggers="mouseenter:mouseleave"
                 >
                   <span><i class="fa fa-times"></i> </span>
@@ -202,10 +253,10 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Student Name
+          Student Name - Admin Student Request Card
           <button
             class="btn btn-sm btn-outline-info  float-right ml-2"
-            popover="View Profile"
+            matTooltip="View Profile"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-eye"></i> </span>
@@ -219,11 +270,11 @@
                 <strong>English</strong>
               </li>
             </ul>
-            <div class="row">
+            <div class="row mt-3">
               <div class="col-6">
                 <button
-                  class="btn btn-sm btn-primary form-control mt-2 ml-4"
-                  popover="Accept"
+                  class="btn btn-sm btn-primary form-control"
+                  matTooltip="Accept"
                   triggers="mouseenter:mouseleave"
                 >
                   <span><i class="fa fa-check"></i> </span>
@@ -231,8 +282,8 @@
               </div>
               <div class="col-6">
                 <button
-                  class="btn btn-sm btn-danger mt-2 ml-4"
-                  popover="Reject"
+                  class="btn btn-sm btn-danger form-control"
+                  matTooltip="Reject"
                   triggers="mouseenter:mouseleave"
                 >
                   <span><i class="fa fa-times"></i> </span>
@@ -256,10 +307,10 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Academy Name
+          Academy Name - Teacher Academy Card
           <button
             class="btn btn-sm btn-outline-info  float-right ml-2"
-            popover="View Profile"
+            matTooltip="View Profile"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-eye"></i> </span>
@@ -276,11 +327,7 @@
           ></rating>
         </div>
         <div class="card-body">
-          <div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item bg-dark p-1">Performance Graph</li>
-            </ul>
-          </div>
+          <div></div>
         </div>
       </div>
     </div>
@@ -297,10 +344,10 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Classroom
+          Classroom - Teacher Classroom Card
           <button
             class="btn btn-sm btn-warning  float-right ml-2"
-            popover="Announcement"
+            matTooltip="Announcement"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-bullhorn"></i> </span>
@@ -310,12 +357,14 @@
           <div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Students : <strong>50</strong>
+                <i class="icon-people"></i> Total Students : <strong>50</strong>
               </li>
               <li class="list-group-item bg-dark p-1">
                 <i class="icon-people"></i> Delivered Lectures :
                 <strong>15</strong>
               </li>
+
+              <li class="list-group-item bg-dark p-1">Performance Graph</li>
             </ul>
           </div>
         </div>
@@ -334,10 +383,10 @@
     <div class="col-4">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Academy Name
+          Academy Name - Student Academies Card
           <button
             class="btn btn-sm btn-outline-info  float-right ml-2"
-            popover="View Profile"
+            matTooltip="View Profile"
             triggers="mouseenter:mouseleave"
           >
             <span><i class="fa fa-eye"></i> </span>
@@ -378,16 +427,16 @@
   </div>
 </div>
 
-<!-- Student Subject Card -->
-<!-- Student Subject Card -->
-<!-- Student Subject Card -->
-<!-- Student Subject Card -->
+<!-- Student Classroom Card -->
+<!-- Student Classroom Card -->
+<!-- Student Classroom Card -->
+<!-- Student Classroom Card -->
 
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-4">
       <div class="card text-white bg-dark">
-        <div class="card-header h4 ">Classroom</div>
+        <div class="card-header h4 ">Classroom - Student Classroom Card</div>
         <div class="card-body">
           <div>
             <ul class="list-group list-group-flush">
