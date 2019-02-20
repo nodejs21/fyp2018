@@ -23,8 +23,9 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AddclassComponent } from './academyadmindashboard/addclass/addclass.component';
-import { DeleteclassComponent } from './academyadmindashboard/deleteclass/deleteclass.component';
 import { AddsubjectComponent } from './subjects/addsubject/addsubject.component';
+import { ConfirmdeletionComponent } from '../../shared/confirmdeletion/confirmdeletion.component';
+import { ConfirmdeletionModule } from '../../shared/confirmdeletion/confirmdeletion.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,6 @@ import { AddsubjectComponent } from './subjects/addsubject/addsubject.component'
     AcademydetailComponent,
     TeacherdetailComponent,
     AddclassComponent,
-    DeleteclassComponent,
     AddsubjectComponent
   ],
   imports: [
@@ -57,13 +57,14 @@ import { AddsubjectComponent } from './subjects/addsubject/addsubject.component'
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    ConfirmdeletionModule
   ],
   exports: [AcademyadmindashboardComponent],
   entryComponents: [
     AddclassComponent,
-    DeleteclassComponent,
-    AddsubjectComponent
+    AddsubjectComponent,
+    ConfirmdeletionComponent
   ],
   providers: [FormBuilder]
 })

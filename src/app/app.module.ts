@@ -56,7 +56,6 @@ import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/account/login/login.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AuthModule } from './utils/services/auth/auth.module';
-import { ConfirmdeletionComponent } from './components/shared/confirmdeletion/confirmdeletion.component';
 // import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
@@ -91,8 +90,7 @@ import { ConfirmdeletionComponent } from './components/shared/confirmdeletion/co
     HomepageComponent,
     ResetpasswordComponent,
     LoginComponent,
-    SignupComponent,
-    ConfirmdeletionComponent
+    SignupComponent
   ],
   providers: [
     {

@@ -4,8 +4,7 @@ import { AddclassComponent } from './addclass/addclass.component';
 import { Router } from '@angular/router';
 import { AdminService } from '../../../../utils/services/firestore/admin/admin.service';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
-import { DeleteclassComponent } from './deleteclass/deleteclass.component';
-import { Template } from '@angular/compiler/src/render3/r3_ast';
+import { ConfirmdeletionComponent } from '../../../shared/confirmdeletion/confirmdeletion.component';
 
 @Component({
   selector: 'app-academyadmindashboard',
@@ -31,7 +30,7 @@ export class AcademyadmindashboardComponent implements OnInit {
   }
 
   openDialog(classId?, className?): void {
-    const dialogRef = this._dialog.open(AddclassComponent, {
+    this._dialog.open(AddclassComponent, {
       // width: '450px',
       data: {
         className,
@@ -53,26 +52,19 @@ export class AcademyadmindashboardComponent implements OnInit {
   }
 
   deleteClass(classId, className) {
-    const confirmClassDeleteionDialog = this._dialog.open(
-      DeleteclassComponent,
-      {
-        data: {
-          title: 'Confirm class deletion',
-          body: `Are you sure you want to delete class: <strong>${className}</strong>`
-        }
+    const confirmDeleteionDialog = this._dialog.open(ConfirmdeletionComponent, {
+      data: {
+        title: 'Confirm class deletion',
+        body: `Are you sure you want to delete class: <strong>${className}</strong>`
       }
-    );
-    confirmClassDeleteionDialog.afterClosed().subscribe(result => {
+    });
+    confirmDeleteionDialog.afterClosed().subscribe(result => {
       if (result) {
         this._adminService
           .deleteClass(classId)
           .then(res => {
-            this._snackBar.open(
-              `Class: ${className} has been successfully deleted!`,
-              'X',
-              {
-                duration: 4000
-              }
+            this.showSnackBar(
+              `Class: ${className} has been successfully deleted!`
             );
           })
           .catch(err => {
@@ -80,5 +72,8 @@ export class AcademyadmindashboardComponent implements OnInit {
           });
       }
     });
+  }
+  showSnackBar(message) {
+    this._snackBar.open(message, 'X', { duration: 4000 });
   }
 }

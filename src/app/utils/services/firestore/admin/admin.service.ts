@@ -65,22 +65,20 @@ export class AdminService {
   //!! Subject Methods
 
   addSubject(subjectName) {
-    // return this.afs
-    //   .collection(`academies`)
-    //   .doc(`${this.user.uid}`)
-    //   .collection(`subjects`)
-    //   .add({ subjectName });
-    console.log(subjectName);
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`subjects`)
+      .add({ subjectName });
   }
 
   updateSubject(subjectId, subjectName) {
-    // return this.afs
-    //   .collection(`academies`)
-    //   .doc(`${this.user.uid}`)
-    //   .collection(`subjects`)
-    //   .doc(`${subjectId}`)
-    //   .update({ subjectName });
-    console.log(subjectId, subjectName);
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`subjects`)
+      .doc(`${subjectId}`)
+      .update({ subjectName });
   }
 
   getSubjects() {
@@ -92,12 +90,11 @@ export class AdminService {
   }
 
   deleteSubject(subjectId) {
-    // return this.afs
-    //   .collection(`academies`)
-    //   .doc(`${this.user.uid}`)
-    //   .collection(`subjects`)
-    //   .doc(subjectId)
-    //   .delete();
-    console.log(subjectId);
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`subjects`)
+      .doc(subjectId)
+      .delete();
   }
 }

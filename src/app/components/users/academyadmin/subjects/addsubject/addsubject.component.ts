@@ -20,18 +20,16 @@ export class AddsubjectComponent implements OnInit {
   ngOnInit() {}
 
   updateSubject() {
-    this._adminService.updateSubject(
-      this.data.subjectId,
-      this.data.subjectName
-    );
-    // .then(res => {
-    //   this.showSnackBar(
-    //     `Class: ${this.data.subjectName} successfully updated!`
-    //   );
-    // })
-    // .catch(err => {
-    //   console.error(err);
-    // });
+    this._adminService
+      .updateSubject(this.data.subjectId, this.data.subjectName)
+      .then(res => {
+        this.showSnackBar(
+          `Subject: ${this.data.subjectName} successfully updated!`
+        );
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   addSubject() {
@@ -42,13 +40,16 @@ export class AddsubjectComponent implements OnInit {
     } else {
       this.data[key] = undefined;
     }
-    this._adminService.addSubject(this.data.subjectName);
-    // .then(res => {
-    //   this.showSnackBar(`Class: ${this.data.subjectName} successfully added!`);
-    // })
-    // .catch(err => {
-    //   console.error(err);
-    // });
+    this._adminService
+      .addSubject(this.data.subjectName)
+      .then(res => {
+        this.showSnackBar(
+          `Subject: ${this.data.subjectName} successfully added!`
+        );
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   showSnackBar(message) {

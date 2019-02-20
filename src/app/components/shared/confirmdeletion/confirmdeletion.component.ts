@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'confirmdeletion',
@@ -6,10 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./confirmdeletion.component.css']
 })
 export class ConfirmdeletionComponent implements OnInit {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

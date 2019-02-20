@@ -18,13 +18,13 @@ const academyadmin: NavData[] = [
   },
   {
     name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'danger',
-      text: 'NEW'
-    },
-    attributes: { disabled: true }
+    url: '/academyadmin',
+    icon: 'icon-speedometer'
+    // badge: {
+    //   variant: 'danger',
+    //   text: 'NEW'
+    // },
+    // attributes: { disabled: true }
   },
   {
     name: 'Students',

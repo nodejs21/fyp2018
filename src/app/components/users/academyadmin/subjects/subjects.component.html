@@ -21,6 +21,7 @@
             class="btn btn-outline-danger border-0 float-right py-1 px-2"
             tooltip="Delete Subject"
             triggers="mouseenter:mouseleave"
+            (click)="deleteSubject(subject.id, subject.data.subjectName)"
           >
             <span><i class="fa fa-trash"></i> </span>
           </button>
@@ -28,7 +29,7 @@
             class="btn btn-outline-info border-0 float-right py-1 px-2"
             tooltip="Edit Subject"
             triggers="mouseenter:mouseleave"
-            (click)="openDialog(subject.id, subject.data.name)"
+            (click)="openDialog(subject.id, subject.data.subjectName)"
           >
             <span><i class="fa fa-edit"></i> </span>
           </button>
@@ -38,7 +39,7 @@
             <!-- <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1"> -->
             <div class="d-flex align-items-center h3">
-              {{ subject.data.name }}
+              {{ subject.data.subjectName }}
             </div>
             <!-- </li>
             </ul> -->

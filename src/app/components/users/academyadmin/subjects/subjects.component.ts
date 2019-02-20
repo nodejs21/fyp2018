@@ -4,6 +4,7 @@ import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { AdminService } from '../../../../utils/services/firestore/admin/admin.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { AddsubjectComponent } from './addsubject/addsubject.component';
+import { ConfirmdeletionComponent } from '../../../shared/confirmdeletion/confirmdeletion.component';
 
 @Component({
   selector: 'app-subjects',
@@ -20,9 +21,7 @@ export class SubjectsComponent implements OnInit {
     private _adminService: AdminService,
     private _snackBar: MatSnackBar,
     private _dialog: MatDialog
-  ) {
-    console.log(this._route.snapshot.paramMap);
-  }
+  ) {}
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
@@ -53,17 +52,27 @@ export class SubjectsComponent implements OnInit {
     });
   }
 
-  updateSubject() {
-    // this._admin
-    //   .updateClass(this.data.classId, this.data.className)
-    //   .then(res => {
-    //     this.showSnackBar(
-    //       `Class: ${this.data.className} successfully updated!`
-    //     );
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
+  deleteSubject(subjectId, subjectName) {
+    const confirmDeleteionDialog = this._dialog.open(ConfirmdeletionComponent, {
+      data: {
+        title: 'Confirm subject deletion',
+        body: `Are you sure you want to delete subject: <strong>${subjectName}</strong>`
+      }
+    });
+    confirmDeleteionDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this._adminService
+          .deleteSubject(subjectId)
+          .then(res => {
+            this.showSnackBar(
+              `Subject: ${subjectName} has been successfully deleted!`
+            );
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
+    });
   }
 
   showSnackBar(message) {
