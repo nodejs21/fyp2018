@@ -8,14 +8,16 @@
     class="form-control"
     [(ngModel)]="data.className"
     placeholder="Class Name"
+    required
   />
   <!-- </mat-form-field> -->
 </div>
 <div mat-dialog-actions>
   <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
+  <!-- [mat-dialog-close]="data.className" -->
   <button
     class="btn btn-outline-success btn-block"
-    [mat-dialog-close]="data.className"
+    (click)="addClass()"
     cdkFocusInitial
   >
     Add

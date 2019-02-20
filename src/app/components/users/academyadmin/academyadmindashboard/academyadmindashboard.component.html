@@ -29,14 +29,15 @@
         <!-- <span><i class="text-dark fa fa-plus display-4"></i></span> -->
       </button>
     </div>
-    <div class="col-sm-6 col-md-4 col-lg-3">
+    <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let class of classes">
       <div class="card bg-dark">
         <div class="card-header h3 p-2">
-          Class: 9
+          Class: {{ class.data.className }}
           <button
             class="btn btn-outline-danger border-0 float-right py-1 px-2"
             tooltip="Delete Class"
             triggers="mouseenter:mouseleave"
+            (click)="deleteClass(class.id, class.data.className)"
           >
             <span><i class="fa fa-trash"></i> </span>
           </button>
@@ -47,17 +48,29 @@
               <li class="list-group-item bg-dark p-1">
                 <i class="icon-people"></i
                 ><a href="www.google.com" target="_blank" class="text-white">
-                  Subjects : <strong> 7 </strong></a
+                  Subjects :
+                  <strong>
+                    {{ class.data.subjects ? class.data.subjects.length : 0 }}
+                  </strong></a
                 >
               </li>
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Students : <strong> 50 </strong>
+                <i class="icon-people"></i> Students :
+                <strong>
+                  {{ class.data.students ? class.data.students.length : 0 }}
+                </strong>
               </li>
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Teachers : <strong> 7 </strong>
+                <i class="icon-people"></i> Teachers :
+                <strong>
+                  {{ class.data.teachers ? class.data.teachers.length : 0 }}
+                </strong>
               </li>
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Classrooms : <strong> 7 </strong>
+                <i class="icon-people"></i> Classrooms :
+                <strong>
+                  {{ class.data.classrooms ? class.data.classrooms.length : 0 }}
+                </strong>
               </li>
             </ul>
           </div>

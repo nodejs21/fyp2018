@@ -45,7 +45,8 @@ import { AuthService } from './utils/services/auth/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   AngularFirestore,
-  FirestoreSettingsToken
+  FirestoreSettingsToken,
+  AngularFirestoreModule
 } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
@@ -74,6 +75,7 @@ import { AuthModule } from './utils/services/auth/auth.module';
     TooltipModule.forRoot(),
     ChartsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,

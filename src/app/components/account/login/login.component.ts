@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../utils/services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 // import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
@@ -13,9 +14,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private _auth: AuthService, private _formBuilder: FormBuilder) {
+  constructor(
+    private _auth: AuthService,
+    private _formBuilder: FormBuilder,
+    private _router: Router
+  ) {
     this._auth.user.subscribe(user => {
-      console.log(user);
+      if (user) {
+        this._router.navigate([`/${user['userType']}`]);
+      }
     });
   }
 
@@ -37,7 +44,6 @@ export class LoginComponent implements OnInit {
         console.log(user);
       })
       .catch(err => {
-        console.log(err);
         console.error(err);
       });
   }

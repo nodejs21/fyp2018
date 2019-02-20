@@ -1,0 +1,18 @@
+<div class="h4" mat-dialog-title>{{ data.title }}</div>
+<div mat-dialog-content [innerHTML]="data.body"></div>
+<div mat-dialog-actions>
+  <button
+    class="btn btn-outline-danger btn-block form-inline"
+    cdkFocusInitial
+    [mat-dialog-close]="true"
+  >
+    Confirm
+  </button>
+  <button
+    class="btn btn-outline-info btn-block form-inline"
+    cdkFocusInitial
+    [mat-dialog-close]="false"
+  >
+    Cancel
+  </button>
+</div>

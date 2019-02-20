@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { navItems } from './../../_nav';
 import { AuthService } from '../../utils/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
-  constructor(private _auth: AuthService) {
+  constructor(private _auth: AuthService, private _router: Router) {
     this.changes = new MutationObserver(mutations => {
       this.sidebarMinimized = document.body.classList.contains(
         'sidebar-minimized'
@@ -22,7 +23,7 @@ export class DefaultLayoutComponent implements OnDestroy {
 
     this._auth.user.subscribe(user => {
       console.log(user);
-      this.navItems = navItems[user.userType];
+      this.navItems = navItems[user ? user.userType : 'originalNav'];
       // switch (user.usertype) {
       //   case 'teacher': {
       //     this.navitems = navitems.teachernav;
@@ -47,6 +48,11 @@ export class DefaultLayoutComponent implements OnDestroy {
       attributes: true,
       attributeFilter: ['class']
     });
+  }
+
+  async logOut() {
+    await this._auth.signOut();
+    this._router.navigate(['/dashboard']);
   }
 
   ngOnDestroy(): void {

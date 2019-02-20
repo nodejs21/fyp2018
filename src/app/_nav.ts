@@ -66,7 +66,7 @@ const academyadmin: NavData[] = [
   {
     name: 'Time Table',
     url: '/theme/typography',
-    icon: 'icon-pencil'
+    icon: 'icon-calendar'
   }
   // {
   //   name: 'Fee',
