@@ -1,25 +1,47 @@
 <div class="animated fadeIn">
   <div class="row">
-    <div class="col-4">
-      <div class="card text-white bg-dark">
-        <div class="card-header h4 ">Classroom</div>
-        <div class="card-body">
-          <div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Teacher : <strong>Tuba</strong>
-              </li>
-              <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Attendance : <strong>15/30</strong>
-              </li>
-              <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Assignments : <strong>2</strong>
-              </li>
-              <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Quizzes : <strong>2</strong>
-              </li>
-              <li class="list-group-item bg-dark p-1">Performance Graph</li>
-            </ul>
+    <div class="col-sm-6 col-md-4 col-lg-2 pb-4">
+      <button
+        class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
+        tooltip="Add Subject"
+        triggers="mouseenter:mouseleave"
+        (click)="openDialog()"
+      >
+        <p class="display-1 text-dark">+</p>
+        <!-- <span><i class="text-dark fa fa-plus display-4"></i></span> -->
+      </button>
+    </div>
+    <div
+      class="col-sm-6 col-md-4 col-lg-2 pb-4"
+      *ngFor="let subject of subjects"
+    >
+      <div class="card text-white bg-dark h-100">
+        <div class="card-header h3 p-2">
+          <button
+            class="btn btn-outline-danger border-0 float-right py-1 px-2"
+            tooltip="Delete Subject"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-trash"></i> </span>
+          </button>
+          <button
+            class="btn btn-outline-info border-0 float-right py-1 px-2"
+            tooltip="Edit Subject"
+            triggers="mouseenter:mouseleave"
+            (click)="openDialog(subject.id, subject.data.name)"
+          >
+            <span><i class="fa fa-edit"></i> </span>
+          </button>
+        </div>
+        <div class="card-body p-2">
+          <div class="d-flex h-100 justify-content-center">
+            <!-- <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1"> -->
+            <div class="d-flex align-items-center h3">
+              {{ subject.data.name }}
+            </div>
+            <!-- </li>
+            </ul> -->
           </div>
         </div>
       </div>

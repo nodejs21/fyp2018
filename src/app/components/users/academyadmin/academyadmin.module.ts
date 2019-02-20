@@ -24,6 +24,7 @@ import { RatingModule } from 'ngx-bootstrap/rating';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AddclassComponent } from './academyadmindashboard/addclass/addclass.component';
 import { DeleteclassComponent } from './academyadmindashboard/deleteclass/deleteclass.component';
+import { AddsubjectComponent } from './subjects/addsubject/addsubject.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DeleteclassComponent } from './academyadmindashboard/deleteclass/delete
     AcademydetailComponent,
     TeacherdetailComponent,
     AddclassComponent,
-    DeleteclassComponent
+    DeleteclassComponent,
+    AddsubjectComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +60,11 @@ import { DeleteclassComponent } from './academyadmindashboard/deleteclass/delete
     MaterialModule
   ],
   exports: [AcademyadmindashboardComponent],
-  entryComponents: [AddclassComponent, DeleteclassComponent],
+  entryComponents: [
+    AddclassComponent,
+    DeleteclassComponent,
+    AddsubjectComponent
+  ],
   providers: [FormBuilder]
 })
 export class AcademyadminModule {}

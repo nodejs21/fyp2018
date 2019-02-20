@@ -18,7 +18,7 @@
           <p class="display-4">➕</p>
           </button>
         </div> -->
-    <div class="col-sm-6 col-md-4 col-lg-3 pb-4">
+    <div class="col-sm-6 col-md-4 col-lg-2 pb-4">
       <button
         class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
         tooltip="Add Class"
@@ -29,7 +29,7 @@
         <!-- <span><i class="text-dark fa fa-plus display-4"></i></span> -->
       </button>
     </div>
-    <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let class of classes">
+    <div class="col-sm-6 col-md-4 col-lg-2" *ngFor="let class of classes">
       <div class="card bg-dark">
         <div class="card-header h3 p-2">
           Class: {{ class.data.className }}
@@ -40,6 +40,14 @@
             (click)="deleteClass(class.id, class.data.className)"
           >
             <span><i class="fa fa-trash"></i> </span>
+          </button>
+          <button
+            class="btn btn-outline-info border-0 float-right py-1 px-2"
+            tooltip="Edit Class"
+            triggers="mouseenter:mouseleave"
+            (click)="openDialog(class.id, class.data.className)"
+          >
+            <span><i class="fa fa-edit"></i> </span>
           </button>
         </div>
         <div class="card-body p-2">

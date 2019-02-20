@@ -56,6 +56,7 @@ import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/account/login/login.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AuthModule } from './utils/services/auth/auth.module';
+import { ConfirmdeletionComponent } from './components/shared/confirmdeletion/confirmdeletion.component';
 // import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
@@ -75,7 +76,7 @@ import { AuthModule } from './utils/services/auth/auth.module';
     TooltipModule.forRoot(),
     ChartsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule.enablePersistence(),
+    // AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
@@ -90,7 +91,8 @@ import { AuthModule } from './utils/services/auth/auth.module';
     HomepageComponent,
     ResetpasswordComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ConfirmdeletionComponent
   ],
   providers: [
     {

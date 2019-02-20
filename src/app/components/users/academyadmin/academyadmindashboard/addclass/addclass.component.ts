@@ -12,10 +12,23 @@ export class AddclassComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddclassComponent>,
     private _auth: AuthService,
-    private _admin: AdminService,
+    private _adminService: AdminService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  updateClass() {
+    this._adminService
+      .updateClass(this.data.classId, this.data.className)
+      .then(res => {
+        this.showSnackBar(
+          `Class: ${this.data.className} successfully updated!`
+        );
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
 
   addClass() {
     var key = 'className';
@@ -25,23 +38,13 @@ export class AddclassComponent implements OnInit {
     } else {
       this.data[key] = undefined;
     }
-
-    console.log(this.data);
-
-    this._admin
+    this._adminService
       .addClass(this.data.className)
       .then(res => {
-        console.log(res);
-        this._snackBar.open(
-          // 'Class: ' + this.data.className + ' has been successfully added!',
-          `Class: ${this.data.className} successfully added!`,
-          'X',
-          { duration: 4000 }
-        );
-        this.dialogRef.close();
+        this.showSnackBar(`Class: ${this.data.className} successfully added!`);
       })
       .catch(err => {
-        console.log();
+        console.error(err);
       });
     // console.log(this._auth.user.subscribe(user));
     // for (let key in this.data) {
@@ -54,8 +57,10 @@ export class AddclassComponent implements OnInit {
     // }
   }
 
-  onNoClick(): void {
+  showSnackBar(message) {
     this.dialogRef.close();
+    this._snackBar.open(message, 'X', { duration: 4000 });
   }
+
   ngOnInit() {}
 }

@@ -60,7 +60,7 @@ const academyadmin: NavData[] = [
   // },
   {
     name: 'Subjects',
-    url: '/theme/typography',
+    url: '/academyadmin/subjects',
     icon: 'icon-pencil'
   },
   {

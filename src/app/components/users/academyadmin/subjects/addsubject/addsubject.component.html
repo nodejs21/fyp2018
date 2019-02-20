@@ -1,0 +1,19 @@
+<div class="h4" mat-dialog-title>{{ data.btnText }} Subject</div>
+<div mat-dialog-content>
+  <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="data.subjectName"
+    placeholder="Subject Name e.g Physics"
+    required
+  />
+</div>
+<div mat-dialog-actions>
+  <button
+    class="btn btn-outline-success btn-block"
+    (click)="data.subjectId ? updateSubject() : addSubject()"
+    cdkFocusInitial
+  >
+    {{ data.btnText }} Subject
+  </button>
+</div>

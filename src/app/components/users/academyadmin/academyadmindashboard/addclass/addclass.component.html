@@ -1,4 +1,4 @@
-<div class="h4" mat-dialog-title>Add Class</div>
+<div class="h4" mat-dialog-title>{{ data.btnText }} Class</div>
 <!-- <hr class="text-secondary" /> -->
 <div mat-dialog-content>
   <!-- <p>What's your favorite animal?</p> -->
@@ -17,9 +17,9 @@
   <!-- [mat-dialog-close]="data.className" -->
   <button
     class="btn btn-outline-success btn-block"
-    (click)="addClass()"
+    (click)="data.classId ? updateClass() : addClass()"
     cdkFocusInitial
   >
-    Add
+    {{ data.btnText }} Class
   </button>
 </div>

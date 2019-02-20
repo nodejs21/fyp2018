@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddclassComponent } from './addclass/addclass.component';
 import { Router } from '@angular/router';
@@ -23,20 +23,23 @@ export class AcademyadmindashboardComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {}
 
-  className: any;
-
-  openDialog(): void {
-    const dialogRef = this._dialog.open(AddclassComponent, {
-      // width: '450px',
-      data: { className: this.className, user: this.user }
-      // hasBackdrop: false
-    });
-  }
-
   ngOnInit() {
     this._auth.user.subscribe(user => {
       this.user = user;
       this.getClasses();
+    });
+  }
+
+  openDialog(classId?, className?): void {
+    const dialogRef = this._dialog.open(AddclassComponent, {
+      // width: '450px',
+      data: {
+        className,
+        classId,
+        user: this.user,
+        btnText: className ? 'Update' : 'Add'
+      }
+      // hasBackdrop: false
     });
   }
 
