@@ -44,9 +44,10 @@ export class AcademyadmindashboardComponent implements OnInit {
 
   getClasses() {
     this._adminService.getClasses().subscribe(async res => {
-      this.classes = await res.map(data => {
-        return { id: data.payload.doc.id, data: data.payload.doc.data() };
-      });
+      this.classes = res;
+      // this.classes = await res.map(data => {
+      //   return { id: data.payload.doc.id, data: data.payload.doc.data() };
+      // });
       console.log(this.classes);
     });
   }

@@ -24,7 +24,8 @@ export class AddsubjectComponent implements OnInit {
       .updateSubject(this.data.subjectId, this.data.subjectName)
       .then(res => {
         this.showSnackBar(
-          `Subject: ${this.data.subjectName} successfully updated!`
+          `Subject: ${this.data.subjectName} successfully updated!`,
+          this.data.subjectId
         );
       })
       .catch(err => {
@@ -44,7 +45,8 @@ export class AddsubjectComponent implements OnInit {
       .addSubject(this.data.subjectName)
       .then(res => {
         this.showSnackBar(
-          `Subject: ${this.data.subjectName} successfully added!`
+          `Subject: ${this.data.subjectName} successfully added!`,
+          res.id
         );
       })
       .catch(err => {
@@ -52,8 +54,11 @@ export class AddsubjectComponent implements OnInit {
       });
   }
 
-  showSnackBar(message) {
-    this.dialogRef.close();
+  showSnackBar(message, subjectId) {
+    this.dialogRef.close({
+      success: true,
+      subjectId
+    });
     this._snackBar.open(message, 'X', { duration: 4000 });
   }
 }

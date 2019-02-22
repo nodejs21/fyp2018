@@ -14,6 +14,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
+  public user: any;
   constructor(private _auth: AuthService, private _router: Router) {
     this.changes = new MutationObserver(mutations => {
       this.sidebarMinimized = document.body.classList.contains(
@@ -23,6 +24,7 @@ export class DefaultLayoutComponent implements OnDestroy {
 
     this._auth.user.subscribe(user => {
       console.log(user);
+      this.user = user;
       this.navItems = navItems[user ? user.userType : 'originalNav'];
       // switch (user.usertype) {
       //   case 'teacher': {

@@ -13,7 +13,10 @@ import { ConfirmdeletionComponent } from '../../../shared/confirmdeletion/confir
 })
 export class SubjectsComponent implements OnInit {
   user: any;
+  classes: any;
   subjects: any;
+  selectedClass: any;
+  selectedClassId: any;
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -26,29 +29,48 @@ export class SubjectsComponent implements OnInit {
   ngOnInit() {
     this._auth.user.subscribe(user => {
       this.user = user;
+      this.getClasses();
       this.getSubjects();
+    });
+  }
+
+  updateSubjects(classId) {
+    console.log(classId, this.selectedClass);
+    this.selectedClassId = classId;
+  }
+
+  async getClasses() {
+    await this._adminService.getClasses().subscribe(classes => {
+      this.classes = classes;
+      // this.selectedClass = classes[0].data.className;
+      console.log(classes);
     });
   }
 
   getSubjects() {
     this._adminService.getSubjects().subscribe(async res => {
-      this.subjects = await res.map(data => {
-        return { id: data.payload.doc.id, data: data.payload.doc.data() };
-      });
+      this.subjects = res;
+      // this.subjects = await res.map(data => {
+      //   return { id: data.payload.doc.id, data: data.payload.doc.data() };
+      // });
       console.log(this.subjects);
     });
   }
 
   openDialog(subjectId?, subjectName?): void {
     const dialogRef = this._dialog.open(AddsubjectComponent, {
-      // width: '450px',
       data: {
+        className: this.selectedClass,
         subjectName,
         subjectId,
         user: this.user,
         btnText: subjectName ? 'Update' : 'Add'
       }
-      // hasBackdrop: false
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res && res.success) {
+        this.updateClassesCollection(res.subjectId, true);
+      }
     });
   }
 
@@ -63,7 +85,8 @@ export class SubjectsComponent implements OnInit {
       if (result) {
         this._adminService
           .deleteSubject(subjectId)
-          .then(res => {
+          .then(async res => {
+            await this.updateClassesCollection(subjectId, false);
             this.showSnackBar(
               `Subject: ${subjectName} has been successfully deleted!`
             );
@@ -74,6 +97,19 @@ export class SubjectsComponent implements OnInit {
       }
     });
   }
+
+  //todo adminService CF func call
+  updateClassesCollection(subjectId, push) {
+    this._adminService
+      .cfUpdateClassesCollection(this.selectedClassId, subjectId, push)
+      .then(res => {
+        console.log('Classes collection successfully updated!');
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+  //todo adminService CF func call
 
   showSnackBar(message) {
     this._snackBar.open(message, 'X', { duration: 4000 });
