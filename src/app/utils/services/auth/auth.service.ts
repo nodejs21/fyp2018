@@ -123,6 +123,7 @@ export class AuthService {
   }
 
   signIn(email, password) {
+    console.log(email, password);
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 

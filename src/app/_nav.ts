@@ -143,6 +143,11 @@ const teacher: NavData[] = [
     name: 'Time Table',
     url: '/theme/typography',
     icon: 'icon-pencil'
+  },
+  {
+    name: 'Requests', 
+    url: '/requests/sent',
+    icon: 'icon-pencil'
   }
 ];
 

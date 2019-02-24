@@ -62,7 +62,7 @@ const routes: Routes = [
         // pathMatch: 'full',
         children: [
           { path: 'invitations', component: InvitationsComponent },
-          { path: 'requestssent', component: RequestssentComponent }
+          { path: 'sent', component: RequestssentComponent }
         ]
       },
       { path: 'dashboard', component: TeacherdashboardComponent }

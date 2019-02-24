@@ -24,8 +24,10 @@ export class AcademyadmindashboardComponent implements OnInit {
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
-      this.user = user;
-      this.getClasses();
+      if(user){
+        this.user = user;
+        this.getClasses();
+      }
     });
   }
 

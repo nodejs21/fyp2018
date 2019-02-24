@@ -53,32 +53,28 @@
                       </div>
                     </div>
                   </form>
-                  {{ loginForm.value | json }}
                 </div>
                 <div class="card-footer p-4">
                   <div class="row">
-                    <div class="col-4">
+                    <!-- <div class="col-4">
                       <button class="btn btn-block btn-facebook" type="button">
                         <i class="fa fa-facebook"></i>
-                        <!-- <span>Facebook</span> -->
                       </button>
-                    </div>
-                    <div class="col-4">
+                    </div> -->
+                    <div class="col-12">
                       <button
                         class="btn btn-block btn-google-plus"
                         type="button"
                         (click)="googleLogin()"
                       >
                         <i class="fa fa-google"></i>
-                        <!-- <span>Google</span> -->
                       </button>
                     </div>
-                    <div class="col-4">
+                    <!-- <div class="col-4">
                       <button class="btn btn-block btn-twitter" type="button">
                         <i class="fa fa-twitter"></i>
-                        <!-- <span>Twitter</span> -->
                       </button>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -89,11 +85,11 @@
                 <div class="card-body text-center">
                   <div>
                     <h2>Sign up</h2>
-                    <p>
+                    <!-- <p>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
-                    </p>
+                    </p> -->
                     <a
                       class="btn btn-primary mt-3"
                       [routerLink]="['/register']"
