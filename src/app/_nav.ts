@@ -27,15 +27,21 @@ const academyadmin: NavData[] = [
     // attributes: { disabled: true }
   },
   {
-    name: 'Students',
-    url: '/theme/colors',
-    icon: 'icon-drop'
+    name: 'Subjects',
+    url: '/academyadmin/subjects',
+    icon: 'icon-pencil'
   },
   {
     name: 'Teachers',
-    url: '/theme/typography',
+    url: '/academyadmin/teachers',
     icon: 'icon-pencil'
   },
+  {
+    name: 'Students',
+    url: '/academyadmin/students',
+    icon: 'icon-user'
+  },
+  
   {
     name: 'Requests',
     url: '/theme/typography',
@@ -58,11 +64,7 @@ const academyadmin: NavData[] = [
   //   url: '/theme/typography',
   //   icon: 'icon-pencil'
   // },
-  {
-    name: 'Subjects',
-    url: '/academyadmin/subjects',
-    icon: 'icon-pencil'
-  },
+  
   {
     name: 'Time Table',
     url: '/theme/typography',
@@ -146,8 +148,20 @@ const teacher: NavData[] = [
   },
   {
     name: 'Requests', 
-    url: '/requests/sent',
-    icon: 'icon-pencil'
+    url: '/teacher/requests ',
+    icon: 'icon-pencil',
+    children: [
+      {
+        name: 'Invitations',
+        url: '/teacher/requests/invitations',
+        icon: 'icon-user'
+      },
+      {
+        name: 'Sent',
+        url: '/teacher/requests/sent',
+        icon: 'icon-puzzle'
+      }
+    ]
   }
 ];
 
