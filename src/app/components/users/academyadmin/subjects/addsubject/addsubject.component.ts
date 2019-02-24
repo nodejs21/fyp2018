@@ -41,8 +41,9 @@ export class AddsubjectComponent implements OnInit {
     } else {
       this.data[key] = undefined;
     }
+
     this._adminService
-      .addSubject(this.data.subjectName)
+      .addSubject(this.data.classId, this.data.subjectName)
       .then(res => {
         this.showSnackBar(
           `Subject: ${this.data.subjectName} successfully added!`,

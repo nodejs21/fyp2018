@@ -13,15 +13,7 @@ export class NotificationService {
   constructor(
     private afMessaging: AngularFireMessaging,
     private fun: AngularFireFunctions
-  ) {
-    try {
-      const _messaging = app.messaging();
-      _messaging.onTokenRefresh = _messaging.onTokenRefresh.bind(_messaging);
-      _messaging.onMessage = _messaging.onMessage.bind(_messaging);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  ) {}
 
   getPermission(): Observable<any> {
     return this.afMessaging.requestToken.pipe(

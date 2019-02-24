@@ -56,7 +56,7 @@ export class AcademyadmindashboardComponent implements OnInit {
     const confirmDeleteionDialog = this._dialog.open(ConfirmdeletionComponent, {
       data: {
         title: 'Confirm class deletion',
-        body: `Are you sure you want to delete class: <strong>${className}</strong>`
+        body: `Are you sure you want to delete class: <strong>${className}</strong><div class="invalid-feedback d-block">* All the subjects in this class will also be deleted!<div>`
       }
     });
     confirmDeleteionDialog.afterClosed().subscribe(result => {

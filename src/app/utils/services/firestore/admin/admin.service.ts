@@ -38,21 +38,21 @@ export class AdminService {
   }
 
   //todo Cloud Function for updating Classes Collection
-  cfUpdateClassesCollection(classId, subjectRef, push) {
-    console.log(classId, subjectRef, push);
-    var op = firebase.firestore.FieldValue.arrayRemove(subjectRef);
-    if (push) {
-      op = firebase.firestore.FieldValue.arrayUnion(subjectRef);
-    }
-    return this.afs
-      .collection(`academies`)
-      .doc(`${this.user.uid}`)
-      .collection(`classes`)
-      .doc(classId)
-      .update({
-        subjects: op
-      });
-  }
+  // cfUpdateClassesCollection(classId, subjectRef, push) {
+  //   console.log(classId, subjectRef, push);
+  //   var op = firebase.firestore.FieldValue.arrayRemove(subjectRef);
+  //   if (push) {
+  //     op = firebase.firestore.FieldValue.arrayUnion(subjectRef);
+  //   }
+  //   return this.afs
+  //     .collection(`academies`)
+  //     .doc(`${this.user.uid}`)
+  //     .collection(`classes`)
+  //     .doc(classId)
+  //     .update({
+  //       subjects: op
+  //     });
+  // }
   //todo Cloud Function for updating Classes Collection
 
   getClasses() {
@@ -91,12 +91,12 @@ export class AdminService {
   //!! Subject Methods
   //!! Subject Methods
 
-  addSubject(subjectName) {
+  addSubject(classRef, subjectName) {
     return this.afs
       .collection(`academies`)
       .doc(`${this.user.uid}`)
       .collection(`subjects`)
-      .add({ subjectName });
+      .add({ subjectName, classRef });
   }
 
   updateSubject(subjectId, subjectName) {
@@ -109,12 +109,12 @@ export class AdminService {
   }
 
   //todo Cloud Function for updating Classes Collection
-  cfUpdateSubjectsCollection(subjectId, classRef, push) {
-    return this.afs
-      .collection(`academies`)
-      .doc(`${this.user.uid}`)
-      .collection(`subjects`, ref => ref.where('classId', '==', classRef));
-  }
+  // cfUpdateSubjectsCollection(subjectId, classRef, push) {
+  //   return this.afs
+  //     .collection(`academies`)
+  //     .doc(`${this.user.uid}`)
+  //     .collection(`subjects`, ref => ref.where('classId', '==', classRef));
+  // }
   //todo Cloud Function for updating Classes Collection
 
   getSubjects() {

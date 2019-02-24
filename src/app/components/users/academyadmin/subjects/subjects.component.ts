@@ -61,6 +61,7 @@ export class SubjectsComponent implements OnInit {
     const dialogRef = this._dialog.open(AddsubjectComponent, {
       data: {
         className: this.selectedClass,
+        classId: this.selectedClassId,
         subjectName,
         subjectId,
         user: this.user,
@@ -100,14 +101,14 @@ export class SubjectsComponent implements OnInit {
 
   //todo adminService CF func call
   updateClassesCollection(subjectId, push) {
-    this._adminService
-      .cfUpdateClassesCollection(this.selectedClassId, subjectId, push)
-      .then(res => {
-        console.log('Classes collection successfully updated!');
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    // this._adminService
+    //   .cfUpdateClassesCollection(this.selectedClassId, subjectId, push)
+    //   .then(res => {
+    //     console.log('Classes collection successfully updated!');
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   }
   //todo adminService CF func call
 

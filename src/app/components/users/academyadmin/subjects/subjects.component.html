@@ -30,7 +30,10 @@
         class="col-sm-6 col-md-4 col-lg-2 pb-4"
         *ngFor="let subject of subjects"
       >
-        <div class="card text-white bg-dark h-100">
+        <div
+          class="card text-white bg-dark h-100"
+          *ngIf="subject.data.classRef == selectedClassId"
+        >
           <div class="card-header h3 p-2">
             <button
               class="btn btn-outline-danger border-0 float-right py-1 px-2"
