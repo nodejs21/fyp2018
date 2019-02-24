@@ -40,8 +40,8 @@ const routes: Routes = [
         // redirectTo: 'assignments',
         // pathMatch: 'full',
         children: [
-          { path: 'academydetail', component: AcademydetailComponent },
-          { path: 'studentdetail', component: StudentdetailComponent }
+          { path: 'academy', component: AcademydetailComponent },
+          { path: 'student', component: StudentdetailComponent }
         ]
       },
       { path: 'lectures', component: LecturesComponent },

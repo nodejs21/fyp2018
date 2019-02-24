@@ -2,37 +2,15 @@
   academydetail works!
 </p> -->
 
-<div class="col-sm-12"> 
-
+<div class="col-sm-12">
   <div class="card">
-    <div class="card-header"><h3>Academy Details</h3></div>
-    <div class="card-body">
-      <form action="">
-        <div class="form-group">
-            <div class="form-group">
-                <label for="Students" class="font-weight-bold"
-                >
-                Academy Name
-                </label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="fa fa-user"></i>
-                    </span>
-                  </div>
-                  <input type="number" id="dob" name="dob" class="form-control" />
-                </div>
-              </div>
-          <label class="font-weight-bold">Rating</label>
-          <div class="input-group">
-            <!-- Ratinng Start -->
-            <!-- Ratinng Start -->
-            <!-- Ratinng Start -->
-            <!-- Ratinng Start -->
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-user"></i></span>
-            </div>
-            <rating
+    <div class="card-header">
+      <h3>
+        Academy Name
+      </h3>
+    <div>
+        <label class="font-weight-bold">Rating</label>
+      <rating
             class="ml-3"
             [(ngModel)]="rate"
             [max]="max"
@@ -42,6 +20,19 @@
             [titles]="['one', 'two', 'three']"
             name="rate"
             ></rating>
+    </div>
+    </div>
+    
+    <div class="card-body">
+      <form action="">
+        <div class="form-group">
+          <div class="input-group">
+            <!-- Ratinng Start -->
+            <!-- Ratinng Start -->
+            <!-- Ratinng Start -->
+            <!-- Ratinng Start -->
+            
+            
             <!-- <span
               class="label"
               [ngClass]="{
@@ -81,46 +72,40 @@
           <!-- Ratinng End -->
         </div>
       </div>
-      <div class="form-group">
-        <label for="totalSubjects" class="font-weight-bold"
-        >Total Subjects</label
-        >
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fa fa-user"></i></span>
+      <div>
+          <div class="form-group">
+              <label for="totalSubjects" class="font-weight-bold"
+              >Choose Class</label>
           </div>
-          <input type="number" id="asd" name="name" class="form-control" />
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="Students" class="font-weight-bold"
-        >Total Students</label
-        >
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">
-              <i class="fa fa-user"></i>
-            </span>
+          <div>
+            <label>Yahan par Dropdown daalna Classes k liye</label>
           </div>
-          <input type="number" id="dob" name="dob" class="form-control" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="Students" class="font-weight-bold"
-        >Total Teachers</label
-        >
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">
-              <i class="fa fa-user"></i>
-            </span>
+          <div class="form-group">
+              <label for="totalSubjects" class="font-weight-bold"
+              >Choose Subject</label>
           </div>
-          <input type="number" id="dob" name="dob" class="form-control" />
-        </div>
+          <div>
+            <label>Yahan par Dropdown daalna Subjects k liye</label>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 ">
+                <button class="button">
+                    <span mattooltip="Send Request for Teaching" triggers="mouseenter:mouseleave">
+                      <i class="text-success fa fa-check"></i
+                    ></span>
+                  </button>
+                </div>
+                <div class="col-sm-6" >
+                  <button class="button" >
+                      <span popover="Cancel" triggers="mouseenter:mouseleave">
+                        <i class="text-danger fa fa-times"></i
+                      ></span>
+                  </button>
+
+                </div>
+          </div>
       </div>
     </form>
   </div>
 </div>
-
 </div>
