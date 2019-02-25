@@ -31,24 +31,24 @@ export class SignupComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         photoURL: ['./../../../../assets/img/avatars/8.jpg'],
         gender: [true],
-        userType: ['teacher'.toLowerCase()],
-        password: ['jjjjjj', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['jjjjjj', Validators.required]
+        userType: [''.toLowerCase()],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required]
       },
       {
         validators: [ConfirmPasswordValidator.MatchPassword]
       }
     );
     this.specificUserForm = this._formBuilder.group({
-      dob: ['2019-02-07', Validators.required],
-      address: ['876545678', [Validators.required, Validators.minLength(5)]],
-      city: ['87654567', [Validators.required, Validators.minLength(3)]],
-      telephone: ['8765456', Validators.required],
-      qualification: ['765456']
+      dob: ['', Validators.required],
+      address: ['', [Validators.required, Validators.minLength(5)]],
+      city: ['', [Validators.required, Validators.minLength(3)]],
+      telephone: ['', Validators.required],
+      qualification: ['']
     });
     this.academyDetailsForm = this._formBuilder.group({
-      academyName: ['34567876543456', Validators.required],
-      academyDescription: ['34567876543456', Validators.required]
+      academyName: ['', Validators.required],
+      academyDescription: ['', Validators.required]
     });
   }
 

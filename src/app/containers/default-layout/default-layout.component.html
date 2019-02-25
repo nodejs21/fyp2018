@@ -1,6 +1,7 @@
 <app-header
   [fixed]="true"
   [navbarBrandFull]="{
+    
     src: 'assets/img/brand/logo.svg',
     width: 89,
     height: 25,
@@ -96,7 +97,7 @@
       [disabled]="sidebarMinimized"
     ></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
-  </app-sidebar>
+  </app-sidebar> -->
   <!-- Main content -->
   <main class="main">
     <!-- Breadcrumb -->
@@ -122,7 +123,7 @@
     <div class="container-fluid"><router-outlet></router-outlet></div>
     <!-- /.container-fluid -->
   </main>
-  <app-aside [fixed]="true" [display]="false">
+  <!-- <app-aside [fixed]="true" [display]="false">
     <tabset>
       <tab>
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
@@ -558,14 +559,14 @@
         </div>
       </tab>
     </tabset>
-  </app-aside>
+  </app-aside> -->
 </div>
 <app-footer>
   <span
     ><a target="_blank" href="https://github.com/nodejs21/fyp2018/"
       >Al-Taleem</a
     >
-    &copy; 2018 COMSATS.</span
+    &copy; 2019 COMSATS.</span
   >
   <span class="ml-auto"
     >Powered by

@@ -18,18 +18,19 @@ export class LoginComponent implements OnInit {
     private _auth: AuthService,
     private _formBuilder: FormBuilder,
     private _router: Router
-  ) {
-    this._auth.user.subscribe(user => {
-      if (user) {
-        this._router.navigate([`/${user['userType']}`]);
-      }
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.loginForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
+    });
+    this._auth.user.subscribe(user => {
+      console.log(user);
+
+      if (user) {
+        this._router.navigate([`/${user['userType']}`]);
+      }
     });
   }
 

@@ -34,7 +34,7 @@ const academyadmin: NavData[] = [
   {
     name: 'Teachers',
     url: '/academyadmin/teachers',
-    icon: 'icon-pencil'
+    icon: 'icon-user'
   },
   {
     name: 'Students',
@@ -49,12 +49,12 @@ const academyadmin: NavData[] = [
     children: [
       {
         name: 'Students',
-        url: '#',
+        url: '/academyadmin/requests/student',
         icon: 'icon-user'
       },
       {
         name: 'Teachers',
-        url: '#',
+        url: '/academyadmin/requests/teacher',
         icon: 'icon-puzzle'
       }
     ]
@@ -67,31 +67,10 @@ const academyadmin: NavData[] = [
   
   {
     name: 'Time Table',
-    url: '/theme/typography',
+    url: '',
     icon: 'icon-calendar'
   }
-  // {
-  //   name: 'Fee',
-  //   url: '/theme/typography',
-  //   icon: 'icon-pencil'
-  // },
-  // {
-  //   name: 'Teachers Salary',
-  //   url: '/theme/typography',
-  //   icon: 'icon-pencil',
-  //   children: [
-  //     {
-  //       name: 'Child 1',
-  //       url: '#',
-  //       icon: 'icon-puzzle'
-  //     },
-  //     {
-  //       name: 'Child 2',
-  //       url: '#',
-  //       icon: 'icon-puzzle'
-  //     }
-  //   ]
-  // }
+  
 ];
 
 const teacher: NavData[] = [
