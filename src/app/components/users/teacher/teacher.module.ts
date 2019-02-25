@@ -19,8 +19,11 @@ import { TeacherComponent } from './teacher.component';
 import { TeacherRoutingModule } from './teacher-routing.module';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { SearchacademyComponent } from '../../shared/searchacademy/searchacademy.component';
+import { SearchacademyModule } from '../../shared/searchacademy/searchacademy.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../material.module';
 
 @NgModule({
   declarations: [
@@ -54,8 +57,12 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
     CollapseModule.forRoot(),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    SearchacademyModule,
+    MaterialModule
   ],
+  entryComponents: [SearchacademyComponent],
   exports: [TeacherdashboardComponent]
 })
 export class TeacherModule {}

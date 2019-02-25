@@ -41,7 +41,7 @@ const academyadmin: NavData[] = [
     url: '/academyadmin/students',
     icon: 'icon-user'
   },
-  
+
   {
     name: 'Requests',
     url: '/theme/typography',
@@ -64,13 +64,12 @@ const academyadmin: NavData[] = [
   //   url: '/theme/typography',
   //   icon: 'icon-pencil'
   // },
-  
+
   {
     name: 'Time Table',
     url: '',
     icon: 'icon-calendar'
   }
-  
 ];
 
 const teacher: NavData[] = [
@@ -80,13 +79,13 @@ const teacher: NavData[] = [
   },
   {
     name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'danger',
-      text: 'NEW'
-    },
-    attributes: { disabled: true }
+    url: '/teacher',
+    icon: 'icon-speedometer'
+    // badge: {
+    //   variant: 'danger',
+    //   text: 'NEW'
+    // },
+    // attributes: { disabled: true }
   },
   {
     name: 'Classes',
@@ -126,7 +125,7 @@ const teacher: NavData[] = [
     icon: 'icon-pencil'
   },
   {
-    name: 'Requests', 
+    name: 'Requests',
     url: '/teacher/requests ',
     icon: 'icon-pencil',
     children: [
@@ -151,13 +150,13 @@ const student: NavData[] = [
   },
   {
     name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'danger',
-      text: 'NEW'
-    },
-    attributes: { disabled: true }
+    url: '/student',
+    icon: 'icon-speedometer'
+    // badge: {
+    //   variant: 'danger',
+    //   text: 'NEW'
+    // },
+    // attributes: { disabled: true }
   },
   {
     name: 'Courses',

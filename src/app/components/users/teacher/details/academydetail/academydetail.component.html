@@ -1,6 +1,3 @@
-<!-- <p>
-  academydetail works!
-</p> -->
 
 <div class="col-sm-12">
   <div class="card">
@@ -8,104 +5,61 @@
       <h3>
         Academy Name
       </h3>
-    <div>
+      <div>
         <label class="font-weight-bold">Rating</label>
-      <rating
-            class="ml-3"
-            [(ngModel)]="rate"
-            [max]="max"
-            [readonly]="isReadonly"
-            (onHover)="hoveringOver($event)"
-            (onLeave)="resetStar()"
-            [titles]="['one', 'two', 'three']"
-            name="rate"
-            ></rating>
+        <rating
+          class="ml-3"
+          [(ngModel)]="rate"
+          [max]="max"
+          [readonly]="isReadonly"
+          (onHover)="hoveringOver($event)"
+          (onLeave)="resetStar()"
+          [titles]="['one', 'two', 'three']"
+          name="rate"
+        ></rating>
+      </div>
     </div>
-    </div>
-    
+
     <div class="card-body">
       <form action="">
-        <div class="form-group">
-          <div class="input-group">
-            <!-- Ratinng Start -->
-            <!-- Ratinng Start -->
-            <!-- Ratinng Start -->
-            <!-- Ratinng Start -->
-            
-            
-            <!-- <span
-              class="label"
-              [ngClass]="{
-                'label-warning': percent < 30,
-                'label-info': percent >= 30 && percent < 70,
-                'label-success': percent >= 70
-              }"
-              [ngStyle]="{
-                display: overStar && !isReadonly ? 'inline' : 'none'
-              }"
-              >{{ percent }}%</span
-              >
-              <div class="card">
-                <pre
-                class="card-block card-header"
-                >Rate: <b>{{rate}}</b>;  Readonly is: <i>{{isReadonly}}</i>;  Hovering over: <b>{{overStar || "none"}}</b></pre>
-              </div>
-              
-              <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              (click)="rate = 0"
-              [disabled]="isReadonly"
-              >
-              Clear
-            </button>
-            <button
-            type="button"
-            class="btn btn-sm btn-primary"
-            (click)="isReadonly = !isReadonly"
-            >
-            Toggle Readonly
-          </button> -->
-          <!-- Ratinng End -->
-          <!-- Ratinng End -->
-          <!-- Ratinng End -->
-          <!-- Ratinng End -->
-        </div>
-      </div>
-      <div>
+        <div>
           <div class="form-group">
-              <label for="totalSubjects" class="font-weight-bold"
-              >Choose Class</label>
+            <label for="totalSubjects" class="font-weight-bold"
+              >Choose Class</label
+            >
           </div>
           <div>
             <label>Yahan par Dropdown daalna Classes k liye</label>
           </div>
           <div class="form-group">
-              <label for="totalSubjects" class="font-weight-bold"
-              >Choose Subject</label>
+            <label for="totalSubjects" class="font-weight-bold"
+              >Choose Subject</label
+            >
           </div>
           <div>
             <label>Yahan par Dropdown daalna Subjects k liye</label>
           </div>
           <div class="row">
             <div class="col-sm-6 ">
-                <button class="button">
-                    <span mattooltip="Send Request for Teaching" triggers="mouseenter:mouseleave">
-                      <i class="text-success fa fa-check"></i
-                    ></span>
-                  </button>
-                </div>
-                <div class="col-sm-6" >
-                  <button class="button" >
-                      <span popover="Cancel" triggers="mouseenter:mouseleave">
-                        <i class="text-danger fa fa-times"></i
-                      ></span>
-                  </button>
-
-                </div>
+              <button class="button">
+                <span
+                  mattooltip="Send Request for Teaching"
+                  triggers="mouseenter:mouseleave"
+                >
+                  <i class="text-success fa fa-check"></i
+                ></span>
+              </button>
+            </div>
+            <div class="col-sm-6">
+              <button class="button">
+                <span popover="Cancel" triggers="mouseenter:mouseleave">
+                  <i class="text-danger fa fa-times"></i
+                ></span>
+              </button>
+            </div>
           </div>
-      </div>
-    </form>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </div>
