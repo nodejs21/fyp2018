@@ -27,15 +27,11 @@ const routes: Routes = [
     component: StudentComponent,
     children: [
       { path: 'attemptquiz', component: AttemptquizComponent },
-      {
-        path: 'course',
-        children: [
-          { path: 'assignments', component: AssignmentsComponent },
-          { path: 'attendance', component: AttendanceComponent },
-          { path: 'quizzes', component: QuizzesComponent },
-          { path: 'results', component: ResultComponent }
-        ]
-      },
+      { path: 'assignments', component: AssignmentsComponent },
+      { path: 'attendance', component: AttendanceComponent },
+      { path: 'quizzes', component: QuizzesComponent },
+      { path: 'results', component: ResultComponent },
+
       {
         path: 'details',
         // redirectTo: 'assignments',
