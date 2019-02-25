@@ -8,7 +8,7 @@
             placeholder="Start exploring academies by typing..."
             aria-label="Number"
             matInput
-            [formControl]="selectedAcademy"
+            [formControl]="searchedAcademy"
             [matAutocomplete]="auto"
           />
         </mat-form-field>
@@ -16,6 +16,7 @@
           <mat-option
             *ngFor="let academy of (filteredOptions | async)"
             [value]="academy.data.academyName"
+            (click)="showAcademyDetails(academy)"
           >
             {{ academy.data.academyName }}
           </mat-option>
@@ -41,6 +42,7 @@
                 <label for="totalSubjects" class="font-weight-bold"
                   >Choose Class</label
                 >
+                {{ selectedClassDetails | json }}
               </div>
               <div>
                 <label>Yahan par Dropdown daalna Classes k liye</label>

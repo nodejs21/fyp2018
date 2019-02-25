@@ -17,6 +17,7 @@ export class SubjectsComponent implements OnInit {
   subjects: any;
   selectedClass: any;
   selectedClassId: any;
+  subjectsSelectedClass: any;
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
@@ -37,13 +38,18 @@ export class SubjectsComponent implements OnInit {
   updateSubjects(classId) {
     console.log(classId, this.selectedClass);
     this.selectedClassId = classId;
+    //! temp hack for displaying subjects cards without gap in them
+    this.subjectsSelectedClass = this.subjects.filter(
+      doc => doc.data.classRef == classId
+    );
+    //! temp hack for displaying subjects cards without gap in them
   }
 
   async getClasses() {
     await this._adminService.getClasses().subscribe(classes => {
       this.classes = classes;
       // this.selectedClass = classes[0].data.className;
-      console.log(classes);
+      // console.log(classes);
     });
   }
 

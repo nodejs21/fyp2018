@@ -13,7 +13,11 @@ import { FormControl } from '@angular/forms';
 export class SearchacademyComponent implements OnInit {
   academies: any = [];
   filteredOptions: Observable<string[]>;
-  selectedAcademy = new FormControl();
+  searchedAcademy = new FormControl();
+  selectedAcademy: any;
+  selectedAcademyId: any;
+  selectedAcademyDetails: any = {};
+
   constructor(
     private _teacherService: TeacherService,
     public dialogRef: MatDialogRef<SearchacademyComponent>,
@@ -30,7 +34,7 @@ export class SearchacademyComponent implements OnInit {
       //   console.log(doc.data(), doc.id);
       // });
     });
-    this.filteredOptions = this.selectedAcademy.valueChanges.pipe(
+    this.filteredOptions = this.searchedAcademy.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );
@@ -44,6 +48,21 @@ export class SearchacademyComponent implements OnInit {
     //   });
     // });
   }
+
+  showAcademyDetails(academy) {
+    console.log(academy);
+    this._teacherService.getClassesDetails(academy.id).subscribe(snapshot => {
+      snapshot.docs.map(doc => {
+        this.selectedAcademyDetails.classes = doc.data();
+      });
+    });
+    this._teacherService.getSubjectsDetails(academy.id).subscribe(snapshot => {
+      snapshot.docs.map(doc => {
+        this.selectedAcademyDetails.subjects = doc.data();
+      });
+    });
+  }
+
   private _filter(value: string): string[] {
     // console.log(value);
 
