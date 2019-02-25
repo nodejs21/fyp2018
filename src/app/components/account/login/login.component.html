@@ -36,6 +36,9 @@
                         formControlName="password"
                       />
                     </div>
+                    <div class="invalid-feedback d-block" *ngIf="error">
+                      Access denied!
+                    </div>
                     <div class="row">
                       <div class="col-6">
                         <button

@@ -37,24 +37,6 @@ export class AdminService {
       .update({ className });
   }
 
-  //todo Cloud Function for updating Classes Collection
-  // cfUpdateClassesCollection(classId, subjectRef, push) {
-  //   console.log(classId, subjectRef, push);
-  //   var op = firebase.firestore.FieldValue.arrayRemove(subjectRef);
-  //   if (push) {
-  //     op = firebase.firestore.FieldValue.arrayUnion(subjectRef);
-  //   }
-  //   return this.afs
-  //     .collection(`academies`)
-  //     .doc(`${this.user.uid}`)
-  //     .collection(`classes`)
-  //     .doc(classId)
-  //     .update({
-  //       subjects: op
-  //     });
-  // }
-  //todo Cloud Function for updating Classes Collection
-
   getClasses() {
     return this.afs
       .collection(`academies`)
@@ -107,15 +89,6 @@ export class AdminService {
       .doc(subjectId)
       .update({ subjectName });
   }
-
-  //todo Cloud Function for updating Classes Collection
-  // cfUpdateSubjectsCollection(subjectId, classRef, push) {
-  //   return this.afs
-  //     .collection(`academies`)
-  //     .doc(`${this.user.uid}`)
-  //     .collection(`subjects`, ref => ref.where('classId', '==', classRef));
-  // }
-  //todo Cloud Function for updating Classes Collection
 
   getSubjects() {
     return this.afs

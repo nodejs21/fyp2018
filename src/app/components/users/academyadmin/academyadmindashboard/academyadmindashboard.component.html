@@ -42,6 +42,7 @@
             <span><i class="fa fa-trash"></i> </span>
           </button>
           <button
+            *ngIf="!class.data.subjects"
             class="btn btn-outline-info border-0 float-right py-1 px-2"
             tooltip="Edit Class"
             triggers="mouseenter:mouseleave"

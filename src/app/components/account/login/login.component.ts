@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  error: any = false;
   constructor(
     private _auth: AuthService,
     private _formBuilder: FormBuilder,
@@ -46,6 +47,7 @@ export class LoginComponent implements OnInit {
       })
       .catch(err => {
         console.error(err);
+        this.error = err;
       });
   }
 

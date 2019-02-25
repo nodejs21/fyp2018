@@ -3,13 +3,29 @@
 <div mat-dialog-content>
   <!-- <p>What's your favorite animal?</p> -->
   <!-- <mat-form-field> -->
-  <input
+  <!-- <input
     type="text"
     class="form-control"
     [(ngModel)]="data.className"
     placeholder="Class Name"
     required
-  />
+  /> -->
+  <mat-form-field>
+    <mat-select placeholder="Select class" [(ngModel)]="data.className">
+      <mat-option *ngFor="let class of classes" [value]="class">
+        {{ class }}
+      </mat-option>
+      <!-- <mat-option *ngFor="let class of classes" [value]="data.className">
+        10
+      </mat-option>
+      <mat-option *ngFor="let class of classes" [value]="data.className">
+        11
+      </mat-option>
+      <mat-option *ngFor="let class of classes" [value]="data.className">
+        12
+      </mat-option> -->
+    </mat-select>
+  </mat-form-field>
   <!-- </mat-form-field> -->
 </div>
 <div mat-dialog-actions>

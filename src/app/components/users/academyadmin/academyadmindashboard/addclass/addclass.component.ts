@@ -9,6 +9,7 @@ import { AdminService } from '../../../../../utils/services/firestore/admin/admi
   styleUrls: ['./addclass.component.css']
 })
 export class AddclassComponent implements OnInit {
+  classes = [9, 10, 11, 12];
   constructor(
     public dialogRef: MatDialogRef<AddclassComponent>,
     private _auth: AuthService,
@@ -31,13 +32,15 @@ export class AddclassComponent implements OnInit {
   }
 
   addClass() {
-    var key = 'className';
-    let value = this.data[key];
-    if (value && value.trim() != '') {
-      this.data[key] = value.trim();
-    } else {
-      this.data[key] = undefined;
-    }
+    // var key = 'className';
+    // let value = this.data[key];
+    // if (value && value.trim() != '') {
+    //   this.data[key] = value.trim();
+    // } else {
+    //   this.data[key] = undefined;
+    // }
+
+    // console.log(this.data);
     this._adminService
       .addClass(this.data.className)
       .then(res => {
@@ -46,6 +49,7 @@ export class AddclassComponent implements OnInit {
       .catch(err => {
         console.error(err);
       });
+
     // console.log(this._auth.user.subscribe(user));
     // for (let key in this.data) {
     //   let value = this.data[key];
