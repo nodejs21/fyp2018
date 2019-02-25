@@ -11,6 +11,10 @@ export interface NavData {
   class?: string;
 }
 
+const academyAdminPrefix = '/academyadmin';
+const teacherPrefix = '/teacher';
+const studentPrefix = '/student';
+
 const academyadmin: NavData[] = [
   {
     title: true,
@@ -18,7 +22,7 @@ const academyadmin: NavData[] = [
   },
   {
     name: 'Dashboard',
-    url: '/academyadmin',
+    url: `${academyAdminPrefix}`,
     icon: 'icon-speedometer'
     // badge: {
     //   variant: 'danger',
@@ -28,48 +32,43 @@ const academyadmin: NavData[] = [
   },
   {
     name: 'Subjects',
-    url: '/academyadmin/subjects',
+    url: `${academyAdminPrefix}/subjects`,
     icon: 'icon-pencil'
   },
   {
     name: 'Teachers',
-    url: '/academyadmin/teachers',
+    url: `${academyAdminPrefix}/teachers`,
     icon: 'icon-user'
   },
   {
     name: 'Students',
-    url: '/academyadmin/students',
+    url: `${academyAdminPrefix}/students`,
     icon: 'icon-user'
   },
 
   {
     name: 'Requests',
-    url: '/theme/typography',
+    // url: '/theme/typography',
     icon: 'icon-pencil',
     children: [
       {
         name: 'Students',
-        url: '/academyadmin/requests/student',
+        url: `${academyAdminPrefix}/requests/student`,
         icon: 'icon-user'
       },
       {
         name: 'Teachers',
-        url: '/academyadmin/requests/teacher',
+        url: `${academyAdminPrefix}/requests/teacher`,
         icon: 'icon-puzzle'
       }
     ]
-  },
-  // {
-  //   name: 'Classes',
-  //   url: '/theme/typography',
-  //   icon: 'icon-pencil'
-  // },
-
-  {
-    name: 'Time Table',
-    url: '',
-    icon: 'icon-calendar'
   }
+
+  // {
+  //   name: 'Time Table',
+  //   url: '',
+  //   icon: 'icon-calendar'
+  // }
 ];
 
 const teacher: NavData[] = [
@@ -79,68 +78,56 @@ const teacher: NavData[] = [
   },
   {
     name: 'Dashboard',
-    url: '/teacher',
+    url: `${teacherPrefix}`,
     icon: 'icon-speedometer'
-    // badge: {
-    //   variant: 'danger',
-    //   text: 'NEW'
-    // },
-    // attributes: { disabled: true }
   },
   {
-    name: 'Classes',
-    url: '/theme/colors',
+    name: 'Classrooms',
+    url: `${teacherPrefix}/classrooms`,
     icon: 'icon-drop'
   },
   {
     name: 'Assignments',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
+    url: `${teacherPrefix}/course/assignments`,
+    icon: 'icon-user'
   },
   {
     name: 'Quizzes',
-    url: '/theme/typography',
-    icon: 'icon-pencil',
-    children: [
-      {
-        name: 'Students',
-        url: '#',
-        icon: 'icon-user'
-      },
-      {
-        name: 'Teachers',
-        url: '#',
-        icon: 'icon-puzzle'
-      }
-    ]
+    url: `${teacherPrefix}/course/quizzes`,
+    icon: 'icon-puzzle'
+  },
+  {
+    name: 'Attendance',
+    url: `${teacherPrefix}/course/attendance`,
+    icon: 'icon-puzzle'
   },
   {
     name: 'Results',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
-  },
-  {
-    name: 'Time Table',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
+    url: `${teacherPrefix}/course/result`,
+    icon: 'icon-puzzle'
   },
   {
     name: 'Requests',
-    url: '/teacher/requests ',
+    url: `${teacherPrefix}`,
     icon: 'icon-pencil',
     children: [
       {
         name: 'Invitations',
-        url: '/teacher/requests/invitations',
+        url: `${teacherPrefix}/requests/invitations`,
         icon: 'icon-user'
       },
       {
         name: 'Sent',
-        url: '/teacher/requests/sent',
+        url: `${teacherPrefix}/requests/sent`,
         icon: 'icon-puzzle'
       }
     ]
   }
+   // {
+  //   name: 'Time Table',
+  //   url: `/theme/typography`,
+  //   icon: 'icon-pencil'
+  // },
 ];
 
 const student: NavData[] = [
@@ -150,68 +137,35 @@ const student: NavData[] = [
   },
   {
     name: 'Dashboard',
-    url: '/student',
-    icon: 'icon-speedometer'
-    // badge: {
-    //   variant: 'danger',
-    //   text: 'NEW'
-    // },
-    // attributes: { disabled: true }
-  },
-  {
-    name: 'Courses',
-    url: '/theme/colors',
-    icon: 'icon-drop'
+    url: `${studentPrefix}/dashboard`,
+    icon: 'icon-speedometer',
   },
   {
     name: 'Assignments',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
+    url: `${studentPrefix}/assignments`,
+    icon: 'icon-pencil',
   },
   {
     name: 'Quizzes',
-    url: '/theme/typography',
+    url: `${studentPrefix}/quizzes`,
     icon: 'icon-pencil',
-    children: [
-      {
-        name: 'Students',
-        url: '#',
-        icon: 'icon-user',
-        children: [
-          {
-            name: 'Students',
-            url: '#',
-            icon: 'icon-user'
-          },
-          {
-            name: 'Teachers',
-            url: '#',
-            icon: 'icon-puzzle'
-          }
-        ]
-      },
-      {
-        name: 'Teachers',
-        url: '#',
-        icon: 'icon-puzzle'
-      }
-    ]
   },
   {
     name: 'Results',
-    url: '/theme/typography',
-    icon: 'icon-pencil'
-  },
-  {
-    name: 'Time Table',
-    url: '/theme/typography',
+    url: `${studentPrefix}/results`,
     icon: 'icon-pencil'
   },
   {
     name: 'Attendance',
-    url: '/theme/typography',
+    url: `${studentPrefix}/attendance`,
     icon: 'icon-pencil'
-  }
+  },
+  // {
+  //   name: 'Time Table',
+  //   url: `/theme/typography`,
+  //   icon: 'icon-pencil'
+  // },
+  
 ];
 
 // ************************************commented- original code************************************

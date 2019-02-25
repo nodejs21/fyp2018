@@ -52,9 +52,9 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
   }
 
-  async logOut() {
-    await this._auth.signOut();
-    this._router.navigate(['/dashboard']);
+  logOut() {
+    this._auth.signOut();
+    // this._router.navigate(['/dashboard']);
   }
 
   ngOnDestroy(): void {

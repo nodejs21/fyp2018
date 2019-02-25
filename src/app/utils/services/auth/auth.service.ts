@@ -87,7 +87,7 @@ export class AuthService {
     await this.pushUserToDb(user, uid);
     delete user.userBasicInfo.password;
     this.user = of(user.userBasicInfo);
-    this.router.navigate(['/']);
+    this.router.navigate([`/${user.userBasicInfo.userType}`]);
   }
 
   private pushUserToDb(user, uid) {
