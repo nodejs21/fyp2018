@@ -25,10 +25,18 @@ export class TeacherService {
       .get();
   }
   getSubjectsDetails(academyId) {
-    return this.afs
+    this.afs
       .collection('academies')
       .doc(academyId)
       .collection('subjects')
-      .get();
+      .get()
+      .forEach(snap => {
+        snap.docs.forEach(doc => {
+          console.log(doc.data());
+        });
+      });
+  }
+  getSubjects(academyId, subjectId) {
+    return this.afs.collection('academies').doc(academyId);
   }
 }

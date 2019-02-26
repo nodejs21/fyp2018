@@ -56,11 +56,13 @@ export class SearchacademyComponent implements OnInit {
         this.selectedAcademyDetails.classes = doc.data();
       });
     });
-    this._teacherService.getSubjectsDetails(academy.id).subscribe(snapshot => {
-      snapshot.docs.map(doc => {
-        this.selectedAcademyDetails.subjects = doc.data();
-      });
-    });
+    this._teacherService.getSubjectsDetails(academy.id);
+    // .subscribe(snapshot => {
+    //   snapshot.docs.map(doc => {
+    //     console.log(doc);
+    //     this.selectedAcademyDetails.subjects = doc.data();
+    //   });
+    // });
   }
 
   private _filter(value: string): string[] {

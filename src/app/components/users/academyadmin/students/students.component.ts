@@ -28,7 +28,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class StudentsComponent implements OnInit {
   classes = [9, 10, 11, 12];
-  data: any = {};
+  // data: any = {};
 
   constructor() {}
 
