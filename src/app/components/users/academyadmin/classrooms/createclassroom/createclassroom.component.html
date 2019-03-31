@@ -1,3 +1,60 @@
-<p>
-  createclassroom works!
-</p>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <div>
+          <div>
+            <h3>
+              Create Classroom
+            </h3>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose Class</mat-label>
+              <mat-select name="classId" [(ngModel)]="classroom.classId">
+                <mat-option value="class.id" *ngFor="let class of classes" (click)="showSubjects(class.id)">{{
+                  class.data.className
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose Subject</mat-label>
+              <mat-select name="subjectId" [(ngModel)]="classroom.subjectId">
+                <mat-option value="subject.id" *ngFor="let subject of selectedClassSubjects"
+                  >{{ subject.data.subjectName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose Teacher</mat-label>
+              <mat-select>
+                <mat-option> </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose Students</mat-label>
+              <mat-select multiple>
+                <mat-option>Option 1 </mat-option>
+                <mat-option>Option 1 </mat-option>
+                <mat-option>Option 1 </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <button
+              class="btn btn-outline-info btn-block border-0 font-weight-bold"
+            >
+              Create
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

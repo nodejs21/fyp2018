@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { SearchacademyComponent } from '../../../shared/searchacademy/searchacademy.component';
 import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-teacherdashboard',

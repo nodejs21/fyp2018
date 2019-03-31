@@ -10,14 +10,14 @@ export class AdminService {
   user: any;
   constructor(private afs: AngularFirestore, private _auth: AuthService) {
     this._auth.user.subscribe(user => {
-      // console.log(user);
+      console.log(user);
       this.user = user;
     });
   }
 
-  //!! Class Methods
-  //!! Class Methods
-  //!! Class Methods
+  // !! Class Methods
+  // !! Class Methods
+  // !! Class Methods
 
   addClass(className) {
     return this.afs
@@ -68,9 +68,9 @@ export class AdminService {
       .delete();
   }
 
-  //!! Subject Methods
-  //!! Subject Methods
-  //!! Subject Methods
+  // !! Subject Methods
+  // !! Subject Methods
+  // !! Subject Methods
 
   addSubject(classRef, subjectName) {
     return this.afs

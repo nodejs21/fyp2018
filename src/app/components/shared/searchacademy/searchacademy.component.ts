@@ -1,14 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { TeacherService } from '../../../utils/services/firestore/teacher/teacher.service';
-import { map, startWith, debounce, debounceTime } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, Inject } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { TeacherService } from "../../../utils/services/firestore/teacher/teacher.service";
+import { map, startWith, debounce, debounceTime } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { FormControl } from "@angular/forms";
 
 @Component({
-  selector: 'searchacademy',
-  templateUrl: './searchacademy.component.html',
-  styleUrls: ['./searchacademy.component.css']
+  selector: "searchacademy",
+  templateUrl: "./searchacademy.component.html",
+  styleUrls: ["./searchacademy.component.css"]
 })
 export class SearchacademyComponent implements OnInit {
   academies: any = [];
@@ -55,8 +55,9 @@ export class SearchacademyComponent implements OnInit {
     this.selectedClassSubjects = [];
     if (this.selectedAcademyDetails.subjects) {
       this.selectedAcademyDetails.subjects.forEach(subject => {
-        if (subject.data.classRef == classId)
+        if (subject.data.classRef == classId) {
           this.selectedClassSubjects.push(subject);
+        }
       });
     }
   }
@@ -69,7 +70,7 @@ export class SearchacademyComponent implements OnInit {
   }
 
   closeDialog() {
-    var result = {
+    const result = {
       academyId: this.selectedAcademy.id,
       classId: this.selectedClassId,
       subjectIds: this.selectedSubjects
