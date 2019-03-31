@@ -10,7 +10,7 @@ export class AdminService {
   user: any;
   constructor(private afs: AngularFirestore, private _auth: AuthService) {
     this._auth.user.subscribe(user => {
-      console.log(user);
+      // console.log(user);
       this.user = user;
     });
   }

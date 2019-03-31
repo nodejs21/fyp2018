@@ -9,11 +9,15 @@ import { switchMap, map } from 'rxjs/operators';
 })
 export class TeacherService {
   academies: Observable<any>;
-  constructor(private afs: AngularFirestore) {}
+  teacher: any;
+  constructor(private afs: AngularFirestore, private _auth: AuthService) {
+    this._auth.user.subscribe(user => {
+      this.teacher = user;
+    });
+  }
 
   getAcademies() {
     console.log('gonna fetch academies');
-    // this.academies = this.afs.collection('academies').get();
     return this.afs.collection('academies').get();
   }
 
@@ -22,21 +26,47 @@ export class TeacherService {
       .collection('academies')
       .doc(academyId)
       .collection('classes')
-      .get();
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return {
+              classId: data.payload.doc.id,
+              data: data.payload.doc.data()
+            };
+          });
+        })
+      );
   }
   getSubjectsDetails(academyId) {
-    this.afs
+    return this.afs
       .collection('academies')
       .doc(academyId)
       .collection('subjects')
-      .get()
-      .forEach(snap => {
-        snap.docs.forEach(doc => {
-          console.log(doc.data());
-        });
-      });
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
   }
   getSubjects(academyId, subjectId) {
     return this.afs.collection('academies').doc(academyId);
+  }
+
+  applyForSubjects(payload) {
+    console.log(payload);
+    delete payload.academyId;
+    console.log(payload);
+    this.afs
+      .collection('academies')
+      .doc(payload.academyId)
+      .collection('requests')
+      .doc('teachers')
+      .collection('pending')
+      .doc(this.teacher.uid)
+      .set(payload, { merge: true });
   }
 }

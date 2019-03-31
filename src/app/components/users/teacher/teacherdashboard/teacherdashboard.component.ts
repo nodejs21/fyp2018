@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar, MatDialog, MatDialogClose } from '@angular/material';
-import { ConfirmdeletionComponent } from '../../../shared/confirmdeletion/confirmdeletion.component';
+import { MatDialog } from '@angular/material';
 import { SearchacademyComponent } from '../../../shared/searchacademy/searchacademy.component';
 import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
 
@@ -10,21 +9,17 @@ import { TeacherService } from '../../../../utils/services/firestore/teacher/tea
   styleUrls: ['./teacherdashboard.component.css']
 })
 export class TeacherdashboardComponent implements OnInit {
-  constructor(
-    private _teacherService: TeacherService,
-    private _snackBar: MatSnackBar,
-    private _dialog: MatDialog
-  ) {}
+  constructor(private _dialog: MatDialog, public _teacher: TeacherService) {}
 
   ngOnInit() {}
 
   openDialog() {
     // if (!this._teacherService.academies) this.getAcademies();
     const dialogRef = this._dialog.open(SearchacademyComponent, {
-      data: { value: true }
+      data: []
     });
     dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
+      this._teacher.applyForSubjects(res);
     });
   }
 

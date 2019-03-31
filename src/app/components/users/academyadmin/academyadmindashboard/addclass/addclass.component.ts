@@ -39,7 +39,6 @@ export class AddclassComponent implements OnInit {
     // } else {
     //   this.data[key] = undefined;
     // }
-
     // console.log(this.data);
     this._adminService
       .addClass(this.data.className)
@@ -49,7 +48,6 @@ export class AddclassComponent implements OnInit {
       .catch(err => {
         console.error(err);
       });
-
     // console.log(this._auth.user.subscribe(user));
     // for (let key in this.data) {
     //   let value = this.data[key];

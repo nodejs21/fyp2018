@@ -1,104 +1,81 @@
 <div class="container">
-  <div class="row">
-    <div class="col-4">
-      <form>
-        <mat-form-field>
-          <input
-            type="text"
-            placeholder="Start exploring academies by typing..."
-            aria-label="Number"
-            matInput
-            [formControl]="searchedAcademy"
-            [matAutocomplete]="auto"
-          />
-        </mat-form-field>
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let academy of (filteredOptions | async)"
-            [value]="academy.data.academyName"
-            (click)="showAcademyDetails(academy)"
-          >
-            {{ academy.data.academyName }}
-          </mat-option>
-        </mat-autocomplete>
-        {{ this.selectedAcademyDetails.classes | json }}
-      </form>
-    </div>
-    <div class="col-8">
-      <div class="card">
-        <div class="card-header">
-          <h3>
-            Academy Name
-          </h3>
-          <div>
-            <label class="font-weight-bold">Rating</label>
-            <!-- <rating class="ml-3" [(ngModel)]="rate"></rating> -->
-          </div>
-        </div>
-
-        <div class="card-body">
-          <form action="">
-            <div>
-              <div class="form-group">
-                <label for="totalSubjects" class="font-weight-bold"
-                  >Choose Class</label
-                >
-                {{ selectedClassDetails | json }}
-              </div>
-              <div>
-                <label>Yahan par Dropdown daalna Classes k liye</label>
-              </div>
-              <div class="form-group">
-                <label for="totalSubjects" class="font-weight-bold"
-                  >Choose Subject</label
-                >
-              </div>
-              <div>
-                <label>Yahan par Dropdown daalna Subjects k liye</label>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 ">
-                  <button class="button">
-                    <span
-                      mattooltip="Send Request for Teaching"
-                      triggers="mouseenter:mouseleave"
-                    >
-                      <i class="text-success fa fa-check"></i
-                    ></span>
-                  </button>
-                </div>
-                <div class="col-sm-6">
-                  <button class="button">
-                    <span popover="Cancel" triggers="mouseenter:mouseleave">
-                      <i class="text-danger fa fa-times"></i
-                    ></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- <form>
   <mat-form-field>
     <input
       type="text"
-      placeholder="Start exploring academies by typing..."
+      placeholder="Start typing something..."
       aria-label="Number"
       matInput
+      [formControl]="searchedAcademy"
       [matAutocomplete]="auto"
     />
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option
-        *ngFor="let option of (filteredOptions | async)"
-        [value]="option"
-      >
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
   </mat-form-field>
-</form> -->
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option
+      *ngFor="let academy of (filteredOptions | async)"
+      [value]="academy.data.academyName"
+      (click)="showAcademyDetails(academy)"
+    >
+      {{ academy.data.academyName }}
+    </mat-option>
+  </mat-autocomplete>
+  <div class="card">
+    <div class="card-header">
+      <h3>
+        {{
+          selectedAcademy ? selectedAcademy.data.academyName : 'Academy Name'
+        }}
+      </h3>
+      <div>
+        <label class="font-weight-bold">Rating</label>
+        <!-- <rating class="ml-3" [(ngModel)]="rate"></rating> -->
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form action="">
+        <div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose class</mat-label>
+              <mat-select name="selectedClassId" [(ngModel)]="selectedClassId">
+                <mat-option
+                  *ngFor="let class of selectedAcademyDetails.classes"
+                  [value]="class.classId"
+                  (click)="showSubjects(class.classId)"
+                >
+                  {{ class.data.className }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose subject(s)</mat-label>
+              <mat-select
+                name="selectedSubjects"
+                multiple
+                [(ngModel)]="selectedSubjects"
+              >
+                <mat-option
+                  *ngFor="let subject of selectedClassSubjects"
+                  [value]="subject.id"
+                >
+                  {{ subject.data.subjectName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <button
+              [disabled]="selectedSubjects.length == 0"
+              class="btn btn-outline-info btn-block border-0 font-weight-bold"
+              (click)="closeDialog()"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

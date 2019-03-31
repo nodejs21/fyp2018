@@ -26,6 +26,7 @@ import { AddclassComponent } from './academyadmindashboard/addclass/addclass.com
 import { AddsubjectComponent } from './subjects/addsubject/addsubject.component';
 import { ConfirmdeletionComponent } from '../../shared/confirmdeletion/confirmdeletion.component';
 import { ConfirmdeletionModule } from '../../shared/confirmdeletion/confirmdeletion.module';
+import { CreateclassroomComponent } from './classrooms/createclassroom/createclassroom.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ConfirmdeletionModule } from '../../shared/confirmdeletion/confirmdelet
     AcademydetailComponent,
     TeacherdetailComponent,
     AddclassComponent,
-    AddsubjectComponent
+    AddsubjectComponent,
+    CreateclassroomComponent
   ],
   imports: [
     CommonModule,

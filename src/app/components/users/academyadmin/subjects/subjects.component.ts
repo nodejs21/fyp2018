@@ -77,6 +77,7 @@ export class SubjectsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res && res.success) {
         this.updateClassesCollection(res.subjectId, true);
+        this.updateSelectedClassSubjects();
       }
     });
   }
@@ -94,6 +95,7 @@ export class SubjectsComponent implements OnInit {
           .deleteSubject(subjectId)
           .then(async res => {
             await this.updateClassesCollection(subjectId, false);
+            this.updateSelectedClassSubjects();
             this.showSnackBar(
               `Subject: ${subjectName} has been successfully deleted!`
             );
@@ -103,6 +105,10 @@ export class SubjectsComponent implements OnInit {
           });
       }
     });
+  }
+
+  updateSelectedClassSubjects() {
+    this.updateSubjects(this.selectedClassId);
   }
 
   //todo adminService CF func call
