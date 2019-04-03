@@ -60,7 +60,7 @@
                   #subjectOption
                   *ngFor="let subject of selectedClassSubjects; index as i"
                   [disabled]="
-                    selectedSubjects.includes(subject.id) ? true : false
+                    pendingRequests.includes(subject.id) ? true : false
                   "
                   [matTooltip]="
                     subjectOption.disabled

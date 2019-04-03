@@ -54,10 +54,10 @@ export class SearchacademyComponent implements OnInit {
       this.selectedAcademyDetails.subjects = subjects;
     });
     this._shared.getPendingRequests(academy.id).subscribe(res => {
-      this.pendingRequests = res;
-      for (let i = 0; i < this.pendingRequests.length; i++) {
-        this.selectedSubjects.push(this.pendingRequests[i].subjectId);
-      }
+      // this.pendingRequests = res;
+      this.pendingRequests = res.map(request => {
+        return request.subjectId;
+      });
     });
   }
 
