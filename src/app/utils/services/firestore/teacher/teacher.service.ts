@@ -56,27 +56,27 @@ export class TeacherService {
     return this.afs.collection('academies').doc(academyId);
   }
 
-  applyForSubjects(payload) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let res = [];
-        for (var i = 0; i < payload.length; i++) {
-          payload[i].userId = this.teacher.uid;
-          payload[i].status = 'pending';
-          payload[i].userType = 'teacher';
-          const academyId = payload[i].academyId;
-          delete payload[i].academyId;
-          const response = this.afs
-            .collection('academies')
-            .doc(academyId)
-            .collection('requests')
-            .add(payload[i]);
-          res.push(response);
-        }
-        resolve(res);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+  // applyForSubjects(payload) {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       let res = [];
+  //       for (var i = 0; i < payload.length; i++) {
+  //         payload[i].userId = this.teacher.uid;
+  //         payload[i].status = 'pending';
+  //         payload[i].userType = 'teacher';
+  //         const academyId = payload[i].academyId;
+  //         delete payload[i].academyId;
+  //         const response = this.afs
+  //           .collection('academies')
+  //           .doc(academyId)
+  //           .collection('requests')
+  //           .add(payload[i]);
+  //         res.push(response);
+  //       }
+  //       resolve(res);
+  //     } catch (error) {
+  //       reject(error);
+  //     }
+  //   });
+  // }
 }

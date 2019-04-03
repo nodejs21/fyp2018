@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <div>
+          <div>
+            <h3>
+              Add Assignment
+            </h3>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose Class</mat-label>
+              <mat-select name="classes" [(ngModel)]="selectedClass">
+                <mat-option *ngFor="let class of classes" value="class">{{
+                  class
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Choose Subject</mat-label>
+              <mat-select name="subjects" [(ngModel)]="selectedSubjects">
+                <mat-option *ngFor="let subject of subjects" value="subject">{{
+                  subject
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Assignment Title</mat-label>
+              <input type="text" matInput [formControl]="assignmentTitle" />
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Total Marks</mat-label>
+              <input type="number" min="0" matInput [formControl]="assignmentMarks" />
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-label>Due Date</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="Choose a date"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="col 6">
+              <button
+              (click)="fileInput.click()"
+                class="btn btn-outline-info btn-block border-0 font-weight-bold"
+              >
+                Attach File
+              </button>
+            </div>
+            <input hidden type="file" #fileInput />
+            <div class="col 6">
+              <button
+                class="btn btn-outline-success btn-block border-0 font-weight-bold"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

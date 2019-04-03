@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { TeacherService } from '../../../utils/services/firestore/teacher/teacher.service';
-import { map, startWith, debounce, debounceTime } from 'rxjs/operators';
+import { map, startWith, debounce, debounceTime, max } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { SharedService } from '../../../utils/services/firestore/shared/shared.service';
@@ -21,6 +21,7 @@ export class SearchacademyComponent implements OnInit {
   selectedClassId: any;
   selectedClassSubjects = [];
   pendingRequests = [];
+  currentClassRequests = [];
 
   selectedSubjects = [];
 
@@ -54,6 +55,9 @@ export class SearchacademyComponent implements OnInit {
     });
     this._shared.getPendingRequests(academy.id).subscribe(res => {
       this.pendingRequests = res;
+      for (let i = 0; i < this.pendingRequests.length; i++) {
+        this.selectedSubjects.push(this.pendingRequests[i].subjectId);
+      }
     });
   }
 
@@ -61,8 +65,9 @@ export class SearchacademyComponent implements OnInit {
     this.selectedClassSubjects = [];
     if (this.selectedAcademyDetails.subjects) {
       this.selectedAcademyDetails.subjects.forEach(subject => {
-        if (subject.data.classRef == classId)
+        if (subject.data.classRef == classId) {
           this.selectedClassSubjects.push(subject);
+        }
       });
     }
   }

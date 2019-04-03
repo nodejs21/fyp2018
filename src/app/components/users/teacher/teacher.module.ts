@@ -24,6 +24,7 @@ import { SearchacademyComponent } from '../../shared/searchacademy/searchacademy
 import { SearchacademyModule } from '../../shared/searchacademy/searchacademy.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
+import { AddassignmentComponent } from './course/assignments/addassignment/addassignment.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MaterialModule } from '../../../material.module';
     ProfileComponent,
     InvitationsComponent,
     RequestssentComponent,
-    MakequizComponent
+    MakequizComponent,
+    AddassignmentComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,7 @@ import { MaterialModule } from '../../../material.module';
     SearchacademyModule,
     MaterialModule
   ],
-  entryComponents: [SearchacademyComponent],
+  entryComponents: [SearchacademyComponent,AddassignmentComponent],
   exports: [TeacherdashboardComponent]
 })
 export class TeacherModule {}

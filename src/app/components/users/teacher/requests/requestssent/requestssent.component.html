@@ -1,3 +1,39 @@
-<p>
-  requestssent works!
-</p>
+<div class="container">
+  <!-- <mat-select name="selectedClassId" [(ngModel)]="selectedClassId">
+    <mat-option
+      *ngFor="let class of selectedAcademyDetails.classes"
+      [value]="class.classId"
+      (click)="showSubjects(class.classId)"
+    >
+      {{ class.data.className }}
+    </mat-option>
+  </mat-select> -->
+</div>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          Physics - Admin Subject Card
+          <button
+            class="btn btn-sm btn-outline-danger  float-right ml-2"
+            matTooltip="Delete"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-trash"></i> </span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Subject Name
+                <strong> Physics </strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
