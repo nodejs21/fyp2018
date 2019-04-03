@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../auth/auth.service';
-import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,6 @@ export class TeacherService {
   }
 
   getAcademies() {
-    console.log('gonna fetch academies');
     return this.afs.collection('academies').get();
   }
 
@@ -52,21 +51,32 @@ export class TeacherService {
         })
       );
   }
-  getSubjects(academyId, subjectId) {
+
+  getSubjects(academyId) {
     return this.afs.collection('academies').doc(academyId);
   }
 
   applyForSubjects(payload) {
-    console.log(payload);
-    delete payload.academyId;
-    console.log(payload);
-    this.afs
-      .collection('academies')
-      .doc(payload.academyId)
-      .collection('requests')
-      .doc('teachers')
-      .collection('pending')
-      .doc(this.teacher.uid)
-      .set(payload, { merge: true });
+    return new Promise(async (resolve, reject) => {
+      try {
+        let res = [];
+        for (var i = 0; i < payload.length; i++) {
+          payload[i].userId = this.teacher.uid;
+          payload[i].status = 'pending';
+          payload[i].userType = 'teacher';
+          const academyId = payload[i].academyId;
+          delete payload[i].academyId;
+          const response = this.afs
+            .collection('academies')
+            .doc(academyId)
+            .collection('requests')
+            .add(payload[i]);
+          res.push(response);
+        }
+        resolve(res);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 }

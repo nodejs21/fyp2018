@@ -57,7 +57,20 @@
                 [(ngModel)]="selectedSubjects"
               >
                 <mat-option
-                  *ngFor="let subject of selectedClassSubjects"
+                  #subjectOption
+                  *ngFor="let subject of selectedClassSubjects; let i = index"
+                  [disabled]="
+                    pendingRequests[i]
+                      ? pendingRequests[i].subjectId == subject.id
+                        ? true
+                        : false
+                      : false
+                  "
+                  [matTooltip]="
+                    subjectOption.disabled
+                      ? 'Your request for this subject is pending!'
+                      : ''
+                  "
                   [value]="subject.id"
                 >
                   {{ subject.data.subjectName }}

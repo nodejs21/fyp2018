@@ -4,6 +4,7 @@ import { TeacherService } from '../../../utils/services/firestore/teacher/teache
 import { map, startWith, debounce, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { SharedService } from '../../../utils/services/firestore/shared/shared.service';
 
 @Component({
   selector: 'searchacademy',
@@ -19,12 +20,14 @@ export class SearchacademyComponent implements OnInit {
   selectedAcademyDetails: any = {};
   selectedClassId: any;
   selectedClassSubjects = [];
+  pendingRequests = [];
 
   selectedSubjects = [];
 
   constructor(
     private _teacherService: TeacherService,
     public dialogRef: MatDialogRef<SearchacademyComponent>,
+    public _shared: SharedService,
     @Inject(MAT_DIALOG_DATA) public data = []
   ) {}
 
@@ -49,6 +52,9 @@ export class SearchacademyComponent implements OnInit {
     this._teacherService.getSubjectsDetails(academy.id).subscribe(subjects => {
       this.selectedAcademyDetails.subjects = subjects;
     });
+    this._shared.getPendingRequests(academy.id).subscribe(res => {
+      this.pendingRequests = res;
+    });
   }
 
   showSubjects(classId) {
@@ -69,11 +75,16 @@ export class SearchacademyComponent implements OnInit {
   }
 
   closeDialog() {
-    var result = {
-      academyId: this.selectedAcademy.id,
-      classId: this.selectedClassId,
-      subjectIds: this.selectedSubjects
-    };
+    var result = [];
+
+    for (var i = 0; i < this.selectedSubjects.length; i++) {
+      result.push({
+        academyId: this.selectedAcademy.id,
+        classId: this.selectedClassId,
+        subjectId: this.selectedSubjects[i]
+      });
+    }
+
     this.dialogRef.close(result);
   }
 }

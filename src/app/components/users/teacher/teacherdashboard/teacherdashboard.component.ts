@@ -9,7 +9,10 @@ import { TeacherService } from '../../../../utils/services/firestore/teacher/tea
   styleUrls: ['./teacherdashboard.component.css']
 })
 export class TeacherdashboardComponent implements OnInit {
-  constructor(private _dialog: MatDialog, public _teacher: TeacherService) {}
+  constructor(
+    private _dialog: MatDialog,
+    public _teacher: TeacherService
+  ) {}
 
   ngOnInit() {}
 
@@ -18,8 +21,17 @@ export class TeacherdashboardComponent implements OnInit {
     const dialogRef = this._dialog.open(SearchacademyComponent, {
       data: []
     });
+
     dialogRef.afterClosed().subscribe(res => {
-      this._teacher.applyForSubjects(res);
+      if (res) {
+        this._teacher.applyForSubjects(res);
+        // .then(res => {
+        //   console.log(res);
+        // })
+        // .catch(error => {
+        //   console.error(error);
+        // });
+      }
     });
   }
 
