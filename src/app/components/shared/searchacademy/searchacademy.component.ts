@@ -55,9 +55,12 @@ export class SearchacademyComponent implements OnInit {
     });
     this._shared.getPendingRequests(academy.id).subscribe(res => {
       // this.pendingRequests = res;
-      this.pendingRequests = res.map(request => {
-        return request.subjectId;
+      res.docs.forEach(request => {
+        this.pendingRequests.push(request.data().subjectId);
       });
+      // this.pendingRequests = res.map(request => {
+      //   return request.subjectId;
+      // });
     });
   }
 
@@ -81,12 +84,26 @@ export class SearchacademyComponent implements OnInit {
 
   closeDialog() {
     var result = [];
-
+    var className;
+    this.selectedAcademyDetails.classes.forEach(obj => {
+      if (obj.classId === this.selectedClassId) {
+        className = obj.data.className;
+      }
+    });
     for (var i = 0; i < this.selectedSubjects.length; i++) {
+      var subjectName;
+      this.selectedClassSubjects.forEach(subject => {
+        if (subject.id === this.selectedSubjects[i]) {
+          subjectName = subject.data.subjectName;
+        }
+      });
       result.push({
         academyId: this.selectedAcademy.id,
         classId: this.selectedClassId,
-        subjectId: this.selectedSubjects[i]
+        subjectId: this.selectedSubjects[i],
+        subjectName: subjectName,
+        className: className,
+        academyName: this.selectedAcademy.data.academyName
       });
     }
 

@@ -1,39 +1,48 @@
-<div class="container">
-  <!-- <mat-select name="selectedClassId" [(ngModel)]="selectedClassId">
+<mat-form-field class="p-0">
+  <mat-label>Select request type</mat-label>
+  <mat-select name="selectedClassId" [(ngModel)]="selectedType">
     <mat-option
-      *ngFor="let class of selectedAcademyDetails.classes"
-      [value]="class.classId"
-      (click)="showSubjects(class.classId)"
+      *ngFor="let type of requestTypes"
+      [value]="type"
+      (click)="showRequests(type)"
     >
-      {{ class.data.className }}
+      {{ type | titlecase }}
     </mat-option>
-  </mat-select> -->
-</div>
+  </mat-select>
+</mat-form-field>
 <div class="animated fadeIn">
+  <!-- <div *ngFor="let academy of requestsToBeShown"> -->
   <div class="row">
-    <div class="col-4">
+    <div
+      class="col-3"
+      *ngFor="let request of requestsToBeShown; index as i; trackBy: trackBySubjectId"
+    >
       <div class="card text-white bg-dark">
-        <div class="card-header h4 ">
-          Physics - Admin Subject Card
-          <button
-            class="btn btn-sm btn-outline-danger  float-right ml-2"
-            matTooltip="Delete"
-            triggers="mouseenter:mouseleave"
-          >
-            <span><i class="fa fa-trash"></i> </span>
-          </button>
-        </div>
+        <div class="card-header h4 ">Academy: {{ request.academyName }}</div>
         <div class="card-body">
           <div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Subject Name
-                <strong> Physics </strong>
+                <i class="icon-people"></i> Class:
+                <strong> {{ request.className }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Subject:
+                <strong> {{ request.subjectName }} </strong>
               </li>
             </ul>
           </div>
         </div>
+        <button
+          class="btn btn-sm btn-danger btn-block float-right"
+          matTooltip="Cancel request"
+          triggers="mouseenter:mouseleave"
+          (click)="cancelRequest(request)"
+        >
+          Cancel Request
+        </button>
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </div>

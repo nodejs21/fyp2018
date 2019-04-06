@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchacademyComponent } from '../../../shared/searchacademy/searchacademy.component';
-import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
 
@@ -15,7 +14,8 @@ export class TeacherdashboardComponent implements OnInit {
   constructor(
     private _dialog: MatDialog,
     public _shared: SharedService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -32,15 +32,20 @@ export class TeacherdashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this._shared.applyForSubjects(res);
-        // .then(res => {
-        //   console.log(res);
-        // })
-        // .catch(error => {
-        //   console.error(error);
-        // });
+        this._shared
+          .applyForSubjects(res)
+          .then(response => {
+            this.showSnackBar(`Your request for subjects has been submitted!`);
+          })
+          .catch(error => {
+            console.error(error);
+          });
       }
     });
+  }
+
+  showSnackBar(message) {
+    this._snackBar.open(message, 'X', { duration: 4000 });
   }
 
   // getAcademies() {

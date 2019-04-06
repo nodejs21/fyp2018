@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddclassComponent } from './addclass/addclass.component';
-import { Router } from '@angular/router';
 import { AdminService } from '../../../../utils/services/firestore/admin/admin.service';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { ConfirmdeletionComponent } from '../../../shared/confirmdeletion/confirmdeletion.component';
@@ -16,7 +15,6 @@ export class AcademyadmindashboardComponent implements OnInit {
   classes: any;
   constructor(
     private _dialog: MatDialog,
-    private _router: Router,
     private _auth: AuthService,
     private _adminService: AdminService,
     private _snackBar: MatSnackBar
@@ -24,7 +22,7 @@ export class AcademyadmindashboardComponent implements OnInit {
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
-      if(user){
+      if (user) {
         this.user = user;
         this.getClasses();
       }
@@ -65,7 +63,7 @@ export class AcademyadmindashboardComponent implements OnInit {
       if (result) {
         this._adminService
           .deleteClass(classId)
-          .then(res => {
+          .then(() => {
             this.showSnackBar(
               `Class: ${className} has been successfully deleted!`
             );
