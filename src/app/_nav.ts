@@ -128,7 +128,7 @@ const teacher: NavData[] = [
       }
     ]
   }
-   // {
+  // {
   //   name: 'Time Table',
   //   url: `/theme/typography`,
   //   icon: 'icon-pencil'
@@ -143,17 +143,17 @@ const student: NavData[] = [
   {
     name: 'Dashboard',
     url: `${studentPrefix}/dashboard`,
-    icon: 'icon-speedometer',
+    icon: 'icon-speedometer'
   },
   {
     name: 'Assignments',
     url: `${studentPrefix}/assignments`,
-    icon: 'icon-pencil',
+    icon: 'icon-pencil'
   },
   {
     name: 'Quizzes',
     url: `${studentPrefix}/quizzes`,
-    icon: 'icon-pencil',
+    icon: 'icon-pencil'
   },
   {
     name: 'Results',
@@ -164,13 +164,12 @@ const student: NavData[] = [
     name: 'Attendance',
     url: `${studentPrefix}/attendance`,
     icon: 'icon-pencil'
-  },
+  }
   // {
   //   name: 'Time Table',
   //   url: `/theme/typography`,
   //   icon: 'icon-pencil'
   // },
-  
 ];
 
 // ************************************commented- original code************************************
