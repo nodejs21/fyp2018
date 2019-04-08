@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CommonModule } from '@angular/common';
 import { ClassroomsComponent } from './classrooms/classrooms.component';
 import { AssignmentsComponent } from './course/assignments/assignments.component';
@@ -25,9 +26,11 @@ import { SearchacademyModule } from '../../shared/searchacademy/searchacademy.mo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
 import { AddassignmentComponent } from './course/assignments/addassignment/addassignment.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
+    
     AssignmentsComponent,
     TeacherComponent,
     TeacherdashboardComponent,
@@ -58,6 +61,8 @@ import { AddassignmentComponent } from './course/assignments/addassignment/addas
     TeacherRoutingModule,
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     CollapseModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,

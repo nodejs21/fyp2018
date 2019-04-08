@@ -2,28 +2,142 @@
   quizzes works!
 </p> -->
 
-<div class="row">
-  <div class="col-sm-12">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="d-inline">Quizzes Page TEACHER</h3>
+<div class="col-sm-12">
+    <mat-card>
+      <div class="row">
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Posted/Submitted</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Posted</mat-option>
+              <mat-option value="option2">Submitted By Students</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Choose Class</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option>None</mat-option>
+              <mat-option value="option1">9</mat-option>
+              <mat-option value="option2">10</mat-option>
+              <mat-option value="option3">11</mat-option>
+              <mat-option value="option3">12</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Choose Subject</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Maths</mat-option>
+              <mat-option value="option2">Chemistry</mat-option>
+              <mat-option value="option3">Physics</mat-option>
+              <mat-option value="option3">Biology</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field>
+            <mat-label>Quiz No</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Option 1</mat-option>
+              <mat-option value="option2">Option 2</mat-option>
+              <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+  
+    <hr />
+  
+    <mat-card>
+      <div class="row">
+        <div class="col-12">
+          <mat-card-title>
+            Posted Quizzes
+          </mat-card-title>
+        </div>
+        
+  
+        <mat-form-field class="px-3">
+          <input
+            matInput
+            (keyup)="applyFilter($event.target.value)"
+            placeholder="Filter"
+          />
+        </mat-form-field>
+        <div class="example-container">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Position Column -->
+          <ng-container matColumnDef="quizNumber">
+            <th mat-header-cell *matHeaderCellDef><strong>No.</strong></th>
+            <td mat-cell *matCellDef="let element">{{ element.quizNumber }}</td>
+          </ng-container>
+  
+          <!-- Name Column -->
+          <ng-container matColumnDef="quizTitle">
+            <th mat-header-cell *matHeaderCellDef><strong>Title</strong></th>
+            <td mat-cell *matCellDef="let element">{{ element.quizTitle }}</td>
+          </ng-container>
+  
+          <!-- Weight Column -->
+          <ng-container matColumnDef="quizAddedDate">
+            <th mat-header-cell *matHeaderCellDef><strong>Added On</strong></th>
+            <td mat-cell *matCellDef="let element">{{ element.quizAddedDate }}</td>
+          </ng-container>
+  
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="quizDueDate">
+            <th mat-header-cell *matHeaderCellDef><strong>Due Date</strong></th>
+            <td mat-cell *matCellDef="let element">{{ element.quizDueDate }}</td>
+          </ng-container>
+         
+          
+          <ng-container matColumnDef="quizDuration">
+            <th mat-header-cell *matHeaderCellDef><strong>Duration (mins)</strong></th>
+            <td mat-cell *matCellDef="let element">{{ element.quizDuration }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="quizTotalMarks">
+            <th mat-header-cell *matHeaderCellDef>
+              <strong>Total Marks</strong>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.quizTotalMarks }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="quizControls">
+            <th mat-header-cell *matHeaderCellDef><strong>Controls</strong></th>
+            <td mat-cell *matCellDef="let element">{{ element.quizControls }}</td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </div>
     </div>
+      
+    </mat-card>
+  </div>
+
+  <hr>
+  
+
+<div class="row">
+  <div class="col-sm-12">
     <div class="animated fadeIn">
       <div class="card">
-        <div class="card-header" (click)="isCollapsed = !isCollapsed">
+        <div class="card-header">
           <label for="className" class="font-weight-bold"
-            >Subject Name Here</label
+            >Submitted Quizzes</label
           >
-          <button class="btn btn-oultine-warning float-right" popover="Add" triggers="mouseenter:mouseleave">
-            <span> <i class="text-warning fa fa-lg fa-plus"></i> </span>
-          </button>
+          
         </div>
-        <div
-          (collapsed)="collapsed($event)"
-          (expanded)="expanded($event)"
-          [collapse]="isCollapsed"
-        >
+        <div>
           <table class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg">
             <thead>
               <tr>
