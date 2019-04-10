@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { StudentdashboardComponent } from './studentdashboard/studentdashboard.component';
@@ -18,7 +20,9 @@ import { VideostreamComponent } from './liveclass/videostream/videostream.compon
 import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../material.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 @NgModule({
   declarations: [
@@ -46,11 +50,15 @@ import { FormsModule } from '@angular/forms';
   ],
 
   imports: [
+    MaterialModule,
     CommonModule,
     StudentRoutingModule,
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
     CollapseModule.forRoot(),
+    ReactiveFormsModule,
     FormsModule
   ],
   exports: [StudentdashboardComponent]
