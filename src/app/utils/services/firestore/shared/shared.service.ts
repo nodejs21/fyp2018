@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../auth/auth.service';
 import { map } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { firestore } from 'firebase';
 
 @Injectable({
@@ -24,14 +23,10 @@ export class SharedService {
   }
 
   getAppliedForAcademies() {
-    if (this.user) {
-      return this.afs
-        .collection(`${this.user.userType}s`)
-        .doc(this.user.uid)
-        .get();
-    } else {
-      return of(null);
-    }
+    return this.afs
+      .collection(`${this.user.userType}s`)
+      .doc(this.user.uid)
+      .get();
   }
 
   getPendingRequests(academyId) {
@@ -43,7 +38,15 @@ export class SharedService {
           .where('userId', '==', this.user.uid)
           .where('status', '==', 'pending')
       )
-      .get();
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+    // .get();
     // .snapshotChanges()
     // .pipe(
     //   map(res => {
@@ -64,7 +67,14 @@ export class SharedService {
           .where('userId', '==', this.user.uid)
           .where('status', '==', 'approved')
       )
-      .get();
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
     // .snapshotChanges()
     // .pipe(
     //   map(res => {
@@ -85,7 +95,14 @@ export class SharedService {
           .where('userId', '==', this.user.uid)
           .where('status', '==', 'rejected')
       )
-      .get();
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
     // .snapshotChanges()
     // .pipe(
     //   map(res => {
@@ -105,6 +122,7 @@ export class SharedService {
           payload[i].userId = this.user.uid;
           payload[i].status = 'pending';
           payload[i].userType = this.user.userType;
+          payload[i].userName = this.user.firstName + ' ' + this.user.lastName;
           const academyId = payload[i].academyId;
           // delete payload[i].academyId;
           const response = this.afs

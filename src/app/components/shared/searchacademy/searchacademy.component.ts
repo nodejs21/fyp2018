@@ -21,6 +21,7 @@ export class SearchacademyComponent implements OnInit {
   selectedClassId: any;
   selectedClassSubjects = [];
   pendingRequests = [];
+  approvedRequests = [];
   currentClassRequests = [];
 
   selectedSubjects = [];
@@ -54,13 +55,14 @@ export class SearchacademyComponent implements OnInit {
       this.selectedAcademyDetails.subjects = subjects;
     });
     this._shared.getPendingRequests(academy.id).subscribe(res => {
-      // this.pendingRequests = res;
-      res.docs.forEach(request => {
-        this.pendingRequests.push(request.data().subjectId);
+      res.forEach(request => {
+        this.pendingRequests.push(request.data.subjectId);
       });
-      // this.pendingRequests = res.map(request => {
-      //   return request.subjectId;
-      // });
+    });
+    this._shared.getApprovedRequests(academy.id).subscribe(res => {
+      res.forEach(request => {
+        this.approvedRequests.push(request.data.subjectId);
+      });
     });
   }
 

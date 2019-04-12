@@ -3,7 +3,7 @@
     <!-- <div class="col-sm-6 col-md-4 col-lg-3 pb-4">
           <button
             class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
-            tooltip="Add Option"
+            matTooltip="Add Option"
             triggers="mouseenter:mouseleave"
             >
             <span><i class="text-dark fa fa-plus display-4"></i></span>
@@ -12,7 +12,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3 pb-4">
           <button
           class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
-          tooltip="Add Option"
+          matTooltip="Add Option"
           triggers="mouseenter:mouseleave"
           >
           <p class="display-4">➕</p>
@@ -21,7 +21,7 @@
     <div class="col-sm-6 col-md-4 col-lg-2 pb-4">
       <button
         class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
-        tooltip="Add Class"
+        matTooltip="Add Class"
         triggers="mouseenter:mouseleave"
         (click)="openDialog()"
       >
@@ -35,7 +35,7 @@
           Class: {{ class.data.className }}
           <button
             class="btn btn-outline-danger border-0 float-right py-1 px-2"
-            tooltip="Delete Class"
+            matTooltip="Delete Class"
             triggers="mouseenter:mouseleave"
             (click)="deleteClass(class.id, class.data.className)"
           >
@@ -44,7 +44,7 @@
           <button
             *ngIf="!class.data.subjects"
             class="btn btn-outline-info border-0 float-right py-1 px-2"
-            tooltip="Edit Class"
+            matTooltip="Edit Class"
             triggers="mouseenter:mouseleave"
             (click)="openDialog(class.id, class.data.className)"
           >

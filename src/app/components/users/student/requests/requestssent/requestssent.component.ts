@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../../../utils/services/auth/auth.service';
 import { SharedService } from '../../../../../utils/services/firestore/shared/shared.service';
 import { MatSnackBar } from '@angular/material';
-import { AuthService } from '../../../../../utils/services/auth/auth.service';
 
 @Component({
-  selector: 'app-requestssent',
+  selector: 'requestssent',
   templateUrl: './requestssent.component.html',
-  styleUrls: ['./requestssent.component.scss']
+  styleUrls: ['./requestssent.component.css']
 })
 export class RequestssentComponent implements OnInit {
   user;

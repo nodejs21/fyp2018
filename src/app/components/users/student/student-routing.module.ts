@@ -14,6 +14,7 @@ import { VideostreamComponent } from './liveclass/videostream/videostream.compon
 import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { StudentComponent } from './student.component';
+import { RequestssentComponent } from './requests/requestssent/requestssent.component';
 
 const routes: Routes = [
   {
@@ -53,7 +54,13 @@ const routes: Routes = [
       },
       { path: 'profile', component: ProfileComponent },
       { path: 'dashboard', component: StudentdashboardComponent },
-      { path: 'subjects', component: SubjectsComponent }
+      { path: 'subjects', component: SubjectsComponent },
+      {
+        path: 'requests',
+        // redirectTo: 'invitations',
+        // pathMatch: 'full',
+        children: [{ path: 'sent', component: RequestssentComponent }]
+      }
     ]
   },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }

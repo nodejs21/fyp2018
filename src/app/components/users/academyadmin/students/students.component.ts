@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
+import { AuthService } from '../../../../utils/services/auth/auth.service';
+import { AdminService } from '../../../../utils/services/firestore/admin/admin.service';
 
 export interface PeriodicElement {
   name: string;
@@ -27,17 +29,60 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./students.component.scss']
 })
 export class StudentsComponent implements OnInit {
-  classes = [9, 10, 11, 12];
-  // data: any = {};
-
-  constructor() {}
-
-  ngOnInit() {}
-
+  classes;
+  selectedClass;
+  selectedClassRoom;
+  students;
   isplayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  subjects;
+  classWithSubjects;
+  // data: any = {};
+
+  constructor(private _auth: AuthService, private _admin: AdminService) {}
+
+  ngOnInit() {
+    this._auth.user.subscribe(user => {
+      this._admin.getStudents().subscribe(students => {
+        console.log(students);
+        this.subjects = Array.from(
+          new Set(students.map(student => student.data.subjectName))
+        );
+        this.classes = Array.from(
+          new Set(students.map(student => student.data.className))
+        );
+        this.students = this.groupByStudentClass(students, 'className');
+        this.classWithSubjects = new Set(
+          students.map(student => {
+            return {
+              subjectName: student.data.subjectName,
+              className: student.data.className
+            };
+          })
+        );
+      });
+    });
+  }
+
+  groupByStudentClass(xs, key) {
+    return xs.reduce(function(rv, x) {
+      (rv[x['data'][key]] = rv[x['data'][key]] || []).push(x);
+      return rv;
+    }, []);
+  }
+
+  // groupStudentsBySubjects(xs, key) {
+  //   return xs.reduce(function(rv, x) {
+  //     (rv[x['data'][key]] = rv[x['data'][key]] || []).push(x);
+  //     return rv;
+  //   }, []);
+  // }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  viewProfile(studentId) {
+    console.log(studentId);
   }
 }

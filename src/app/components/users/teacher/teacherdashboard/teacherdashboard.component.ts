@@ -10,19 +10,13 @@ import { SharedService } from '../../../../utils/services/firestore/shared/share
   styleUrls: ['./teacherdashboard.component.css']
 })
 export class TeacherdashboardComponent implements OnInit {
-  user;
   constructor(
     private _dialog: MatDialog,
     public _shared: SharedService,
-    private _auth: AuthService,
     private _snackBar: MatSnackBar
   ) {}
 
-  ngOnInit() {
-    this._auth.user.subscribe(user => {
-      this.user = user;
-    });
-  }
+  ngOnInit() {}
 
   openDialog() {
     // if (!this._teacherService.academies) this.getAcademies();

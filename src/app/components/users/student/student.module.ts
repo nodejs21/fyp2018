@@ -19,6 +19,10 @@ import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../material.module';
+import { SearchacademyComponent } from '../../shared/searchacademy/searchacademy.component';
+import { SearchacademyModule } from '../../shared/searchacademy/searchacademy.module';
+import { RequestssentComponent } from './requests/requestssent/requestssent.component';
 
 @NgModule({
   declarations: [
@@ -42,17 +46,21 @@ import { FormsModule } from '@angular/forms';
     TeacherdetailComponent,
     VideostreamComponent,
     WhiteboardComponent,
-    SubjectsComponent
+    SubjectsComponent,
+    RequestssentComponent
   ],
 
   imports: [
     CommonModule,
+    MaterialModule,
+    SearchacademyModule,
     StudentRoutingModule,
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
     CollapseModule.forRoot(),
     FormsModule
   ],
+  entryComponents: [SearchacademyComponent],
   exports: [StudentdashboardComponent]
 })
 export class StudentModule {}

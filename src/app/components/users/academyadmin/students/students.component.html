@@ -3,7 +3,11 @@
     <div class="col-2">
       <mat-form-field class="d-block">
         <!-- [(ngModel)]="data.className" -->
-        <mat-select placeholder="Select class" disableRipple>
+        <mat-select
+          placeholder="Select class"
+          [(ngModel)]="selectedClass"
+          disableRipple
+        >
           <mat-option>None</mat-option>
           <mat-option *ngFor="let class of classes" [value]="class">
             {{ class }}
@@ -14,10 +18,36 @@
     <div class="col-2">
       <mat-form-field class="d-block">
         <!-- [(ngModel)]="data.classRoom" -->
-        <mat-select placeholder="Select classroom">
-          <mat-option>None</mat-option>
-          <mat-option *ngFor="let class of classes" [value]="class">
-            {{ class }}
+        <mat-select
+          placeholder="Select classroom"
+          [(ngModel)]="selectedClassRoom"
+        >
+          <!-- <mat-option>None</mat-option> -->
+          <mat-option
+            *ngFor="let subject of classWithSubjects"
+            [value]="subject.subjectName"
+            [hidden]="
+              selectedClass
+                ? selectedClass == subject.className
+                  ? false
+                  : true
+                : true
+            "
+          >
+            {{
+              selectedClass
+                ? selectedClass == subject.className
+                  ? subject.subjectName
+                  : null
+                : null
+            }}
+            <!-- {{
+              selectedClassRoom
+                ? selectedClassRoom == class.subjectName
+                  ? class.subjectName
+                  : undefined
+                : undefined
+            }} -->
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -41,21 +71,62 @@
           <th>Control</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Talha Khan</td>
-          <td>2019/01/01</td>
-          <td>
+      <tbody *ngIf="students">
+        <tr *ngFor="let student of students[selectedClass]">
+          <td
+            *ngIf="
+              selectedClassRoom
+                ? student.data.subjectName == selectedClassRoom
+                  ? true
+                  : false
+                : true
+            "
+          >
+            {{
+              selectedClassRoom
+                ? student.data.subjectName == selectedClassRoom
+                  ? student.data.studentName
+                  : undefined
+                : student.data.studentName
+            }}
+          </td>
+          <td
+            *ngIf="
+              selectedClassRoom
+                ? student.data.subjectName == selectedClassRoom
+                  ? true
+                  : false
+                : true
+            "
+          >
+            {{
+              selectedClassRoom
+                ? student.data.subjectName == selectedClassRoom
+                  ? student.data.addedOn
+                  : undefined
+                : student.data.addedOn
+            }}
+          </td>
+          <td
+            *ngIf="
+              selectedClassRoom
+                ? student.data.subjectName == selectedClassRoom
+                  ? true
+                  : false
+                : true
+            "
+          >
             <button
               class="btn btn btn-outline-info"
               matTooltip="View Profile"
               triggers="mouseenter:mouseleave"
+              (click)="viewProfile(student.data.studentId)"
             >
               <span><i class="fa fa-eye"></i> </span>
             </button>
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>Safi Ullah</td>
           <td>2019/01/01</td>
           <td>
@@ -80,7 +151,7 @@
               <span><i class="fa fa-eye"></i> </span>
             </button>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
 

@@ -60,11 +60,14 @@
                   #subjectOption
                   *ngFor="let subject of selectedClassSubjects; index as i"
                   [disabled]="
-                    pendingRequests.includes(subject.id) ? true : false
+                    pendingRequests.includes(subject.id) ||
+                    approvedRequests.includes(subject.id)
+                      ? true
+                      : false
                   "
                   [matTooltip]="
                     subjectOption.disabled
-                      ? 'Your request for this subject is pending!'
+                      ? 'Your request for this subject is either pending or approved!'
                       : ''
                   "
                   [value]="subject.id"

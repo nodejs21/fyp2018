@@ -1,61 +1,72 @@
-<!-- <p>
-  teacherrequests works!
-  * Teacher request card or list
-</p> -->
+<mat-form-field class="p-0">
+  <mat-label>Select request type</mat-label>
+  <mat-select name="selectedClassId" [(ngModel)]="selectedType">
+    <mat-option
+      *ngFor="let type of requestTypes"
+      [value]="type"
+      (click)="showRequests(type)"
+    >
+      {{ type | titlecase }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-
-
-<div class="animated fadeIn">
-    <div class="row">
-      <div class="col-4">
-        <div class="card text-white bg-dark">
-          <div class="card-header h4 ">
-            Teacher Name
-            <button
-              class="btn btn-sm btn-outline-info float-right ml-2"
-              matTooltip="View Profile"
-              triggers="mouseenter:mouseleave"
-            >
-              <span><i class="fa fa-eye"></i> </span>
-            </button>
-            <rating
-              class="ml-3"
-              [(ngModel)]="rate"
-              [max]="max"
-              [readonly]="isReadonly"
-              (onHover)="hoveringOver($event)"
-              (onLeave)="resetStar()"
-              [titles]="['one', 'two', 'three']"
-              name="rate"
-            ></rating>
-          </div>
-          <div class="card-body">
-            <div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item bg-dark p-1">
-                  <i class="icon-people"></i> Applied For :
-                  <strong>English</strong>
-                </li>
-              </ul>
-              <div class="row mt-3">
-                <div class="col-6">
-                  <button
-                    class="btn btn-sm btn-success form-control"
-                    matTooltip="Accept"
-                    triggers="mouseenter:mouseleave"
-                  >
-                    <span><i class="fa fa-check"></i> </span>
-                  </button>
-                </div>
-                <div class="col-6">
-                  <button
-                    class="btn btn-sm btn-danger form-control"
-                    matTooltip="Reject"
-                    triggers="mouseenter:mouseleave"
-                  >
-                    <span><i class="fa fa-times"></i> </span>
-                  </button>
-                </div>
+<div class="animated fadeIn" *ngIf="selectedType == 'pending'">
+  <div class="row">
+    <div class="col-3" *ngFor="let request of pendingRequests">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          {{ request.data.userName }}
+          <button
+            class="btn btn-sm btn-outline-info float-right ml-2"
+            matTooltip="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-eye"></i> </span>
+          </button>
+          <!-- (onHover)="hoveringOver($event)"
+          (onLeave)="resetStar()" -->
+          <rating
+            class="ml-3"
+            [(ngModel)]="rate"
+            [max]="max"
+            [readonly]="isReadonly"
+            [titles]="['one', 'two', 'three']"
+            name="rate"
+          ></rating>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Class :
+                <strong> {{ request.data.className }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Subject :
+                <strong> {{ request.data.subjectName }} </strong>
+              </li>
+            </ul>
+            <div class="row mt-3" *ngIf="selectedType == 'pending'">
+              <div class="col-6">
+                <button
+                  class="btn btn-sm btn-success form-control"
+                  matTooltip="Accept"
+                  triggers="mouseenter:mouseleave"
+                  (click)="updateRequestStatus(request.id, 'approved', request)"
+                >
+                  <span><i class="fa fa-check"></i> </span>
+                </button>
+              </div>
+              <div class="col-6">
+                <button
+                  class="btn btn-sm btn-danger form-control"
+                  matTooltip="Reject"
+                  triggers="mouseenter:mouseleave"
+                  (click)="updateRequestStatus(request.id, 'rejected')"
+                >
+                  <span><i class="fa fa-times"></i> </span>
+                </button>
               </div>
             </div>
           </div>
@@ -63,3 +74,138 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="animated fadeIn" *ngIf="selectedType == 'approved'">
+  <div class="row">
+    <div class="col-3" *ngFor="let request of approvedRequests">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          {{ request.data.userName }}
+          <button
+            class="btn btn-sm btn-outline-info float-right ml-2"
+            matTooltip="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-eye"></i> </span>
+          </button>
+          <!-- (onHover)="hoveringOver($event)"
+          (onLeave)="resetStar()" -->
+          <rating
+            class="ml-3"
+            [(ngModel)]="rate"
+            [max]="max"
+            [readonly]="isReadonly"
+            [titles]="['one', 'two', 'three']"
+            name="rate"
+          ></rating>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Class :
+                <strong> {{ request.data.className }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Subject :
+                <strong> {{ request.data.subjectName }} </strong>
+              </li>
+            </ul>
+            <div class="row mt-3" *ngIf="selectedType == 'pending'">
+              <div class="col-6">
+                <button
+                  class="btn btn-sm btn-success form-control"
+                  matTooltip="Accept"
+                  triggers="mouseenter:mouseleave"
+                  (click)="updateRequestStatus(request.id, 'approved', request)"
+                >
+                  <span><i class="fa fa-check"></i> </span>
+                </button>
+              </div>
+              <div class="col-6">
+                <button
+                  class="btn btn-sm btn-danger form-control"
+                  matTooltip="Reject"
+                  triggers="mouseenter:mouseleave"
+                  (click)="updateRequestStatus(request.id, 'rejected')"
+                >
+                  <span><i class="fa fa-times"></i> </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn" *ngIf="selectedType == 'rejected'">
+  <div class="row">
+    <div class="col-3" *ngFor="let request of rejectedRequests">
+      <div class="card text-white bg-dark">
+        <div class="card-header h4 ">
+          {{ request.data.userName }}
+          <button
+            class="btn btn-sm btn-outline-info float-right ml-2"
+            matTooltip="View Profile"
+            triggers="mouseenter:mouseleave"
+          >
+            <span><i class="fa fa-eye"></i> </span>
+          </button>
+          <!-- (onHover)="hoveringOver($event)"
+          (onLeave)="resetStar()" -->
+          <rating
+            class="ml-3"
+            [(ngModel)]="rate"
+            [max]="max"
+            [readonly]="isReadonly"
+            [titles]="['one', 'two', 'three']"
+            name="rate"
+          ></rating>
+        </div>
+        <div class="card-body">
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Class :
+                <strong> {{ request.data.className }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Subject :
+                <strong> {{ request.data.subjectName }} </strong>
+              </li>
+            </ul>
+            <div class="row mt-3" *ngIf="selectedType == 'pending'">
+              <div class="col-6">
+                <button
+                  class="btn btn-sm btn-success form-control"
+                  matTooltip="Accept"
+                  triggers="mouseenter:mouseleave"
+                  (click)="updateRequestStatus(request.id, 'approved', request)"
+                >
+                  <span><i class="fa fa-check"></i> </span>
+                </button>
+              </div>
+              <div class="col-6">
+                <button
+                  class="btn btn-sm btn-danger form-control"
+                  matTooltip="Reject"
+                  triggers="mouseenter:mouseleave"
+                  (click)="updateRequestStatus(request.id, 'rejected')"
+                >
+                  <span><i class="fa fa-times"></i> </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div
+  *ngIf="selectedType ? selectedType == 'pending' ? #pendingRequests : selectedType == 'approved' ? #approvedRequests : #rejectedRequests : undefined"
+></div> -->
