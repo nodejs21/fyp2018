@@ -47,8 +47,6 @@
                 <mat-label>Choose Students</mat-label>
                 <mat-select multiple>
                   <mat-option>Option 1 </mat-option>
-                  <mat-option>Option 1 </mat-option>
-                  <mat-option>Option 1 </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -57,33 +55,34 @@
           <div class="col-6">
             <div class="form-group">
               <mat-form-field>
-                <mat-label>Choose Days</mat-label>
+                <mat-label>Class days</mat-label>
                 <mat-select multiple>
-                  <mat-option>Monday</mat-option>
-                  <mat-option>Tuesday</mat-option>
-                  <mat-option>Wednesday</mat-option>
-                  <mat-option>Thursday</mat-option>
-                  <mat-option>Friday</mat-option>
-                  <mat-option>Saturday</mat-option>
-                  <mat-option>Sunday</mat-option>
+                  <mat-option value="day" *ngFor="let day of daysOfWeek">
+                    {{ day | titlecase }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-
             <div class="form-group">
               <mat-form-field>
-                <mat-label>Choose Time</mat-label>
+                <mat-label>Class timing</mat-label>
                 <mat-select>
-                  <mat-option>5 PM</mat-option>
-                  <mat-option>6 PM</mat-option>
-                  <mat-option>7 PM</mat-option>
+                  <mat-option value="hour" *ngFor="let hour of hoursOfDay">
+                    {{ hour }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div class="form-group">
               <mat-form-field class="example-full-width">
                 <mat-label>Class Duration</mat-label>
-                <input matInput placeholder="In Minutes" type="number" min="1" value="" />
+                <input
+                  matInput
+                  placeholder="In Minutes"
+                  type="number"
+                  min="1"
+                  value=""
+                />
               </mat-form-field>
             </div>
           </div>
