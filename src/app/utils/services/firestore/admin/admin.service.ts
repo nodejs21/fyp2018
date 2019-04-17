@@ -112,4 +112,130 @@ export class AdminService {
       .doc(subjectId)
       .delete();
   }
+
+  getTeacherRequests(status) {
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('requests', ref =>
+        ref.where('userType', '==', 'teacher').where('status', '==', status)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  getStudentRequests(status) {
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('requests', ref =>
+        ref.where('userType', '==', 'student').where('status', '==', status)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  async updateRequestStatus(requestId, requestStatus, request?) {
+    this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('requests')
+      .doc(requestId)
+      .update({ status: requestStatus })
+      .then(() => {
+        if (requestStatus == 'approved' && request.data.userType == 'teacher') {
+          return this.addTeacher(request);
+        }
+        if (requestStatus == 'approved' && request.data.userType == 'student') {
+          return this.addStudent(request);
+        }
+      });
+  }
+
+  private addTeacher(request) {
+    const payload = {
+      teacherId: request.data.userId,
+      classId: request.data.classId,
+      className: request.data.className,
+      subjectName: request.data.subjectName,
+      teacherName: request.data.userName,
+      subjectId: request.data.subjectId,
+      addedOn: new Date()
+    };
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('teachers')
+      .add(payload);
+  }
+
+  private addStudent(request) {
+    const payload = {
+      studentId: request.data.userId,
+      classId: request.data.classId,
+      className: request.data.className,
+      subjectName: request.data.subjectName,
+      studentName: request.data.userName,
+      subjectId: request.data.subjectId,
+      addedOn: new Date()
+    };
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('students')
+      .add(payload);
+  }
+
+  getTeachers() {
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('teachers')
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  getStudents() {
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('students')
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  createClassroom(classroom) {
+    console.log(this.user.uid);
+    console.log(classroom);
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('classrooms')
+      .add(classroom);
+  }
+  
 }
