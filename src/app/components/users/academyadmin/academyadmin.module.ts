@@ -17,7 +17,7 @@ import { AcademydetailComponent } from "./details/academydetail/academydetail.co
 import { TeacherdetailComponent } from "./details/teacherdetail/teacherdetail.component";
 import { AcademyadminRoutingModule } from "./academyadmin-routing.module";
 import { AcademyadminComponent } from "./academyadmin.component";
-import { FormBuilder, FormsModule } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "../../../material.module";
 import { TooltipModule } from "ngx-bootstrap/tooltip";
 import { RatingModule } from "ngx-bootstrap/rating";
@@ -60,7 +60,8 @@ import { CreateclassroomComponent } from "./classrooms/createclassroom/createcla
     ProgressbarModule.forRoot(),
     FormsModule,
     MaterialModule,
-    ConfirmdeletionModule
+    ConfirmdeletionModule,
+    ReactiveFormsModule
   ],
   exports: [AcademyadmindashboardComponent],
   entryComponents: [

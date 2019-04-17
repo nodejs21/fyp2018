@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../auth/auth.service';
-import { map, flatMap } from 'rxjs/operators';
-import { firestore } from 'firebase';
-import { from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -155,7 +153,7 @@ export class AdminService {
       .collection('requests')
       .doc(requestId)
       .update({ status: requestStatus })
-      .then(success => {
+      .then(() => {
         if (requestStatus == 'approved' && request.data.userType == 'teacher') {
           return this.addTeacher(request);
         }
@@ -173,7 +171,7 @@ export class AdminService {
       subjectName: request.data.subjectName,
       teacherName: request.data.userName,
       subjectId: request.data.subjectId,
-      addedOn: new Date().toLocaleString()
+      addedOn: new Date()
     };
     return this.afs
       .collection('academies')
@@ -190,7 +188,7 @@ export class AdminService {
       subjectName: request.data.subjectName,
       studentName: request.data.userName,
       subjectId: request.data.subjectId,
-      addedOn: new Date().toLocaleString()
+      addedOn: new Date()
     };
     return this.afs
       .collection('academies')
@@ -228,4 +226,15 @@ export class AdminService {
         })
       );
   }
+
+  createClassroom(classroom) {
+    console.log(this.user.uid);
+    console.log(classroom);
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('classrooms')
+      .add(classroom);
+  }
+  
 }

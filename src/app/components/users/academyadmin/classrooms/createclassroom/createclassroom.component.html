@@ -1,58 +1,121 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <form>
+      <form [formGroup]="classroomForm">
         <div>
-          <div>
-            <h3>
-              Create Classroom
-            </h3>
+          <h3>
+            Create Classroom
+          </h3>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Choose Class</mat-label>
+                <mat-select formControlName="class">
+                  <mat-option
+                    *ngFor="let class of classes"
+                    [value]="{
+                      className: class.data.className,
+                      classId: class.id
+                    }"
+                    (click)="showSubjects(class.id)"
+                    >{{ class.data.className }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Choose Subject</mat-label>
+                <mat-select formControlName="subject">
+                  <mat-option
+                    *ngFor="let subject of selectedClassSubjects"
+                    [value]="{
+                      subjectName: subject.data.subjectName,
+                      subjectId: subject.id
+                    }"
+                    (click)="showTeachers(subject.id); showStudents(subject.id)"
+                    >{{ subject.data.subjectName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Choose Teacher</mat-label>
+                <mat-select formControlName="teacher">
+                  <mat-option
+                    *ngFor="let cteacher of selectedSubjectTeachers"
+                    [value]="{
+                      teacherName: cteacher.data.teacherName,
+                      teacherId: cteacher.data.teacherId
+                    }"
+                    >{{ cteacher.data.teacherName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Choose Students</mat-label>
+                <mat-select multiple formControlName="students">
+                  <mat-option
+                    *ngFor="let cstudent of selectedSubjectStudents"
+                    [value]="{
+                      studentName: cstudent.data.studentName,
+                      studentId: cstudent.data.studentId
+                    }"
+                    >{{ cstudent.data.studentName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
-          <div class="form-group">
-            <mat-form-field>
-              <mat-label>Choose Class</mat-label>
-              <mat-select name="classId" [(ngModel)]="classroom.classId">
-                <mat-option value="class.id" *ngFor="let class of classes" (click)="showSubjects(class.id)">{{
-                  class.data.className
-                }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+          <div class="col-6">
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Class days</mat-label>
+                <mat-select multiple formControlName="days">
+                  <mat-option [value]="day" *ngFor="let day of daysOfWeek">
+                    {{ day | titlecase }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-label>Class timing</mat-label>
+                <mat-select name="time" formControlName="time">
+                  <mat-option [value]="hour" *ngFor="let hour of hoursOfDay">
+                    {{ hour }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="example-full-width">
+                <mat-label>Class Duration</mat-label>
+                <input
+                  matInput
+                  placeholder="In Minutes"
+                  type="number"
+                  min="1"
+                  min="200"
+                  formControlName="duration"
+                />
+              </mat-form-field>
+            </div>
           </div>
-          <div class="form-group">
-            <mat-form-field>
-              <mat-label>Choose Subject</mat-label>
-              <mat-select name="subjectId" [(ngModel)]="classroom.subjectId">
-                <mat-option value="subject.id" *ngFor="let subject of selectedClassSubjects"
-                  >{{ subject.data.subjectName }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-form-field>
-              <mat-label>Choose Teacher</mat-label>
-              <mat-select>
-                <mat-option> </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="form-group">
-            <mat-form-field>
-              <mat-label>Choose Students</mat-label>
-              <mat-select multiple>
-                <mat-option>Option 1 </mat-option>
-                <mat-option>Option 1 </mat-option>
-                <mat-option>Option 1 </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="row">
-            <button
-              class="btn btn-outline-info btn-block border-0 font-weight-bold"
-            >
-              Create
-            </button>
-          </div>
+        </div>
+        <div class="row">
+          <button
+            [disabled]="!classroomForm.valid"
+            class="btn btn-outline-info btn-block border-0 font-weight-bold"
+            (click)="createClass()"
+          >
+            Create Classroom
+          </button>
         </div>
       </form>
     </div>
