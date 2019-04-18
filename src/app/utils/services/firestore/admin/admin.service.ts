@@ -236,5 +236,4 @@ export class AdminService {
       .collection('classrooms')
       .add(classroom);
   }
-  
 }
