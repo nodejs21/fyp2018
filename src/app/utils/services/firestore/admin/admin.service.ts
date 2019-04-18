@@ -228,12 +228,34 @@ export class AdminService {
   }
 
   createClassroom(classroom) {
-    console.log(this.user.uid);
-    console.log(classroom);
     return this.afs
       .collection('academies')
       .doc(this.user.uid)
       .collection('classrooms')
       .add(classroom);
+  }
+
+  getClassrooms() {
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('classrooms')
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  deleteClassroom(id: string) {
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`classrooms`)
+      .doc(id)
+      .delete();
   }
 }

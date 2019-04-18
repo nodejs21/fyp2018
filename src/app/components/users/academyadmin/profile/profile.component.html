@@ -1,201 +1,719 @@
 <div class="row">
-    <div class="col-sm-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="d-inline">Academy Admin Profile Page</h3>
-          <!-- <button
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Academy Admin Profile Page</h3>
+        <!-- <button
             type="submit"
             class="btn btn-warning float-right text-weight-bold d-inline"
           >
             Edit Profile
           </button> -->
-          <button
-            class="btn btn-oultine-warning float-right"
-            popover="Edit"
-            triggers="mouseenter:mouseleave"
-          >
-            <span> <i class="text-warning fa fa-lg fa-pencil"></i> </span>
-          </button>
-        </div>
-        <div class="card-body">
-          <form action="">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="firstName" class="font-weight-bold"
-                    >First Name</label
-                  >
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="fa fa-user"></i
-                      ></span>
+        <!-- <button
+          (click)="editState = !editState"
+          class="btn btn-oultine-warning float-right"
+          popover="Edit"
+          triggers="mouseenter:mouseleave"
+        >
+          <span> <i class="text-warning fa fa-lg fa-pencil"></i> </span>
+        </button> -->
+      </div>
+      <div class="card-body" *ngIf="academyDetailsForm">
+        <div class="container">
+          <mat-horizontal-stepper [linear]="false" #stepper>
+            <mat-step [stepControl]="basicUserForm">
+              <ng-template matStepLabel>User Basic Info</ng-template>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 mx-auto">
+                    <div class="card mx-4">
+                      <div class="card-body p-4">
+                        <form [formGroup]="basicUserForm">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <h1>Update</h1>
+                              <p class="text-muted">Update your account</p>
+                            </div>
+                            <div class="col-md-6">
+                              <img
+                                [src]="downloadURL"
+                                class="rounded-circle img-fluid float-right embed-responsive-item"
+                                style="height: 50px; width: 50px;"
+                                (click)="fileInput.click()"
+                              />
+                              <input
+                                type="file"
+                                hidden
+                                #fileInput
+                                (change)="handler($event)"
+                              />
+                            </div>
+                          </div>
+
+                          <!-- <div class="row">
+                              <div class="col 6">
+                                <button
+                                (click)="fileInput.click()"
+                                  class="btn btn-outline-info btn-block border-0 font-weight-bold"
+                                >
+                                  Attach File
+                                </button>
+                              </div>
+                              <input hidden type="file" #fileInput />
+                            </div> -->
+
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"
+                                ><i class="icon-user"></i
+                              ></span>
+                            </div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              [ngClass]="{
+                                'is-valid': !firstName.errors,
+                                'is-invalid':
+                                  firstName.errors && firstName.touched
+                              }"
+                              placeholder="First Name"
+                              formControlName="firstName"
+                            />
+                            <input
+                              type="text"
+                              class="form-control"
+                              [ngClass]="{
+                                'is-valid': !lastName.errors,
+                                'is-invalid':
+                                  lastName.errors && lastName.touched
+                              }"
+                              placeholder="Last Name"
+                              formControlName="lastName"
+                            />
+                          </div>
+                          <div
+                            class="invalid-feedback d-block"
+                            *ngIf="
+                              firstName.touched &&
+                              (firstName.errors || lastName.errors)
+                            "
+                          >
+                            First and Last both names are required.
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">@</span>
+                            </div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              [ngClass]="{
+                                'is-valid': !email.errors,
+                                'is-invalid': email.errors && email.touched
+                              }"
+                              placeholder="Email"
+                              formControlName="email"
+                            />
+                          </div>
+                          <div
+                            class="invalid-feedback d-block"
+                            *ngIf="email.touched && email.errors"
+                          >
+                            Email is required.
+                          </div>
+
+                          <div
+                            class="input-group align-center d-flex justify-content-center"
+                          >
+                            <label
+                              class="switch switch-lg switch-label switch-outline-success"
+                              tooltip="Gender"
+                            >
+                              <input
+                                type="checkbox"
+                                class="switch-input"
+                                formControlName="gender"
+                                checked="true"
+                              />
+                              <span
+                                class="switch-slider"
+                                data-checked="👨‍🦱"
+                                data-unchecked="👩‍🦰"
+                              ></span>
+                            </label>
+                          </div>
+                          <!-- <div
+                            class="btn-group btn-group-sm d-flex mb-2"
+                            btnRadioGroup
+                            formControlName="userType"
+                            tooltip="User Type"
+                          >
+                            <label
+                              btnRadio="academyadmin"
+                              class="btn btn-outline-dark"
+                            >
+                              Academy Admin
+                            </label>
+                            <label
+                              btnRadio="teacher"
+                              class="btn btn-outline-dark"
+                            >
+                              Teacher
+                            </label>
+                            <label
+                              btnRadio="student"
+                              class="btn btn-outline-dark"
+                            >
+                              Student
+                            </label>
+                          </div> -->
+                          <button
+                            class="btn btn-block btn-success"
+                            matStepperNext
+                          >
+                            Next
+                          </button>
+                        </form>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
+                          <!-- <div class="col-4">
+                                <button
+                                  class="btn btn-block btn-facebook"
+                                  type="button"
+                                  (click)="facebookLogin()"
+                                >
+                                  <i class="fa fa-facebook"></i>
+                                </button>
+                              </div> -->
+
+                          <!-- <div class="col-4">
+                                <button class="btn btn-block btn-twitter" type="button">
+                                  <i class="fa fa-twitter"></i>
+                                </button>
+                              </div> -->
+                        </div>
+                      </div>
                     </div>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="name"
-                      class="form-control"
-                      placeholder="First Name"
-                    />
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="lastName" class="font-weight-bold">Last Name</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="fa fa-user"></i>
-                      </span>
+            </mat-step>
+            <mat-step
+              [stepControl]="specificUserForm"
+              errorMessage="Address is required."
+            >
+              <ng-template matStepLabel
+                >{{ basicUserForm.value.userType | titlecase }} Specific
+                Info</ng-template
+              >
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 mx-auto">
+                    <div
+                      class="card mx-4"
+                      [hidden]="basicUserForm.value.userType != 'student'"
+                    >
+                      <div class="card-body p-4">
+                        <form [formGroup]="specificUserForm">
+                          <div class="form-group">
+                            <label class="font-weight-bold"
+                              >Date of Birth</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                  ><i class="fa fa-user"></i
+                                ></span>
+                              </div>
+                              <input
+                                class="form-control"
+                                formControlName="dob"
+                                type="date"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Address</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                  ><i class="fa fa-user"></i
+                                ></span>
+                              </div>
+                              <input
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !address.errors,
+                                  'is-invalid':
+                                    address.errors && address.touched
+                                }"
+                                placeholder="Address"
+                                formControlName="address"
+                                type="text"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="address.touched && address.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.required"
+                            >
+                              Address is required.
+                            </div>
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.minlength"
+                            >
+                              Address must have atleast 5 characters.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">City</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                  ><i class="fa fa-user"></i
+                                ></span>
+                              </div>
+                              <input
+                                class="form-control is-valid"
+                                [ngClass]="{
+                                  'is-valid': !city.errors,
+                                  'is-invalid': city.touched && city.errors
+                                }"
+                                formControlName="city"
+                                placeholder="City"
+                                type="text"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="invalid-feedback d-block"
+                            *ngIf="
+                              city.errors &&
+                              city.errors.required &&
+                              city.touched
+                            "
+                          >
+                            City is required.
+                          </div>
+                          <div
+                            class="invalid-feedback d-block"
+                            *ngIf="
+                              city.errors &&
+                              city.errors.minlength &&
+                              city.touched
+                            "
+                          >
+                            City name must have 3 or more characters.
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Telephone</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                  ><i class="fa fa-user"></i
+                                ></span>
+                              </div>
+                              <input
+                                class="form-control"
+                                formControlName="telephone"
+                                placeholder="Telephone"
+                                type="tel"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
+                          <button
+                            class="btn btn-block btn-success"
+                            (click)="signUp()"
+                            [disabled]="!specificUserForm.valid"
+                          >
+                            Create Account
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="name"
-                      class="form-control"
-                      placeholder="Last Name"
-                    />
+                    <div
+                      class="card mx-4"
+                      [hidden]="basicUserForm.value.userType != 'teacher'"
+                    >
+                      <div class="card-body p-4">
+                        <form [formGroup]="specificUserForm">
+                          <div class="form-group">
+                            <label class="font-weight-bold"
+                              >Date of Birth</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="date"
+                                formControlName="dob"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Address</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="address"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !address.errors,
+                                  'is-invalid':
+                                    address.errors && address.touched
+                                }"
+                                placeholder="Address"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="address.touched && address.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.required"
+                            >
+                              Address is required.
+                            </div>
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.minlength"
+                            >
+                              Address must have atleast 5 characters.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">City</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="city"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !city.errors,
+                                  'is-invalid': city.errors && city.touched
+                                }"
+                                placeholder="City"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="city.touched && city.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="city.errors.required"
+                            >
+                              City is required.
+                            </div>
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="city.errors.minlength"
+                            >
+                              City must have atleast 3 characters.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Telephone</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="tel"
+                                formControlName="telephone"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !telephone.errors,
+                                  'is-invalid':
+                                    telephone.errors && telephone.touched
+                                }"
+                                placeholder="Telephone"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="telephone.touched && telephone.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="telephone.errors.required"
+                            >
+                              Telephone is required.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold"
+                              >Qualification</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="tel"
+                                formControlName="qualification"
+                                class="form-control"
+                                placeholder="E.g: Phd in Electronics [Yet to be decided]"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
+                          <button
+                            class="btn btn-block btn-success"
+                            (click)="signUp()"
+                            [disabled]="!specificUserForm.valid"
+                          >
+                            Create Account
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="card mx-4"
+                      [hidden]="basicUserForm.value.userType != 'academyadmin'"
+                    >
+                      <div class="card-body p-4">
+                        <form [formGroup]="specificUserForm">
+                          <div class="form-group">
+                            <label class="font-weight-bold"
+                              >Date of Birth</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="date"
+                                formControlName="dob"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Address</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="address"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !address.errors,
+                                  'is-invalid':
+                                    address.errors && address.touched
+                                }"
+                                placeholder="Address"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="address.touched && address.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.required"
+                            >
+                              Address is required.
+                            </div>
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.minlength"
+                            >
+                              Address must have atleast 5 characters.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">City</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="city"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !city.errors,
+                                  'is-invalid': city.errors && city.touched
+                                }"
+                                placeholder="City"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="city.touched && city.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="city.errors.required"
+                            >
+                              City is required.
+                            </div>
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="city.errors.minlength"
+                            >
+                              City must have atleast 3 characters.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Telephone</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="tel"
+                                formControlName="telephone"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !telephone.errors,
+                                  'is-invalid':
+                                    telephone.errors && telephone.touched
+                                }"
+                                placeholder="Telephone"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div *ngIf="telephone.touched && telephone.errors">
+                        <div
+                          class="invalid-feedback d-block"
+                          *ngIf="telephone.errors.required"
+                        >
+                          Telephone is required.
+                        </div>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
+                          <button
+                            class="btn btn-block btn-success"
+                            matStepperNext
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="email" class="font-weight-bold">Email</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"
-                    ><i class="fa fa-envelope"></i
-                  ></span>
+              <!-- <div>
+                      <button mat-button matStepperPrevious>Back</button>
+                      <button mat-button matStepperNext>Next</button>
+                    </div> -->
+            </mat-step>
+            <mat-step *ngIf="basicUserForm.value.userType == 'academyadmin'">
+              <ng-template matStepLabel>Academy Details</ng-template>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 mx-auto">
+                    <div class="card mx-4">
+                      <div class="card-body p-4">
+                        <form [formGroup]="academyDetailsForm">
+                          <div class="row">
+                            <div class="col-md-9">
+                              <label class="font-weight-bold">
+                                Academy Logo
+                              </label>
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                [src]="downloadURL"
+                                class="rounded-circle img-fluid float-right embed-responsive-item"
+                                alt="Cinque Terre"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Academy Name</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                  ><i class="fa fa-user"></i
+                                ></span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="academyName"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Description</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text"
+                                  ><i class="fa fa-user"></i
+                                ></span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="academyDescription"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
+                          <button
+                            class="btn btn-block btn-success"
+                            (click)="signUp()"
+                          >
+                            Update Profile
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="form-control"
-                  placeholder="Email"
-                  autocomplete="email"
-                />
               </div>
-            </div>
-            <div class="form-group">
-              <label for="dob" class="font-weight-bold">Date of Birth</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </div>
-                <input type="date" id="dob" name="dob" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="gender" class="font-weight-bold">Gender</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  id="dob"
-                  name="dob"
-                  class="form-control"
-                  placeholder="Gender"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="age" class="font-weight-bold">Age</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </div>
-                <input
-                  type="number"
-                  id="age"
-                  name="age"
-                  class="form-control"
-                  disabled="true"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="address" class="font-weight-bold">Address</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  id="dob"
-                  name="dob"
-                  class="form-control"
-                  placeholder="Address"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="city" class="font-weight-bold">City</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  id="dob"
-                  name="dob"
-                  class="form-control"
-                  placeholder="City"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="tel" class="font-weight-bold">Telephone</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </div>
-                <input
-                  type="tel"
-                  id="dob"
-                  name="dob"
-                  class="form-control"
-                  placeholder="Telephone"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="qual" class="font-weight-bold">Qualification</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="fa fa-user"></i>
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  id="dob"
-                  name="dob"
-                  class="form-control"
-                  placeholder="Qualification"
-                />
-              </div>
-            </div>
-            
-          </form>
+            </mat-step>
+            <!-- <mat-step>
+                    <ng-template matStepLabel>Done</ng-template>
+                    You are now done.
+                    <div>
+                      <button mat-button matStepperPrevious>Back</button>
+                      <button mat-button (click)="stepper.reset()">Reset</button>
+                    </div>
+                  </mat-step> -->
+          </mat-horizontal-stepper>
         </div>
       </div>
     </div>
-   
   </div>
+</div>
