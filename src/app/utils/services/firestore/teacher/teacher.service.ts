@@ -52,10 +52,44 @@ export class TeacherService {
       );
   }
 
+  // getTeacherClasses(teacherId) {
+  //   return this.afs
+  //     .collection('academies')
+  //     .doc(academyId)
+  //     .collection('subjects')
+  //     .snapshotChanges()
+  //     .pipe(
+  //       map(res => {
+  //         return res.map(data => {
+  //           return { id: data.payload.doc.id, data: data.payload.doc.data() };
+  //         });
+  //       })
+  //     );
+  // }
+
   getSubjects(academyId) {
     return this.afs.collection('academies').doc(academyId);
   }
 
+  createQuiz(quiz: any, academyId, classId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classId)
+      .collection('quizes')
+      .add(quiz);
+  }
+
+  createAssignment(assignment: any, academyId, classId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classId)
+      .collection('assignments')
+      .add(assignment);
+  }
   // applyForSubjects(payload) {
   //   return new Promise(async (resolve, reject) => {
   //     try {

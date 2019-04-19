@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { AdminService } from '../../../../utils/services/firestore/admin/admin.service';
+import { MatDialog } from '@angular/material';
+import { ProfilepopupComponent } from '../../../shared/profilepopup/profilepopup.component';
 
 export interface PeriodicElement {
   name: string;
@@ -39,7 +41,11 @@ export class StudentsComponent implements OnInit {
   classWithSubjects;
   // data: any = {};
 
-  constructor(private _auth: AuthService, private _admin: AdminService) {}
+  constructor(
+    private _auth: AuthService,
+    private _admin: AdminService,
+    private _dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
@@ -82,7 +88,11 @@ export class StudentsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  viewProfile(studentId) {
-    console.log(studentId);
+  viewProfile(id) {
+    console.log(id);
+
+    this._dialog.open(ProfilepopupComponent, {
+      data: id
+    });
   }
 }

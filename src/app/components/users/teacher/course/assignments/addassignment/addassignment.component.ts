@@ -3,6 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { TeacherService } from '../../../../../../utils/services/firestore/teacher/teacher.service';
+import { AuthService } from '../../../../../../utils/services/auth/auth.service';
 
 @Component({
   selector: 'addassignment',
@@ -12,20 +15,40 @@ import { AngularFireStorage } from '@angular/fire/storage';
 export class AddassignmentComponent implements OnInit {
   assignmentTitle = new FormControl();
   assignmentMarks = new FormControl();
-  classes = [9, 10, 11, 12];
+  classes = ['9', '8'];
   selectedClass;
-  subjects = ['Maths', 'Chemistry', 'Physics', 'Biology'];
-  selectedSubjects;
+  subjects = ['Math', 'Urdu'];
+  selectedSubject;
 
   uploadedFile;
+  assignmentForm: FormGroup;
 
   constructor(
     private storage: AngularFireStorage,
     public dialogRef: MatDialogRef<AddassignmentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data = []
+    @Inject(MAT_DIALOG_DATA) public data = [],
+    private formBuilder: FormBuilder,
+    private teacherService: TeacherService,
+    private _auth: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // this._auth.user.subscribe(user => {
+    //   this.teacherService.getClassesDetails(user.uid).subscribe(classes => {
+    //     this.classes = classes;
+    //     console.log('classes', classes);
+    //   });
+    // });
+
+    this.assignmentForm = this.formBuilder.group({
+      class: [''],
+      subject: [''],
+      title: [''],
+      totalMarks: [''],
+      dueDate: [''],
+      uploadedFile: [this.uploadedFile]
+    });
+  }
 
   handler(e) {
     const file = e.target.files[0];
@@ -57,5 +80,29 @@ export class AddassignmentComponent implements OnInit {
     //   console.log(reader.result);
     // };
     // this.uploadFirebaseStorage(file);
+  }
+
+  get class() {
+    return this.assignmentForm.get('class');
+  }
+
+  get subject() {
+    return this.assignmentForm.get('subject');
+  }
+
+  get title() {
+    return this.assignmentForm.get('title');
+  }
+
+  get totalMarks() {
+    return this.assignmentForm.get('totalMarks');
+  }
+
+  get dueDate() {
+    return this.assignmentForm.get('dueDate');
+  }
+
+  createAssignment() {
+    console.log(this.assignmentForm.value);
   }
 }

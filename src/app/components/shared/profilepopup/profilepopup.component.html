@@ -1,0 +1,21 @@
+<div class="row" *ngIf="user" style="min-width: 360px;">
+  <div class="col-md-4 p-1">
+    <img [src]="user.photoURL" alt="" height="100" width="100" />
+  </div>
+  <div class="col-md-4 ">
+    <strong> Name: </strong> <br />
+    <p>{{ user.firstName }}</p>
+    <br />
+    <strong> Gender: </strong> <br />
+    <p *ngIf="user.gender">Male</p>
+    <p *ngIf="!user.gender">Female</p>
+  </div>
+
+  <div class="col-md-4">
+    <strong> Email: </strong> <br />
+    <p>{{ user.email }}</p>
+    <br />
+    <strong> Type: </strong> <br />
+    <p>{{ user.userType }}</p>
+  </div>
+</div>

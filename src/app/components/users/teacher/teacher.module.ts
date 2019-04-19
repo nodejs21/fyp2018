@@ -30,7 +30,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { CreateassignmentComponent } from './createassignment/createassignment.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-
+import { SharedModule } from '../../shared/shared.module';
+import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.component';
 @NgModule({
   declarations: [
     AssignmentsComponent,
@@ -72,9 +73,14 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     SearchacademyModule,
     MaterialModule,
     HttpClientModule,
-    AngularEditorModule
+    AngularEditorModule,
+    SharedModule
   ],
-  entryComponents: [SearchacademyComponent, AddassignmentComponent],
+  entryComponents: [
+    SearchacademyComponent,
+    AddassignmentComponent,
+    ProfilepopupComponent
+  ],
   exports: [TeacherdashboardComponent]
 })
 export class TeacherModule {}

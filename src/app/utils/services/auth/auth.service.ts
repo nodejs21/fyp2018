@@ -154,6 +154,13 @@ export class AuthService {
     }
   }
 
+  getUser(id: string) {
+    return this.afs
+      .collection('users')
+      .doc(id)
+      .valueChanges();
+  }
+
   getUserSpecificInfo(type: string, id: string) {
     return this.afs
       .collection(`${type}s`)
