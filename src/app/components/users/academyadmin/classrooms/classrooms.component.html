@@ -5,23 +5,25 @@
 </p> -->
 
 <div class="animated fadeIn">
-  <div class="col-sm-6 col-md-4 col-lg-2 pb-4">
-    <button
-      class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
-      matTooltip="Add Classroom"
-      triggers="mouseenter:mouseleave"
-      (click)="openDialog()"
-    >
-      <p class="display-1 text-dark">+</p>
-      <!-- <span><i class="text-dark fa fa-plus display-4"></i></span> -->
-    </button>
-  </div>
+  <div class="col-sm-6 col-md-4 col-lg-2 pb-4"></div>
   <div class="row">
-    <div class="col-4">
-      <div class="card text-white bg-dark">
+    <div class="col-md-3">
+      <button
+        class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
+        tooltip="Add Classroom"
+        triggers="mouseenter:mouseleave"
+        (click)="openDialog()"
+      >
+        <p class="display-1 text-dark">+</p>
+        <!-- <span><i class="text-dark fa fa-plus display-4"></i></span> -->
+      </button>
+    </div>
+    <div class="col-md-3" *ngFor="let classroom of classrooms">
+      <div class="card text-white bg-dark h-100">
         <div class="card-header h4 ">
-          Maths
+          {{ classroom.data.subject.subjectName }}
           <button
+            (click)="deleteClassroom(classroom.id)"
             class="btn btn-sm btn-outline-danger  float-right ml-2"
             popover="Delete"
             triggers="mouseenter:mouseleave"
@@ -33,10 +35,12 @@
           <div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Students : <strong> 50 </strong>
+                <i class="icon-people"></i> Students :
+                <strong> {{ classroom.data.students.length }} </strong>
               </li>
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-user"></i> Teacher : <strong> Safi </strong>
+                <i class="icon-user"></i> Teacher :
+                <strong> {{ classroom.data.teacher.name }} </strong>
               </li>
               <li class="list-group-item bg-dark p-1">Performance Graph</li>
             </ul>

@@ -16,6 +16,7 @@ import { RequestssentComponent } from './requests/requestssent/requestssent.comp
 import { TeacherdashboardComponent } from './teacherdashboard/teacherdashboard.component';
 import { MakequizComponent } from './makequiz/makequiz.component';
 import { TeacherComponent } from './teacher.component';
+import { CreateassignmentComponent } from './createassignment/createassignment.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -55,6 +56,7 @@ const routes: Routes = [
         ]
       },
       { path: 'makequiz', component: MakequizComponent },
+      { path: 'createassignment', component: CreateassignmentComponent },
       { path: 'profile', component: ProfileComponent },
       {
         path: 'requests',

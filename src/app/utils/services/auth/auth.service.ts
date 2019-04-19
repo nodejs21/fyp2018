@@ -122,6 +122,52 @@ export class AuthService {
     }
   }
 
+  updateUser(user, uid) {
+    user.userBasicInfo.uid = uid;
+    user.userSpecificInfo.uid = uid;
+    user.userSpecificInfo.uid = uid;
+    console.log(user);
+    /* below if else statements ko refactor krna a */
+    this.afs
+      .collection('users')
+      .doc(uid)
+      .update(user.userBasicInfo);
+    if (user.userBasicInfo.userType === 'teacher') {
+      this.afs
+        .collection('teachers')
+        .doc(uid)
+        .update(user.userSpecificInfo);
+    } else if (user.userBasicInfo.userType === 'student') {
+      this.afs
+        .collection('students')
+        .doc(uid)
+        .update(user.userSpecificInfo);
+    } else if (user.userBasicInfo.userType === 'academyadmin') {
+      this.afs
+        .collection('academyadmins')
+        .doc(uid)
+        .update(user.userSpecificInfo);
+      this.afs
+        .collection('academies')
+        .doc(uid)
+        .update(user.academyDetails);
+    }
+  }
+
+  getUserSpecificInfo(type: string, id: string) {
+    return this.afs
+      .collection(`${type}s`)
+      .doc(id)
+      .valueChanges();
+  }
+
+  getAcademyDetails(id: string) {
+    return this.afs
+      .collection(`academies`)
+      .doc(id)
+      .valueChanges();
+  }
+
   signIn(email, password) {
     console.log(email, password);
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);

@@ -56,6 +56,9 @@ import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/account/login/login.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AuthModule } from './utils/services/auth/auth.module';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { HttpClientModule } from '@angular/common/http';
+
 // import { LoginComponent } from './views/login/login.component';
 
 @NgModule({
@@ -74,13 +77,15 @@ import { AuthModule } from './utils/services/auth/auth.module';
     ButtonsModule.forRoot(),
     TooltipModule.forRoot(),
     ChartsModule,
+    AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     // AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    AuthModule
+    AuthModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
