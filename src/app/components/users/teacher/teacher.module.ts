@@ -32,6 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { SharedModule } from '../../shared/shared.module';
 import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.component';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+
 @NgModule({
   declarations: [
     AssignmentsComponent,
@@ -68,6 +70,7 @@ import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.co
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
+    ButtonsModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     SearchacademyModule,
