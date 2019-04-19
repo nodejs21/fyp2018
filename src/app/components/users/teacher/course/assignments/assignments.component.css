@@ -9,8 +9,15 @@ table {
   width: 100%;
 }
 
+.angular-editor-textarea {
+  background-color: white !important;
+}
+
+body {
+  background: white;
+}
 /* .mat-form-field { */
-  /* font-size: 14px; */
-  /* width: 100%; */
-  /* overflow: auto; */
+/* font-size: 14px; */
+/* width: 100%; */
+/* overflow: auto; */
 /* } */

@@ -107,6 +107,11 @@ const teacher: NavData[] = [
     icon: 'icon-puzzle'
   },
   {
+    name: 'Make Assignment',
+    url: `${teacherPrefix}/createassignment`,
+    icon: 'icon-puzzle'
+  },
+  {
     name: 'Results',
     url: `${teacherPrefix}/course/result`,
     icon: 'icon-puzzle'

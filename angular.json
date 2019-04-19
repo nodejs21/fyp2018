@@ -129,7 +129,5 @@
       "prefix": "app"
     }
   },
-  "cli": {
-    "defaultCollection": "@ngxs/schematics"
-  }
+  "cli": {}
 }

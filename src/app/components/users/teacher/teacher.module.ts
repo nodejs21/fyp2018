@@ -27,10 +27,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
 import { AddassignmentComponent } from './course/assignments/addassignment/addassignment.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CreateassignmentComponent } from './createassignment/createassignment.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
-    
     AssignmentsComponent,
     TeacherComponent,
     TeacherdashboardComponent,
@@ -54,7 +56,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     InvitationsComponent,
     RequestssentComponent,
     MakequizComponent,
-    AddassignmentComponent
+    AddassignmentComponent,
+    CreateassignmentComponent
   ],
   imports: [
     CommonModule,
@@ -67,9 +70,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FormsModule,
     ReactiveFormsModule,
     SearchacademyModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+    AngularEditorModule
   ],
-  entryComponents: [SearchacademyComponent,AddassignmentComponent],
+  entryComponents: [SearchacademyComponent, AddassignmentComponent],
   exports: [TeacherdashboardComponent]
 })
 export class TeacherModule {}

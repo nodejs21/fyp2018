@@ -26,6 +26,9 @@ export class ProfileComponent implements OnInit {
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
   academyDetailsForm: FormGroup;
+
+  user;
+
   downloadURL =
     'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
 
@@ -43,6 +46,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
+      this.user = user;
       this.basicUserForm = this._formBuilder.group({
         firstName: [user.firstName, Validators.required],
         lastName: [user.lastName, Validators.required],
@@ -78,6 +82,17 @@ export class ProfileComponent implements OnInit {
   // Rating Code Start
   // Rating Code Start
   // Rating Code Start
+
+  updateProfile(id: string) {
+    const user: any = {
+      userBasicInfo: this.basicUserForm.value,
+      userSpecificInfo: this.specificUserForm.value,
+      academyDetails: this.academyDetailsForm.value
+    };
+
+    this._auth.updateUser(user, id);
+    // this._auth.(user, this._auth.user['value']['uid']);
+  }
 
   hoveringOver(value: number): void {
     this.overStar = value;
@@ -182,26 +197,5 @@ export class ProfileComponent implements OnInit {
     //   console.log(reader.result);
     // };
     // this.uploadFirebaseStorage(file);
-  }
-
-  uploadFirebaseStorage(file) {
-    const filePath = `displayPicture/${new Date().getTime()}_${file.name}`;
-    const fileRef = this.storage.ref(filePath);
-    const task = fileRef.putString(file.thumbUrl.split(',')[1], 'base64');
-    task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe(url => {
-            file.url = url;
-            file.thumbUrl = url;
-
-            console.log(file);
-
-            // this.onSuccess('200', file);
-          });
-        })
-      )
-      .subscribe();
   }
 }

@@ -122,7 +122,7 @@ export class AuthService {
     }
   }
 
-  private updateUser(user, uid) {
+  updateUser(user, uid) {
     user.userBasicInfo.uid = uid;
     user.userSpecificInfo.uid = uid;
     user.userSpecificInfo.uid = uid;

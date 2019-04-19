@@ -691,8 +691,9 @@
                       <div class="card-footer p-4">
                         <div class="row">
                           <button
+                            *ngIf="user"
                             class="btn btn-block btn-success"
-                            (click)="signUp()"
+                            (click)="updateProfile(user.uid)"
                           >
                             Update Profile
                           </button>
