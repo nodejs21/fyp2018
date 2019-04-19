@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 export class MakequizComponent implements OnInit {
   quizForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.quizForm = this.formBuilder.group({
@@ -88,5 +88,4 @@ export class MakequizComponent implements OnInit {
     alert(JSON.stringify(this.quizForm.value));
     console.log(this.quizForm.value);
   }
-
 }
