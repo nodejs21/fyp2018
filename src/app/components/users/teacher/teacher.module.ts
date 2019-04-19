@@ -30,6 +30,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { CreateassignmentComponent } from './createassignment/createassignment.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
+    ButtonsModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     SearchacademyModule,
