@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { navItems } from './../../_nav';
 import { AuthService } from '../../utils/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { MessagingService } from '../../utils/services/messaging.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +16,14 @@ export class DefaultLayoutComponent implements OnDestroy {
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
   public user: any;
-  constructor(private _auth: AuthService, private _router: Router) {
+  constructor(
+    private _auth: AuthService,
+    private _router: Router,
+    private msgService: MessagingService
+  ) {
+    this.msgService.getPermission();
+    this.msgService.receiveMessage();
+
     this.changes = new MutationObserver(mutations => {
       this.sidebarMinimized = document.body.classList.contains(
         'sidebar-minimized'
