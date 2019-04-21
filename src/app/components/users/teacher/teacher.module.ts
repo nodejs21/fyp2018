@@ -33,6 +33,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { SharedModule } from '../../shared/shared.module';
 import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { LiveclassComponent } from './liveclass/liveclass.component';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     RequestssentComponent,
     MakequizComponent,
     AddassignmentComponent,
-    CreateassignmentComponent
+    CreateassignmentComponent,
+    LiveclassComponent
   ],
   imports: [
     CommonModule,
@@ -84,6 +87,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     AddassignmentComponent,
     ProfilepopupComponent
   ],
-  exports: [TeacherdashboardComponent]
+  exports: [TeacherdashboardComponent],
+  providers: [AngularFireDatabase]
 })
 export class TeacherModule {}

@@ -15,6 +15,7 @@ import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component
 import { SubjectsComponent } from './subjects/subjects.component';
 import { StudentComponent } from './student.component';
 import { RequestssentComponent } from './requests/requestssent/requestssent.component';
+import { LiveclassComponent } from './liveclass/liveclass.component';
 
 const routes: Routes = [
   {
@@ -45,12 +46,11 @@ const routes: Routes = [
       { path: 'lectures', component: LecturesComponent },
       {
         path: 'liveclass',
-        // redirectTo: 'videostream',
-        // pathMatch: 'full',
-        children: [
-          { path: 'videostream', component: VideostreamComponent },
-          { path: 'whiteboard', component: WhiteboardComponent }
-        ]
+        component: LiveclassComponent
+        // children: [
+        //   { path: 'videostream', component: VideostreamComponent },
+        //   { path: 'whiteboard', component: WhiteboardComponent }
+        // ]
       },
       { path: 'profile', component: ProfileComponent },
       { path: 'dashboard', component: StudentdashboardComponent },

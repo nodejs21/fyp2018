@@ -17,6 +17,7 @@ import { TeacherdashboardComponent } from './teacherdashboard/teacherdashboard.c
 import { MakequizComponent } from './makequiz/makequiz.component';
 import { TeacherComponent } from './teacher.component';
 import { CreateassignmentComponent } from './createassignment/createassignment.component';
+import { LiveclassComponent } from './liveclass/liveclass.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -48,12 +49,13 @@ const routes: Routes = [
       { path: 'lectures', component: LecturesComponent },
       {
         path: 'liveclass',
+        component: LiveclassComponent
         // redirectTo: 'videostream',
         // pathMatch: 'full',
-        children: [
-          { path: 'videostream', component: VideostreamComponent },
-          { path: 'whiteboard', component: WhiteboardComponent }
-        ]
+        // children: [
+        //   { path: 'videostream', component: VideostreamComponent },
+        //   { path: 'whiteboard', component: WhiteboardComponent }
+        // ]
       },
       { path: 'makequiz', component: MakequizComponent },
       { path: 'createassignment', component: CreateassignmentComponent },

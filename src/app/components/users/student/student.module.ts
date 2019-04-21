@@ -23,6 +23,8 @@ import { MaterialModule } from '../../../material.module';
 import { SearchacademyComponent } from '../../shared/searchacademy/searchacademy.component';
 import { SearchacademyModule } from '../../shared/searchacademy/searchacademy.module';
 import { RequestssentComponent } from './requests/requestssent/requestssent.component';
+import { LiveclassComponent } from './liveclass/liveclass.component';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @NgModule({
   declarations: [
@@ -47,9 +49,9 @@ import { RequestssentComponent } from './requests/requestssent/requestssent.comp
     VideostreamComponent,
     WhiteboardComponent,
     SubjectsComponent,
-    RequestssentComponent
+    RequestssentComponent,
+    LiveclassComponent
   ],
-
   imports: [
     CommonModule,
     MaterialModule,
@@ -61,6 +63,7 @@ import { RequestssentComponent } from './requests/requestssent/requestssent.comp
     FormsModule
   ],
   entryComponents: [SearchacademyComponent],
-  exports: [StudentdashboardComponent]
+  exports: [StudentdashboardComponent],
+  providers: [AngularFireDatabase]
 })
 export class StudentModule {}

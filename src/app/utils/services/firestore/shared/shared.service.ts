@@ -173,4 +173,24 @@ export class SharedService {
         );
     });
   }
+
+  sendOffer(senderId: string, offer: {}) {
+    return this.afs
+      .collection('rtc')
+      .doc(senderId)
+      .set({ senderId, offer: JSON.stringify(offer) });
+  }
+
+  getOffer(senderId: string) {
+    return this.afs
+      .collection('rtc', ref => ref.where('senderId', '==', senderId))
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
 }

@@ -31,7 +31,7 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
 
     this._auth.user.subscribe(user => {
-      console.log(user);
+      // console.log(user);
       this.user = user;
       this.navItems = navItems[user ? user.userType : 'originalNav'];
       // switch (user.usertype) {

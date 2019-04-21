@@ -132,6 +132,11 @@ const teacher: NavData[] = [
         icon: 'icon-puzzle'
       }
     ]
+  },
+  {
+    name: 'Live Class',
+    url: `${teacherPrefix}/liveclass`,
+    icon: 'icon-puzzle'
   }
   // {
   //   name: 'Time Table',
@@ -181,6 +186,11 @@ const student: NavData[] = [
         icon: 'icon-puzzle'
       }
     ]
+  },
+  {
+    name: 'Live Class',
+    url: `${studentPrefix}/liveclass`,
+    icon: 'icon-puzzle'
   }
   // {
   //   name: 'Time Table',
