@@ -149,6 +149,16 @@ export class SharedService {
       .ref.update({ requests: firestore.FieldValue.arrayUnion(academyId) });
   }
 
+  getRequestIds() {
+    console.log(this.user.userType);
+    console.log(this.user.uid);
+
+    return this.afs
+      .collection(`${this.user.userType}s`)
+      .doc(this.user.uid)
+      .valueChanges();
+  }
+
   cancelRequest(academyId, subjectId) {
     return new Promise((resolve, reject) => {
       this.afs
@@ -174,16 +184,27 @@ export class SharedService {
     });
   }
 
-  sendOffer(senderId: string, offer: {}) {
+  sendOffer(senderId: any, offer: {}) {
     return this.afs
       .collection('rtc')
-      .doc(senderId)
-      .set({ senderId, offer: JSON.stringify(offer) });
+      .doc(`offer${senderId}`)
+      .set({ senderId, offer: JSON.stringify(offer), type: 'offer' });
   }
 
-  getOffer(senderId: string) {
+  sendAnswer(senderId: any, offer: {}) {
     return this.afs
-      .collection('rtc', ref => ref.where('senderId', '==', senderId))
+      .collection('rtc')
+      .doc(`answer${senderId}`)
+      .set({ senderId, answer: JSON.stringify(offer), type: 'answer' });
+  }
+
+  getOffer(senderId: any) {
+    console.log();
+
+    return this.afs
+      .collection('rtc', ref =>
+        ref.where('senderId', '==', senderId).where('type', '==', 'offer')
+      )
       .snapshotChanges()
       .pipe(
         map(res => {
@@ -193,4 +214,69 @@ export class SharedService {
         })
       );
   }
+
+  getAnswer(senderId: any) {
+    return this.afs
+      .collection('rtc', ref =>
+        ref.where('senderId', '==', senderId).where('type', '==', 'answer')
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  sendOfferCandidate(senderId, candidate: {}) {
+    return this.afs
+      .collection('rtc')
+      .doc(`offercandidate${senderId}`)
+      .set({ senderId, candidate });
+  }
+  getOfferCandidate(senderId) {
+    return this.afs
+      .collection('rtc')
+      .doc(`offercandidate${senderId}`)
+      .get();
+  }
+  sendAnswerCandidate(senderId, candidate: {}) {
+    return this.afs
+      .collection('rtc')
+      .doc(`answercandidate${senderId}`)
+      .set({ senderId, candidate });
+  }
+  getAnswerCandidate(senderId) {
+    return this.afs
+      .collection('rtc')
+      .doc(`answercandidate${senderId}`)
+      .get();
+  }
+
+  // getPermission() {
+  //   return this.afs
+  //     .collection('permission')
+  //     .doc(this.user.uid)
+  //     .set({ studentId: this.user.uid, permission: false, teacherId:  });
+  // }
+
+  // checkPermission() {
+  //   return this.afs
+  //     .collection('permission')
+  //     .doc(this.user.uid)
+  //     .valueChanges();
+  // }
+
+  // checkPermissions() {
+
+  // }
+
+  // givePermission(permit) {
+  //   return this.afs
+  //     .collection('permission')
+  //     .doc()
+  //     .add({ studentId: this.user.uid, permission: false, teacherId:  });
+  // }
 }

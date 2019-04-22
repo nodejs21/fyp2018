@@ -121,11 +121,11 @@ const teacher: NavData[] = [
     url: `${teacherPrefix}`,
     icon: 'icon-pencil',
     children: [
-      {
-        name: 'Invitations',
-        url: `${teacherPrefix}/requests/invitations`,
-        icon: 'icon-user'
-      },
+      // {
+      //   name: 'Invitations',
+      //   url: `${teacherPrefix}/requests/invitations`,
+      //   icon: 'icon-user'
+      // },
       {
         name: 'Sent',
         url: `${teacherPrefix}/requests/sent`,

@@ -77,7 +77,7 @@ export class TeacherService {
       .doc(academyId)
       .collection('classrooms')
       .doc(classId)
-      .collection('quizes')
+      .collection('quizzes')
       .add(quiz);
   }
 

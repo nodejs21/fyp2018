@@ -21,382 +21,183 @@ declare let RTCPeerConnection: any;
   templateUrl: './liveclass.component.html',
   styleUrls: ['./liveclass.component.css']
 })
-export class LiveclassComponent implements OnInit {
-  peerConnection;
-  roomToCreate;
-  displayMyVideo: boolean;
-  displayFriendsVideo: boolean;
+export class LiveclassComponent {
+  targetpeer: any;
+  dataChannel: any;
+  peer: any;
+  server: any = null;
+  n = <any>navigator;
+  initiatorOffer: any;
+  clientanswer: any;
+  recieveanswer: any;
+  expectanswer: boolean = false;
   @ViewChild('friendsVideo') friendsVideo: any;
   @ViewChild('myVideo') myVideo: any;
-  channel: any;
-  database: any;
-  constructor(
-    private _shared: SharedService,
-    private _afDb: AngularFireDatabase
-  ) {}
+  turnReady: boolean;
+  localvideostream: any;
+  friendsVideostream: any;
+  pcConfig = {
+    iceServers: [
+      {
+        urls: 'stun:stun.l.google.com:19302',
+        credential: ''
+      }
+    ]
+  };
+  roomToCreate = '92';
 
-  ngOnInit() {}
+  ngOnInit() {
+    /////////////////////////////////////
+    this.n.getUserMedia =
+      this.n.getUserMedia ||
+      this.n.webkitGetUserMedia ||
+      this.n.mozGetUserMedia ||
+      this.n.msGetUserMedia;
+    this.n.getUserMedia(
+      { video: true, audio: true },
+      stream => {
+        this.localstream(stream);
+      },
+      () => {}
+    );
 
-  initRtc() {
-    this.getMediaStream()
-      .then(stream => {
-        console.log(stream);
-        this.myVideo.nativeElement.srcObject = stream;
-        this.createPeerConnection()
-          .then(connection => {
-            console.log(connection);
-            this.createOffer()
-              .then(async offer => {
-                console.log(offer);
-                await this.addOfferToPeerConnection(offer);
-                this._shared
-                  .sendOffer(this.roomToCreate, offer)
-                  .then(res => {
-                    console.log(res);
-                  })
-                  .catch(error => console.error(error));
-                // this.addOfferToPeerConnection(offer)
-                //   .then(response => {
-                //     console.log(response);
-                //   })
-                //   .catch(error => console.error(error));
-
-                // this.createAnswer()
-                //   .then(answer => {
-                //     console.log(answer);
-                //   })
-                //   .catch(error => console.error(error));
-              })
-              .catch(error => console.error(error));
-          })
-          .catch(error => console.error(error));
-      })
-      .catch(error => console.error(error));
+    if (location.hostname !== 'localhost') {
+      this.requestTurn(
+        'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
+      );
+    }
+    //////////////////////////////////////
+    this.peer = new RTCPeerConnection(this.pcConfig);
+    this.peer.onaddstream = this.handleRemoteStreamAdded;
+    this.peer.onicecandidate = this.sendIcecandidates;
+    setTimeout(() => {
+      console.log(this.localvideostream);
+      this.peer.addStream(this.localvideostream);
+      console.log('local stream added');
+    }, 1000);
   }
 
-  getMediaStream() {
-    return new Promise((resolve, reject) => {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true, video: true })
-        .then(stream => {
-          resolve(stream);
+  constructor(private _shared: SharedService) {
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // for video chat and voice chat
+
+    // // recieve teacher offer
+    // this._shared.getOffer(this.roomToCreate).subscribe(data => {
+    //   console.log(data);
+    //   // this.peer.setRemoteDescription(new RTCSessionDescription(data), () => {});
+    //   this.peer.createAnswer().then(this.localDescCreated);
+    // });
+    // recieve answer  from student
+    this._shared.getAnswer(this.roomToCreate).subscribe(data => {
+      console.log(data);
+      var msg = JSON.parse(data[0]['data']['answer']);
+      this.peer.setRemoteDescription(new RTCSessionDescription(msg), () => {});
+    });
+
+    this._shared.getAnswerCandidate(this.roomToCreate).subscribe(data => {
+      console.log('Recieved candidate');
+      // let values = Object.keys(data).map(key => data[key]);
+      this.peer.addIceCandidate(
+        new RTCIceCandidate({
+          candidate: data.data().candidate.candidate
         })
-        .catch(error => {
-          console.error(error);
-          reject(error);
-        });
+      );
+      // if (location.hash != '#init') {
+      this.peer.ondatachannel = function(event) {
+        var channel = event.channel;
+        channel.onopen = function(event) {
+          console.log('channelopened');
+          channel.send('Hi back!');
+        };
+        channel.onmessage = function(event) {
+          console.log('messege arrived');
+
+          console.log(event.data);
+        };
+      };
+      // }
     });
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
-  createPeerConnection() {
-    return new Promise((resolve, reject) => {
-      this.peerConnection = new webkitRTCPeerConnection(SERVERS);
-      resolve(this.peerConnection);
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  requestTurn(turnURL) {
+    var turnExists = false;
+    for (var i in this.pcConfig.iceServers) {
+      if (this.pcConfig.iceServers[i].urls.substr(0, 5) === 'turn:') {
+        turnExists = true;
+        this.turnReady = true;
+        break;
+      }
+    }
+    if (!turnExists) {
+      console.log('Getting TURN server from ', turnURL);
+      // No TURN server. Get one from computeengineondemand.appspot.com:
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var turnServer = JSON.parse(xhr.responseText);
+          console.log('Got TURN server: ', turnServer);
+          this.pcConfig.iceServers.push({
+            urls: 'turn:' + turnServer.username + '@' + turnServer.turn,
+            credential: turnServer.password
+          });
+          this.turnReady = true;
+        }
+      };
+      xhr.open('GET', turnURL, true);
+      xhr.send();
+    }
+  }
+
+  localstream(stream) {
+    console.log('got local stream');
+
+    this.localvideostream = stream;
+    let video = this.myVideo.nativeElement;
+    video.srcObject = stream;
+  }
+
+  //creating the WEB-RTC session
+  creatingWebRtcConnection() {
+    this.peer = new RTCPeerConnection(this.pcConfig);
+    this.peer.addStream(this.localvideostream);
+    this.peer.createOffer().then(this.localDescCreated);
+    this.peer.onaddstream = this.handleRemoteStreamAdded;
+    this.peer.onicecandidate = this.sendIcecandidates;
+  }
+  sendIcecandidates = event => {
+    console.log(event);
+    if (event.candidate) {
+      console.log('Sending Ice candidate');
+      this._shared.sendOfferCandidate(this.roomToCreate, {
+        type: 'candidate',
+        label: event.candidate.sdpMLineIndex,
+        id: event.candidate.sdpMid,
+        candidate: event.candidate.candidate
+      });
+    } else {
+      console.log('End of candidates.');
+    }
+  };
+  handleRemoteStreamAdded = event => {
+    console.log('got remort stream');
+    console.log(event.stream);
+    this.friendsVideo.nativeElement.srcObject = event.stream;
+    // let video1 = this.friendsVideo.nativeElement;
+    // console.log(event.stream);
+    // var str = event.stream;
+    // video1.srcObject = str;
+  };
+  localDescCreated = desc => {
+    console.log(desc);
+    this.peer.setLocalDescription(desc, () => {
+      if (desc.type === 'offer') {
+        //  send ooofer message
+        this._shared.sendOffer(this.roomToCreate, desc);
+      }
+      if (desc.type === 'answer') {
+      }
     });
-  }
-
-  createOffer() {
-    return this.peerConnection.createOffer();
-  }
-
-  addOfferToPeerConnection(offer) {
-    return this.peerConnection.setLocalDescription(offer);
-  }
-
-  createAnswer() {
-    return this.peerConnection.createAnswer();
-  }
-
-  //! ********************************************************************************
-
-  // ngOnInit() {
-  //   this.database = this._afDb.database.ref();
-  //   this.database.on('child_added', this.readMessage);
-  //   var servers = {
-  //     iceServers: [
-  //       { urls: 'stun:stun.services.mozilla.com' },
-  //       { urls: 'stun:stun.l.google.com:19302' },
-  //       {
-  //         urls: 'turn:numb.viagenie.ca',
-  //         credential: 'webrtc',
-  //         username: 'websitebeaver@mail.com'
-  //       }
-  //     ]
-  //   };
-  //   this.peerConnection = new RTCPeerConnection(servers);
-  //   this.peerConnection.onicecandidate = event =>
-  //     event.candidate
-  //       ? this.sendMessage(
-  //           this.roomToCreate,
-  //           JSON.stringify({ ice: event.candidate })
-  //         )
-  //       : console.log('Sent All Ice');
-  //   this.peerConnection.onaddstream = event =>
-  //     (this.friendsVideo.nativeElement.srcObject = event.stream);
-  //   this.showMyFace();
-  // }
-
-  // sendMessage(senderId, data) {
-  //   var msg = this.database.push({ sender: senderId, message: data });
-  //   msg.remove();
-  // }
-
-  // readMessage(data) {
-  //   var msg = JSON.parse(data.val().message);
-  //   var sender = data.val().sender;
-  //   if (sender != this.roomToCreate) {
-  //     if (msg.ice != undefined)
-  //       this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.ice));
-  //     else if (msg.sdp.type == 'offer')
-  //       this.peerConnection
-  //         .setRemoteDescription(new RTCSessionDescription(msg.sdp))
-  //         .then(() => this.peerConnection.createAnswer())
-  //         .then(answer => this.peerConnection.setLocalDescription(answer))
-  //         .then(() =>
-  //           this.sendMessage(
-  //             this.roomToCreate,
-  //             JSON.stringify({ sdp: this.peerConnection.localDescription })
-  //           )
-  //         );
-  //     else if (msg.sdp.type == 'answer')
-  //       this.peerConnection.setRemoteDescription(
-  //         new RTCSessionDescription(msg.sdp)
-  //       );
-  //   }
-  // }
-
-  // showMyFace() {
-  //   navigator.mediaDevices
-  //     .getUserMedia({ audio: true, video: true })
-  //     .then(stream => (this.myVideo.nativeElement.srcObject = stream))
-  //     .then(stream => this.peerConnection.addStream(stream));
-  // }
-
-  // showFriendsFace() {
-  //   this.peerConnection
-  //     .createOffer()
-  //     .then(offer => this.peerConnection.setLocalDescription(offer))
-  //     .then(() =>
-  //       this.sendMessage(
-  //         this.roomToCreate,
-  //         JSON.stringify({ sdp: this.peerConnection.localDescription })
-  //       )
-  //     );
-  // }
-
-  //! ********************************************************************************
-
-  // peerConnection;
-  // roomToCreate;
-  // displayMyVideo: boolean;
-  // displayFriendsVideo: boolean;
-  // @ViewChild('friendsVideo') friendsVideo: any;
-  // @ViewChild('myVideo') myVideo: any;
-  // channel: any;
-  // database: any;
-
-  // setupWebRtc() {
-  //   // this.roomToCreate = this.guid();
-  //   var channelName = '/webrtc';
-  //   this.channel = this._afDb.list(channelName);
-  //   this.database = this._afDb.database.ref(channelName);
-
-  //   this.database.on('child_added', this.readMessage.bind(this));
-  //   this.peerConnection = new RTCPeerConnection(SERVERS, DEFAULT_CONSTRAINTS);
-  //   this.peerConnection.onicecandidate = event =>
-  //     event.candidate
-  //       ? this.sendMessage(
-  //           this.roomToCreate,
-  //           JSON.stringify({ ice: event.candidate })
-  //         )
-  //       : console.log('Sent All Ice');
-
-  //   this.peerConnection.ontrack = event =>
-  //     (this.friendsVideo.nativeElement.srcObject = event.streams[0]); // use ontrack
-
-  //   this.showMe();
-  // }
-
-  // sendMessage(roomToCreate, data) {
-  //   var msg = this.channel.push({
-  //     sender: roomToCreate,
-  //     message: data
-  //   });
-  //   msg.remove();
-  // }
-
-  // readMessage(data) {
-  //   console.log(data);
-
-  //   if (!data) return;
-  //   var msg = JSON.parse(data.val().message);
-  //   var sender = data.val().sender;
-  //   if (sender != this.roomToCreate) {
-  //     if (msg.ice != undefined)
-  //       this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.ice));
-  //     else if (msg.sdp.type == 'offer')
-  //       this.peerConnection
-  //         .setRemoteDescription(new RTCSessionDescription(msg.sdp))
-  //         .then(() => this.peerConnection.createAnswer())
-  //         .then(answer => this.peerConnection.setLocalDescription(answer))
-  //         .then(() =>
-  //           this.sendMessage(
-  //             this.roomToCreate,
-  //             JSON.stringify({ sdp: this.peerConnection.localDescription })
-  //           )
-  //         );
-  //     else if (msg.sdp.type == 'answer')
-  //       this.peerConnection.setRemoteDescription(
-  //         new RTCSessionDescription(msg.sdp)
-  //       );
-  //   }
-  // }
-
-  // showMe() {
-  //   navigator.mediaDevices
-  //     .getUserMedia({ audio: true, video: true })
-  //     .then(stream => (this.myVideo.nativeElement.srcObject = stream))
-  //     .then(stream =>
-  //       stream.getTracks().forEach(track => {
-  //         this.peerConnection.addTrack(track);
-  //       })
-  //     );
-  // }
-
-  // showRemote() {
-  //   this.peerConnection
-  //     .createOffer()
-  //     .then(offer => this.peerConnection.setLocalDescription(offer))
-  //     .then(() =>
-  //       this.sendMessage(
-  //         this.roomToCreate,
-  //         JSON.stringify({ sdp: this.peerConnection.localDescription })
-  //       )
-  //     );
-  // }
-
-  // guid() {
-  //   return (
-  //     this.s4() +
-  //     this.s4() +
-  //     '-' +
-  //     this.s4() +
-  //     '-' +
-  //     this.s4() +
-  //     '-' +
-  //     this.s4() +
-  //     '-' +
-  //     this.s4() +
-  //     this.s4() +
-  //     this.s4()
-  //   );
-  // }
-
-  // s4() {
-  //   return Math.floor((1 + Math.random()) * 0x10000)
-  //     .toString(16)
-  //     .substring(1);
-  // }
-
-  // ! ***************************************************************************************
-
-  // setUp() {
-  //   var servers = {
-  //     iceServers: [
-  //       { urls: 'stun:stun.services.mozilla.com' },
-  //       { urls: 'stun:stun.l.google.com:19302' }
-  //     ]
-  //   };
-  //   // this.peerConnection = new webkitRTCPeerConnection(servers);
-  //   this.showMyVideo();
-  //   this.peerConnection = new RTCPeerConnection(servers);
-  //   this.showFriendsFace();
-  //   console.log(this.peerConnection);
-  //   console.log(this.peerConnection.onicecandidate);
-
-  //   this.peerConnection.onicecandidate = event => {
-  //     console.log(event.candidate);
-  //     event.candidate
-  //       ? this.sendMessage(
-  //           this.roomToCreate,
-  //           JSON.stringify({ ice: event.candidate })
-  //         )
-  //       : console.log('Send all ICE.');
-  //   };
-
-  //   // this.sendMessage(this.roomToCreate, {});
-
-  //   this.peerConnection.ontrack = event => {
-  //     console.log(event.streams);
-  //     this.friendsVideo.nativeElement.srcObject = event.streams;
-  //   };
-  //   // navigator.mediaDevices
-  //   //   .getUserMedia({ audio: true, video: true })
-  //   //   .then(stream => {
-  //   //     stream.getTracks().forEach(track => {
-  //   //       stream.addTrack(track);
-  //   //     });
-  //   //   });
-  //   // peerConnection.createOffer().then(offer => peerConnection.setLocalDescription(offer));
-  // }
-
-  // showMyVideo() {
-  //   this.displayMyVideo = true;
-  //   navigator.mediaDevices
-  //     .getUserMedia({ audio: true, video: true })
-  //     .then(stream => (this.myVideo.nativeElement.srcObject = stream))
-  //     .then(stream =>
-  //       stream.getTracks().forEach(track => {
-  //         stream.addTrack(track);
-  //       })
-  //     );
-  // }
-
-  // showFriendsFace() {
-  //   this.displayFriendsVideo = true;
-  //   this.peerConnection
-  //     .createOffer()
-  //     .then(offer => this.peerConnection.setLocalDescription(offer))
-  //     .then(() =>
-  //       this.sendMessage(
-  //         this.roomToCreate,
-  //         JSON.stringify({ sdp: this.peerConnection.localDescription })
-  //       )
-  //     );
-  // }
-
-  // sendMessage(senderId, data) {
-  //   this._shared
-  //     .sendMessage(senderId, data)
-  //     .then(msg => {
-  //       console.log(msg);
-  //     })
-  //     .catch(error => console.error(error));
-  //   // var msg = database.push({ sender: senderId, message: data });
-  //   // msg.remove();
-  // }
-
-  // readMessage(data) {
-  //   var msg = JSON.parse(data.val().message);
-  //   var sender = data.val().sender;
-  //   if (sender != this.roomToCreate) {
-  //     if (msg.ice != undefined)
-  //       this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.ice));
-  //     else if (msg.sdp.type == 'offer')
-  //       this.peerConnection
-  //         .setRemoteDescription(new RTCSessionDescription(msg.sdp))
-  //         .then(() => this.peerConnection.createAnswer())
-  //         .then(answer => this.peerConnection.setLocalDescription(answer))
-  //         .then(() =>
-  //           this.sendMessage(
-  //             this.roomToCreate,
-  //             JSON.stringify({ sdp: this.peerConnection.localDescription })
-  //           )
-  //         );
-  //     else if (msg.sdp.type == 'answer')
-  //       this.peerConnection.setRemoteDescription(
-  //         new RTCSessionDescription(msg.sdp)
-  //       );
-  //   }
-  // }
+  };
 }
