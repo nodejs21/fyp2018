@@ -3,6 +3,7 @@ import { StudentService } from '../../../../utils/services/firestore/student/stu
 import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { take } from 'rxjs/internal/operators/take';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 // const SERVERS: any = {
 //   iceServers: [
@@ -24,6 +25,33 @@ import { take } from 'rxjs/internal/operators/take';
   styleUrls: ['./liveclass.component.css']
 })
 export class LiveclassComponent implements OnInit {
+  htmlContent = 'Create your assignment';
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '25rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    // uploadUrl: 'v1/images', // if needed
+    customClasses: [
+      // optional
+      {
+        name: 'quote',
+        class: 'quote'
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1'
+      }
+    ]
+  };
+
   targetpeer: any;
   dataChannel: any;
   peer: any;
@@ -143,7 +171,7 @@ export class LiveclassComponent implements OnInit {
   }
 
   // sendMessage(msg) {
-    
+
   // }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

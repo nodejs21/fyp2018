@@ -1,20 +1,20 @@
-<input type="text" [(ngModel)]="roomToCreate" />
-
-<button class="btn btn-outline-info" (click)="creatingWebRtcConnection()">
-  Start
-</button>
-<br />
-<button class="btn btn-outline-info" (click)="showFriendsFace()">
-  Show Remote
-</button>
-<!-- <button class="btn btn-outline-info" (click)="initRtc()">
-          Start
-        </button> -->
-<!-- <button class="btn btn-outline-info" (click)="showFriendsFace()">
-  Show Remote
-</button> -->
-
-<video [src]="friendsVideo" controls autoplay #friendsVideo></video>
-<!-- *ngIf="displayFriendsVideo" -->
-<video [src]="myVideo" controls autoplay muted #myVideo></video>
-<!-- *ngIf="displayMyVideo" -->
+<div class="container">
+  <div class="row">
+    <input class="form-control" type="text" [(ngModel)]="roomToCreate" />
+    <button class="btn btn-outline-info" (click)="creatingWebRtcConnection()">
+      Start
+    </button>
+    <br />
+  </div>
+  <br /><br />
+  <div class="row">
+    <div class="col-6">
+      <video [src]="myVideo" controls autoplay muted #myVideo></video>
+      <!-- *ngIf="displayMyVideo" -->
+    </div>
+    <div class="col-6">
+      <video [src]="friendsVideo" controls autoplay #friendsVideo></video>
+      <!-- *ngIf="displayFriendsVideo" -->
+    </div>
+  </div>
+</div>

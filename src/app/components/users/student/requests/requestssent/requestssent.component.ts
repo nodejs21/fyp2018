@@ -19,6 +19,7 @@ export class RequestssentComponent implements OnInit {
   selectedType = 'pending';
   requestsToBeShown;
   academies = [];
+  selectedAcademyId;
 
   constructor(
     private _auth: AuthService,
@@ -33,16 +34,16 @@ export class RequestssentComponent implements OnInit {
         this.requestedAcademies.forEach(academyId => {
           this.academies.push(academyId);
         });
-        this.fetchRequests();
+        // this.fetchRequests();
       });
     });
   }
 
-  fetchRequests() {
-    this.academies.forEach(academyId => {
-      this.getRequests(academyId);
-    });
-  }
+  // fetchRequests() {
+  //   this.academies.forEach(academyId => {
+  //     this.getRequests(academyId);
+  //   });
+  // }
 
   getRequests(academyId) {
     this._shared.getPendingRequests(academyId).subscribe(requests => {

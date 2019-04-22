@@ -1,11 +1,29 @@
-<mat-form-field class="p-0">
-  <mat-label>Select request type</mat-label>
-  <mat-select name="selectedClassId" [(ngModel)]="selectedType">
-    <mat-option *ngFor="let type of requestTypes" [value]="type">
-      {{ type | titlecase }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="row">
+  <div class="col-6">
+    <mat-form-field class="p-0">
+      <mat-label>Select Academy</mat-label>
+      <mat-select name="selectedAcademyId" [(ngModel)]="selectedAcademyId">
+        <mat-option
+          *ngFor="let academy of academies"
+          [value]="academy"
+          (click)="getRequests(academy.academyId)"
+        >
+          {{ academy.academyName | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-6">
+    <mat-form-field class="p-0">
+      <mat-label>Select request type</mat-label>
+      <mat-select name="selectedClassId" [(ngModel)]="selectedType">
+        <mat-option *ngFor="let type of requestTypes" [value]="type">
+          {{ type | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
 <div class="animated fadeIn" *ngIf="selectedType == 'pending'">
   <div class="row">
     <div

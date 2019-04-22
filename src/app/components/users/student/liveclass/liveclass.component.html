@@ -1,13 +1,50 @@
-<input type="text" [(ngModel)]="roomToJoin" />
-<button class="btn btn-outline-primary" (click)="sendMessage('Bismillah...')">
-  Send Message
-</button>
-<button class="btn btn-outline-primary" (click)="joinClass()">
-  Join Class
-</button>
-
-<video [src]="teacherVideo" controls autoplay #teacherVideo></video>
-<video [src]="myVideo" controls autoplay #myVideo></video>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <input class="form-control" type="text" [(ngModel)]="roomToJoin" />
+    </div>
+    <div class="col-3">
+      <button
+        class="btn btn-outline-primary"
+        (click)="sendMessage('Bismillah...')"
+      >
+        Send Message
+      </button>
+    </div>
+    <div class="col-3">
+      <button class="btn btn-outline-primary" (click)="joinClass()">
+        Join Class
+      </button>
+    </div>
+    <div class="col-3">
+      <button class="btn btn-info" (click)="askForPermission()">
+        Request Permission For Question
+      </button>
+    </div>
+    <div class="col-12">
+      <div class="col-6">
+        <angular-editor
+          [(ngModel)]="htmlContent"
+          [config]="config"
+        ></angular-editor>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-info" (click)="sendQuestion()">
+          Ask Question
+        </button>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+  <div class="row">
+    <div class="colr-6">
+      <video [src]="myVideo" controls autoplay #myVideo></video>
+    </div>
+    <div class="colr-6">
+      <video [src]="teacherVideo" controls autoplay #teacherVideo></video>
+    </div>
+  </div>
+</div>
 
 <!-- <iframe src="https://rtcmulticonnection.herokuapp.com/demos/Video-Broadcasting.html" width="100%" height="500px" allow="geolocation; microphone; camera">
   <p>Your browser does not support iframes.</p>

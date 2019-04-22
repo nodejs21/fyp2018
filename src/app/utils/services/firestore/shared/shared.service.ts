@@ -115,6 +115,8 @@ export class SharedService {
   }
 
   applyForSubjects(payload) {
+    console.log(payload);
+
     return new Promise(async (resolve, reject) => {
       try {
         let res = [];
@@ -133,7 +135,10 @@ export class SharedService {
           response.then(data => {
             res.push(data.path);
           });
-          this.updateUserPendingRequests(academyId);
+          this.updateUserPendingRequests({
+            academyName: payload[i].academyName,
+            academyId
+          });
         }
         resolve(res);
       } catch (error) {
@@ -142,11 +147,11 @@ export class SharedService {
     });
   }
 
-  private updateUserPendingRequests(academyId) {
+  private updateUserPendingRequests(academy) {
     this.afs
       .collection(`${this.user.userType}s`)
       .doc(this.user.uid)
-      .ref.update({ requests: firestore.FieldValue.arrayUnion(academyId) });
+      .ref.update({ requests: firestore.FieldValue.arrayUnion(academy) });
   }
 
   getRequestIds() {

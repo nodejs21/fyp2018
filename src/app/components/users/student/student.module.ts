@@ -25,6 +25,7 @@ import { SearchacademyModule } from '../../shared/searchacademy/searchacademy.mo
 import { RequestssentComponent } from './requests/requestssent/requestssent.component';
 import { LiveclassComponent } from './liveclass/liveclass.component';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
     CollapseModule.forRoot(),
-    FormsModule
+    FormsModule,
+    AngularEditorModule
   ],
   entryComponents: [SearchacademyComponent],
   exports: [StudentdashboardComponent],
