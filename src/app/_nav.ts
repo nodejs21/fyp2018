@@ -165,11 +165,11 @@ const student: NavData[] = [
     url: `${studentPrefix}/quizzes`,
     icon: 'icon-pencil'
   },
-  {
-    name: 'Results',
-    url: `${studentPrefix}/results`,
-    icon: 'icon-pencil'
-  },
+  // {
+  //   name: 'Results',
+  //   url: `${studentPrefix}/results`,
+  //   icon: 'icon-pencil'
+  // },
   {
     name: 'Attendance',
     url: `${studentPrefix}/attendance`,
