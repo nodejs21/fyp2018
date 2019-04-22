@@ -23,7 +23,6 @@ export class DefaultLayoutComponent implements OnDestroy {
   ) {
     this.msgService.getPermission();
     this.msgService.receiveMessage();
-
     this.changes = new MutationObserver(mutations => {
       this.sidebarMinimized = document.body.classList.contains(
         'sidebar-minimized'

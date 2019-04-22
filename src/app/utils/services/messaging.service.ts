@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { take } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,11 @@ import { AuthService } from './auth/auth.service';
 export class MessagingService {
   messaging = firebase.messaging();
 
-  constructor(private db: AngularFirestore, private _auth: AuthService) {}
+  constructor(
+    private db: AngularFirestore,
+    private _auth: AuthService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   updateToken(token) {
     this._auth.user.subscribe(user => {
@@ -40,8 +45,9 @@ export class MessagingService {
 
   receiveMessage() {
     this.messaging.onMessage(payload => {
+      console.log(payload);
       this.playNotificationSound();
-      alert(payload.title);
+      this._snackBar.open(payload.notification.body, 'X', { duration: 4000 });
     });
   }
 

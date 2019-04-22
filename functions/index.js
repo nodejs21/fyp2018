@@ -63,7 +63,7 @@ exports.oneToOneNotificatioin = functions.firestore
     // const adminSnap = await adminRef;
     // const adminData = adminSnap.data();
     // const token = adminData.token;
-
+    console.log(notification.token);
     const payload = {
       notification: {
         title: notification.title,
