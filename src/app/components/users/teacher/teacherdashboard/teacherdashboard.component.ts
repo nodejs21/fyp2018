@@ -10,13 +10,43 @@ import { SharedService } from '../../../../utils/services/firestore/shared/share
   styleUrls: ['./teacherdashboard.component.css']
 })
 export class TeacherdashboardComponent implements OnInit {
+  approvedRequests;
+  classrooms;
+  selectedAcademy;
   constructor(
     private _dialog: MatDialog,
     public _shared: SharedService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _auth: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._auth.user.subscribe(async user => {
+      await this.getApprovedRequests().then(requests => {
+        console.log(requests);
+        this.approvedRequests = requests;
+      });
+    });
+  }
+
+  getApprovedRequests() {
+    var temp = [];
+    return new Promise((resolve, reject) => {
+      {
+        this._shared.getUserRequests().subscribe(userInfo => {
+          if(!userInfo['requests']) return;
+          userInfo['requests'].forEach(async request => {
+            await this._shared
+              .getApprovedRequests(request.academyId)
+              .subscribe(request => {
+                temp.push(request);
+              });
+          });
+          resolve(temp);
+        });
+      }
+    });
+  }
 
   openDialog() {
     // if (!this._teacherService.academies) this.getAcademies();

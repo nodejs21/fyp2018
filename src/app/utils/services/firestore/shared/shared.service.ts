@@ -3,12 +3,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../auth/auth.service';
 import { map } from 'rxjs/operators';
 import { firestore } from 'firebase';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
   user;
+
   constructor(private afs: AngularFirestore, private _auth: AuthService) {
     this._auth.user.subscribe(user => {
       this.user = user;
@@ -161,6 +163,36 @@ export class SharedService {
       .valueChanges();
   }
 
+  getAssignments(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('assignments');
+  }
+
+  // getAssignmentDetails(assignmentId) {
+  //   return this.afs.collection('academies').doc()
+  // }
+
+  getClassrooms(academyId) {
+    return this.afs
+      .collection(`academies`)
+      .doc(academyId)
+      .collection('classrooms', ref =>
+        ref.where('teacher.teacherId', '==', this.user.uid)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
   cancelRequest(academyId, subjectId) {
     return new Promise((resolve, reject) => {
       this.afs
@@ -291,5 +323,13 @@ export class SharedService {
           });
         })
       );
+  }
+
+  updateLiveClass(classObj) {
+    console.log(classObj);
+    // return this.afs
+    //   .collection('liveclasses')
+    //   .doc(this.user.uid)
+    //   .set({})
   }
 }

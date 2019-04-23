@@ -159,11 +159,11 @@ export class LiveclassComponent implements OnInit {
     //////////////////////////////////////
     this.peer = new RTCPeerConnection(this.pcConfig);
     this.channel = this.peer.createDataChannel(this.roomToJoin);
-    this.peer.ontrack = e => {
-      console.log('got track', e.track, e.streams);
-      this.teacherVideo.nativeElement.srcObject = e.streams[0];
-    };
-    // this.peer.onaddstream = this.handleRemoteStreamAdded;
+    // this.peer.ontrack = e => {
+    //   console.log('got track', e.track, e.streams);
+    //   this.teacherVideo.nativeElement.srcObject = e.streams[0];
+    // };
+    this.peer.onaddstream = this.handleRemoteStreamAdded;
     this.peer.onicecandidate = this.sendIcecandidates;
     setTimeout(() => {
       console.log(this.localvideostream);

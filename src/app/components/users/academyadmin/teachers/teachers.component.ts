@@ -38,5 +38,4 @@ export class TeachersComponent implements OnInit {
   deleteTeacher(teacher) {
     console.log(teacher);
   }
-
 }

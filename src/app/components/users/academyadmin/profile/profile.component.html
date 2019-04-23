@@ -36,16 +36,16 @@
                             </div>
                             <div class="col-md-6">
                               <img
-                                [src]="downloadURL"
+                                [src]="user.photoURL"
                                 class="rounded-circle img-fluid float-right embed-responsive-item"
                                 style="height: 50px; width: 50px;"
-                                (click)="fileInput.click()"
+                                (click)="profilePicInput.click()"
                               />
                               <input
                                 type="file"
                                 hidden
-                                #fileInput
-                                (change)="handler($event)"
+                                #profilePicInput
+                                (change)="handlerForProfilePic($event)"
                               />
                             </div>
                           </div>
@@ -167,16 +167,16 @@
                               Student
                             </label>
                           </div> -->
+                        </form>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
                           <button
                             class="btn btn-block btn-success"
                             matStepperNext
                           >
                             Next
                           </button>
-                        </form>
-                      </div>
-                      <div class="card-footer p-4">
-                        <div class="row">
                           <!-- <div class="col-4">
                                 <button
                                   class="btn btn-block btn-facebook"
@@ -326,7 +326,7 @@
                           </div>
                         </form>
                       </div>
-                      <div class="card-footer p-4">
+                      <!-- <div class="card-footer p-4">
                         <div class="row">
                           <button
                             class="btn btn-block btn-success"
@@ -336,7 +336,7 @@
                             Create Account
                           </button>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                     <div
                       class="card mx-4"
@@ -650,9 +650,16 @@
                             </div>
                             <div class="col-md-3">
                               <img
-                                [src]="downloadURL"
+                                [src]="user.academyLogoURL"
                                 class="rounded-circle img-fluid float-right embed-responsive-item"
                                 alt="Cinque Terre"
+                                (click)="logoUrlInput.click()"
+                              />
+                              <input
+                                type="file"
+                                hidden
+                                #logoUrlInput
+                                (change)="handlerForAcademyLogo($event)"
                               />
                             </div>
                           </div>

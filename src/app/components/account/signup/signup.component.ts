@@ -3,6 +3,8 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmPasswordValidator } from './../../../utils/validators/confirm-password.validator';
 import { AuthService } from '../../../utils/services/auth/auth.service';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -20,8 +22,13 @@ export class SignupComponent implements OnInit {
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
   academyDetailsForm: FormGroup;
+  downloadURL: any;
 
-  constructor(private _formBuilder: FormBuilder, private _auth: AuthService) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _auth: AuthService,
+    private storage: AngularFireStorage
+  ) {}
 
   ngOnInit() {
     this.basicUserForm = this._formBuilder.group(
@@ -98,6 +105,39 @@ export class SignupComponent implements OnInit {
     // console.log(this.basicUserForm);
     // console.log(this.basicUserForm.value);
     // console.log(JSON.stringify(this.basicUserForm.value, undefined, 2));
+  }
+
+  handler(e) {
+    let file = e.target.files[0];
+    console.log(file);
+
+    const filePath = `pictures/${Date.now()}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    // observe percentage changes
+    // this.uploadPercent = task.percentageChanges();
+    // get notified when the download URL is available
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(dl => {
+            this.downloadURL = dl;
+            this.photoURL.setValue(dl);
+            console.log(this.downloadURL);
+          });
+        })
+      )
+      .subscribe();
+
+    // file.thumbUrl = '';
+
+    // const reader = new FileReader();
+    // reader.onload = () => {
+    //   file.thumbUrl = reader.result;
+    //   console.log(reader.result);
+    // };
+    // this.uploadFirebaseStorage(file);
   }
 
   get firstName() {

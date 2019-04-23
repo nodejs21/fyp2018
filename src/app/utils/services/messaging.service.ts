@@ -54,7 +54,7 @@ export class MessagingService {
   async deleteMyToken(user) {
     const token = await this.messaging.getToken();
     console.log('TOKEN', token);
-    return this.db
+    this.db
       .collection('users')
       .doc(user.uid)
       .update({ token: firebase.firestore.FieldValue.arrayRemove(token) });

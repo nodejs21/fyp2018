@@ -31,6 +31,7 @@ export class RequestssentComponent implements OnInit {
     this._auth.user.subscribe(user => {
       this._shared.getAppliedForAcademies().subscribe(res => {
         this.requestedAcademies = res.data().requests;
+        if (!this.requestedAcademies) return;
         this.requestedAcademies.forEach(academy => {
           this.academies.push(academy);
         });

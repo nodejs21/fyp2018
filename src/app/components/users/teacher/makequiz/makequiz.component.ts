@@ -23,6 +23,7 @@ export class MakequizComponent implements OnInit {
       this._shared.getUserRequests().subscribe(userInfo => {
         console.log(userInfo);
         this.classes = [];
+        if(!userInfo['requests']) return;
         userInfo['requests'].forEach(async academyid => {
           await this._shared
             .getApprovedRequests(academyid)

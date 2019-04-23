@@ -57,12 +57,12 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
   }
 
-  async logOut() {
+  logOut() {
     console.log('LOGOUT');
     // this._auth.user.subscribe(async user => {
     //   await this.msgService.deleteMyToken(user);
     // });
-    await this.msgService.deleteMyToken(this.user);
+    this.msgService.deleteMyToken(this.user);
     this._auth.signOut();
     // this._router.navigate(['/dashboard']);
   }

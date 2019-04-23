@@ -4,6 +4,7 @@ import { ConfirmPasswordValidator } from './../../../../utils/validators/confirm
 import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-profile',
@@ -26,16 +27,18 @@ export class ProfileComponent implements OnInit {
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
   academyDetailsForm: FormGroup;
-
   user;
 
   downloadURL =
+    'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
+  logoURL =
     'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
 
   constructor(
     private _formBuilder: FormBuilder,
     private _auth: AuthService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private _snackBar: MatSnackBar
   ) {
     this.max = 10;
     this.rate = 7;
@@ -51,7 +54,7 @@ export class ProfileComponent implements OnInit {
         firstName: [user.firstName, Validators.required],
         lastName: [user.lastName, Validators.required],
         email: [user.email, [Validators.required, Validators.email]],
-        photoURL: [this.downloadURL],
+        photoURL: [user.photoURL],
         gender: [true],
         userType: [user.userType.toLowerCase()]
       });
@@ -73,15 +76,12 @@ export class ProfileComponent implements OnInit {
       this._auth.getAcademyDetails(user.uid).subscribe((details: any) => {
         this.academyDetailsForm = this._formBuilder.group({
           academyName: [details.academyName, Validators.required],
-          academyDescription: [details.academyDescription, Validators.required]
+          academyDescription: [details.academyDescription, Validators.required],
+          academylogoURL: [details.academyLogoURL, Validators.required]
         });
       });
     });
   }
-
-  // Rating Code Start
-  // Rating Code Start
-  // Rating Code Start
 
   updateProfile(id: string) {
     const user: any = {
@@ -90,7 +90,13 @@ export class ProfileComponent implements OnInit {
       academyDetails: this.academyDetailsForm.value
     };
 
-    this._auth.updateUser(user, id);
+    this._auth
+      .updateUser(user, id)
+      .then(res => {
+        console.log(res);
+        this.showSnackBar(`Profile has been updated successfully!`);
+      })
+      .catch(error => console.error(error));
     // this._auth.(user, this._auth.user['value']['uid']);
   }
 
@@ -98,14 +104,15 @@ export class ProfileComponent implements OnInit {
     this.overStar = value;
     this.percent = (value / this.max) * 100;
   }
-
+  showSnackBar(message) {
+    this._snackBar.open(message, 'X', {
+      duration: 4000,
+      panelClass: 'bg-success'
+    });
+  }
   resetStar(): void {
     this.overStar = void 0;
   }
-  // Rating Code End
-  // Rating Code End
-  // Rating Code End
-  // Rating Code End
 
   collapsed(event: any): void {
     // console.log(event);
@@ -165,15 +172,17 @@ export class ProfileComponent implements OnInit {
   get academyDescription() {
     return this.academyDetailsForm.get('academyDescription');
   }
+  get academyLogoURL() {
+    return this.academyDetailsForm.get('academyLogoURL');
+  }
 
-  handler(e) {
+  handlerForProfilePic(e) {
     let file = e.target.files[0];
     console.log(file);
 
     const filePath = `pictures/${Date.now()}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
-
     // observe percentage changes
     // this.uploadPercent = task.percentageChanges();
     // get notified when the download URL is available
@@ -183,19 +192,36 @@ export class ProfileComponent implements OnInit {
         finalize(() => {
           fileRef.getDownloadURL().subscribe(dl => {
             this.downloadURL = dl;
+            this.photoURL.setValue(dl);
             console.log(this.downloadURL);
           });
         })
       )
       .subscribe();
+  }
 
-    // file.thumbUrl = '';
+  handlerForAcademyLogo(e) {
+    let file = e.target.files[0];
+    console.log(file);
 
-    // const reader = new FileReader();
-    // reader.onload = () => {
-    //   file.thumbUrl = reader.result;
-    //   console.log(reader.result);
-    // };
-    // this.uploadFirebaseStorage(file);
+    const filePath = `pictures/${Date.now()}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+    // observe percentage changes
+    // this.uploadPercent = task.percentageChanges();
+    // get notified when the download URL is available
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(dl => {
+            this.logoURL = dl;
+            console.log(this.academyLogoURL);
+            this.academyLogoURL.setValue(dl);
+            console.log(this.downloadURL);
+          });
+        })
+      )
+      .subscribe();
   }
 }

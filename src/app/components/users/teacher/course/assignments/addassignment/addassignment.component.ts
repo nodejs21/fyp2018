@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { FormControl, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
@@ -24,6 +24,7 @@ export class AddassignmentComponent implements OnInit {
   approvedRequests = [];
   buttonHidden = false;
   disableUploadButton = false;
+  classrooms;
 
   assignmentForm: FormGroup;
 
@@ -34,7 +35,9 @@ export class AddassignmentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private teacherService: TeacherService,
     private _auth: AuthService,
-    private _shared: SharedService
+    private _shared: SharedService,
+    private _teacher: TeacherService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -50,31 +53,52 @@ export class AddassignmentComponent implements OnInit {
             });
         });
       });
-      this.teacherService.getClassesDetails(user.uid).subscribe(classes => {
-        this.classes = classes;
-        console.log('classes', classes);
-      });
+      // this.teacherService.getClassesDetails(user.uid).subscribe(classes => {
+      //   this.classes = classes;
+      //   console.log('classes', classes);
+      // });
     });
     this.assignmentForm = this.formBuilder.group({
-      academy: [''],
-      class: [''],
-      subject: [''],
-      title: [''],
-      totalMarks: [''],
-      dueDate: [''],
-      uploadedFile: ['']
+      academy: ['', Validators.required],
+      classRoom: ['', Validators.required],
+      subject: ['', Validators.required],
+      title: ['', Validators.required],
+      totalMarks: ['', Validators.required],
+      dueDate: ['', Validators.required],
+      uploadedFile: [''],
+      classRoomId: ['', Validators.required],
+      classId: ['', Validators.required],
+      teacher: ['', Validators.required]
     });
   }
 
-  updateValues(request) {
-    this.academy.setValue({
-      academyname: request.data.academyName,
-      academyid: request.data.academyId
+  getAcademyData(academyId) {
+    console.log(academyId);
+    this._shared.getClassrooms(academyId).subscribe(classrooms => {
+      this.classrooms = classrooms;
+      console.log(this.classrooms);
     });
-    this.class.setValue({
-      className: request.data.className,
-      classId: request.data.classId
+  }
+
+  updateValues(classObj, academy) {
+    console.log(classObj, academy);
+
+    // this.academy.setValue(academy.data.academyName);
+    this.classId.setValue(academy.data.classId);
+    this.classRoom.setValue(classObj.data.class.className);
+    this.classRoomId.setValue(classObj.id);
+    this.teacher.setValue({
+      teacherName: classObj.data.teacher.teacherName,
+      teacherId: classObj.data.teacher.teacherId
     });
+    // this.academy.setValue({
+    //   academyname: classObj.data.academyName,
+    //   academyid: classObj.data.academyId
+    // });
+    // this.class.setValue({
+    //   className: classObj.data.className,
+    //   classId: classObj.data.classId
+    // });
   }
 
   handler(e) {
@@ -117,8 +141,8 @@ export class AddassignmentComponent implements OnInit {
     return this.assignmentForm.get('academy');
   }
 
-  get class() {
-    return this.assignmentForm.get('class');
+  get classRoom() {
+    return this.assignmentForm.get('classRoom');
   }
 
   get subject() {
@@ -141,7 +165,32 @@ export class AddassignmentComponent implements OnInit {
     return this.assignmentForm.get('uploadedFile');
   }
 
+  get classRoomId() {
+    return this.assignmentForm.get('classRoomId');
+  }
+
+  get teacher() {
+    return this.assignmentForm.get('teacher');
+  }
+
+  get classId() {
+    return this.assignmentForm.get('classId');
+  }
+
   createAssignment() {
     console.log(this.assignmentForm.value);
+    this._teacher
+      .createAssignment(this.assignmentForm.value)
+      .then(res => {
+        console.log(res);
+        this.showSnackBar(`Assignemt successfully uploaded!`);
+        //! Push Notification To All Students Of This ClassRoom
+      })
+      .catch(error => console.error(error));
+  }
+
+  showSnackBar(message) {
+    this.dialogRef.close();
+    this._snackBar.open(message, 'X', { duration: 4000 });
   }
 }

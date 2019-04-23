@@ -6,27 +6,31 @@
           Add Assignment
         </h3>
       </div>
-      <form [formGroup]="assignmentForm">
+      <form [formGroup]="assignmentForm" aria-disabled="!approvedRequests[0]">
         <div class="form-group">
           <mat-form-field>
             <mat-label>Choose Academy</mat-label>
-            <input type="text" matInput formControlName="academy" readonly />
-            <!-- <mat-select formControlName="academy">
+            <!-- <input type="text" matInput formControlName="academy" readonly /> -->
+            <mat-select formControlName="academy">
               <mat-option
                 *ngFor="let academy of approvedRequests[0]"
-                [value]="academy"
+                [value]="{
+                  academyName: academy.data.academyName,
+                  academyId: academy.data.academyId
+                }"
+                (click)="getAcademyData(academy.data.academyId)"
                 >{{ academy.data.academyName }}</mat-option
               >
-            </mat-select> -->
+            </mat-select>
           </mat-form-field>
         </div>
         <div class="form-group">
           <mat-form-field>
             <mat-label>Choose Class</mat-label>
-            <input type="text" matInput formControlName="class" readonly />
-            <!-- <mat-select formControlName="class">
-              <mat-option *ngFor="let class of classes" [value]="class">{{
-                  requests.data
+            <input type="text" matInput formControlName="classRoom" readonly />
+            <!-- <mat-select formControlName="classRoom">
+              <mat-option *ngFor="let class of classrooms" [value]="class">{{
+                class?.data?.class.className
               }}</mat-option>
             </mat-select> -->
           </mat-form-field>
@@ -36,13 +40,13 @@
             <mat-label>Choose Subject</mat-label>
             <mat-select formControlName="subject">
               <mat-option
-                *ngFor="let request of approvedRequests[0]"
+                *ngFor="let class of classrooms; index as i"
                 [value]="{
-                  subjectId: request.data.subjectId,
-                  subjectName: request.data.subjectName
+                  subjectId: class.data.subject.subjectId,
+                  subjectName: class.data.subject.subjectName
                 }"
-                (click)="updateValues(request)"
-                >{{ request.data.subjectName }}</mat-option
+                (click)="updateValues(class, approvedRequests[0][i])"
+                >{{ class?.data?.subject.subjectName }}</mat-option
               >
             </mat-select>
           </mat-form-field>
@@ -81,7 +85,17 @@
           </mat-form-field>
         </div>
       </form>
-
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="classrooms ? classrooms.length == 0 : false"
+          >
+            You can not upload any assignment because there is no classroom
+            associated to you.
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col 6">
           <button
@@ -96,7 +110,7 @@
         <div class="col 6">
           <button
             (click)="createAssignment()"
-            [disabled]="buttonHidden"
+            [disabled]="buttonHidden || !assignmentForm.valid"
             class="btn btn-outline-success btn-block border-0 font-weight-bold"
           >
             Upload
