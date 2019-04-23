@@ -56,6 +56,13 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  keyDownFunction(event) {
+    if(event.keyCode == 13) {
+      this.login();
+      // rest of your code
+    }
+  }
+
   get email() {
     return this.loginForm.get('email');
   }

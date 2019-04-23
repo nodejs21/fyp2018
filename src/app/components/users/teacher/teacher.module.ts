@@ -31,7 +31,6 @@ import { CreateassignmentComponent } from './createassignment/createassignment.c
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { SharedModule } from '../../shared/shared.module';
-import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { LiveclassComponent } from './liveclass/liveclass.component';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -82,11 +81,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
     AngularEditorModule,
     SharedModule
   ],
-  entryComponents: [
-    SearchacademyComponent,
-    AddassignmentComponent,
-    ProfilepopupComponent
-  ],
+  entryComponents: [SearchacademyComponent, AddassignmentComponent],
   exports: [TeacherdashboardComponent],
   providers: [AngularFireDatabase]
 })

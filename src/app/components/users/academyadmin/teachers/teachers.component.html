@@ -13,37 +13,24 @@
             class="btn btn-sm btn-outline-danger  float-right ml-2"
             matTooltip="Delete - I think this option is not justifiable!! - DISCUSS"
             triggers="mouseenter:mouseleave"
+            (click)="deleteTeacher(teacher)"
           >
             <span><i class="fa fa-trash"></i> </span>
           </button>
           <!-- (onHover)="hoveringOver($event)"
             (onLeave)="resetStar()" -->
-          <rating
-            class="ml-3"
-            [(ngModel)]="rate"
-            [max]="max"
-            [readonly]="isReadonly"
-            [titles]="['one', 'two', 'three']"
-            name="rate"
-          ></rating>
+          
         </div>
         <div class="card-body">
           <div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Class :
+                <i class="icon-badge"></i> Class :
                 <strong> {{ teacher.data.className }} </strong>
               </li>
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-user"></i> Subject :
+                <i class="icon-notebook"></i> Subject :
                 <strong> {{ teacher.data.subjectName }} </strong>
-              </li>
-              <li class="list-group-item bg-dark p-1">
-                <i class="icon-user"></i> Recorded Lectures :
-                <strong> 10 </strong>
-              </li>
-              <li class="list-group-item bg-dark p-1">
-                <i class="icon-user"></i> Live Lectures : <strong> 16 </strong>
               </li>
             </ul>
           </div>

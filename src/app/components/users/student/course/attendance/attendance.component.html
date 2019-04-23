@@ -1,4 +1,84 @@
-<!-- <p>
-  attendance works!
-  * Attendance 
-</p> -->
+
+<div class="col-sm-12">
+  <mat-card>
+    <div class="row">
+      <div class="col-sm-3">
+        <mat-form-field>
+          <mat-label>Choose Subject</mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Maths</mat-option>
+            <mat-option value="option2">Chemistry</mat-option>
+            <mat-option value="option3">Physics</mat-option>
+            <mat-option value="option3">Biology</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+
+  <hr />
+
+  <mat-card>
+    <div class="row">
+      <div class="col-11">
+        <mat-card-title>
+          Student Attendance
+        </mat-card-title>
+      </div>
+      
+
+      <mat-form-field class="px-3">
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Filter"
+        />
+      </mat-form-field>
+      <div class="example-container">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="lectureno">
+          <th mat-header-cell *matHeaderCellDef><strong>Lecture No</strong></th>
+          <td mat-cell *matCellDef="let element">{{ element.lectureno }}</td>
+        </ng-container>
+        <ng-container matColumnDef="lecturetitle">
+          <th mat-header-cell *matHeaderCellDef><strong>Lecture Title</strong></th>
+          <td mat-cell *matCellDef="let element">{{ element.lecturetitle }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="attendancestatus">
+          <th mat-header-cell *matHeaderCellDef><strong>Status</strong></th>
+          <td mat-cell *matCellDef="let element">{{ element.attendancestatus }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="lecturedate">
+          <th mat-header-cell *matHeaderCellDef><strong>Lecture Date</strong></th>
+          <td mat-cell *matCellDef="let element">{{ element.lecturedate }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="lecturestarttime">
+          <th mat-header-cell *matHeaderCellDef><strong>Lecture Start Time</strong></th>
+          <td mat-cell *matCellDef="let element">{{ element.lecturestarttime }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lectureendtime">
+          <th mat-header-cell *matHeaderCellDef>
+            <strong>Lecture End Time</strong>
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.lectureendtime }}</td>
+        </ng-container>
+
+        
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+    
+  </mat-card>
+</div>

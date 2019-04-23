@@ -12,7 +12,15 @@ import { MatSnackBar } from '@angular/material';
 export class MessagingService {
   messaging = firebase.messaging();
 
+<<<<<<< HEAD
   constructor(private db: AngularFirestore, private _snackBar: MatSnackBar) {}
+=======
+  constructor(
+    private db: AngularFirestore,
+    private _auth: AuthService,
+    private _snackBar: MatSnackBar
+  ) {}
+>>>>>>> 3f12fd0fde7ba4770c656f9e6e0e10ce50f2b946
 
   updateToken(user, token) {
     this.db
@@ -60,7 +68,11 @@ export class MessagingService {
     this.messaging.onMessage(payload => {
       console.log(payload);
       this.playNotificationSound();
+<<<<<<< HEAD
       this._snackBar.open(payload.notification.body, 'X', { duration: 4000 });
+=======
+      this._snackBar.open(payload.body, 'X', { duration: 4000 });
+>>>>>>> 3f12fd0fde7ba4770c656f9e6e0e10ce50f2b946
     });
   }
 
