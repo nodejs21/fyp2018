@@ -16,6 +16,7 @@ import { MessagingService } from '../../../utils/services/messaging.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   error: any = false;
+  btnLoginDisable = false;
   constructor(
     private _auth: AuthService,
     private _formBuilder: FormBuilder,
@@ -30,7 +31,6 @@ export class LoginComponent implements OnInit {
     });
     this._auth.user.subscribe(user => {
       console.log(user);
-
       if (user) {
         this._router.navigate([`/${user['userType']}`]);
       }
@@ -42,22 +42,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.btnLoginDisable = true;
     this._auth
       .signIn(this.email.value, this.password.value)
       .then(({ user }) => {
         this.msgService.getPermission(user);
         this.msgService.monitorRefresh(user);
         this.msgService.receiveMessage();
+        this.btnLoginDisable = false;
         console.log(user, 'UUSSRR');
       })
       .catch(err => {
         console.error(err);
         this.error = err;
+        this.btnLoginDisable = false;
       });
   }
 
   keyDownFunction(event) {
-    if(event.keyCode == 13) {
+    if (event.keyCode == 13) {
       this.login();
       // rest of your code
     }

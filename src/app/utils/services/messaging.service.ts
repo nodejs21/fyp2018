@@ -54,7 +54,7 @@ export class MessagingService {
   async deleteMyToken(user) {
     const token = await this.messaging.getToken();
     console.log('TOKEN', token);
-    return this.db
+    this.db
       .collection('users')
       .doc(user.uid)
       .update({ token: firebase.firestore.FieldValue.arrayRemove(token) });
@@ -65,6 +65,7 @@ export class MessagingService {
       console.log(payload);
       this.playNotificationSound();
       this._snackBar.open(payload.notification.body, 'X', { duration: 4000 });
+      this._snackBar.open(payload.body, 'X', { duration: 4000 });
     });
   }
 

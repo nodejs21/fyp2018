@@ -15,8 +15,9 @@
                     </div>
                     <div class="col-md-3">
                       <img
-                        [(src)]="basicUserForm.value.photoURL"
+                        [src]="basicUserForm.value.photoURL"
                         class="rounded-circle img-fluid float-right embed-responsive-item"
+                        (click)="fileInput.click()"
                       />
                     </div>
                   </div>
@@ -637,9 +638,16 @@
                     </div>
                     <div class="col-md-3">
                       <img
-                        src="./../../../../assets/img/avatars/8.jpg"
+                        [src]="logoURL"
                         class="rounded-circle img-fluid float-right embed-responsive-item"
                         alt="Cinque Terre"
+                        (click)="fileInput.click()"
+                      />
+                      <input
+                        type="file"
+                        hidden
+                        #fileInput
+                        (change)="handlerForAcademyLogo($event)"
                       />
                     </div>
                   </div>

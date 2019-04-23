@@ -31,24 +31,6 @@ export class DefaultLayoutComponent implements OnDestroy {
       console.log(user);
       this.user = user;
       this.navItems = navItems[user ? user.userType : 'originalNav'];
-      // switch (user.usertype) {
-      //   case 'teacher': {
-      //     this.navitems = navitems.teachernav;
-      //     break;
-      //   }
-      //   case 'academyadmin': {
-      //     this.navitems = navitems.academyadminnav;
-      //     break;
-      //   }
-      //   case 'student': {
-      //     this.navitems = navitems.studentnav;
-      //     break;
-      //   }
-
-      //   default: {
-      //     break;
-      //   }
-      // }
     });
 
     this.changes.observe(<Element>this.element, {
@@ -57,12 +39,12 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
   }
 
-  async logOut() {
+  logOut() {
     console.log('LOGOUT');
     // this._auth.user.subscribe(async user => {
     //   await this.msgService.deleteMyToken(user);
     // });
-    await this.msgService.deleteMyToken(this.user);
+    this.msgService.deleteMyToken(this.user);
     this._auth.signOut();
     // this._router.navigate(['/dashboard']);
   }

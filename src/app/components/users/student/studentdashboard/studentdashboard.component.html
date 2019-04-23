@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
   <div class="row">
-    <div class="col-sm-6 col-md-4 col-lg-2 pb-4">
+    <div class="col-3 col-sm-6 col-md-4 col-lg-2 pb-4">
       <button
         class="btn btn-sm btn-secondary border border-secondary btn-block h-100"
         matTooltip="Search for academy"
@@ -10,15 +10,15 @@
         <p class="display-1 text-dark">+</p>
       </button>
     </div>
-  </div>
-</div>
-
-<div class="animated fadeIn">
-  <div class="row">
-    <div class="col-4">
+    <div
+      class="col-3"
+      *ngFor="
+        let request of approvedRequests ? approvedRequests[0] : approvedRequests
+      "
+    >
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Academy Name
+          {{ request.data.academyName }}
           <button
             class="btn btn-sm btn-outline-info  float-right ml-2"
             matTooltip="View Profile"
@@ -26,33 +26,15 @@
           >
             <span><i class="fa fa-eye"></i> </span>
           </button>
-          <rating
-            class="ml-3"
-            [(ngModel)]="rate"
-            [max]="max"
-            [readonly]="isReadonly"
-            (onHover)="hoveringOver($event)"
-            (onLeave)="resetStar()"
-            [titles]="['one', 'two', 'three']"
-            name="rate"
-          ></rating>
         </div>
         <div class="card-body">
           <div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1">
-                Subjects :
-                <ul>
-                  <li class="list-group-item bg-dark p-1">
-                    <i class="fa fa-book"></i> Maths
-                  </li>
-                  <li class="list-group-item bg-dark p-1">
-                    <i class="fa fa-book"></i> Chemistry
-                  </li>
-                  <li class="list-group-item bg-dark p-1">
-                    <i class="fa fa-book"></i> Physics
-                  </li>
-                </ul>
+                Class : {{ request.data.className }}
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                Subject : {{ request.data.subjectName }}
               </li>
             </ul>
           </div>
@@ -61,3 +43,8 @@
     </div>
   </div>
 </div>
+
+<!-- <div class="animated fadeIn">
+  <div class="row">
+  </div>
+</div> -->

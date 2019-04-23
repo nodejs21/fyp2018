@@ -18,7 +18,7 @@ import { VideostreamComponent } from './liveclass/videostream/videostream.compon
 import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
 import { SearchacademyComponent } from '../../shared/searchacademy/searchacademy.component';
 import { SearchacademyModule } from '../../shared/searchacademy/searchacademy.module';
@@ -62,7 +62,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     ProgressbarModule.forRoot(),
     CollapseModule.forRoot(),
     FormsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    ReactiveFormsModule
   ],
   entryComponents: [SearchacademyComponent],
   exports: [StudentdashboardComponent],

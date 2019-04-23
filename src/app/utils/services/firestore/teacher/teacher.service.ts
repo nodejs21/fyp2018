@@ -81,12 +81,12 @@ export class TeacherService {
       .add(quiz);
   }
 
-  createAssignment(assignment: any, academyId, classId) {
+  createAssignment(assignment: any) {
     return this.afs
       .collection('academies')
-      .doc(academyId)
+      .doc(assignment.academy.academyId)
       .collection('classrooms')
-      .doc(classId)
+      .doc(assignment.classRoomId)
       .collection('assignments')
       .add(assignment);
   }

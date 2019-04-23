@@ -133,12 +133,12 @@ export class AuthService {
       .doc(uid)
       .update(user.userBasicInfo);
     if (user.userBasicInfo.userType === 'teacher') {
-      this.afs
+      return this.afs
         .collection('teachers')
         .doc(uid)
         .update(user.userSpecificInfo);
     } else if (user.userBasicInfo.userType === 'student') {
-      this.afs
+      return this.afs
         .collection('students')
         .doc(uid)
         .update(user.userSpecificInfo);
@@ -147,7 +147,7 @@ export class AuthService {
         .collection('academyadmins')
         .doc(uid)
         .update(user.userSpecificInfo);
-      this.afs
+      return this.afs
         .collection('academies')
         .doc(uid)
         .update(user.academyDetails);
