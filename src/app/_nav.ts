@@ -33,38 +33,39 @@ const academyadmin: NavData[] = [
   {
     name: 'Subjects',
     url: `${academyAdminPrefix}/subjects`,
-    icon: 'icon-pencil'
+    icon: 'icon-notebook'
   },
   {
     name: 'Classrooms',
     url: `${academyAdminPrefix}/classrooms`,
-    icon: 'icon-pencil'
+    icon: 'icon-badge'
   },
   {
     name: 'Teachers',
     url: `${academyAdminPrefix}/teachers`,
+    
     icon: 'icon-user'
   },
   {
     name: 'Students',
     url: `${academyAdminPrefix}/students`,
-    icon: 'icon-user'
+    icon: 'icon-people'
   },
 
   {
     name: 'Requests',
     // url: '/theme/typography',
-    icon: 'icon-pencil',
+    icon: 'icon-question',
     children: [
       {
         name: 'Students',
         url: `${academyAdminPrefix}/requests/student`,
-        icon: 'icon-user'
+        icon: 'icon-people'
       },
       {
         name: 'Teachers',
         url: `${academyAdminPrefix}/requests/teacher`,
-        icon: 'icon-puzzle'
+        icon: 'icon-user'
       }
     ]
   }
@@ -89,17 +90,17 @@ const teacher: NavData[] = [
   {
     name: 'Classrooms',
     url: `${teacherPrefix}/classrooms`,
-    icon: 'icon-drop'
+    icon: 'icon-screen-desktop'
   },
   {
     name: 'Assignments',
     url: `${teacherPrefix}/course/assignments`,
-    icon: 'icon-user'
+    icon: 'icon-note'
   },
   {
     name: 'Quizzes',
     url: `${teacherPrefix}/course/quizzes`,
-    icon: 'icon-puzzle'
+    icon: 'icon-clock'
   },
   {
     name: 'Make Quiz',
@@ -109,17 +110,17 @@ const teacher: NavData[] = [
   {
     name: 'Make Assignment',
     url: `${teacherPrefix}/createassignment`,
-    icon: 'icon-puzzle'
+    icon: 'icon-pencil'
   },
-  {
-    name: 'Results',
-    url: `${teacherPrefix}/course/result`,
-    icon: 'icon-puzzle'
-  },
+  // {
+  //   name: 'Results',
+  //   url: `${teacherPrefix}/course/result`,
+  //   icon: 'icon-puzzle'
+  // },
   {
     name: 'Requests',
     url: `${teacherPrefix}`,
-    icon: 'icon-pencil',
+    icon: 'icon-question',
     children: [
       // {
       //   name: 'Invitations',
@@ -129,14 +130,14 @@ const teacher: NavData[] = [
       {
         name: 'Sent',
         url: `${teacherPrefix}/requests/sent`,
-        icon: 'icon-puzzle'
+        icon: 'icon-cursor'
       }
     ]
   },
   {
     name: 'Live Class',
     url: `${teacherPrefix}/liveclass`,
-    icon: 'icon-puzzle'
+    icon: 'icon-earphones-alt'
   }
   // {
   //   name: 'Time Table',
@@ -158,12 +159,12 @@ const student: NavData[] = [
   {
     name: 'Assignments',
     url: `${studentPrefix}/assignments`,
-    icon: 'icon-pencil'
+    icon: 'icon-note'
   },
   {
     name: 'Quizzes',
     url: `${studentPrefix}/quizzes`,
-    icon: 'icon-pencil'
+    icon: 'icon-clock'
   },
   // {
   //   name: 'Results',
@@ -173,12 +174,12 @@ const student: NavData[] = [
   {
     name: 'Attendance',
     url: `${studentPrefix}/attendance`,
-    icon: 'icon-pencil'
+    icon: 'icon-check'
   },
   {
     name: 'Requests',
     url: `${studentPrefix}`,
-    icon: 'icon-pencil',
+    icon: 'icon-question',
     children: [
       {
         name: 'Sent',

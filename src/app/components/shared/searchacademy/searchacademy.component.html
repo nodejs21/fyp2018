@@ -1,8 +1,9 @@
 <div class="container">
+  <h3>Apply For Academy</h3>
   <mat-form-field>
     <input
       type="text"
-      placeholder="Start typing something..."
+      placeholder="Search Academy"
       aria-label="Number"
       matInput
       [formControl]="searchedAcademy"
@@ -22,13 +23,10 @@
     <div class="card-header">
       <h3>
         {{
-          selectedAcademy ? selectedAcademy.data.academyName : 'Academy Name'
+          selectedAcademy ? selectedAcademy.data.academyName : ''
         }}
       </h3>
-      <div>
-        <label class="font-weight-bold">Rating</label>
-        <!-- <rating class="ml-3" [(ngModel)]="rate"></rating> -->
-      </div>
+      
     </div>
 
     <div class="card-body">
