@@ -21,8 +21,6 @@ export class DefaultLayoutComponent implements OnDestroy {
     private _router: Router,
     private msgService: MessagingService
   ) {
-    this.msgService.getPermission();
-    this.msgService.receiveMessage();
     this.changes = new MutationObserver(mutations => {
       this.sidebarMinimized = document.body.classList.contains(
         'sidebar-minimized'
@@ -59,7 +57,12 @@ export class DefaultLayoutComponent implements OnDestroy {
     });
   }
 
-  logOut() {
+  async logOut() {
+    console.log('LOGOUT');
+    // this._auth.user.subscribe(async user => {
+    //   await this.msgService.deleteMyToken(user);
+    // });
+    await this.msgService.deleteMyToken(this.user);
     this._auth.signOut();
     // this._router.navigate(['/dashboard']);
   }

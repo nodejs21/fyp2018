@@ -44,8 +44,11 @@ export class LoginComponent implements OnInit {
   login() {
     this._auth
       .signIn(this.email.value, this.password.value)
-      .then(user => {
-        console.log(user);
+      .then(({ user }) => {
+        this.msgService.getPermission(user);
+        this.msgService.monitorRefresh(user);
+        this.msgService.receiveMessage();
+        console.log(user, 'UUSSRR');
       })
       .catch(err => {
         console.error(err);
