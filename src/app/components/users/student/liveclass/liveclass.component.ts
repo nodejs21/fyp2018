@@ -76,6 +76,7 @@ export class LiveclassComponent implements OnInit {
   };
   roomToJoin = '92';
   channel;
+  currentClass;
 
   constructor(
     private _student: StudentService,
@@ -132,6 +133,7 @@ export class LiveclassComponent implements OnInit {
       console.log(msg);
       this.peer.setRemoteDescription(new RTCSessionDescription(msg), () => {
         this.peer.createAnswer().then(this.localDescCreated);
+        this._shared.joinClass().subscribe()
       });
     });
   }
@@ -246,4 +248,11 @@ export class LiveclassComponent implements OnInit {
       }
     });
   };
+
+  askForPermission() {
+    var teacherId = 90;
+    this._shared.getPermission(teacherId).then(res => {
+      console.log(res);
+    });
+  }
 }

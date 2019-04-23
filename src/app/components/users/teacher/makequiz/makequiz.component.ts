@@ -20,7 +20,7 @@ export class MakequizComponent implements OnInit {
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
-      this._shared.getRequestIds().subscribe(userInfo => {
+      this._shared.getUserRequests().subscribe(userInfo => {
         console.log(userInfo);
         this.classes = [];
         userInfo['requests'].forEach(async academyid => {

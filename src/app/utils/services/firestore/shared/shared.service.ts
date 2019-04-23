@@ -154,10 +154,7 @@ export class SharedService {
       .ref.update({ requests: firestore.FieldValue.arrayUnion(academy) });
   }
 
-  getRequestIds() {
-    console.log(this.user.userType);
-    console.log(this.user.uid);
-
+  getUserRequests() {
     return this.afs
       .collection(`${this.user.userType}s`)
       .doc(this.user.uid)
@@ -260,28 +257,39 @@ export class SharedService {
       .get();
   }
 
-  // getPermission() {
-  //   return this.afs
-  //     .collection('permission')
-  //     .doc(this.user.uid)
-  //     .set({ studentId: this.user.uid, permission: false, teacherId:  });
-  // }
+  getPermission(teacherId) {
+    return this.afs
+      .collection('permission')
+      .doc(this.user.uid)
+      .set({ studentId: this.user.uid, permission: false, teacherId });
+  }
 
-  // checkPermission() {
-  //   return this.afs
-  //     .collection('permission')
-  //     .doc(this.user.uid)
-  //     .valueChanges();
-  // }
+  checkPermission() {
+    return this.afs
+      .collection('permission')
+      .doc(this.user.uid)
+      .valueChanges();
+  }
 
-  // checkPermissions() {
+  givePermission(permit, teacherId) {
+    return this.afs
+      .collection('permission')
+      .doc(this.user.uid)
+      .set({ studentId: this.user.uid, permission: false, teacherId });
+  }
 
-  // }
-
-  // givePermission(permit) {
-  //   return this.afs
-  //     .collection('permission')
-  //     .doc()
-  //     .add({ studentId: this.user.uid, permission: false, teacherId:  });
-  // }
+  joinClass() {
+    return this.afs
+      .collection('liveclasses', ref =>
+        ref.where('students', 'array-contains', this.user.uid)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
 }
