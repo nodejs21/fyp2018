@@ -9,18 +9,22 @@
         <mat-label>Select Academy</mat-label>
         <mat-select name="selectedAcademyId" [(ngModel)]="selectedAcademy">
           <mat-option
-            *ngFor="
-              let academy of approvedRequests
-                ? approvedRequests[0]
-                : approvedRequests
-            "
-            [value]="academy"
-            (click)="getAcademyData(academy)"
+            *ngFor="let academy of approvedRequests; index as i"
+            [value]="academy[i]"
+            (click)="getAcademyData(academy[i])"
           >
-            {{ academy.data.academyName | titlecase }}
+            {{ academy[i].data.academyName | titlecase }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
+    <div
+      class="col-8"
+      *ngIf="selectedAcademy && classrooms ? classrooms.length == 0 : false"
+    >
+      <div class="invalid-feedback d-block align-bottom">
+        <h5>*You have no classroom in the selected academy.</h5>
+      </div>
     </div>
     <div class="col-4" *ngFor="let classroom of classrooms">
       <div class="card text-white bg-dark">

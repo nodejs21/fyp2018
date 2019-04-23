@@ -26,6 +26,8 @@ export class ProfileComponent implements OnInit {
   basicUserForm: FormGroup;
   specificUserForm: FormGroup;
 
+  isUploading = false;
+
   user;
 
   downloadURL =
@@ -45,34 +47,31 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._auth.user
-      .subscribe(user => {
-        this.user = user;
-        this.basicUserForm = this._formBuilder.group({
-          firstName: [user.firstName, Validators.required],
-          lastName: [user.lastName, Validators.required],
-          email: [user.email, [Validators.required, Validators.email]],
-          photoURL: [user.photoURL],
-          gender: [true],
-          userType: [user.userType.toLowerCase()]
+    this._auth.user.subscribe(user => {
+      this.user = user;
+      this.basicUserForm = this._formBuilder.group({
+        firstName: [user.firstName, Validators.required],
+        lastName: [user.lastName, Validators.required],
+        email: [user.email, [Validators.required, Validators.email]],
+        photoURL: [user.photoURL],
+        gender: [true],
+        userType: [user.userType.toLowerCase()]
+      });
+      this._auth
+        .getUserSpecificInfo(user.userType, user.uid)
+        .subscribe((user: any) => {
+          this.specificUserForm = this._formBuilder.group({
+            dob: [user.dob, Validators.required],
+            address: [
+              user.address,
+              [Validators.required, Validators.minLength(5)]
+            ],
+            city: [user.city, [Validators.required, Validators.minLength(3)]],
+            telephone: [user.telephone, Validators.required],
+            qualification: [user.qualification]
+          });
         });
-        this._auth
-          .getUserSpecificInfo(user.userType, user.uid)
-          .subscribe((user: any) => {
-            this.specificUserForm = this._formBuilder.group({
-              dob: [user.dob, Validators.required],
-              address: [
-                user.address,
-                [Validators.required, Validators.minLength(5)]
-              ],
-              city: [user.city, [Validators.required, Validators.minLength(3)]],
-              telephone: [user.telephone, Validators.required],
-              qualification: [user.qualification]
-            });
-          })
-          .unsubscribe();
-      })
-      .unsubscribe();
+    });
   }
 
   // Rating Code Start
@@ -167,6 +166,7 @@ export class ProfileComponent implements OnInit {
   }
 
   handler(e) {
+    this.isUploading = true;
     let file = e.target.files[0];
     console.log(file);
 
@@ -184,6 +184,7 @@ export class ProfileComponent implements OnInit {
             this.downloadURL = dl;
             this.photoURL.setValue(dl);
             console.log(this.downloadURL);
+            this.isUploading = false;
           });
         })
       )

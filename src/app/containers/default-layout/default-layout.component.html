@@ -39,6 +39,18 @@
     <!-- <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#"><i class="icon-location-pin"></i></a>
     </li> -->
+    <li class="nav-item dropdown">
+      <strong>
+        {{ user?.firstName | titlecase }}
+      </strong>
+      {{ user?.lastName | titlecase }}
+      <br />
+      <!-- <span class="blockquote-footer"> -->
+      <small class="text-muted">
+        {{ user?.email }}
+      </small>
+      <!-- </span> -->
+    </li>
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a
         class="nav-link"
@@ -59,15 +71,15 @@
       >
         <!-- <div class="dropdown-header text-center"><strong>Account</strong></div>
         <a class="dropdown-item" href="#"
-          ><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info"
-            >1</span
+        ><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info"
+        >1</span
           ></a
         >
         <a class="dropdown-item" href="#"
-          ><i class="fa fa-envelope-o"></i> Messages<span
-            class="badge badge-success"
-            >1</span
-          ></a
+        ><i class="fa fa-envelope-o"></i> Messages<span
+        class="badge badge-success"
+        >1</span
+        ></a
         > -->
         <!-- <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a> -->
         <!-- <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comment<span class="badge badge-warning">42</span></a> -->

@@ -21,7 +21,7 @@ export class AddassignmentComponent implements OnInit {
   selectedClass;
   subjects = [];
   selectedSubject;
-  approvedRequests = [];
+  approvedRequests;
   buttonHidden = false;
   disableUploadButton = false;
   classrooms;
@@ -41,23 +41,30 @@ export class AddassignmentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._auth.user.subscribe(user => {
-      this._shared.getUserRequests().subscribe(user => {
-        user['requests'].forEach(academy => {
-          this._shared
-            .getApprovedRequests(academy.academyId)
-            .subscribe(request => {
-              if (request.length > 0) {
-                this.approvedRequests.push(request);
-              }
-            });
-        });
+    this._auth.user.subscribe(async user => {
+      await this.getApprovedRequests().then(requests => {
+        this.approvedRequests = requests;
+        console.log(this.approvedRequests);
       });
-      // this.teacherService.getClassesDetails(user.uid).subscribe(classes => {
-      //   this.classes = classes;
-      //   console.log('classes', classes);
-      // });
     });
+    // this._auth.user.subscribe(user => {
+    //   this._shared.getUserRequests().subscribe(user => {
+    //     if (!user['requests']) return;
+    //     user['requests'].forEach(academy => {
+    //       this._shared
+    //         .getApprovedRequests(academy.academyId)
+    //         .subscribe(request => {
+    //           if (request.length > 0) {
+    //             this.approvedRequests.push(request);
+    //           }
+    //         });
+    //     });
+    //   });
+    //   // this.teacherService.getClassesDetails(user.uid).subscribe(classes => {
+    //   //   this.classes = classes;
+    //   //   console.log('classes', classes);
+    //   // });
+    // });
     this.assignmentForm = this.formBuilder.group({
       academy: ['', Validators.required],
       classRoom: ['', Validators.required],
@@ -69,6 +76,25 @@ export class AddassignmentComponent implements OnInit {
       classRoomId: ['', Validators.required],
       classId: ['', Validators.required],
       teacher: ['', Validators.required]
+    });
+  }
+
+  getApprovedRequests() {
+    var temp = [];
+    return new Promise((resolve, reject) => {
+      {
+        this._shared.getUserRequests().subscribe(userInfo => {
+          if (!userInfo['requests']) return;
+          userInfo['requests'].forEach(async request => {
+            await this._shared
+              .getApprovedRequests(request.academyId)
+              .subscribe(request => {
+                temp.push(request);
+              });
+          });
+          resolve(temp);
+        });
+      }
     });
   }
 

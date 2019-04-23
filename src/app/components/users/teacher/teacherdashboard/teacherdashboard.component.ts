@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchacademyComponent } from '../../../shared/searchacademy/searchacademy.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
@@ -21,25 +21,26 @@ export class TeacherdashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._auth.user.subscribe(async user => {
-      await this.getApprovedRequests().then(requests => {
-        console.log(requests);
+    this._auth.user.subscribe(user => {
+      this.approvedRequests = [];
+      this.getApprovedRequests().then(requests => {
         this.approvedRequests = requests;
+        console.log(this.approvedRequests);
       });
     });
   }
 
   getApprovedRequests() {
-    var temp = [];
     return new Promise((resolve, reject) => {
       {
+        var temp = [];
         this._shared.getUserRequests().subscribe(userInfo => {
-          if(!userInfo['requests']) return;
+          if (!userInfo['requests']) return;
           userInfo['requests'].forEach(async request => {
             await this._shared
               .getApprovedRequests(request.academyId)
               .subscribe(request => {
-                temp.push(request);
+                if (request.length > 0) temp.push(request);
               });
           });
           resolve(temp);

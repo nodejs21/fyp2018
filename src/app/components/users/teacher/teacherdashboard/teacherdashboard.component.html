@@ -10,33 +10,30 @@
         <p class="display-1 text-dark">+</p>
       </button>
     </div>
-    <div
-      class="col-3"
-      *ngFor="
-        let request of approvedRequests ? approvedRequests[0] : approvedRequests
-      "
-    >
-      <div class="card text-white bg-dark">
-        <div class="card-header h4 ">
-          {{ request.data.academyName }}
-          <button
-            class="btn btn-sm btn-outline-info  float-right ml-2"
-            matTooltip="View Profile"
-            triggers="mouseenter:mouseleave"
-          >
-            <span><i class="fa fa-eye"></i> </span>
-          </button>
-        </div>
-        <div class="card-body">
-          <div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item bg-dark p-1">
-                Class : {{ request.data.className }}
-              </li>
-              <li class="list-group-item bg-dark p-1">
-                Subject : {{ request.data.subjectName }}
-              </li>
-            </ul>
+    <div class="col-3" *ngFor="let requests of approvedRequests; index as i">
+      <div *ngFor="let request of requests">
+        <div class="card text-white bg-dark">
+          <div class="card-header h4">
+            {{ request.data.academyName }}
+            <button
+              class="btn btn-sm btn-outline-info  float-right ml-2"
+              matTooltip="View Profile"
+              triggers="mouseenter:mouseleave"
+            >
+              <span><i class="fa fa-eye"></i> </span>
+            </button>
+          </div>
+          <div class="card-body">
+            <div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark p-1">
+                  Class : {{ request.data.className }}
+                </li>
+                <li class="list-group-item bg-dark p-1">
+                  Subject : {{ request.data.subjectName }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
