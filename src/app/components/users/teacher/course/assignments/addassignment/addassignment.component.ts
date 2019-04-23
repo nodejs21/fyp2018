@@ -47,24 +47,6 @@ export class AddassignmentComponent implements OnInit {
         console.log(this.approvedRequests);
       });
     });
-    // this._auth.user.subscribe(user => {
-    //   this._shared.getUserRequests().subscribe(user => {
-    //     if (!user['requests']) return;
-    //     user['requests'].forEach(academy => {
-    //       this._shared
-    //         .getApprovedRequests(academy.academyId)
-    //         .subscribe(request => {
-    //           if (request.length > 0) {
-    //             this.approvedRequests.push(request);
-    //           }
-    //         });
-    //     });
-    //   });
-    //   // this.teacherService.getClassesDetails(user.uid).subscribe(classes => {
-    //   //   this.classes = classes;
-    //   //   console.log('classes', classes);
-    //   // });
-    // });
     this.assignmentForm = this.formBuilder.group({
       academy: ['', Validators.required],
       classRoom: ['', Validators.required],
@@ -75,7 +57,8 @@ export class AddassignmentComponent implements OnInit {
       uploadedFile: [''],
       classRoomId: ['', Validators.required],
       classId: ['', Validators.required],
-      teacher: ['', Validators.required]
+      teacher: ['', Validators.required],
+      uploadedOn: ['', Validators.required]
     });
   }
 
@@ -117,6 +100,7 @@ export class AddassignmentComponent implements OnInit {
       teacherName: classObj.data.teacher.teacherName,
       teacherId: classObj.data.teacher.teacherId
     });
+    this.uploadedOn.setValue(new Date());
     // this.academy.setValue({
     //   academyname: classObj.data.academyName,
     //   academyid: classObj.data.academyId
@@ -145,22 +129,13 @@ export class AddassignmentComponent implements OnInit {
         finalize(() => {
           fileRef.getDownloadURL().subscribe(dl => {
             this.uploadedFile.setValue(dl);
-            console.log(this.uploadedFile);
+            console.log(this.uploadedFile.value);
             this.disableUploadButton = false;
             this.buttonHidden = false;
           });
         })
       )
       .subscribe();
-
-    // file.thumbUrl = '';
-
-    // const reader = new FileReader();
-    // reader.onload = () => {
-    //   file.thumbUrl = reader.result;
-    //   console.log(reader.result);
-    // };
-    // this.uploadFirebaseStorage(file);
   }
 
   get academy() {
@@ -201,6 +176,10 @@ export class AddassignmentComponent implements OnInit {
 
   get classId() {
     return this.assignmentForm.get('classId');
+  }
+
+  get uploadedOn() {
+    return this.assignmentForm.get('uploadedOn');
   }
 
   createAssignment() {

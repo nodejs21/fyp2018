@@ -169,7 +169,15 @@ export class SharedService {
       .doc(academyId)
       .collection('classrooms')
       .doc(classroomId)
-      .collection('assignments');
+      .collection('assignments')
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
   }
 
   // getAssignmentDetails(assignmentId) {

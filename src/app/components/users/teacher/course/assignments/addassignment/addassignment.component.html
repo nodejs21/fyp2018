@@ -83,7 +83,7 @@
       <div class="col-12">
         <div
           class="invalid-feedback d-block"
-          *ngIf="classrooms ? classrooms.length == 0 : false"
+          *ngIf="classrooms ? (classrooms.length == 0 ? true : false) : false"
         >
           <h6>
             *You can not upload any assignment because there is no classroom
@@ -97,7 +97,11 @@
         <button
           (click)="fileInput.click()"
           [disabled]="
-            disableUploadButton || classrooms ? classrooms.length == 0 : true
+            disableUploadButton || classrooms
+              ? classrooms.length == 0
+                ? true
+                : false
+              : true
           "
           class="btn btn-outline-info btn-block border-0 font-weight-bold"
         >

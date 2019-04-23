@@ -4,6 +4,25 @@ import { AddassignmentComponent } from './addassignment/addassignment.component'
 import { SharedService } from '../../../../../utils/services/firestore/shared/shared.service';
 import { AuthService } from '../../../../../utils/services/auth/auth.service';
 
+export interface Assignment {
+  assignmentTitle: string;
+  assignmentNumber: number;
+  addedDate: string;
+  dueDate: string;
+  totalMarks: number;
+  fileURL: string;
+}
+
+const ELEMENT_DATA: Assignment[] = [
+  // {
+  //   assignmentNumber: 1,
+  //   assignmentTitle: 'Business Plan',
+  //   addedDate: '10-03-2019',
+  //   dueDate: '20-03-2019',
+  //   totalMarks: 10
+  // }
+];
+
 @Component({
   selector: 'app-assignments',
   templateUrl: './assignments.component.html',
@@ -16,15 +35,16 @@ export class AssignmentsComponent implements OnInit {
     'addedDate',
     'dueDate',
     'totalMarks',
-    'controls'
+    'fileURL'
   ];
   // tslint:disable-next-line: no-use-before-declare
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   approvedRequests = [];
-  approvedAcademies = [];
   classrooms;
   allAssignments;
   subjects;
+  academyId;
+  classroomId;
 
   constructor(
     private _dialog: MatDialog,
@@ -40,9 +60,9 @@ export class AssignmentsComponent implements OnInit {
           this._shared
             .getApprovedRequests(academy.academyId)
             .subscribe(request => {
+              if (!request) return;
               if (request.length > 0) {
                 this.approvedRequests.push(request);
-                this.approvedAcademies.push(academy);
               }
             });
         });
@@ -66,11 +86,28 @@ export class AssignmentsComponent implements OnInit {
     });
   }
 
-  getAssignments() {}
+  getAssignments(classroomId, academyId?) {
+    console.log(classroomId, this.academyId);
+    this._shared
+      .getAssignments(this.academyId, classroomId)
+      .subscribe(assignments => {
+        console.log(assignments);
+        assignments.forEach((assignment, index) => {
+          ELEMENT_DATA.push({
+            assignmentTitle: assignment.data.title,
+            assignmentNumber: index,
+            addedDate: assignment.data.uploadedOn,
+            dueDate: assignment.data.dueDate,
+            totalMarks: assignment.data.totalMarks,
+            fileURL: assignment.data.uploadedFile
+          });
+        });
+      });
+  }
 
   openDialog() {
     // if (!this._teacherService.academies) this.getAcademies();
-    const dialogRef = this._dialog.open(AddassignmentComponent, {
+    this._dialog.open(AddassignmentComponent, {
       data: []
     });
   }
@@ -79,40 +116,3 @@ export class AssignmentsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
-export interface PeriodicElement {
-  assignmentTitle: string;
-  assignmentNumber: number;
-  addedDate: string;
-  dueDate: string;
-  totalMarks: number;
-  controls: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  // tslint:disable-next-line: max-line-length
-  {
-    assignmentNumber: 1,
-    assignmentTitle: 'Business Plan',
-    addedDate: '10-03-2019',
-    dueDate: '20-03-2019',
-    totalMarks: 10,
-    controls: 'Edit/Delete'
-  },
-  // tslint:disable-next-line: max-line-length
-  {
-    assignmentNumber: 2,
-    assignmentTitle: 'Project Plan',
-    addedDate: '20-03-2019',
-    dueDate: '30-03-2019',
-    totalMarks: 10,
-    controls: 'Edit/Delete'
-  },
-  {
-    assignmentNumber: 2,
-    assignmentTitle: 'Project Plan',
-    addedDate: '20-03-2019',
-    dueDate: '30-03-2019',
-    totalMarks: 10,
-    controls: 'Edit/Delete'
-  }
-];
