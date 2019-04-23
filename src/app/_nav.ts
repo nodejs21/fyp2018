@@ -43,7 +43,6 @@ const academyadmin: NavData[] = [
   {
     name: 'Teachers',
     url: `${academyAdminPrefix}/teachers`,
-    
     icon: 'icon-user'
   },
   {
