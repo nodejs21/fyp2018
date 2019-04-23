@@ -12,41 +12,67 @@ import { MatSnackBar } from '@angular/material';
 export class MessagingService {
   messaging = firebase.messaging();
 
+<<<<<<< HEAD
+  constructor(private db: AngularFirestore, private _snackBar: MatSnackBar) {}
+=======
   constructor(
     private db: AngularFirestore,
     private _auth: AuthService,
     private _snackBar: MatSnackBar
   ) {}
+>>>>>>> 3f12fd0fde7ba4770c656f9e6e0e10ce50f2b946
 
-  updateToken(token) {
-    this._auth.user.subscribe(user => {
-      if (!user) return;
-
-      this.db
-        .collection('users')
-        .doc(user.uid)
-        .update({ token: token });
-    });
+  updateToken(user, token) {
+    this.db
+      .collection('users')
+      .doc(user.uid)
+      .update({ token: firebase.firestore.FieldValue.arrayUnion(token) });
   }
 
-  getPermission() {
+  getPermission(user) {
     this.messaging
       .requestPermission()
       .then(() => {
         return this.messaging.getToken();
       })
       .then(token => {
-        this.updateToken(token);
+        this.updateToken(user, token);
       })
       .catch(err => {
         console.log('Unable to get permission to notify.', err);
       });
   }
 
+  monitorRefresh(user) {
+    this.messaging.onTokenRefresh(() => {
+      this.messaging
+        .getToken()
+        .then(refreshedToken => {
+          console.log('Token refreshed.');
+          this.updateToken(user, refreshedToken);
+        })
+        .catch(err => console.log(err, 'Unable to retrieve new token'));
+    });
+  }
+
+  async deleteMyToken(user) {
+    const token = await this.messaging.getToken();
+    console.log('TOKEN', token);
+    return this.db
+      .collection('users')
+      .doc(user.uid)
+      .update({ token: firebase.firestore.FieldValue.arrayRemove(token) });
+  }
+
   receiveMessage() {
     this.messaging.onMessage(payload => {
+      console.log(payload);
       this.playNotificationSound();
+<<<<<<< HEAD
+      this._snackBar.open(payload.notification.body, 'X', { duration: 4000 });
+=======
       this._snackBar.open(payload.body, 'X', { duration: 4000 });
+>>>>>>> 3f12fd0fde7ba4770c656f9e6e0e10ce50f2b946
     });
   }
 
