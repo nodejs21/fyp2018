@@ -65,7 +65,7 @@ export class MessagingService {
       console.log(payload);
       this.playNotificationSound();
       this._snackBar.open(payload.notification.body, 'X', { duration: 4000 });
-      this._snackBar.open(payload.body, 'X', { duration: 4000 });
+      // this._snackBar.open(payload.body, 'X', { duration: 4000 });
     });
   }
 

@@ -4,6 +4,7 @@ import { SharedService } from '../../../../utils/services/firestore/shared/share
 import { AngularFireDatabase } from '@angular/fire/database';
 import { take } from 'rxjs/internal/operators/take';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { AuthService } from '../../../../utils/services/auth/auth.service';
 
 // const SERVERS: any = {
 //   iceServers: [
@@ -77,13 +78,156 @@ export class LiveclassComponent implements OnInit {
   roomToJoin = '92';
   channel;
   currentClass;
+  approvedRequests: {};
+  btnPermissionDisabled = true;
+  durationInClass = 0;
+  academyId;
+  classroomId;
+  permission;
 
   constructor(
     private _student: StudentService,
     private _shared: SharedService,
-    private _afDb: AngularFireDatabase
-  ) {
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    private _afDb: AngularFireDatabase,
+    private _auth: AuthService
+  ) {}
+
+  joinClass() {
+    // recieve teacher offer
+    this._shared.getOffer(this.roomToJoin).subscribe(data => {
+      console.log(data);
+      var msg = JSON.parse(data[0]['data']['offer']);
+      console.log(msg);
+      this.peer.setRemoteDescription(new RTCSessionDescription(msg), () => {
+        this.peer.createAnswer().then(this.localDescCreated);
+        this._shared.joinClass().subscribe();
+      });
+    });
+  }
+
+  ngOnInit() {
+    this._auth.user.subscribe(async user => {
+      await this.getApprovedRequests().then(requests => {
+        this.approvedRequests = requests;
+        console.log(this.approvedRequests);
+      });
+      this._shared.getUpdatesOfLiveclass().subscribe(res => {
+        const academyId = res['academyId'];
+        const classroomId = res['classroomId'];
+        if (academyId && classroomId) {
+          this.academyId = academyId;
+          this.classroomId = classroomId;
+          this._shared
+            .attendLiveClass(academyId, classroomId)
+            .subscribe(liveclass => {
+              this.btnPermissionDisabled = false;
+              console.log(liveclass);
+              this._shared
+                .getPreviousAttendance(academyId, classroomId)
+                .subscribe(attendance => {
+                  console.log(attendance);
+                  this.durationInClass += attendance
+                    ? attendance['durationInClass']
+                      ? attendance['durationInClass']
+                      : 0
+                    : 0;
+                  this.startCountingAttendance();
+                  this.updateAttendance();
+                });
+            });
+        } else {
+          this.btnPermissionDisabled = true;
+        }
+      });
+      // this.approvedRequests.forEach(requests => {
+      //   requests.forEach(request => {
+      //     console.log(request);
+      //     // this.getAcademyData(request);
+      //   });
+      // });
+    });
+  }
+
+  startCountingAttendance() {
+    setInterval(() => this.durationInClass++, 1000);
+  }
+
+  updateAttendance() {
+    this._shared.updateAttendance(
+      this.academyId,
+      this.classroomId,
+      this.durationInClass
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.peer = undefined;
+    this.updateAttendance();
+  }
+
+  getAcademyData(academyId) {
+    console.log(academyId);
+    return new Promise((resolve, reject) => {
+      this._shared.getStudentClassrooms(academyId).subscribe(classrooms => {
+        resolve(classrooms);
+        // this.classrooms.push(classrooms);
+        // console.log(this.classrooms);
+      });
+    });
+  }
+
+  getApprovedRequests() {
+    var temp = [];
+    return new Promise((resolve, reject) => {
+      {
+        this._shared.getUserRequests().subscribe(userInfo => {
+          if (!userInfo['requests']) return;
+          userInfo['requests'].forEach(async request => {
+            await this._shared
+              .getApprovedRequests(request.academyId)
+              .subscribe(request => {
+                temp.push(request);
+              });
+          });
+          resolve(temp);
+        });
+      }
+    });
+  }
+
+  initConnection(academy) {
+    this.n.getUserMedia =
+      this.n.getUserMedia ||
+      this.n.webkitGetUserMedia ||
+      this.n.mozGetUserMedia ||
+      this.n.msGetUserMedia;
+    this.n.getUserMedia(
+      { video: true, audio: true },
+      stream => {
+        this.localstream(stream);
+      },
+      () => {}
+    );
+    if (location.hostname !== 'localhost') {
+      this.requestTurn(
+        'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
+      );
+    }
+    //////////////////////////////////////
+    this.peer = new RTCPeerConnection(this.pcConfig);
+    this.channel = this.peer.createDataChannel(this.roomToJoin);
+    // this.peer.ontrack = e => {
+    //   console.log('got track', e.track, e.streams);
+    //   this.teacherVideo.nativeElement.srcObject = e.streams[0];
+    // };
+    this.peer.onaddstream = this.handleRemoteStreamAdded;
+    this.peer.onicecandidate = this.sendIcecandidates;
+    setTimeout(() => {
+      console.log(this.localvideostream);
+      this.peer.addStream(this.localvideostream);
+      console.log('local stream added');
+    }, 1000);
+
     // for video chat and voice chat
     // // recieve teacher offer
     // this._shared.getOffer(this.roomToJoin).subscribe(data => {
@@ -122,54 +266,6 @@ export class LiveclassComponent implements OnInit {
       };
       // }
     });
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  }
-
-  joinClass() {
-    // recieve teacher offer
-    this._shared.getOffer(this.roomToJoin).subscribe(data => {
-      console.log(data);
-      var msg = JSON.parse(data[0]['data']['offer']);
-      console.log(msg);
-      this.peer.setRemoteDescription(new RTCSessionDescription(msg), () => {
-        this.peer.createAnswer().then(this.localDescCreated);
-        this._shared.joinClass().subscribe()
-      });
-    });
-  }
-
-  ngOnInit() {
-    this.n.getUserMedia =
-      this.n.getUserMedia ||
-      this.n.webkitGetUserMedia ||
-      this.n.mozGetUserMedia ||
-      this.n.msGetUserMedia;
-    this.n.getUserMedia(
-      { video: true, audio: true },
-      stream => {
-        this.localstream(stream);
-      },
-      () => {}
-    );
-    if (location.hostname !== 'localhost') {
-      this.requestTurn(
-        'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
-      );
-    }
-    //////////////////////////////////////
-    this.peer = new RTCPeerConnection(this.pcConfig);
-    this.channel = this.peer.createDataChannel(this.roomToJoin);
-    // this.peer.ontrack = e => {
-    //   console.log('got track', e.track, e.streams);
-    //   this.teacherVideo.nativeElement.srcObject = e.streams[0];
-    // };
-    this.peer.onaddstream = this.handleRemoteStreamAdded;
-    this.peer.onicecandidate = this.sendIcecandidates;
-    setTimeout(() => {
-      console.log(this.localvideostream);
-      this.peer.addStream(this.localvideostream);
-      console.log('local stream added');
-    }, 1000);
   }
 
   // sendMessage(msg) {
@@ -250,9 +346,13 @@ export class LiveclassComponent implements OnInit {
   };
 
   askForPermission() {
-    var teacherId = 90;
-    this._shared.getPermission(teacherId).then(res => {
-      console.log(res);
+    this._shared.askPermission(this.academyId, this.classroomId).then(res => {
+      this._shared
+        .checkPermission(this.academyId, this.classroomId)
+        .subscribe(res => {
+          this.permission = res;
+          console.log(this.permission);
+        });
     });
   }
 }

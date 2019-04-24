@@ -28,27 +28,37 @@
     <hr /> -->
   <div class="form-row">
     <div class="col-md-2">
-      <mat-form-field class="p-0">
-        <mat-label>Class</mat-label>
-        <mat-select formControlName="className">
+      <mat-form-field>
+        <mat-label>Choose Academy</mat-label>
+        <mat-select
+          aria-disabled="!approvedRequests"
+          [(ngModel)]="academyId"
+          [ngModelOptions]="{ standalone: true }"
+        >
           <mat-option
-            [value]="class"
-            *ngFor="let class of classes ? classes[0] : classes"
+            *ngFor="let academy of approvedRequests; index as i"
+            [value]="academy[i]"
+            (click)="getAcademyData(academy[i].data.academyId)"
+            >{{ academy[i].data.academyName | titlecase }}</mat-option
           >
-            {{ class.data.className }}
-          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="col-md-3">
-      <mat-form-field class="p-0">
-        <mat-label>Subject</mat-label>
-        <mat-select formControlName="subject">
+      <mat-form-field>
+        <mat-label>Choose Classroom</mat-label>
+        <mat-select
+          [(ngModel)]="classroomId"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+          <mat-option>None</mat-option>
           <mat-option
-            [value]="currentSubject"
-            *ngFor="let currentSubject of classes ? classes[0] : classes"
+            *ngFor="let classroom of classrooms; index as i"
+            [value]="classroom"
+            (click)="getQuizzes(classroom)"
           >
-            <!-- {{ class.data.className == className.value ? class.data.subject }} -->
+            {{ classroom.data.class.className }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -59,23 +69,28 @@
         <input matInput type="text" formControlName="title" />
       </mat-form-field>
     </div>
+    <!-- <div class="col-md-3">
+      <div class="form-group">
+            <mat-form-field>
+              <mat-label>Quiz duration (min)</mat-label>
+              <input type="number" min="0" matInput formControlName="totalMarks" />
+            </mat-form-field>
+          </div>
+    </div> -->
     <div class="col-md-3">
-      <label class="font-weight-bold">Duration</label>
-      <input
-        type="number"
-        class="form-control"
-        placeholder="Quiz Duration (min)"
-        formControlName="duration"
-      />
-    </div>
-    <div class="col-md-3">
-      <label class="font-weight-bold">Total Marks</label>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Total Marks</mat-label>
+          <input type="number" min="0" matInput formControlName="totalMarks" />
+        </mat-form-field>
+      </div>
+      <!-- <label class="font-weight-bold">Total Marks</label>
       <input
         type="number"
         class="form-control"
         placeholder="Total Marks"
         formControlName="totalMarks"
-      />
+      /> -->
     </div>
   </div>
   <div class="row mt-4">
@@ -83,7 +98,9 @@
       <div class="animated fadeIn">
         <div class="card">
           <div class="card-header">
-            <label class="font-weight-bold">{{ quizForm.value.subject }}</label>
+            <label class="font-weight-bold">
+              {{ classroomId ? classroomId.data.subject.subjectName : '' }}
+            </label>
             <div class="pl-2 pr-2 float-right">
               <button
                 class="btn p-0"
@@ -288,7 +305,7 @@
   </div>
 </form>
 
-<div
+<!-- <div
   class="modal fade"
   bsModal
   #staticModal="bs-modal"
@@ -318,4 +335,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

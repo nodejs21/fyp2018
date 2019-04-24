@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
-import { AuthService } from "../../auth/auth.service";
-import { map } from "rxjs/operators";
-import { firestore } from "firebase";
-import { Observable, Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from '../../auth/auth.service';
+import { map, merge } from 'rxjs/operators';
+import { firestore } from 'firebase';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class SharedService {
   user;
@@ -19,7 +19,7 @@ export class SharedService {
 
   getAcademyDetails(academyId) {
     return this.afs
-      .collection("academies")
+      .collection('academies')
       .doc(academyId)
       .get();
   }
@@ -33,12 +33,12 @@ export class SharedService {
 
   getPendingRequests(academyId) {
     return this.afs
-      .collection("academies")
+      .collection('academies')
       .doc(academyId)
-      .collection("requests", ref =>
+      .collection('requests', ref =>
         ref
-          .where("userId", "==", this.user.uid)
-          .where("status", "==", "pending")
+          .where('userId', '==', this.user.uid)
+          .where('status', '==', 'pending')
       )
       .snapshotChanges()
       .pipe(
@@ -62,12 +62,12 @@ export class SharedService {
 
   getApprovedRequests(academyId) {
     return this.afs
-      .collection("academies")
+      .collection('academies')
       .doc(academyId)
-      .collection("requests", ref =>
+      .collection('requests', ref =>
         ref
-          .where("userId", "==", this.user.uid)
-          .where("status", "==", "approved")
+          .where('userId', '==', this.user.uid)
+          .where('status', '==', 'approved')
       )
       .snapshotChanges()
       .pipe(
@@ -90,12 +90,12 @@ export class SharedService {
 
   getRejectedRequests(academyId) {
     return this.afs
-      .collection("academies")
+      .collection('academies')
       .doc(academyId)
-      .collection("requests", ref =>
+      .collection('requests', ref =>
         ref
-          .where("userId", "==", this.user.uid)
-          .where("status", "==", "rejected")
+          .where('userId', '==', this.user.uid)
+          .where('status', '==', 'rejected')
       )
       .snapshotChanges()
       .pipe(
@@ -124,15 +124,15 @@ export class SharedService {
         let res = [];
         for (var i = 0; i < payload.length; i++) {
           payload[i].userId = this.user.uid;
-          payload[i].status = "pending";
+          payload[i].status = 'pending';
           payload[i].userType = this.user.userType;
-          payload[i].userName = this.user.firstName + " " + this.user.lastName;
+          payload[i].userName = this.user.firstName + ' ' + this.user.lastName;
           const academyId = payload[i].academyId;
           // delete payload[i].academyId;
           const response = this.afs
-            .collection("academies")
+            .collection('academies')
             .doc(academyId)
-            .collection("requests")
+            .collection('requests')
             .add(payload[i]);
           response.then(data => {
             res.push(data.path);
@@ -165,11 +165,11 @@ export class SharedService {
 
   getAssignments(academyId, classroomId) {
     return this.afs
-      .collection("academies")
+      .collection('academies')
       .doc(academyId)
-      .collection("classrooms")
+      .collection('classrooms')
       .doc(classroomId)
-      .collection("assignments")
+      .collection('assignments')
       .snapshotChanges()
       .pipe(
         map(res => {
@@ -180,6 +180,196 @@ export class SharedService {
       );
   }
 
+  startLiveClass(academyId, classroomId) {
+    console.log(academyId, classroomId);
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .set(
+        {
+          startedAt: new Date(),
+          status: true
+        },
+        { merge: true }
+      );
+    // .snapshotChanges()
+    // .pipe(
+    //   map(res => {
+    //     return res.map(data => {
+    //       return { id: data.payload.doc.id, data: data.payload.doc.data() };
+    //     });
+    //   })
+    // );
+  }
+
+  getPreviousAttendance(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .collection('students')
+      .doc(this.user.uid)
+      .valueChanges();
+  }
+
+  updateAttendance(academyId, classroomId, durationInClass) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .collection('students')
+      .doc(this.user.uid)
+      .set({
+        students: {
+          studentId: this.user.uid,
+          studentName: this.user.firstName + ' ' + this.user.lastName,
+          durationInClass
+        }
+      });
+  }
+
+  studentsInClassroom(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .collection('students')
+      .valueChanges();
+  }
+
+  endLiveClassByTeacher(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .set(
+        {
+          endedAt: new Date(),
+          status: false
+        },
+        { merge: true }
+      );
+  }
+
+  informStudentsOfClassroom(studentId, academyId, classroomId) {
+    this.afs
+      .collection('students')
+      .doc(studentId)
+      .set(
+        {
+          academyId,
+          classroomId
+        },
+        { merge: true }
+      );
+  }
+
+  getUpdatesOfLiveclass() {
+    return this.afs
+      .collection('students')
+      .doc(this.user.uid)
+      .valueChanges();
+  }
+
+  liveclassFinished(studentId) {
+    this.afs
+      .collection('students')
+      .doc(studentId)
+      .update({
+        academyId: firestore.FieldValue.delete(),
+        classroomId: firestore.FieldValue.delete()
+      });
+  }
+
+  attendLiveClass(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .valueChanges();
+  }
+
+  askPermission(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .doc(this.user.uid)
+      .set(
+        {
+          studentId: this.user.uid,
+          studentName: this.user.firstName + ' ' + this.user.lastName,
+          permission: 'pending'
+        },
+        { merge: true }
+      );
+  }
+
+  checkPermission(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .doc(this.user.uid)
+      .valueChanges();
+  }
+
+  subscribeToQuestions(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .valueChanges();
+  }
+
+  givePermission(permit, academyId, classroomId, studentId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .doc(studentId)
+      .set(
+        {
+          permission: permit ? 'granted' : 'rejected'
+        },
+        { merge: true }
+      );
+  }
   // getAssignmentDetails(assignmentId) {
   //   return this.afs.collection('academies').doc()
   // }
@@ -188,8 +378,8 @@ export class SharedService {
     return this.afs
       .collection(`academies`)
       .doc(academyId)
-      .collection("classrooms", ref =>
-        ref.where("teacher.teacherId", "==", this.user.uid)
+      .collection('classrooms', ref =>
+        ref.where('teacher.teacherId', '==', this.user.uid)
       )
       .snapshotChanges()
       .pipe(
@@ -205,10 +395,10 @@ export class SharedService {
     return this.afs
       .collection(`academies`)
       .doc(academyId)
-      .collection("classrooms", ref =>
-        ref.where("students", "array-contains", {
+      .collection('classrooms', ref =>
+        ref.where('students', 'array-contains', {
           studentId: this.user.uid,
-          studentName: this.user.firstName + " " + this.user.lastName
+          studentName: this.user.firstName + ' ' + this.user.lastName
         })
       )
       .snapshotChanges()
@@ -224,12 +414,12 @@ export class SharedService {
   cancelRequest(academyId, subjectId) {
     return new Promise((resolve, reject) => {
       this.afs
-        .collection("academies")
+        .collection('academies')
         .doc(academyId)
-        .collection("requests", ref =>
+        .collection('requests', ref =>
           ref
-            .where("userId", "==", this.user.uid)
-            .where("subjectId", "==", subjectId)
+            .where('userId', '==', this.user.uid)
+            .where('subjectId', '==', subjectId)
         )
         .get()
         .subscribe(
@@ -248,24 +438,24 @@ export class SharedService {
 
   sendOffer(senderId: any, offer: {}) {
     return this.afs
-      .collection("rtc")
+      .collection('rtc')
       .doc(`offer${senderId}`)
-      .set({ senderId, offer: JSON.stringify(offer), type: "offer" });
+      .set({ senderId, offer: JSON.stringify(offer), type: 'offer' });
   }
 
   sendAnswer(senderId: any, offer: {}) {
     return this.afs
-      .collection("rtc")
+      .collection('rtc')
       .doc(`answer${senderId}`)
-      .set({ senderId, answer: JSON.stringify(offer), type: "answer" });
+      .set({ senderId, answer: JSON.stringify(offer), type: 'answer' });
   }
 
   getOffer(senderId: any) {
     console.log();
 
     return this.afs
-      .collection("rtc", ref =>
-        ref.where("senderId", "==", senderId).where("type", "==", "offer")
+      .collection('rtc', ref =>
+        ref.where('senderId', '==', senderId).where('type', '==', 'offer')
       )
       .snapshotChanges()
       .pipe(
@@ -279,8 +469,8 @@ export class SharedService {
 
   getAnswer(senderId: any) {
     return this.afs
-      .collection("rtc", ref =>
-        ref.where("senderId", "==", senderId).where("type", "==", "answer")
+      .collection('rtc', ref =>
+        ref.where('senderId', '==', senderId).where('type', '==', 'answer')
       )
       .snapshotChanges()
       .pipe(
@@ -294,54 +484,40 @@ export class SharedService {
 
   sendOfferCandidate(senderId, candidate: {}) {
     return this.afs
-      .collection("rtc")
+      .collection('rtc')
       .doc(`offercandidate${senderId}`)
       .set({ senderId, candidate });
   }
   getOfferCandidate(senderId) {
     return this.afs
-      .collection("rtc")
+      .collection('rtc')
       .doc(`offercandidate${senderId}`)
       .get();
   }
   sendAnswerCandidate(senderId, candidate: {}) {
     return this.afs
-      .collection("rtc")
+      .collection('rtc')
       .doc(`answercandidate${senderId}`)
       .set({ senderId, candidate });
   }
   getAnswerCandidate(senderId) {
     return this.afs
-      .collection("rtc")
+      .collection('rtc')
       .doc(`answercandidate${senderId}`)
       .get();
   }
 
-  getPermission(teacherId) {
-    return this.afs
-      .collection("permission")
-      .doc(this.user.uid)
-      .set({ studentId: this.user.uid, permission: false, teacherId });
-  }
-
-  checkPermission() {
-    return this.afs
-      .collection("permission")
-      .doc(this.user.uid)
-      .valueChanges();
-  }
-
-  givePermission(permit, teacherId) {
-    return this.afs
-      .collection("permission")
-      .doc(this.user.uid)
-      .set({ studentId: this.user.uid, permission: false, teacherId });
-  }
+  // getPermission(teacherId) {
+  //   return this.afs
+  //     .collection("permission")
+  //     .doc(this.user.uid)
+  //     .set({ studentId: this.user.uid, permission: false, teacherId });
+  // }
 
   joinClass() {
     return this.afs
-      .collection("liveclasses", ref =>
-        ref.where("students", "array-contains", this.user.uid)
+      .collection('liveclasses', ref =>
+        ref.where('students', 'array-contains', this.user.uid)
       )
       .snapshotChanges()
       .pipe(

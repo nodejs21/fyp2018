@@ -4,8 +4,180 @@
   * Filters Optional
 </p> -->
 
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
 
-<div class="row">
+<div class="col-sm-12">
+  <mat-card>
+    <div class="row">
+      <div class="col-sm-4">
+        <mat-form-field>
+          <mat-label>Choose Academy</mat-label>
+          <mat-select aria-disabled="!approvedRequests" [(ngModel)]="academyId">
+            <mat-option
+              *ngFor="let academy of approvedRequests; index as i"
+              [value]="academy[i].data.academyId"
+              (click)="getAcademyData(academy[i].data.academyId)"
+              >{{ academy[i].data.academyName | titlecase }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4">
+        <mat-form-field>
+          <mat-label>Choose Classroom</mat-label>
+          <mat-select [(ngModel)]="classroomId">
+            <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+            <mat-option>None</mat-option>
+            <mat-option
+              *ngFor="let classroom of classrooms"
+              [value]="classroom.id"
+              (click)="getAssignments(classroom.id)"
+            >
+              {{ classroom.data.class.className }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+
+  <hr />
+
+  <mat-card>
+    <div class="row">
+      <div class="col-11">
+        <mat-card-title>
+          Posted Assignments
+        </mat-card-title>
+      </div>
+      <div class="col-1">
+        <button
+          mat-button
+          class="float-right btn btn-success"
+          (click)="openDialog()"
+        >
+          Post Assignment
+        </button>
+      </div>
+
+      <mat-form-field class="px-3">
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Assignment title"
+        />
+      </mat-form-field>
+      <div class="container">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Position Column -->
+
+          <ng-container matColumnDef="assignmentNumber">
+            <th mat-header-cell *matHeaderCellDef><strong>No.</strong></th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.assignmentNumber + 1 }}
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="assignmentTitle">
+            <th mat-header-cell *matHeaderCellDef><strong>Title</strong></th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.assignmentTitle }}
+            </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="addedDate">
+            <th mat-header-cell *matHeaderCellDef><strong>Added On</strong></th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.addedDate.toDate() | date: 'medium' }}
+            </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="dueDate">
+            <th mat-header-cell *matHeaderCellDef><strong>Due Date</strong></th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.dueDate.toDate() | date: 'medium' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalMarks">
+            <th mat-header-cell *matHeaderCellDef>
+              <strong>Total Marks</strong>
+            </th>
+            <td mat-cell *matCellDef="let element">{{ element.totalMarks }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="fileURL">
+            <th mat-header-cell *matHeaderCellDef><strong>File URL</strong></th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+                <a href="javascript:void()" (click)="fileInput.click()">
+                  <span
+                    popover="Submit Assignment"
+                    triggers="mouseenter:mouseleave"
+                  >
+                    <i class="text-info fa fa-upload"> </i>
+                  </span>
+                </a>
+                <input
+                  type="file"
+                  hidden
+                  #fileInput
+                  (change)="handler($event)"
+                />
+              </div>
+              <div>
+                <a [href]="element.fileURL" download>
+                  <span
+                    popover="Download Assignment"
+                    triggers="mouseenter:mouseleave"
+                  >
+                    <i class="text-success fa fa-download"> </i>
+                  </span>
+                </a>
+              </div>
+              <!-- {{ element.fileURL }} -->
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>
+              <strong>Status</strong>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="badge badge-success">{{
+                element.status ? element.status : 'Pending'
+              }}</span>
+            </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="controls">
+            <th mat-header-cell *matHeaderCellDef><strong>Controls</strong></th>
+              <td mat-cell *matCellDef="let element">{{ element.controls }}</td>
+            </ng-container> -->
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+
+<!-- <div class="row">
     <div class="col-sm-12">
       <div class="card">
         <div class="card-header">
@@ -73,4 +245,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
