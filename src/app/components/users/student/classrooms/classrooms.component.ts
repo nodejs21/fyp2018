@@ -23,7 +23,7 @@ export class ClassroomsComponent implements OnInit {
 
   getAcademyData(academy) {
     console.log(academy);
-    this._shared.getTeacherClassrooms(academy.data.academyId).subscribe(classrooms => {
+    this._shared.getStudentClassrooms(academy.data.academyId).subscribe(classrooms => {
       this.classrooms = classrooms;
       console.log(this.classrooms);
     });

@@ -26,6 +26,7 @@ import { RequestssentComponent } from './requests/requestssent/requestssent.comp
 import { LiveclassComponent } from './liveclass/liveclass.component';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ClassroomsComponent } from './classrooms/classrooms.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     WhiteboardComponent,
     SubjectsComponent,
     RequestssentComponent,
-    LiveclassComponent
+    LiveclassComponent,
+    ClassroomsComponent
   ],
   imports: [
     CommonModule,

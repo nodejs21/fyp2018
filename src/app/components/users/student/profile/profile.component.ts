@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../../../utils/services/auth/auth.service';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AuthService } from "../../../../utils/services/auth/auth.service";
+import { AngularFireStorage } from "@angular/fire/storage";
+import { finalize } from "rxjs/operators";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"]
 })
 export class ProfileComponent implements OnInit {
   rate: number;
   isReadonly: boolean;
   max: number;
+  minDate = new Date(1947, 0, 1);
+  maxDate = new Date(2014, 0, 1);
 
+  isUploading = false;
   overStar: number | undefined;
   percent: number;
 
@@ -29,7 +32,7 @@ export class ProfileComponent implements OnInit {
   user;
 
   downloadURL =
-    'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png';
+    "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -41,7 +44,7 @@ export class ProfileComponent implements OnInit {
     this.rate = 7;
     this.isReadonly = false;
     this.isCollapsed = false;
-    this.iconCollapse = 'icon-arrow-up';
+    this.iconCollapse = "icon-arrow-up";
   }
 
   ngOnInit() {
@@ -59,7 +62,6 @@ export class ProfileComponent implements OnInit {
         .getUserSpecificInfo(user.userType, user.uid)
         .subscribe((user: any) => {
           this.specificUserForm = this._formBuilder.group({
-            dob: [user.dob, Validators.required],
             address: [
               user.address,
               [Validators.required, Validators.minLength(5)]
@@ -92,9 +94,9 @@ export class ProfileComponent implements OnInit {
     // this._auth.(user, this._auth.user['value']['uid']);
   }
   showSnackBar(message) {
-    this._snackBar.open(message, 'X', {
+    this._snackBar.open(message, "X", {
       duration: 4000,
-      panelClass: 'bg-success'
+      panelClass: "bg-success"
     });
   }
   hoveringOver(value: number): void {
@@ -120,50 +122,51 @@ export class ProfileComponent implements OnInit {
 
   toggleCollapse(): void {
     this.isCollapsed = !this.isCollapsed;
-    this.iconCollapse = this.isCollapsed ? 'icon-arrow-down' : 'icon-arrow-up';
+    this.iconCollapse = this.isCollapsed ? "icon-arrow-down" : "icon-arrow-up";
   }
 
   get firstName() {
-    return this.basicUserForm.get('firstName');
+    return this.basicUserForm.get("firstName");
   }
   get lastName() {
-    return this.basicUserForm.get('lastName');
+    return this.basicUserForm.get("lastName");
   }
   get email() {
-    return this.basicUserForm.get('email');
+    return this.basicUserForm.get("email");
   }
   get photoURL() {
-    return this.basicUserForm.get('photoURL');
+    return this.basicUserForm.get("photoURL");
   }
   get gender() {
-    return this.basicUserForm.get('gender');
+    return this.basicUserForm.get("gender");
   }
   get userType() {
-    return this.basicUserForm.get('userType');
+    return this.basicUserForm.get("userType");
   }
   get password() {
-    return this.basicUserForm.get('password');
+    return this.basicUserForm.get("password");
   }
   get confirmPassword() {
-    return this.basicUserForm.get('confirmPassword');
+    return this.basicUserForm.get("confirmPassword");
   }
   get dob() {
-    return this.specificUserForm.get('dob');
+    return this.specificUserForm.get("dob");
   }
   get address() {
-    return this.specificUserForm.get('address');
+    return this.specificUserForm.get("address");
   }
   get city() {
-    return this.specificUserForm.get('city');
+    return this.specificUserForm.get("city");
   }
   get telephone() {
-    return this.specificUserForm.get('telephone');
+    return this.specificUserForm.get("telephone");
   }
   get qualification() {
-    return this.specificUserForm.get('qualification');
+    return this.specificUserForm.get("qualification");
   }
 
   handler(e) {
+    this.isUploading = true;
     let file = e.target.files[0];
     console.log(file);
 
@@ -181,6 +184,7 @@ export class ProfileComponent implements OnInit {
             this.downloadURL = dl;
             this.photoURL.setValue(dl);
             console.log(this.downloadURL);
+            this.isUploading = false;
           });
         })
       )

@@ -35,6 +35,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { LiveclassComponent } from './liveclass/liveclass.component';
 import { AngularFireDatabase } from '@angular/fire/database';
 
+
 @NgModule({
   declarations: [
     AssignmentsComponent,
@@ -62,7 +63,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
     MakequizComponent,
     AddassignmentComponent,
     CreateassignmentComponent,
-    LiveclassComponent
+    LiveclassComponent,
   ],
   imports: [
     CommonModule,

@@ -83,7 +83,7 @@ export class AddassignmentComponent implements OnInit {
 
   getAcademyData(academyId) {
     console.log(academyId);
-    this._shared.getClassrooms(academyId).subscribe(classrooms => {
+    this._shared.getTeacherClassrooms(academyId).subscribe(classrooms => {
       this.classrooms = classrooms;
       console.log(this.classrooms);
     });

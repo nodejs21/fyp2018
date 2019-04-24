@@ -23,6 +23,8 @@ export class SignupComponent implements OnInit {
   specificUserForm: FormGroup;
   academyDetailsForm: FormGroup;
   downloadURL: any;
+  minDate = new Date(1947, 0, 1);
+  maxDate = new Date(2014, 0, 1);
 
   constructor(
     private _formBuilder: FormBuilder,

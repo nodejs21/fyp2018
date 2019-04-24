@@ -156,6 +156,11 @@ const student: NavData[] = [
     icon: 'icon-speedometer'
   },
   {
+    name: 'Classrooms',
+    url: `${studentPrefix}/classrooms`,
+    icon: 'icon-screen-desktop'
+  },
+  {
     name: 'Assignments',
     url: `${studentPrefix}/assignments`,
     icon: 'icon-note'
