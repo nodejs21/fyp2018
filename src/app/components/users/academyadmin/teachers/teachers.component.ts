@@ -15,15 +15,6 @@ export class TeachersComponent implements OnInit {
     this._auth.user.subscribe(user => {
       this._admin.getTeachers().subscribe(teachers => {
         this.teachers = teachers;
-        // console.log(this.groupByTeacherId(teachers, 'teacherId'));
-        // console.log(teachers);
-        // teachers.reduce((prev, current, index, teachers) => {
-        //   var temp = [];
-        //   console.log(prev, current);
-        //   if (prev.data.techerId == current.data.teacherId)
-        //     temp.push(teachers[index]);
-        //   return current;
-        // });
       });
     });
   }
@@ -36,6 +27,14 @@ export class TeachersComponent implements OnInit {
   }
 
   deleteTeacher(teacher) {
+    this._admin
+      .deleteTeacher(teacher.id)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     console.log(teacher);
   }
 }

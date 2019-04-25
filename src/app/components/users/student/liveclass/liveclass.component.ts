@@ -132,7 +132,7 @@ export class LiveclassComponent implements OnInit {
                       : 0
                     : 0;
                   this.startCountingAttendance();
-                  this.updateAttendance();
+                  // this.updateAttendance();
                 });
             });
         } else {
@@ -162,7 +162,7 @@ export class LiveclassComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.peer = undefined;
-    this.updateAttendance();
+    // this.updateAttendance();
   }
 
   getAcademyData(academyId) {

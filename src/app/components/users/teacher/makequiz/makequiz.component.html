@@ -37,7 +37,7 @@
         >
           <mat-option
             *ngFor="let academy of approvedRequests; index as i"
-            [value]="academy[i]"
+            [value]="academy[i].data.academyId"
             (click)="getAcademyData(academy[i].data.academyId)"
             >{{ academy[i].data.academyName | titlecase }}</mat-option
           >
@@ -102,20 +102,21 @@
               {{ classroomId ? classroomId.data.subject.subjectName : '' }}
             </label>
             <div class="pl-2 pr-2 float-right">
-              <button
+              <!-- <button
                 class="btn p-0"
                 popover="View"
                 triggers="mouseenter:mouseleave"
                 (click)="staticModal.show()"
               >
                 <span><i class="text-success fa fa-eye"></i> </span>
-              </button>
+              </button> -->
               <button
                 class="btn p-0 ml-2"
                 popover="Save"
                 triggers="mouseenter:mouseleave"
                 (click)="saveQuiz()"
               >
+                <!-- [disabled]="quizForm.valid" -->
                 <span> <i class="text-primary fa fa-save"></i> </span>
               </button>
               <button
@@ -123,6 +124,7 @@
                 popover="Upload"
                 triggers="mouseenter:mouseleave"
               >
+                <!-- [disabled]="quizForm.valid" -->
                 <span> <i class="text-warning fa fa-upload"></i> </span>
               </button>
             </div>

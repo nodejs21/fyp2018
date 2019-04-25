@@ -483,10 +483,17 @@ export class SharedService {
   }
 
   sendOfferCandidate(senderId, candidate: {}) {
+    console.log(candidate);
     return this.afs
       .collection('rtc')
       .doc(`offercandidate${senderId}`)
-      .set({ senderId, candidate });
+      .set(
+        {
+          senderId,
+          candidates: firestore.FieldValue.arrayUnion(candidate)
+        },
+        { merge: true }
+      );
   }
   getOfferCandidate(senderId) {
     return this.afs
@@ -498,7 +505,13 @@ export class SharedService {
     return this.afs
       .collection('rtc')
       .doc(`answercandidate${senderId}`)
-      .set({ senderId, candidate });
+      .set(
+        {
+          senderId,
+          candidates: firestore.FieldValue.arrayUnion(candidate)
+        },
+        { merge: true }
+      );
   }
   getAnswerCandidate(senderId) {
     return this.afs

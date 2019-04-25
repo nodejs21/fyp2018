@@ -71,7 +71,7 @@ export class TeacherService {
     return this.afs.collection('academies').doc(academyId);
   }
 
-  createQuiz(quiz: any, academyId, classroomId) {
+  createQuiz(academyId, classroomId, quiz: any) {
     return this.afs
       .collection('academies')
       .doc(academyId)

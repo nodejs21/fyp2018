@@ -52,6 +52,7 @@ export class AssignmentsComponent implements OnInit {
   downloadURL: any;
   assignmentUrl: any;
   user;
+  assignments;
 
   constructor(
     private _dialog: MatDialog,
@@ -101,6 +102,7 @@ export class AssignmentsComponent implements OnInit {
       .getAssignments(this.academyId, classroomId)
       .subscribe(assignments => {
         console.log(assignments);
+        this.assignments = assignments;
         assignments.forEach((assignment, index) => {
           ELEMENT_DATA.push({
             assignmentTitle: assignment.data.title,
@@ -120,7 +122,6 @@ export class AssignmentsComponent implements OnInit {
   }
 
   handler(e) {
-    
     this.isUploading = true;
     let file = e.target.files[0];
     console.log(file);

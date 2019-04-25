@@ -103,6 +103,37 @@ export class AdminService {
       );
   }
 
+  getSubjectsAgainstClass(classId) {
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`subjects`, ref => ref.where('classRef', '==', classId))
+      .get();
+  }
+  getStudentsAgainstClass(classId) {
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`students`, ref => ref.where('classId', '==', classId))
+      .get();
+  }
+  getTeachersAgainstClass(classId) {
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`teachers`, ref => ref.where('classId', '==', classId))
+      .get();
+  }
+  getClassroomsAgainstClass(classId) {
+    return this.afs
+      .collection(`academies`)
+      .doc(`${this.user.uid}`)
+      .collection(`classrooms`, ref =>
+        ref.where('class.classId', '==', classId)
+      )
+      .get();
+  }
+
   deleteSubject(subjectId) {
     return this.afs
       .collection(`academies`)
@@ -212,6 +243,15 @@ export class AdminService {
       );
   }
 
+  deleteTeacher(docId) {
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('teachers')
+      .doc(docId)
+      .delete();
+  }
+
   getStudents() {
     return this.afs
       .collection('academies')
@@ -258,4 +298,22 @@ export class AdminService {
       .doc(id)
       .delete();
   }
+
+  subjectHasClassroom(subjectId) {
+    return this.afs
+      .collection('academies')
+      .doc(this.user.uid)
+      .collection('classrooms', ref =>
+        ref.where('subject.subjectId', '==', subjectId)
+      )
+      .valueChanges();
+  }
+
+  updateSubjectDeletionReferences(subjectId) {}
+
+  deleteSubjectFromStudents(subjecctId) {
+    // return this.afs.collection('academies').doc(this.user.uid).collection('students', ref => ref.where('subjectId', '==', subjecctId)).
+  }
+  deleteSubjectFromClasses(subjecctId) {}
+  deleteSubjectFromClassrooms(subjecctId) {}
 }

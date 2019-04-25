@@ -70,6 +70,35 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       //   });
       // });
     });
+
+    this.n.getUserMedia =
+      this.n.getUserMedia ||
+      this.n.webkitGetUserMedia ||
+      this.n.mozGetUserMedia ||
+      this.n.msGetUserMedia;
+    this.n.getUserMedia(
+      { video: true, audio: true },
+      stream => {
+        this.localstream(stream);
+      },
+      () => {}
+    );
+
+    if (location.hostname !== 'localhost') {
+      this.requestTurn(
+        'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
+      );
+    }
+    //////////////////////////////////////
+    this.peer = new RTCPeerConnection(this.pcConfig);
+    this.peer.onaddstream = this.handleRemoteStreamAdded;
+    this.peer.onicecandidate = this.sendIcecandidates;
+    setTimeout(() => {
+      console.log(this.localvideostream);
+      this.peer.addStream(this.localvideostream);
+      console.log('local stream added');
+    }, 1000);
+
   }
 
   ngOnDestroy(): void {
@@ -138,7 +167,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       });
   }
 
-  initConnection(academy) {
+  initConnection(academy?) {
     this.n.getUserMedia =
       this.n.getUserMedia ||
       this.n.webkitGetUserMedia ||
@@ -169,42 +198,42 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       // this.approvedRequests.forEach(requests => {
       //   requests.forEach(request => {
       //     console.log(request);
-      this.getAcademyData(academy.data.academyId).then(classrooms => {
-        console.log(classrooms);
-        console.log(classrooms[0]);
-        this.academyId = academy.data.academyId;
-        this.classroomId = classrooms[0].id;
-        this._shared
-          .startLiveClass(academy.data.academyId, classrooms[0].id)
-          .then(liveClass => {
-            console.log(liveClass);
-            this.students = classrooms[0].data.students;
-            this.students.forEach(student => {
-              console.log(student);
-              this._shared
-                .studentsInClassroom(this.academyId, this.classroomId)
-                .subscribe(students => {
-                  console.log(students);
-                  this.studentsCount = students.length;
-                  this._shared
-                    .subscribeToQuestions(this.academyId, this.classroomId)
-                    .subscribe(questions => {
-                      console.log(questions);
-                      console.log(questions[this.questions ? this.questions.length : 0]);
-                      this.newRequest =
-                        questions[this.questions ? this.questions.length : 0];
-                      this.questions = questions;
-                      console.log(this.questions);
-                    });
-                });
-              this._shared.informStudentsOfClassroom(
-                student.studentId,
-                academy.data.academyId,
-                classrooms[0].id
-              );
-            });
-          });
-      });
+      // this.getAcademyData(academy.data.academyId).then(classrooms => {
+      //   console.log(classrooms);
+      //   console.log(classrooms[0]);
+      //   this.academyId = academy.data.academyId;
+      //   this.classroomId = classrooms[0].id;
+      //   this._shared
+      //     .startLiveClass(academy.data.academyId, classrooms[0].id)
+      //     .then(liveClass => {
+      //       console.log(liveClass);
+      //       this.students = classrooms[0].data.students;
+      //       this.students.forEach(student => {
+      //         console.log(student);
+      //         this._shared
+      //           .studentsInClassroom(this.academyId, this.classroomId)
+      //           .subscribe(students => {
+      //             console.log(students);
+      //             this.studentsCount = students.length;
+      //             this._shared
+      //               .subscribeToQuestions(this.academyId, this.classroomId)
+      //               .subscribe(questions => {
+      //                 console.log(questions);
+      //                 console.log(questions[this.questions ? this.questions.length : 0]);
+      //                 this.newRequest =
+      //                   questions[this.questions ? this.questions.length : 0];
+      //                 this.questions = questions;
+      //                 console.log(this.questions);
+      //               });
+      //           });
+      //         this._shared.informStudentsOfClassroom(
+      //           student.studentId,
+      //           academy.data.academyId,
+      //           classrooms[0].id
+      //         );
+      //       });
+      //     });
+      // });
       //   });
       // });
     }, 1000);
@@ -247,6 +276,31 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       // }
     });
   }
+
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+  sendOffer() {
+    this.peer = new RTCPeerConnection(this.pcConfig);
+    this.peer.addStream(this.localvideostream);
+    this.peer.createOffer().then(this.localDescCreated);
+    this.peer.onaddstream = this.handleRemoteStreamAdded;
+    this.peer.onicecandidate = this.sendIcecandidates;
+  }
+  // receiveOffer() {}
+  sendCandidate() {}
+  // receiveCandidate() {}
+  sendMediaStreamObject() {}
+  // receiveMediaStreamObject() {}
+
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+  //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   requestTurn(turnURL) {

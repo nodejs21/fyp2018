@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
+import { StudentService } from '../../../../utils/services/firestore/student/student.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-attemptquiz',
@@ -17,14 +19,18 @@ export class AttemptquizComponent implements OnInit {
   allAssignments;
   academyId;
   classroomId;
+  quiz;
 
   constructor(
     private formBuilder: FormBuilder,
     private _shared: SharedService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _student: StudentService,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    // console.log(JSON.parse(this._route.snapshot.paramMap.get('quiz')));
     // this._auth.user.subscribe(user => {
     //   this._shared.getUserRequests().subscribe(userInfo => {
     //     console.log(userInfo);
@@ -71,15 +77,22 @@ export class AttemptquizComponent implements OnInit {
   }
 
   getAcademyData(academyId) {
+    this.academyId = academyId;
     console.log(academyId);
-    this._shared.getTeacherClassrooms(academyId).subscribe(classrooms => {
+    this._shared.getStudentClassrooms(academyId).subscribe(classrooms => {
       this.classrooms = classrooms;
       console.log(this.classrooms);
     });
   }
 
-  getQuizzes(classroomId) {
-    console.log(classroomId);
+  getQuizzes(classroom) {
+    console.log(classroom);
+    console.log(this.academyId);
+    this._student
+      .getQuizzes(this.academyId, classroom.id)
+      .subscribe(quizzes => {
+        console.log(quizzes);
+      });
   }
 
   get className() {

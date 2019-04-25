@@ -13,11 +13,15 @@ import { ConfirmdeletionComponent } from '../../../shared/confirmdeletion/confir
 export class AcademyadmindashboardComponent implements OnInit {
   user: any;
   classes: any;
+  students = [];
+  teachers = [];
+  classrooms = [];
   constructor(
     private _dialog: MatDialog,
     private _auth: AuthService,
     private _adminService: AdminService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _admin: AdminService
   ) {}
 
   ngOnInit() {
@@ -45,10 +49,20 @@ export class AcademyadmindashboardComponent implements OnInit {
   getClasses() {
     this._adminService.getClasses().subscribe(async res => {
       this.classes = res;
-      // this.classes = await res.map(data => {
-      //   return { id: data.payload.doc.id, data: data.payload.doc.data() };
-      // });
       console.log(this.classes);
+      this.classes.forEach(classs => {
+        this._admin.getStudentsAgainstClass(classs.id).subscribe(students => {
+          this.students.push(students.docs.length);
+        });
+        this._admin.getTeachersAgainstClass(classs.id).subscribe(teachers => {
+          this.teachers.push(teachers.docs.length);
+        });
+        this._admin
+          .getClassroomsAgainstClass(classs.id)
+          .subscribe(classrooms => {
+            this.classrooms.push(classrooms.docs.length);
+          });
+      });
     });
   }
 

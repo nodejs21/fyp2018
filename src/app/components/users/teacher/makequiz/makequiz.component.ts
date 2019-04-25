@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
+import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
 @Component({
   selector: 'app-makequiz',
   templateUrl: './makequiz.component.html',
@@ -20,7 +21,8 @@ export class MakequizComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private _shared: SharedService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _teacher: TeacherService
   ) {}
 
   ngOnInit() {
@@ -53,6 +55,7 @@ export class MakequizComponent implements OnInit {
               if (!request) return;
               if (request.length > 0) {
                 this.approvedRequests.push(request);
+                console.log(request);
               }
             });
         });
@@ -60,12 +63,12 @@ export class MakequizComponent implements OnInit {
     });
     this.quizForm = this.formBuilder.group({
       className: 0,
-      subject: 'Subject Name',
-      title: 'Chapter 1',
-      duration: 10,
-      totalMarks: 10,
-      status: 'saved',
-      academyName: '',
+      subject: ['Subject Name', Validators.required],
+      title: ['', Validators.required],
+      duration: [10, Validators.required],
+      totalMarks: [0, Validators.required],
+      status: ['saved', Validators.required],
+      academyName: ['', Validators.required],
       qacademyId: '',
       qclassroomId: '',
       postedOn: '',
@@ -104,8 +107,8 @@ export class MakequizComponent implements OnInit {
 
   initQuestion() {
     return this.formBuilder.group({
-      text: '',
-      type: 'mcq',
+      text: ['', Validators.required],
+      type: ['mcq', Validators.required],
       mcqOptions: this.formBuilder.array([
         this.initMcqOption(),
         this.initMcqOption()
@@ -117,7 +120,7 @@ export class MakequizComponent implements OnInit {
 
   initMcqOption() {
     const group = this.formBuilder.group({
-      option: ''
+      option: ['']
     });
     return group;
   }
@@ -166,6 +169,12 @@ export class MakequizComponent implements OnInit {
   }
 
   saveQuiz() {
+    // if (!this.academyId) {
+    //   return alert('Choose an academy first!');
+    // }
+    // if (!this.classroomId) {
+    //   return alert('Choose a subject first!');
+    // }
     this.academyName.setValue(this.academyId.data.academyName);
     this.qacademyId.setValue(this.academyId.data.academyId);
     this.qclassroomId.setValue(this.classroomId.id);
@@ -173,5 +182,14 @@ export class MakequizComponent implements OnInit {
     console.log(this.academyId);
     console.log(this.classroomId);
     console.log(this.quizForm.value);
+    // this._teacher
+    //   .createQuiz(
+    //     this.academyId.data.academyId,
+    //     this.classroomId.id,
+    //     this.quizForm.value
+    //   )
+    //   .then(res => {
+    //     alert('Quiz has been uploaded successfully!');
+    //   });
   }
 }
