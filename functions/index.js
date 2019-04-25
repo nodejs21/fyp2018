@@ -59,15 +59,12 @@ exports.oneToOneNotificatioin = functions.firestore
   .document('notifications/{notificationId}')
   .onCreate(async (snapshot, context) => {
     const notification = snapshot.data();
-<<<<<<< HEAD
     // const adminRef = db.doc('admins/McTypcvnLIUUXBdQbd6Sryjjnw22').get();
     // const adminSnap = await adminRef;
     // const adminData = adminSnap.data();
     // const token = adminData.token;
     console.log(notification.token);
-=======
 
->>>>>>> 3f12fd0fde7ba4770c656f9e6e0e10ce50f2b946
     const payload = {
       notification: {
         title: notification.title,

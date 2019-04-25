@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
+import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
 @Component({
   selector: 'app-makequiz',
   templateUrl: './makequiz.component.html',
@@ -20,7 +21,8 @@ export class MakequizComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private _shared: SharedService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _teacher: TeacherService
   ) {}
 
   ngOnInit() {
@@ -47,9 +49,13 @@ export class MakequizComponent implements OnInit {
       this._shared.getUserRequests().subscribe(user => {
         if (!user['requests']) return;
         user['requests'].forEach(academy => {
+          console.log(academy);
+
           this._shared
             .getApprovedRequests(academy.academyId)
             .subscribe(request => {
+              console.log(request);
+
               if (!request) return;
               if (request.length > 0) {
                 this.approvedRequests.push(request);
@@ -139,7 +145,7 @@ export class MakequizComponent implements OnInit {
       'questions',
       questionNumber
     ]) as FormArray;
-    question.controls['mcqCorrectOption'].value = correctOptionNumber;
+    question.controls['mcqCorrectOption'].setValue(correctOptionNumber);
   }
 
   addMcqOption(questionNumber) {
@@ -170,8 +176,14 @@ export class MakequizComponent implements OnInit {
     this.qacademyId.setValue(this.academyId.data.academyId);
     this.qclassroomId.setValue(this.classroomId.id);
     this.postedOn.setValue(new Date());
-    console.log(this.academyId);
-    console.log(this.classroomId);
+    // console.log(this.academyId);
+    // console.log(this.classroomId);
     console.log(this.quizForm.value);
+
+    this._teacher.createQuiz(
+      this.quizForm.value,
+      this.qacademyId,
+      this.qclassroomId
+    );
   }
 }
