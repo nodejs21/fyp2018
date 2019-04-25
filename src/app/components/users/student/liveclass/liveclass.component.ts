@@ -246,11 +246,15 @@ export class LiveclassComponent implements OnInit {
     this._shared.getOfferCandidate(this.roomToJoin).subscribe(data => {
       console.log('Recieved candidate');
       console.log(data);
-      this.peer.addIceCandidate(
-        new RTCIceCandidate({
-          candidate: data.data().candidate.candidate
-        })
-      );
+      if (data.data().candidates) {
+        data.data().candidates.forEach(candidate => {
+          this.peer.addIceCandidate(
+            new RTCIceCandidate({
+              candidate: candidate.candidate
+            })
+          );
+        });
+      }
       // if (location.hash != '#init') {
       this.peer.ondatachannel = function(event) {
         console.log(event);

@@ -3,34 +3,37 @@
     <input class="form-control" type="text" [(ngModel)]="roomToCreate" />
     <!-- (click)="initConnection(approvedRequests[1][0])" -->
     <!-- (click)="initConnection(approvedRequests[1][0])" -->
-    <button class="btn btn-outline-info" (click)="initConnection()">
-      Start Class
-    </button>
-    <!-- <button class="btn btn-outline-info" (click)="creatingWebRtcConnection()">
-      Send Answer
-    </button> -->
-    <button class="btn btn-outline-info" (click)="endClass()">
-      End Class
-    </button>
-    <br>
-    <button class="btn btn-outline-info" (click)="sendOffer()">
-      Send Offer
-    </button>
-    <!-- <button class="btn btn-success" (click)="receiveOffer()">
-      Receive Offer
-    </button> -->
-    <button class="btn btn-outline-info" (click)="sendCandidate()">
-      Send ICE Candidate
-    </button>
-    <!-- <button class="btn btn-success" (click)="receiveCandidate()">
-      Receive ICE Candidate
-    </button> -->
-    <button class="btn btn-outline-info" (click)="sendMediaStreamObject()">
-      Send Media Stream Object
-    </button>
-    <!-- <button class="btn btn-success" (click)="receiveMediaStreamObject()">
-      Receive Media Stream Object
-    </button> -->
+    <div>
+      <button class="btn btn-outline-info" (click)="initConnection()">
+        Start Class
+      </button>
+      <!-- <button class="btn btn-outline-info" (click)="creatingWebRtcConnection()">
+        Send Answer
+      </button> -->
+      <button class="btn btn-outline-info" (click)="endClass()">
+        End Class
+      </button>
+    </div>
+    <div>
+      <button class="btn btn-outline-info" (click)="sendOffer()">
+        Send Offer
+      </button>
+      <!-- <button class="btn btn-success" (click)="receiveOffer()">
+        Receive Offer
+      </button> -->
+      <button class="btn btn-outline-info" (click)="sendCandidate()">
+        Send ICE Candidate
+      </button>
+      <!-- <button class="btn btn-success" (click)="receiveCandidate()">
+        Receive ICE Candidate
+      </button> -->
+      <button class="btn btn-outline-info" (click)="sendMediaStreamObject()">
+        Send Media Stream Object
+      </button>
+      <!-- <button class="btn btn-success" (click)="receiveMediaStreamObject()">
+        Receive Media Stream Object
+      </button> -->
+    </div>
     <div *ngIf="studentsCount">
       Students taking class: <strong>{{ studentsCount }}</strong> .
       <!-- <div class="btn-group"> -->

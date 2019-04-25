@@ -98,7 +98,6 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       this.peer.addStream(this.localvideostream);
       console.log('local stream added');
     }, 1000);
-
   }
 
   ngOnDestroy(): void {
@@ -287,13 +286,49 @@ export class LiveclassComponent implements OnInit, OnDestroy {
     this.peer = new RTCPeerConnection(this.pcConfig);
     this.peer.addStream(this.localvideostream);
     this.peer.createOffer().then(this.localDescCreated);
-    this.peer.onaddstream = this.handleRemoteStreamAdded;
-    this.peer.onicecandidate = this.sendIcecandidates;
+    this._shared.getAnswer(this.roomToCreate).subscribe(data => {
+      console.log(data);
+      var msg = JSON.parse(data[0]['data']['answer']);
+      this.peer.setRemoteDescription(new RTCSessionDescription(msg), () => {});
+    });
   }
   // receiveOffer() {}
-  sendCandidate() {}
+  sendCandidate() {
+    this.peer.onicecandidate = this.sendIcecandidates;
+    this._shared.getAnswerCandidate(this.roomToCreate).subscribe(data => {
+      console.log('Recieved candidate');
+      console.log(data.data());
+
+      // let values = Object.keys(data).map(key => data[key]);
+      if(data.data().candidates) {
+        data.data().candidates.forEach(candidate => {
+          this.peer.addIceCandidate(
+            new RTCIceCandidate({
+              candidate: candidate.candidate
+            })
+          );
+        })
+      }
+      // if (location.hash != '#init') {
+      this.peer.ondatachannel = function(event) {
+        var channel = event.channel;
+        channel.onopen = function(event) {
+          console.log('channelopened');
+          channel.send('Hi back!');
+        };
+        channel.onmessage = function(event) {
+          console.log('messege arrived');
+
+          console.log(event.data);
+        };
+      };
+      // }
+    });
+  }
   // receiveCandidate() {}
-  sendMediaStreamObject() {}
+  sendMediaStreamObject() {
+    this.peer.onaddstream = this.handleRemoteStreamAdded;
+  }
   // receiveMediaStreamObject() {}
 
   //!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
