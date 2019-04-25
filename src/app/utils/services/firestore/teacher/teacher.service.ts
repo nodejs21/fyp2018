@@ -71,7 +71,7 @@ export class TeacherService {
     return this.afs.collection('academies').doc(academyId);
   }
 
-  createQuiz(quiz: any, academyId, classroomId) {
+  createQuiz(academyId, classroomId, quiz: any) {
     return this.afs
       .collection('academies')
       .doc(academyId)
@@ -82,11 +82,13 @@ export class TeacherService {
   }
 
   createAssignment(assignment: any) {
+    console.log(assignment);
+    
     return this.afs
       .collection('academies')
       .doc(assignment.academy.academyId)
       .collection('classrooms')
-      .doc(assignment.classRoomId)
+      .doc(assignment.classRoom.classRoomId)
       .collection('assignments')
       .add(assignment);
   }

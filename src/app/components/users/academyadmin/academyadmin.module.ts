@@ -70,7 +70,8 @@ import { SharedModule } from '../../shared/shared.module';
     AddclassComponent,
     AddsubjectComponent,
     ConfirmdeletionComponent,
-    CreateclassroomComponent
+    CreateclassroomComponent,
+    ProfilepopupComponent
   ],
   providers: [FormBuilder]
 })

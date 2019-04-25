@@ -36,4 +36,14 @@ export class StudentService {
         { merge: true }
       );
   }
+
+  getQuizzes(academyId, classroomId) {
+    return this._afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('quizzes')
+      .valueChanges();
+  }
 }

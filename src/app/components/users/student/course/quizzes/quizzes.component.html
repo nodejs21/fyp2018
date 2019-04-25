@@ -4,109 +4,159 @@
   * Filters Optional
 </p> -->
 
+<form [formGroup]="quizForm">
+  <!-- <hr />
+        <pre>value: {{ quizForm.value | json }}</pre>
+        <hr /> -->
+  <div class="form-row">
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>Choose Academy</mat-label>
+        <mat-select
+          aria-disabled="!approvedRequests"
+          [(ngModel)]="academyId"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-option
+            *ngFor="let academy of approvedRequests; index as i"
+            [value]="academy[i].data.academyId"
+            (click)="getAcademyData(academy[i].data.academyId)"
+            >{{ academy[i].data.academyName | titlecase }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-label>Choose Classroom</mat-label>
+        <mat-select
+          [(ngModel)]="classroomId"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+          <mat-option>None</mat-option>
+          <mat-option
+            *ngFor="let classroom of classrooms; index as i"
+            [value]="classroom"
+            (click)="getQuizzes(classroom)"
+          >
+            {{ classroom.data.class.className }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- <div class="col-md-3">
+      <mat-form-field class="p-0">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" formControlName="title" disabled="true" />
+      </mat-form-field>
+    </div> -->
+    <!-- <div class="col-md-3">
+          <div class="form-group">
+                <mat-form-field>
+                  <mat-label>Quiz duration (min)</mat-label>
+                  <input type="number" min="0" matInput formControlName="totalMarks" />
+                </mat-form-field>
+              </div>
+        </div> -->
+    <!-- <div class="col-md-3">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Total Marks</mat-label>
+          <input
+            type="number"
+            min="0"
+            matInput
+            formControlName="totalMarks"
+            disabled="true"
+          />
+        </mat-form-field>
+      </div> -->
+    <!-- <label class="font-weight-bold">Total Marks</label>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Total Marks"
+            formControlName="totalMarks"
+          /> -->
+    <!-- </div> -->
+  </div>
+</form>
 
 <div class="row">
-    <div class="col-sm-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="d-inline">Quizzes</h3>
-        </div>
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="d-inline">Quizzes</h3>
       </div>
-      <div class="animated fadeIn">
-        <div class="card">
-          <div class="card-header" (click)="isCollapsed = !isCollapsed">
-            <label for="className" class="font-weight-bold"
-              >Subject Name</label
-            >
-          </div>
-          <div
-            (collapsed)="collapsed($event)"
-            (expanded)="expanded($event)"
-            [collapse]="isCollapsed"
+    </div>
+    <div class="animated fadeIn">
+      <div class="card">
+        <div class="card-header" (click)="isCollapsed = !isCollapsed">
+          <label for="className" class="font-weight-bold">
+            {{ classroom ? classroom.data.subject.subjectName : '' }}
+          </label>
+        </div>
+        <!-- (expanded)="expanded($event)" -->
+        <!-- (collapsed)="collapsed($event)"
+          [collapse]="isCollapsed" -->
+        <div>
+          <table
+            class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
           >
-            <table class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Added On</th>
-                  <th>Due Date</th>
-                  <th>Attempted On</th>
-                  <th>Time (min)</th>
-                  <th>Obtained Marks</th>
-                  <th>Total Marks</th>
-                  <th>Status</th>
-                  <th class="text-center">Controls</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Project Charter</td>
-                  <td>2012/01/01</td>
-                  <td>2012/01/01</td>
-                  <td>2012/01/01</td>
-                  <td>15</td>
-                  <td>8</td>
-                  <td>10</td>
-                  <td><span class="badge badge-success">Attemped</span></td>
-                  <td>
-                    <div class="pl-2 pr-2 text-center">
-                      <button
-                        class="btn p-0"
-                        popover="View"
-                        triggers="mouseenter:mouseleave"
-                      >
-                        <span>
-                          
-                          <i class="text-primary fa fa-eye">    </i> </span>
-
-                      </button>
-                      <button
-                        class="btn p-0 ml-2"
-                        popover="Attempt"
-                        triggers="mouseenter:mouseleave"
-                        hidden="true"
-                      >
-                        <span> <i class="text-success fa fa-pencil"></i> </span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Project Charter</td>
-                  <td>2012/01/01</td>
-                  <td>2012/01/01</td>
-                  <td>2012/01/01</td>
-                  <td>15</td>
-                  <td>8</td>
-                  <td>10</td>
-                  <td><span class="badge badge-warning">Pending</span></td>
-                  <td>
-                    <div class="pl-2 pr-2 text-center">
-                      <button
-                        class="btn p-0"
-                        popover="View"
-                        triggers="mouseenter:mouseleave"
-                        hidden="true"
-                      >
-                        <span><i class="text-success fa fa-eye"></i> </span>
-                      </button>
-                      <button
-                        class="btn p-0 ml-2"
-                        popover="Attempt"
-                        triggers="mouseenter:mouseleave"
-                      >
-                        <span> <i class="text-success fa fa-pencil"></i> </span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Added On</th>
+                <!-- <th>Due Date</th> -->
+                <!-- <th>Attempted On</th> -->
+                <!-- <th>Time (min)</th> -->
+                <!-- <th>Obtained Marks</th> -->
+                <th>Total Marks</th>
+                <th>Status</th>
+                <th class="text-center">Controls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let quiz of quizzes; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ quiz.title }}</td>
+                <td>{{ quiz.postedOn.toDate() | date }}</td>
+                <!-- <td>2012/01/01</td> -->
+                <!-- <td>{{}}</td> -->
+                <!-- <td>{{}}</td> -->
+                <!-- <td>{{}}</td> -->
+                <td>{{ quiz.totalMarks }}</td>
+                <td>
+                  <span class="badge badge-success">{{ quiz.status }}</span>
+                </td>
+                <td>
+                  <div class="pl-2 pr-2 text-center">
+                    <button
+                      class="btn p-0"
+                      popover="View"
+                      triggers="mouseenter:mouseleave"
+                      (click)="showQuiz(quiz)"
+                    >
+                      <span> <i class="text-primary fa fa-eye"> </i> </span>
+                    </button>
+                    <!-- <button
+                      class="btn p-0 ml-2"
+                      popover="Attempt"
+                      triggers="mouseenter:mouseleave"
+                      hidden="true"
+                      (click)="showQuiz(quiz)"
+                    >
+                      <span> <i class="text-success fa fa-pencil"></i> </span>
+                    </button> -->
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
+</div>

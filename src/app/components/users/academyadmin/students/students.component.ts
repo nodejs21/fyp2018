@@ -51,12 +51,15 @@ export class StudentsComponent implements OnInit {
     this._auth.user.subscribe(user => {
       this._admin.getStudents().subscribe(students => {
         console.log(students);
-        this.subjects = Array.from(
-          new Set(students.map(student => student.data.subjectName))
-        );
+        // this.subjects = Array.from(
+        //   new Set(students.map(student => student.data.subjectName))
+        // );
+        // console.log(this.subjects);
         this.classes = Array.from(
           new Set(students.map(student => student.data.className))
         );
+        console.log(this.classes);
+
         this.students = this.groupByStudentClass(students, 'className');
         this.classWithSubjects = new Set(
           students.map(student => {
@@ -66,6 +69,7 @@ export class StudentsComponent implements OnInit {
             };
           })
         );
+        console.log(this.classWithSubjects);
       });
     });
   }

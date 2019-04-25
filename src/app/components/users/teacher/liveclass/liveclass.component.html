@@ -1,10 +1,9 @@
 <div class="container">
   <div class="row">
     <input class="form-control" type="text" [(ngModel)]="roomToCreate" />
-    <button
-      class="btn btn-outline-info"
-      (click)="initConnection(approvedRequests[1][0])"
-    >
+    <!-- (click)="initConnection(approvedRequests[1][0])" -->
+    <!-- (click)="initConnection(approvedRequests[1][0])" -->
+    <button class="btn btn-outline-info" (click)="initConnection()">
       Start Class
     </button>
     <!-- <button class="btn btn-outline-info" (click)="creatingWebRtcConnection()">
@@ -13,12 +12,33 @@
     <button class="btn btn-outline-info" (click)="endClass()">
       End Class
     </button>
+    <br>
+    <button class="btn btn-outline-info" (click)="sendOffer()">
+      Send Offer
+    </button>
+    <!-- <button class="btn btn-success" (click)="receiveOffer()">
+      Receive Offer
+    </button> -->
+    <button class="btn btn-outline-info" (click)="sendCandidate()">
+      Send ICE Candidate
+    </button>
+    <!-- <button class="btn btn-success" (click)="receiveCandidate()">
+      Receive ICE Candidate
+    </button> -->
+    <button class="btn btn-outline-info" (click)="sendMediaStreamObject()">
+      Send Media Stream Object
+    </button>
+    <!-- <button class="btn btn-success" (click)="receiveMediaStreamObject()">
+      Receive Media Stream Object
+    </button> -->
     <div *ngIf="studentsCount">
       Students taking class: <strong>{{ studentsCount }}</strong> .
+      <!-- <div class="btn-group"> -->
+
+      <!-- </div> -->
+      <br />
     </div>
-    <br />
-  </div>
-  <!-- <div class="row" *ngIf="newRequest">
+    <!-- <div class="row" *ngIf="newRequest">
     <button class="btn btn-outline-info" (click)="givePermission(true)">
       Accept
     </button>
@@ -26,37 +46,39 @@
       Reject
     </button>
   </div> -->
-  <br />
-  <div class="row">
-    <ul *ngFor="let request of questions">
-      <li>
-        Status: {{ request.permission }} | Student: {{ request.studentName }} |
-        <button
-          *ngIf="newRequest"
-          class="btn btn-outline-info"
-          (click)="givePermission(true)"
-        >
-          Accept
-        </button>
-        |
-        <button
-          *ngIf="newRequest"
-          class="btn btn-outline-info"
-          (click)="givePermission(false)"
-        >
-          Reject
-        </button>
-      </li>
-    </ul>
-  </div>
-  <br /><br />
-  <div class="row">
-    <div class="col-6">
-      <video [src]="myVideo" controls autoplay muted #myVideo></video>
-      <!-- *ngIf="displayMyVideo" -->
+    <br />
+    <div class="row">
+      <ul *ngFor="let request of questions">
+        <li>
+          Status: {{ request.permission }} | Student:
+          {{ request.studentName }} |
+          <button
+            *ngIf="newRequest"
+            class="btn btn-outline-info"
+            (click)="givePermission(true)"
+          >
+            Accept
+          </button>
+          |
+          <button
+            *ngIf="newRequest"
+            class="btn btn-outline-info"
+            (click)="givePermission(false)"
+          >
+            Reject
+          </button>
+        </li>
+      </ul>
     </div>
-    <!-- <div class="col-6">
-      <video [src]="friendsVideo" controls autoplay #friendsVideo></video>
-    </div> -->
+    <br /><br />
+    <div class="row">
+      <div class="col-6">
+        <video [src]="myVideo" controls autoplay muted #myVideo></video>
+        <!-- *ngIf="displayMyVideo" -->
+      </div>
+      <div class="col-6">
+        <video [src]="friendsVideo" controls autoplay #friendsVideo></video>
+      </div>
+    </div>
   </div>
 </div>

@@ -42,9 +42,10 @@ export class AddassignmentComponent implements OnInit {
 
   ngOnInit() {
     this._auth.user.subscribe(async user => {
-      await this.getApprovedRequests().then(requests => {
+      await this.getApprovedRequests().then((requests: any[]) => {
+        if(requests[length] == 0) return;
         this.approvedRequests = requests;
-        console.log(this.approvedRequests);
+        // console.log(this.approvedRequests);
       });
     });
     this.assignmentForm = this.formBuilder.group({

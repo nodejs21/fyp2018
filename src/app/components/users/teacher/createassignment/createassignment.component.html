@@ -5,7 +5,7 @@
         <mat-label>Choose Academy</mat-label>
         <mat-select
           aria-disabled="!approvedRequests"
-          [(ngModel)]="academyId"
+          [(ngModel)]="academy"
           [ngModelOptions]="{ standalone: true }"
         >
           <mat-option
@@ -21,7 +21,7 @@
       <mat-form-field>
         <mat-label>Choose Classroom</mat-label>
         <mat-select
-          [(ngModel)]="classroomId"
+          [(ngModel)]="classroom"
           [ngModelOptions]="{ standalone: true }"
         >
           <!-- (click)="getSubjects(classroom.data.class.classId)" -->
@@ -29,16 +29,14 @@
           <mat-option
             *ngFor="let classroom of classrooms; index as i"
             [value]="classroom"
-            (click)="getQuizzes(classroom)"
+            (click)="selectClassroom(classroom)"
           >
             {{ classroom.data.class.className }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
+    <div class="col-md-7">
       <button
         mat-button
         class="float-right btn btn-success"

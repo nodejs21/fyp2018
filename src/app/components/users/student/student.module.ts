@@ -27,6 +27,7 @@ import { LiveclassComponent } from './liveclass/liveclass.component';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ClassroomsComponent } from './classrooms/classrooms.component';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ClassroomsComponent } from './classrooms/classrooms.component';
     RatingModule.forRoot(),
     ProgressbarModule.forRoot(),
     CollapseModule.forRoot(),
+    ButtonsModule.forRoot(),
     FormsModule,
     AngularEditorModule,
     ReactiveFormsModule

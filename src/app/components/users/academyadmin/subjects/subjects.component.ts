@@ -113,6 +113,7 @@ export class SubjectsComponent implements OnInit {
 
   //todo adminService CF func call
   updateClassesCollection(subjectId, push) {
+    // this.
     // this._adminService
     //   .cfUpdateClassesCollection(this.selectedClassId, subjectId, push)
     //   .then(res => {

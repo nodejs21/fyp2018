@@ -46,28 +46,32 @@
 
   <hr />
 
-  <mat-card>
+  <mat-card
+    *ngIf="
+      academyId && classroomId && assignments ? assignments.length == 0 : false
+    "
+  >
+    <div class="row">
+      <div class="invalid-feedback d-block align-bottom">
+        <h5>
+          *There is no assignment for selected subject.
+        </h5>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card *ngIf="assignments ? assignments.length != 0 : false">
     <div class="row">
       <div class="col-11">
         <mat-card-title>
           Posted Assignments
         </mat-card-title>
       </div>
-      <div class="col-1">
-        <button
-          mat-button
-          class="float-right btn btn-success"
-          (click)="openDialog()"
-        >
-          Post Assignment
-        </button>
-      </div>
 
       <mat-form-field class="px-3">
         <input
           matInput
           (keyup)="applyFilter($event.target.value)"
-          placeholder="Assignment title"
+          placeholder="You can also filter the assignment by its title"
         />
       </mat-form-field>
       <div class="container">
