@@ -79,21 +79,30 @@ exports.classNotifications = functions.firestore
       .doc(context.params.academyId)
       .get();
     const academyData = academyRef.data();
-    const studentTokens = classRoomData.students.map(student => {
+    const studentsData = classRoomData.students.map(student => {
       return admin
         .firestore()
         .collection('users')
         .doc(student.studentId)
         .get()
         .then(snap => {
-          console.log(snap, 'snap');
           const data = snap.data();
-          console.log(data, 'data');
-          return data.token[0];
+          return data;
         });
     });
 
-    const allTokens = await Promise.all(studentTokens);
+    console.log(studentsData);
+    const studentPromises = await Promise.all(studentsData);
+    console.log(studentPromises);
+
+    const allTokens = studentPromises.reduce((acc, student) => {
+      console.log(student, 'STD');
+      if (student.token.length > 0) {
+        return [...acc, student.token[0]];
+      } else return acc;
+    }, []);
+
+    console.log(allTokens);
 
     allTokens.forEach(tok => {
       admin

@@ -19,7 +19,7 @@
                       className: class.data.className,
                       classId: class.id
                     }"
-                    (click)="showSubjects(class.id)"
+                    (click)="showSubjects(class.id, class.data.className)"
                     >{{ class.data.className }}</mat-option
                   >
                 </mat-select>
@@ -31,6 +31,7 @@
                 <mat-select formControlName="subject">
                   <mat-option
                     *ngFor="let subject of selectedClassSubjects"
+                    [disabled]="classMap[selectedClass].includes(subject.id)"
                     [value]="{
                       subjectName: subject.data.subjectName,
                       subjectId: subject.id
