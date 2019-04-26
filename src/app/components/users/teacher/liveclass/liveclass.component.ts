@@ -42,7 +42,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       console.log(this.classRoomToCreate);
 
       this.localStream = this.agoraService.createStream(
-        uid,
+        this.classRoomToCreate,
         true,
         null,
         null,
