@@ -73,10 +73,12 @@ exports.classNotifications = functions.firestore
   .document('academies/{academyId}/classrooms/{classroomId}')
   .onCreate(async (snapshot, context) => {
     const classRoomData = await snapshot.data();
-    // const adminRef = db.doc('admins/McTypcvnLIUUXBdQbd6Sryjjnw22').get();
-    // const adminSnap = await adminRef;
-    // const adminData = adminSnap.data();
-    // const token = adminData.token;
+    const academyRef = await admin
+      .firestore()
+      .collection('academies')
+      .doc(context.params.academyId)
+      .get();
+    const academyData = academyRef.data();
     const studentTokens = classRoomData.students.map(student => {
       return admin
         .firestore()
@@ -84,19 +86,24 @@ exports.classNotifications = functions.firestore
         .doc(student.studentId)
         .get()
         .then(snap => {
+          console.log(snap, 'snap');
           const data = snap.data();
+          console.log(data, 'data');
           return data.token[0];
         });
     });
 
-    console.log(studentTokens);
-    studentTokens.forEach(tok => {
+    const allTokens = await Promise.all(studentTokens);
+
+    allTokens.forEach(tok => {
       admin
         .firestore()
         .collection('notifications')
         .add({
-          body: 'You are added to classroom',
-          title: 'Class Created',
+          body: `You are added to class ${
+            classRoomData.subject.subjectName
+          } in ${academyData.academyName} academy`,
+          title: `Class Created`,
           token: tok
         });
     });
