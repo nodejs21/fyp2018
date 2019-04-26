@@ -53,7 +53,6 @@ export class MessagingService {
 
   async deleteMyToken(user) {
     const token = await this.messaging.getToken();
-    console.log('TOKEN', token);
     this.db
       .collection('users')
       .doc(user.uid)
@@ -63,9 +62,9 @@ export class MessagingService {
   receiveMessage() {
     this.messaging.onMessage(payload => {
       console.log(payload);
-      this.playNotificationSound();
+      // this.playNotificationSound();
+      console.log(payload);
       this._snackBar.open(payload.notification.body, 'X', { duration: 4000 });
-      // this._snackBar.open(payload.body, 'X', { duration: 4000 });
     });
   }
 

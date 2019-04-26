@@ -18,11 +18,11 @@ export class CreateclassroomComponent implements OnInit {
   subjectId: String;
   teacherId: String;
   studentsIds: [String];
-
+  selectedClass: String;
   selectedClassSubjects = [];
   selectedSubjectTeachers = [];
   selectedSubjectStudents = [];
-
+  classMap: object = {};
   teachers: any;
   cstudents: any;
   cdays = [];
@@ -85,8 +85,18 @@ export class CreateclassroomComponent implements OnInit {
     this._auth.user.subscribe(user => {
       this._admin.getClasses().subscribe(res => {
         this.classes = res;
+        console.log(this.classMap);
+        this.classes.forEach(c => {
+          this.classMap = {
+            ...this.classMap,
+            [c.data.className]: c.data.subjects
+          };
+        });
+        console.log(this.classMap, 'CLASSMAP');
+        console.log(this.classes, 'CLASSES');
       });
       this._admin.getSubjects().subscribe(res => {
+        console.log(res, 'SUBJECTS');
         this.subjects = res;
       });
       this._admin.getTeachers().subscribe(res => {
@@ -98,10 +108,12 @@ export class CreateclassroomComponent implements OnInit {
     });
   }
 
-  showSubjects(classId) {
+  showSubjects(classId, className) {
     this.selectedClassSubjects = [];
+    this.selectedClass = className;
     if (this.subjects) {
       this.subjects.forEach(subject => {
+        console.log(subject);
         if (subject.data.classRef == classId) {
           this.selectedClassSubjects.push(subject);
         }

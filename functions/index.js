@@ -79,30 +79,46 @@ exports.classNotifications = functions.firestore
   .document('academies/{academyId}/classrooms/{classroomId}')
   .onCreate(async (snapshot, context) => {
     const classRoomData = await snapshot.data();
-    // const adminRef = db.doc('admins/McTypcvnLIUUXBdQbd6Sryjjnw22').get();
-    // const adminSnap = await adminRef;
-    // const adminData = adminSnap.data();
-    // const token = adminData.token;
-    const studentTokens = classRoomData.students.map(student => {
+    const academyRef = await admin
+      .firestore()
+      .collection('academies')
+      .doc(context.params.academyId)
+      .get();
+    const academyData = academyRef.data();
+    const studentsData = classRoomData.students.map(student => {
       return admin
         .firestore()
         .collection('users')
         .doc(student.studentId)
         .get()
         .then(snap => {
-          console.log(snap.data);
-          return snap.data.token;
+          const data = snap.data();
+          return data;
         });
     });
 
-    console.log(studentTokens);
-    studentTokens.forEach(tok => {
+    console.log(studentsData);
+    const studentPromises = await Promise.all(studentsData);
+    console.log(studentPromises);
+
+    const allTokens = studentPromises.reduce((acc, student) => {
+      console.log(student, 'STD');
+      if (student.token.length > 0) {
+        return [...acc, student.token[0]];
+      } else return acc;
+    }, []);
+
+    console.log(allTokens);
+
+    allTokens.forEach(tok => {
       admin
         .firestore()
         .collection('notifications')
         .add({
-          body: 'You are added to classroom',
-          title: 'Class Created',
+          body: `You are added to class ${
+            classRoomData.subject.subjectName
+          } in ${academyData.academyName} academy`,
+          title: `Class Created`,
           token: tok
         });
     });

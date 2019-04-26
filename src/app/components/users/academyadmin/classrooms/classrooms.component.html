@@ -1,5 +1,3 @@
-
-
 <div class="animated fadeIn">
   <div class="col-sm-6 col-md-4 col-lg-2 pb-4"></div>
   <div class="row">
@@ -30,6 +28,10 @@
         <div class="card-body">
           <div>
             <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> ClassName :
+                <strong> {{ classroom.data.class.className }} </strong>
+              </li>
               <li class="list-group-item bg-dark p-1">
                 <i class="icon-people"></i> Students :
                 <strong> {{ classroom.data.students.length }} </strong>
