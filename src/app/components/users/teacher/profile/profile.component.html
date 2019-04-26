@@ -1,355 +1,347 @@
-<!-- <p>
-  profile works!
-</p> -->
-
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-12">
     <div class="card">
       <div class="card-header">
-        <h3 class="d-inline">TEACHER Personal Details</h3>
-        <!-- <button
-          type="submit"
-          class="btn btn-warning float-right text-weight-bold d-inline"
-        >
-          Edit Profile
-        </button> -->
-        <button
-          class="btn btn-oultine-warning float-right"
-          popover="Edit"
-          triggers="mouseenter:mouseleave"
-        >
-          <span> <i class="text-warning fa fa-lg fa-pencil"></i> </span>
-        </button>
+        <h3 class="d-inline">Teacher Profile Page</h3>
       </div>
       <div class="card-body">
-        <form action="">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="firstName" class="font-weight-bold"
-                  >First Name</label
-                >
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"
-                      ><i class="fa fa-user"></i
-                    ></span>
-                  </div>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="name"
-                    class="form-control"
-                    placeholder="First Name"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="lastName" class="font-weight-bold">Last Name</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="fa fa-user"></i>
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="name"
-                    class="form-control"
-                    placeholder="Last Name"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="email" class="font-weight-bold">Email</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"
-                  ><i class="fa fa-envelope"></i
-                ></span>
-              </div>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="form-control"
-                placeholder="Email"
-                autocomplete="email"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="dob" class="font-weight-bold">Date of Birth</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input type="date" id="dob" name="dob" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="gender" class="font-weight-bold">Gender</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input
-                type="text"
-                id="dob"
-                name="dob"
-                class="form-control"
-                placeholder="Gender"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="age" class="font-weight-bold">Age</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              
-              <input
-                type="number"
-                id="age"
-                name="age"
-                class="form-control"
-                disabled="true"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="address" class="font-weight-bold">Address</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input
-                type="text"
-                id="dob"
-                name="dob"
-                class="form-control"
-                placeholder="Address"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="city" class="font-weight-bold">City</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input
-                type="text"
-                id="dob"
-                name="dob"
-                class="form-control"
-                placeholder="City"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="tel" class="font-weight-bold">Telephone</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input
-                type="tel"
-                id="dob"
-                name="dob"
-                class="form-control"
-                placeholder="Telephone"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="qual" class="font-weight-bold">Qualification</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input
-                type="text"
-                id="dob"
-                name="dob"
-                class="form-control"
-                placeholder="Qualification"
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="about" class="font-weight-bold">About Me</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input
-                type="text"
-                id="dob"
-                name="dob"
-                class="form-control"
-                placeholder="Your Intro"
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-header"><h3>Academy Details</h3></div>
-      <div class="card-body">
-        <form action="">
-          <div class="form-group">
-            <label class="font-weight-bold">Rating</label>
-            <div class="input-group">
-              <!-- Ratinng Start -->
-              <!-- Ratinng Start -->
-              <!-- Ratinng Start -->
-              <!-- Ratinng Start -->
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-user"></i></span>
-              </div>
-              <rating
-                class="ml-3"
-                [(ngModel)]="rate"
-                [max]="max"
-                [readonly]="isReadonly"
-                (onHover)="hoveringOver($event)"
-                (onLeave)="resetStar()"
-                [titles]="['one', 'two', 'three']"
-                name="rate"
-              ></rating>
-              <!-- <span
-                  class="label"
-                  [ngClass]="{
-                    'label-warning': percent < 30,
-                    'label-info': percent >= 30 && percent < 70,
-                    'label-success': percent >= 70
-                  }"
-                  [ngStyle]="{
-                    display: overStar && !isReadonly ? 'inline' : 'none'
-                  }"
-                  >{{ percent }}%</span
-                >
-                <div class="card">
-                  <pre
-                    class="card-block card-header"
-                  >Rate: <b>{{rate}}</b>;  Readonly is: <i>{{isReadonly}}</i>;  Hovering over: <b>{{overStar || "none"}}</b></pre>
-                </div>
+        <div class="container" *ngIf="basicUserForm && specificUserForm">
+          <mat-horizontal-stepper [linear]="false" #stepper>
+            <mat-step [stepControl]="basicUserForm">
+              <ng-template matStepLabel>User Basic Info</ng-template>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 mx-auto">
+                    <div class="card mx-4">
+                      <div class="card-body p-4">
+                        <form [formGroup]="basicUserForm">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <h1>Update</h1>
+                              <p class="text-muted">Update your account</p>
+                            </div>
+                            <div class="col-md-6">
+                              <img
+                                [src]="user.photoURL"
+                                class="rounded-circle img-fluid float-right embed-responsive-item"
+                                style="height: 50px; width: 50px;"
+                                (click)="fileInput.click()"
+                              />
+                              <input
+                                type="file"
+                                hidden
+                                #fileInput
+                                (change)="handler($event)"
+                              />
+                            </div>
+                          </div>
 
-                <button
-                  type="button"
-                  class="btn btn-sm btn-danger"
-                  (click)="rate = 0"
-                  [disabled]="isReadonly"
-                >
-                  Clear
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-primary"
-                  (click)="isReadonly = !isReadonly"
-                >
-                  Toggle Readonly
-                </button> -->
-              <!-- Ratinng End -->
-              <!-- Ratinng End -->
-              <!-- Ratinng End -->
-              <!-- Ratinng End -->
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="totalSubjects" class="font-weight-bold"
-              >Total Subjects</label
-            >
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-user"></i></span>
-              </div>
-              <input type="number" id="asd" name="name" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="delivered" class="font-weight-bold"
-              >Delivered Lectures</label
-            >
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input
-                type="number"
-                id="lastName"
-                name="name"
-                class="form-control"
-              />
-            </div>
-          </div>
+                          <!-- <div class="row">
+                                  <div class="col 6">
+                                    <button
+                                    (click)="fileInput.click()"
+                                      class="btn btn-outline-info btn-block border-0 font-weight-bold"
+                                    >
+                                      Attach File
+                                    </button>
+                                  </div>
+                                  <input hidden type="file" #fileInput />
+                                </div> -->
 
-          <div class="form-group">
-            <label for="recLec" class="font-weight-bold"
-              >Recorded Lectures</label
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"
+                                ><i class="icon-user"></i
+                              ></span>
+                            </div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              [ngClass]="{
+                                'is-valid': !firstName.errors,
+                                'is-invalid':
+                                  firstName.errors && firstName.touched
+                              }"
+                              placeholder="First Name"
+                              formControlName="firstName"
+                            />
+                            <input
+                              type="text"
+                              class="form-control"
+                              [ngClass]="{
+                                'is-valid': !lastName.errors,
+                                'is-invalid':
+                                  lastName.errors && lastName.touched
+                              }"
+                              placeholder="Last Name"
+                              formControlName="lastName"
+                            />
+                          </div>
+                          <div
+                            class="invalid-feedback d-block"
+                            *ngIf="
+                              firstName.touched &&
+                              (firstName.errors || lastName.errors)
+                            "
+                          >
+                            First and Last both names are required.
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">@</span>
+                            </div>
+                            <input
+                            disabled
+                              type="text"
+                              class="form-control"
+                              [ngClass]="{
+                                'is-valid': !email.errors,
+                                'is-invalid': email.errors && email.touched
+                              }"
+                              placeholder="Email"
+                              formControlName="email"
+                            />
+                          </div>
+                          <div
+                            class="invalid-feedback d-block"
+                            *ngIf="email.touched && email.errors"
+                          >
+                            Email is required.
+                          </div>
+
+                          <div
+                            class="input-group align-center d-flex justify-content-center"
+                          >
+                            <label
+                              class="switch switch-lg switch-label switch-outline-success"
+                              tooltip="Gender"
+                            >
+                              <input
+                                type="checkbox"
+                                class="switch-input"
+                                formControlName="gender"
+                                checked="true"
+                              />
+                              <span
+                                class="switch-slider"
+                                data-checked="👨‍🦱"
+                                data-unchecked="👩‍🦰"
+                              ></span>
+                            </label>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
+                          <button
+                            [disabled]="isUploading"
+                            class="btn btn-block btn-success"
+                            matStepperNext
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-step>
+            <mat-step
+              [stepControl]="specificUserForm"
+              errorMessage="Address is required."
             >
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"
-                  ><i class="fa fa-envelope"></i
-                ></span>
+              <ng-template matStepLabel
+                >{{ basicUserForm.value.userType | titlecase }} Specific
+                Info</ng-template
+              >
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 mx-auto">
+                    <div
+                      class="card mx-4"
+                      [hidden]="basicUserForm.value.userType != 'teacher'"
+                    >
+                      <div class="card-body p-4">
+                        <form [formGroup]="specificUserForm">
+                          <!-- <div class="form-group">
+                            <label class="font-weight-bold"
+                              >Date of Birth</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                [matDatepicker]="picker"
+                                formControlName="dob"
+                                placeholder="Choose a date"
+                                class="form-control"
+                                [min]="minDate"
+                                [max]="maxDate"
+                              />
+                              <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                              ></mat-datepicker-toggle>
+                              <mat-datepicker hidden #picker></mat-datepicker>
+                            </div>
+                          </div> -->
+                          <!-- <div class="form-group">
+                            <mat-form-field>
+                              <mat-label>Due Date</mat-label>
+                              <input
+                                matInput
+                                [matDatepicker]="picker"
+                                formControlName="dob"
+                                placeholder="Choose a date"
+                              />
+                              <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker"
+                              ></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                          </div> -->
+                          <div class="form-group">
+                            <label class="font-weight-bold">Address</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="address"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !address.errors,
+                                  'is-invalid':
+                                    address.errors && address.touched
+                                }"
+                                placeholder="Address"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="address.touched && address.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.required"
+                            >
+                              Address is required.
+                            </div>
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="address.errors.minlength"
+                            >
+                              Address must have atleast 5 characters.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">City</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="city"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !city.errors,
+                                  'is-invalid': city.errors && city.touched
+                                }"
+                                placeholder="City"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="city.touched && city.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="city.errors.required"
+                            >
+                              City is required.
+                            </div>
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="city.errors.minlength"
+                            >
+                              City must have atleast 3 characters.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold">Telephone</label>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                placeholder="+92-000-0000000"
+                                type="tel"
+                                pattern="[\+]\d{2}[\-]\d{3}[\-]\d{7}"
+                                formControlName="telephone"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !telephone.errors,
+                                  'is-invalid':
+                                    telephone.errors && telephone.touched
+                                }"
+                              />
+                            </div>
+                          </div>
+                          <div *ngIf="telephone.touched && telephone.errors">
+                            <div
+                              class="invalid-feedback d-block"
+                              *ngIf="telephone.errors.required"
+                            >
+                              Telephone is required.
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="font-weight-bold"
+                              >Qualification</label
+                            >
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-user"></i>
+                                </span>
+                              </div>
+                              <input
+                                type="text"
+                                formControlName="qualification"
+                                class="form-control"
+                                placeholder="E.g: Phd in Electronics [Yet to be decided]"
+                              />
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="card-footer p-4">
+                        <div class="row">
+                          <button
+                            *ngIf="user"
+                            class="btn btn-block btn-success"
+                            (click)="updateProfile(user.uid)"
+                          >
+                            Update Profile
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <input type="number" id="" name="email" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="liveLec" class="font-weight-bold">Live Lectures</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"
-                  ><i class="fa fa-envelope"></i
-                ></span>
-              </div>
-              <input type="number" id="" name="email" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="Students" class="font-weight-bold"
-              >No of Students</label
-            >
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fa fa-user"></i>
-                </span>
-              </div>
-              <input type="number" id="dob" name="dob" class="form-control" />
-            </div>
-          </div>
-        </form>
+            </mat-step>
+          </mat-horizontal-stepper>
+        </div>
       </div>
     </div>
   </div>

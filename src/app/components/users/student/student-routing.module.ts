@@ -5,17 +5,16 @@ import { AssignmentsComponent } from './course/assignments/assignments.component
 import { AttendanceComponent } from './course/attendance/attendance.component';
 import { QuizzesComponent } from './course/quizzes/quizzes.component';
 import { ResultComponent } from './course/result/result.component';
-import { ProfileComponent } from './profile/profile.component';
 import { AttemptquizComponent } from './attemptquiz/attemptquiz.component';
 import { LecturesComponent } from './lectures/lectures.component';
 import { AcademydetailComponent } from './details/academydetail/academydetail.component';
 import { TeacherdetailComponent } from './details/teacherdetail/teacherdetail.component';
-import { VideostreamComponent } from './liveclass/videostream/videostream.component';
-import { WhiteboardComponent } from './liveclass/whiteboard/whiteboard.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { StudentComponent } from './student.component';
 import { RequestssentComponent } from './requests/requestssent/requestssent.component';
 import { LiveclassComponent } from './liveclass/liveclass.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ClassroomsComponent } from './classrooms/classrooms.component';
 
 const routes: Routes = [
   {
@@ -52,6 +51,8 @@ const routes: Routes = [
         //   { path: 'whiteboard', component: WhiteboardComponent }
         // ]
       },
+
+      { path: 'classrooms', component: ClassroomsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'dashboard', component: StudentdashboardComponent },
       { path: 'subjects', component: SubjectsComponent },

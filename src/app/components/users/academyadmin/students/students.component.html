@@ -99,13 +99,7 @@
                 : true
             "
           >
-            {{
-              selectedClassRoom
-                ? student.data.subjectName == selectedClassRoom
-                  ? student.data.addedOn
-                  : undefined
-                : student.data.addedOn
-            }}
+            {{ student.data.addedOn.toDate() | date: 'medium' }}
           </td>
           <td
             *ngIf="

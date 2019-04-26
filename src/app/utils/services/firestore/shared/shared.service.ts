@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from '../../auth/auth.service';
-import { map } from 'rxjs/operators';
+import { map, merge } from 'rxjs/operators';
 import { firestore } from 'firebase';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
   user;
+
   constructor(private afs: AngularFirestore, private _auth: AuthService) {
     this._auth.user.subscribe(user => {
       this.user = user;
@@ -161,6 +163,254 @@ export class SharedService {
       .valueChanges();
   }
 
+  getAssignments(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('assignments')
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  startLiveClass(academyId, classroomId) {
+    console.log(academyId, classroomId);
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .set(
+        {
+          startedAt: new Date(),
+          status: true
+        },
+        { merge: true }
+      );
+    // .snapshotChanges()
+    // .pipe(
+    //   map(res => {
+    //     return res.map(data => {
+    //       return { id: data.payload.doc.id, data: data.payload.doc.data() };
+    //     });
+    //   })
+    // );
+  }
+
+  getPreviousAttendance(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .collection('students')
+      .doc(this.user.uid)
+      .valueChanges();
+  }
+
+  updateAttendance(academyId, classroomId, durationInClass) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .collection('students')
+      .doc(this.user.uid)
+      .set({
+        students: {
+          studentId: this.user.uid,
+          studentName: this.user.firstName + ' ' + this.user.lastName,
+          durationInClass
+        }
+      });
+  }
+
+  studentsInClassroom(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .collection('students')
+      .valueChanges();
+  }
+
+  endLiveClassByTeacher(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .set(
+        {
+          endedAt: new Date(),
+          status: false
+        },
+        { merge: true }
+      );
+  }
+
+  informStudentsOfClassroom(studentId, academyId, classroomId) {
+    this.afs
+      .collection('students')
+      .doc(studentId)
+      .set(
+        {
+          academyId,
+          classroomId
+        },
+        { merge: true }
+      );
+  }
+
+  getUpdatesOfLiveclass() {
+    return this.afs
+      .collection('students')
+      .doc(this.user.uid)
+      .valueChanges();
+  }
+
+  liveclassFinished(studentId) {
+    this.afs
+      .collection('students')
+      .doc(studentId)
+      .update({
+        academyId: firestore.FieldValue.delete(),
+        classroomId: firestore.FieldValue.delete()
+      });
+  }
+
+  attendLiveClass(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .valueChanges();
+  }
+
+  askPermission(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .doc(this.user.uid)
+      .set(
+        {
+          studentId: this.user.uid,
+          studentName: this.user.firstName + ' ' + this.user.lastName,
+          permission: 'pending'
+        },
+        { merge: true }
+      );
+  }
+
+  checkPermission(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .doc(this.user.uid)
+      .valueChanges();
+  }
+
+  subscribeToQuestions(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .valueChanges();
+  }
+
+  givePermission(permit, academyId, classroomId, studentId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(`${academyId}|${classroomId}`)
+      .collection('questions')
+      .doc(studentId)
+      .set(
+        {
+          permission: permit ? 'granted' : 'rejected'
+        },
+        { merge: true }
+      );
+  }
+  // getAssignmentDetails(assignmentId) {
+  //   return this.afs.collection('academies').doc()
+  // }
+
+  getTeacherClassrooms(academyId) {
+    return this.afs
+      .collection(`academies`)
+      .doc(academyId)
+      .collection('classrooms', ref =>
+        ref.where('teacher.teacherId', '==', this.user.uid)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  getStudentClassrooms(academyId) {
+    return this.afs
+      .collection(`academies`)
+      .doc(academyId)
+      .collection('classrooms', ref =>
+        ref.where('students', 'array-contains', {
+          studentId: this.user.uid,
+          studentName: this.user.firstName + ' ' + this.user.lastName
+        })
+      )
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, data: data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
   cancelRequest(academyId, subjectId) {
     return new Promise((resolve, reject) => {
       this.afs
@@ -233,10 +483,17 @@ export class SharedService {
   }
 
   sendOfferCandidate(senderId, candidate: {}) {
+    console.log(candidate);
     return this.afs
       .collection('rtc')
       .doc(`offercandidate${senderId}`)
-      .set({ senderId, candidate });
+      .set(
+        {
+          senderId,
+          candidates: firestore.FieldValue.arrayUnion(candidate)
+        },
+        { merge: true }
+      );
   }
   getOfferCandidate(senderId) {
     return this.afs
@@ -248,7 +505,13 @@ export class SharedService {
     return this.afs
       .collection('rtc')
       .doc(`answercandidate${senderId}`)
-      .set({ senderId, candidate });
+      .set(
+        {
+          senderId,
+          candidates: firestore.FieldValue.arrayUnion(candidate)
+        },
+        { merge: true }
+      );
   }
   getAnswerCandidate(senderId) {
     return this.afs
@@ -257,26 +520,12 @@ export class SharedService {
       .get();
   }
 
-  getPermission(teacherId) {
-    return this.afs
-      .collection('permission')
-      .doc(this.user.uid)
-      .set({ studentId: this.user.uid, permission: false, teacherId });
-  }
-
-  checkPermission() {
-    return this.afs
-      .collection('permission')
-      .doc(this.user.uid)
-      .valueChanges();
-  }
-
-  givePermission(permit, teacherId) {
-    return this.afs
-      .collection('permission')
-      .doc(this.user.uid)
-      .set({ studentId: this.user.uid, permission: false, teacherId });
-  }
+  // getPermission(teacherId) {
+  //   return this.afs
+  //     .collection("permission")
+  //     .doc(this.user.uid)
+  //     .set({ studentId: this.user.uid, permission: false, teacherId });
+  // }
 
   joinClass() {
     return this.afs
@@ -291,5 +540,13 @@ export class SharedService {
           });
         })
       );
+  }
+
+  updateLiveClass(classObj) {
+    console.log(classObj);
+    // return this.afs
+    //   .collection('liveclasses')
+    //   .doc(this.user.uid)
+    //   .set({})
   }
 }

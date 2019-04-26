@@ -36,4 +36,8 @@ export class CreateassignmentComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  postAssignment() {
+    console.log(this.htmlContent);
+  }
 }

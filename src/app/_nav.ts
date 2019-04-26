@@ -104,7 +104,7 @@ const teacher: NavData[] = [
   {
     name: 'Make Quiz',
     url: `${teacherPrefix}/makequiz`,
-    icon: 'icon-puzzle'
+    icon: 'icon-settings'
   },
   {
     name: 'Make Assignment',
@@ -156,6 +156,11 @@ const student: NavData[] = [
     icon: 'icon-speedometer'
   },
   {
+    name: 'Classrooms',
+    url: `${studentPrefix}/classrooms`,
+    icon: 'icon-screen-desktop'
+  },
+  {
     name: 'Assignments',
     url: `${studentPrefix}/assignments`,
     icon: 'icon-note'
@@ -164,6 +169,11 @@ const student: NavData[] = [
     name: 'Quizzes',
     url: `${studentPrefix}/quizzes`,
     icon: 'icon-clock'
+  },
+  {
+    name: 'Attemp Quiz',
+    url: `${studentPrefix}/attemptquiz`,
+    icon: 'icon-puzzle'
   },
   // {
   //   name: 'Results',

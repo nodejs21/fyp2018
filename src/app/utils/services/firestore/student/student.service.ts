@@ -20,4 +20,30 @@ export class StudentService {
         )
       );
   }
+
+  submitAssignment(academyId, classroomId, student) {
+    return this._afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('assignments')
+      .doc(student.studentId)
+      .set(
+        {
+          student
+        },
+        { merge: true }
+      );
+  }
+
+  getQuizzes(academyId, classroomId) {
+    return this._afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('quizzes')
+      .valueChanges();
+  }
 }

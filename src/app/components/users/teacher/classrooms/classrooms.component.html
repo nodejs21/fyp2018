@@ -5,13 +5,36 @@
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-4">
+      <mat-form-field class="p-0">
+        <mat-label>Select Academy</mat-label>
+        <mat-select name="selectedAcademyId" [(ngModel)]="selectedAcademy">
+          <mat-option
+            *ngFor="let academy of approvedRequests; index as i"
+            [value]="academy[i]"
+            (click)="getAcademyData(academy[i])"
+          >
+            {{ academy[i].data.academyName | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div
+      class="col-8"
+      *ngIf="selectedAcademy && classrooms ? classrooms.length == 0 : false"
+    >
+      <div class="invalid-feedback d-block align-bottom">
+        <h5>*You have no classroom in the selected academy.</h5>
+      </div>
+    </div>
+    <div class="col-4" *ngFor="let classroom of classrooms">
       <div class="card text-white bg-dark">
         <div class="card-header h4 ">
-          Classroom
+          {{ classroom.id }}
           <button
             class="btn btn-sm btn-warning  float-right ml-2"
             popover="Announcement"
             triggers="mouseenter:mouseleave"
+            (click)="addAnnouncement()"
           >
             <span><i class="fa fa-bullhorn"></i> </span>
           </button>
@@ -20,11 +43,36 @@
           <div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Students : <strong>50</strong>
+                <i class="icon-people"></i> Class :
+                <strong> {{ classroom.data.class.className }} </strong>
               </li>
               <li class="list-group-item bg-dark p-1">
-                <i class="icon-people"></i> Delivered Lectures :
-                <strong>15</strong>
+                <i class="icon-people"></i> Teacher Name :
+                <strong> {{ classroom.data.teacher.teacherName }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Students :
+                <strong> {{ classroom.data.students.length }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Subject :
+                <strong> {{ classroom.data.subject.subjectName }} </strong>
+              </li>
+              Days :
+              <li
+                class="list-group-item bg-dark p-1"
+                *ngFor="let day of classroom.data.days"
+              >
+                <!-- <i class="icon-people"></i> -->
+                <strong class="pl-4"> {{ day | titlecase }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Duration :
+                <strong> {{ classroom.data.duration }} </strong>
+              </li>
+              <li class="list-group-item bg-dark p-1">
+                <i class="icon-people"></i> Time :
+                <strong> {{ classroom.data.time }} </strong>'O Clock
               </li>
             </ul>
           </div>

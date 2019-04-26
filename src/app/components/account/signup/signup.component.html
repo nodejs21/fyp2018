@@ -15,8 +15,9 @@
                     </div>
                     <div class="col-md-3">
                       <img
-                        [(src)]="basicUserForm.value.photoURL"
+                        [src]="basicUserForm.value.photoURL"
                         class="rounded-circle img-fluid float-right embed-responsive-item"
+                        (click)="fileInput.click()"
                       />
                     </div>
                   </div>
@@ -238,10 +239,18 @@
                         ></span>
                       </div>
                       <input
-                        class="form-control"
+                        [matDatepicker]="picker1"
                         formControlName="dob"
-                        type="date"
+                        placeholder="Choose a date"
+                        class="form-control"
+                        [min]="minDate"
+                        [max]="maxDate"
                       />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker1"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker hidden #picker1></mat-datepicker>
                     </div>
                   </div>
                   <div class="form-group">
@@ -319,11 +328,25 @@
                         ></span>
                       </div>
                       <input
-                        class="form-control"
-                        formControlName="telephone"
-                        placeholder="Telephone"
+                        placeholder="+92-000-0000000"
                         type="tel"
+                        pattern="[\+]\d{2}[\-]\d{3}[\-]\d{7}"
+                        formControlName="telephone"
+                        class="form-control"
+                        [ngClass]="{
+                          'is-valid': !telephone.errors,
+                          'is-invalid': telephone.errors && telephone.touched
+                        }"
                       />
+                    </div>
+
+                  </div>
+                  <div *ngIf="telephone.touched && telephone.errors">
+                    <div
+                      class="invalid-feedback d-block"
+                      *ngIf="telephone.errors.required"
+                    >
+                      Telephone is required.
                     </div>
                   </div>
                 </form>
@@ -355,10 +378,18 @@
                         </span>
                       </div>
                       <input
-                        type="date"
+                        [matDatepicker]="picker2"
                         formControlName="dob"
+                        placeholder="Choose a date"
                         class="form-control"
+                        [min]="minDate"
+                        [max]="maxDate"
                       />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker2"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker hidden #picker2></mat-datepicker>
                     </div>
                   </div>
                   <div class="form-group">
@@ -438,15 +469,17 @@
                         </span>
                       </div>
                       <input
-                        type="tel"
-                        formControlName="telephone"
-                        class="form-control"
-                        [ngClass]="{
-                          'is-valid': !telephone.errors,
-                          'is-invalid': telephone.errors && telephone.touched
-                        }"
-                        placeholder="Telephone"
-                      />
+                                placeholder="+92-000-0000000"
+                                type="tel"
+                                pattern="[\+]\d{2}[\-]\d{3}[\-]\d{7}"
+                                formControlName="telephone"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !telephone.errors,
+                                  'is-invalid':
+                                    telephone.errors && telephone.touched
+                                }"
+                              />
                     </div>
                   </div>
                   <div *ngIf="telephone.touched && telephone.errors">
@@ -502,10 +535,18 @@
                         </span>
                       </div>
                       <input
-                        type="date"
+                        [matDatepicker]="picker3"
                         formControlName="dob"
+                        placeholder="Choose a date"
                         class="form-control"
+                        [min]="minDate"
+                        [max]="maxDate"
                       />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker3"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker hidden #picker3></mat-datepicker>
                     </div>
                   </div>
                   <div class="form-group">
@@ -585,15 +626,17 @@
                         </span>
                       </div>
                       <input
-                        type="tel"
-                        formControlName="telephone"
-                        class="form-control"
-                        [ngClass]="{
-                          'is-valid': !telephone.errors,
-                          'is-invalid': telephone.errors && telephone.touched
-                        }"
-                        placeholder="Telephone"
-                      />
+                                placeholder="+92-000-0000000"
+                                type="tel"
+                                pattern="[\+]\d{2}[\-]\d{3}[\-]\d{7}"
+                                formControlName="telephone"
+                                class="form-control"
+                                [ngClass]="{
+                                  'is-valid': !telephone.errors,
+                                  'is-invalid':
+                                    telephone.errors && telephone.touched
+                                }"
+                              />
                     </div>
                   </div>
                 </form>
@@ -637,9 +680,16 @@
                     </div>
                     <div class="col-md-3">
                       <img
-                        src="./../../../../assets/img/avatars/8.jpg"
+                        [src]="logoURL"
                         class="rounded-circle img-fluid float-right embed-responsive-item"
                         alt="Cinque Terre"
+                        (click)="fileInput.click()"
+                      />
+                      <input
+                        type="file"
+                        hidden
+                        #fileInput
+                        (change)="handlerForAcademyLogo($event)"
                       />
                     </div>
                   </div>

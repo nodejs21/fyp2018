@@ -31,24 +31,6 @@ export class DefaultLayoutComponent implements OnDestroy {
       console.log(user);
       this.user = user;
       this.navItems = navItems[user ? user.userType : 'originalNav'];
-      // switch (user.usertype) {
-      //   case 'teacher': {
-      //     this.navitems = navitems.teachernav;
-      //     break;
-      //   }
-      //   case 'academyadmin': {
-      //     this.navitems = navitems.academyadminnav;
-      //     break;
-      //   }
-      //   case 'student': {
-      //     this.navitems = navitems.studentnav;
-      //     break;
-      //   }
-
-      //   default: {
-      //     break;
-      //   }
-      // }
     });
 
     this.changes.observe(<Element>this.element, {

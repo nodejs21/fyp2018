@@ -28,6 +28,7 @@ import { ConfirmdeletionComponent } from '../../shared/confirmdeletion/confirmde
 import { ConfirmdeletionModule } from '../../shared/confirmdeletion/confirmdeletion.module';
 import { CreateclassroomComponent } from './classrooms/createclassroom/createclassroom.component';
 import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.component';
+import { SharedModule } from '../../shared/shared.module';
 @NgModule({
   declarations: [
     AddclassComponent,
@@ -50,8 +51,7 @@ import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.co
     TeacherdetailComponent,
     AddclassComponent,
     AddsubjectComponent,
-    CreateclassroomComponent,
-    ProfilepopupComponent
+    CreateclassroomComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +62,8 @@ import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.co
     FormsModule,
     MaterialModule,
     ConfirmdeletionModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [AcademyadmindashboardComponent],
   entryComponents: [

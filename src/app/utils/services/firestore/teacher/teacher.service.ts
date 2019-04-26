@@ -71,22 +71,22 @@ export class TeacherService {
     return this.afs.collection('academies').doc(academyId);
   }
 
-  createQuiz(quiz: any, academyId, classId) {
+  createQuiz(academyId, classroomId, quiz: any) {
     return this.afs
       .collection('academies')
       .doc(academyId)
       .collection('classrooms')
-      .doc(classId)
+      .doc(classroomId)
       .collection('quizzes')
       .add(quiz);
   }
 
-  createAssignment(assignment: any, academyId, classId) {
+  createAssignment(assignment: any) {
     return this.afs
       .collection('academies')
-      .doc(academyId)
+      .doc(assignment.academy.academyId)
       .collection('classrooms')
-      .doc(classId)
+      .doc(assignment.classRoomId)
       .collection('assignments')
       .add(assignment);
   }

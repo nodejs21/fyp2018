@@ -2,18 +2,36 @@
 <div class="col-sm-12">
   <mat-card>
     <div class="row">
-      <div class="col-sm-3">
-        <mat-form-field>
-          <mat-label>Choose Subject</mat-label>
-          <mat-select [(value)]="selected">
-            <mat-option>None</mat-option>
-            <mat-option value="option1">Maths</mat-option>
-            <mat-option value="option2">Chemistry</mat-option>
-            <mat-option value="option3">Physics</mat-option>
-            <mat-option value="option3">Biology</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      
+      <div class="col-sm-6">
+          <mat-form-field>
+            <mat-label>Choose Academy</mat-label>
+            <mat-select aria-disabled="!approvedRequests" [(ngModel)]="academyId">
+              <mat-option
+                *ngFor="let academy of approvedRequests; index as i"
+                [value]="academy[i].data.academyId"
+                (click)="getAcademyData(academy[i].data.academyId)"
+                >{{ academy[i].data.academyName | titlecase }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field>
+            <mat-label>Choose Classroom</mat-label>
+            <mat-select [(ngModel)]="classroomId">
+              <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+              <mat-option>None</mat-option>
+              <mat-option
+                *ngFor="let classroom of classrooms"
+                [value]="classroom.id"
+                (click)="getAssignments(classroom.id)"
+              >
+                {{ classroom.data.class.className }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
     </div>
   </mat-card>
 
