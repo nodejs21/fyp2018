@@ -62,7 +62,8 @@ export class MessagingService {
   receiveMessage() {
     this.messaging.onMessage(payload => {
       console.log(payload);
-      this.playNotificationSound();
+      // this.playNotificationSound();
+      console.log(payload);
       this._snackBar.open(payload.notification.body, 'X', { duration: 4000 });
     });
   }
