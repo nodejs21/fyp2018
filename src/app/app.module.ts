@@ -1,25 +1,23 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
-import { LocationStrategy, HashLocationStrategy } from "@angular/common";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
-import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
-import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { AngularAgoraRtcModule, AgoraConfig } from 'angular-agora-rtc';
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
-
-import { AppComponent } from "./app.component";
+import { AppComponent } from './app.component';
 
 // Import containers
-import { DefaultLayoutComponent } from "./containers";
+import { DefaultLayoutComponent } from './containers';
 
-import { P404Component } from "./views/error/404.component";
-import { P500Component } from "./views/error/500.component";
+import { P404Component } from './views/error/404.component';
+import { P500Component } from './views/error/500.component';
 // import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [DefaultLayoutComponent];
+const agoraConfig: AgoraConfig = {
+  AppID: 'b2dcf826f45d49199067e3e9b101be32'
+};
 
 import {
   AppAsideModule,
@@ -27,38 +25,35 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule
-} from "@coreui/angular";
+} from '@coreui/angular';
 
 // Import routing module
-import { AppRoutingModule } from "./app.routing";
+import { AppRoutingModule } from './app.routing';
 
 // Import 3rd party components
-import { BsDropdownModule } from "ngx-bootstrap/dropdown";
-import { CollapseModule } from "ngx-bootstrap/collapse";
-import { TabsModule } from "ngx-bootstrap/tabs";
-import { ButtonsModule } from "ngx-bootstrap/buttons";
-import { ChartsModule } from "ng2-charts/ng2-charts";
-import { HomepageComponent } from "./components/homepage/homepage.component";
-import { SignupComponent } from "./components/account/signup/signup.component";
-import { ResetpasswordComponent } from "./components/account/resetpassword/resetpassword.component";
-import { AuthService } from "./utils/services/auth/auth.service";
-import { AngularFireAuth } from "@angular/fire/auth";
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { SignupComponent } from './components/account/signup/signup.component';
+import { ResetpasswordComponent } from './components/account/resetpassword/resetpassword.component';
+import { AuthService } from './utils/services/auth/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 import {
   AngularFirestore,
-  FirestoreSettingsToken,
-  AngularFirestoreModule
-} from "@angular/fire/firestore";
-import { AngularFireModule } from "@angular/fire";
-import { environment } from "../environments/environment";
-import { ReactiveFormsModule, FormBuilder, FormsModule } from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MaterialModule } from "./material.module";
-import { LoginComponent } from "./components/account/login/login.component";
-import { TooltipModule } from "ngx-bootstrap/tooltip";
-import { AuthModule } from "./utils/services/auth/auth.module";
-import { AngularFireStorageModule } from "@angular/fire/storage";
-import { HttpClientModule } from "@angular/common/http";
-
+  FirestoreSettingsToken
+} from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { LoginComponent } from './components/account/login/login.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { AuthModule } from './utils/services/auth/auth.module';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { HttpClientModule } from '@angular/common/http';
 
 // import { LoginComponent } from './views/login/login.component';
 
@@ -79,13 +74,14 @@ import { HttpClientModule } from "@angular/common/http";
     ChartsModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularAgoraRtcModule.forRoot(agoraConfig),
     // AngularFirestoreModule.enablePersistence(),
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
     AuthModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,

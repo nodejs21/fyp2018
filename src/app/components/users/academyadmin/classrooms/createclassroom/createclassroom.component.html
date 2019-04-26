@@ -29,9 +29,9 @@
               <mat-form-field>
                 <mat-label>Choose Subject</mat-label>
                 <mat-select formControlName="subject">
+                  <!-- [disabled]="classMap[selectedClass].includes(subject.id)" -->
                   <mat-option
                     *ngFor="let subject of selectedClassSubjects"
-                    [disabled]="classMap[selectedClass].includes(subject.id)"
                     [value]="{
                       subjectName: subject.data.subjectName,
                       subjectId: subject.id

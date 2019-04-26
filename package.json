@@ -48,6 +48,7 @@
     "@ngxs/logger-plugin": "^3.4.3",
     "@ngxs/store": "^3.4.3",
     "@types/quill": "^2.0.2",
+    "angular-agora-rtc": "^0.1.0",
     "angular-calendar": "^0.26.6",
     "angular-draggable-droppable": "^4.1.0",
     "angular-resizable-element": "^3.2.3",
