@@ -1,6 +1,13 @@
 
+
 <div class="animated fadeIn">
-    <div class="row">
+  <mat-card>
+    <h2>Class Rooms</h2>
+  
+  </mat-card>
+  <hr>
+  
+  <div class="row">
       <div class="col-12">
         <mat-form-field class="p-0">
           <mat-label>Select Academy</mat-label>
@@ -15,6 +22,7 @@
           </mat-select>
         </mat-form-field>
       </div>
+    
       <div
         class="col-12"
         *ngIf="selectedAcademy && classrooms ? classrooms.length == 0 : false"
@@ -26,7 +34,7 @@
       <div class="col-4" *ngFor="let classroom of classrooms">
         <div class="card text-white bg-dark">
           <div class="card-header h4 ">
-            {{ classroom.id }}
+            <!-- {{ classroom.id }} -->
             <!-- <button
               class="btn btn-sm btn-warning  float-right ml-2"
               popover="Announcement"
@@ -40,11 +48,11 @@
             <div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item bg-dark p-1">
-                  <i class="icon-people"></i> Class :
+                  <i class="icon-badge"></i> Class :
                   <strong> {{ classroom.data.class.className }} </strong>
                 </li>
                 <li class="list-group-item bg-dark p-1">
-                  <i class="icon-people"></i> Teacher Name :
+                  <i class="icon-user"></i> Teacher Name :
                   <strong> {{ classroom.data.teacher.teacherName }} </strong>
                 </li>
                 <li class="list-group-item bg-dark p-1">
@@ -52,23 +60,24 @@
                   <strong> {{ classroom.data.students.length }} </strong>
                 </li>
                 <li class="list-group-item bg-dark p-1">
-                  <i class="icon-people"></i> Subject :
+                  <i class="icon-notebook"></i> Subject :
                   <strong> {{ classroom.data.subject.subjectName }} </strong>
                 </li>
-                Days :
+                
+                <i class="icon-calendar"> Days :</i>
+
                 <li
                   class="list-group-item bg-dark p-1"
                   *ngFor="let day of classroom.data.days"
                 >
-                  <!-- <i class="icon-people"></i> -->
                   <strong class="pl-4"> {{ day | titlecase }} </strong>
                 </li>
                 <li class="list-group-item bg-dark p-1">
-                  <i class="icon-people"></i> Duration :
+                  <i class="icon-clock"></i> Duration :
                   <strong> {{ classroom.data.duration }} </strong>
                 </li>
                 <li class="list-group-item bg-dark p-1">
-                  <i class="icon-people"></i> Time :
+                  <i class="icon-clock"></i> Time :
                   <strong> {{ classroom.data.time }} </strong>'O Clock
                 </li>
               </ul>

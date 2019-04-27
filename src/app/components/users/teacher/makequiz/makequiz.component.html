@@ -92,6 +92,38 @@
         formControlName="totalMarks"
       /> -->
     </div>
+
+    <div class="col-md-2">
+      <mat-form-field>
+        <mat-label>Due Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="dueDate"
+          placeholder="Choose a date"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <mat-form-field class="p-0">
+        <mat-label>Duration</mat-label>
+        <input
+          matInput
+          type="number"
+          minlength="1"
+          [(ngModel)]="subject"
+          disabled
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="col-md-6">
+      <button mat-button class="btn btn-success btn-block">
+        Post Quiz
+      </button>
+    </div>
   </div>
   <div class="row mt-4">
     <div class="col-sm-12">
@@ -99,35 +131,8 @@
         <div class="card">
           <div class="card-header">
             <label class="font-weight-bold">
-              {{ classroomId ? classroomId.data.subject.subjectName : '' }}
+              {{ classroomId ? classroomId.data.subject.subjectName : "" }}
             </label>
-            <div class="pl-2 pr-2 float-right">
-              <!-- <button
-                class="btn p-0"
-                popover="View"
-                triggers="mouseenter:mouseleave"
-                (click)="staticModal.show()"
-              >
-                <span><i class="text-success fa fa-eye"></i> </span>
-              </button> -->
-              <button
-                class="btn p-0 ml-2"
-                popover="Save"
-                triggers="mouseenter:mouseleave"
-                (click)="saveQuiz()"
-              >
-                <!-- [disabled]="quizForm.valid" -->
-                <span> <i class="text-primary fa fa-save"></i> </span>
-              </button>
-              <button
-                class="btn p-0 ml-2"
-                popover="Upload"
-                triggers="mouseenter:mouseleave"
-              >
-                <!-- [disabled]="quizForm.valid" -->
-                <span> <i class="text-warning fa fa-upload"></i> </span>
-              </button>
-            </div>
           </div>
           <div class="card-body" formArrayName="questions">
             <ol class="p-0">
@@ -150,7 +155,7 @@
                     <div class="input-group-append">
                       <button
                         class="btn border border-danger rounded"
-                        popover="Delete Question"
+                        matTooltip="Delete Question"
                         triggers="mouseenter:mouseleave"
                         (click)="deleteQuestion(questionNumber)"
                       >
@@ -180,7 +185,7 @@
                     class="btn-group btn-group-sm d-flex"
                     btnRadioGroup
                     formControlName="type"
-                    tooltip="Question Type"
+                    matTooltip="Question Type"
                   >
                     <label btnRadio="mcq" class="btn btn-outline-dark">
                       MCQ
@@ -201,6 +206,7 @@
                       >
                         <div class="input-group">
                           <input
+                          
                             #option
                             value="{{ optionNumber }}"
                             name="{{ questionNumber }}"
@@ -224,7 +230,7 @@
                           />
                           <button
                             class="btn btn-sm border border-danger rounded py-0"
-                            popover="Delete Option"
+                            matTooltip="Delete Option"
                             triggers="mouseenter:mouseleave"
                             (click)="deleteOption(questionNumber, optionNumber)"
                           >
@@ -237,7 +243,7 @@
                       <div class="d-inline">
                         <button
                           class="btn btn-sm btn-secondary border border-secondary py-0 mb-1 ml-4"
-                          popover="Add Option"
+                          matTooltip="Add Option"
                           triggers="mouseenter:mouseleave"
                           (click)="addMcqOption(questionNumber)"
                         >
@@ -275,12 +281,12 @@
                       class="btn-group btn-group-sm "
                       btnRadioGroup
                       formControlName="tfCorrectOption"
-                      tooltip="Correct Option"
+                      
                     >
-                      <label btnRadio="true" class="btn btn-outline-primary">
+                      <label btnRadio="true" class="btn btn-outline-primary" matTooltip="✔">
                         True
                       </label>
-                      <label btnRadio="false" class="btn btn-outline-primary">
+                      <label btnRadio="false" class="btn btn-outline-primary" matTooltip="❌">
                         False
                       </label>
                     </div>
@@ -292,7 +298,7 @@
               <div class="col-sm-12">
                 <button
                   class="btn btn-secondary btn-lg btn-block pt-0 pb-0"
-                  popover="Add Question"
+                  matTooltip="Add Question"
                   triggers="mouseenter:mouseleave"
                   (click)="addQuestion()"
                 >

@@ -97,20 +97,21 @@ const teacher: NavData[] = [
     icon: 'icon-note'
   },
   {
+    name: 'Create Assignment',
+    url: `${teacherPrefix}/createassignment`,
+    icon: 'icon-pencil'
+  },
+  {
     name: 'Quizzes',
     url: `${teacherPrefix}/course/quizzes`,
     icon: 'icon-clock'
   },
   {
-    name: 'Make Quiz',
+    name: 'Create Quiz',
     url: `${teacherPrefix}/makequiz`,
     icon: 'icon-settings'
   },
-  {
-    name: 'Make Assignment',
-    url: `${teacherPrefix}/createassignment`,
-    icon: 'icon-pencil'
-  },
+  
   // {
   //   name: 'Results',
   //   url: `${teacherPrefix}/course/result`,
@@ -158,7 +159,7 @@ const student: NavData[] = [
   {
     name: 'Classrooms',
     url: `${studentPrefix}/classrooms`,
-    icon: 'icon-screen-desktop'
+    icon: 'icon-badge'
   },
   {
     name: 'Assignments',
@@ -173,7 +174,7 @@ const student: NavData[] = [
   {
     name: 'Attemp Quiz',
     url: `${studentPrefix}/attemptquiz`,
-    icon: 'icon-puzzle'
+    icon: 'icon-pencil'
   },
   // {
   //   name: 'Results',
@@ -183,7 +184,7 @@ const student: NavData[] = [
   {
     name: 'Attendance',
     url: `${studentPrefix}/attendance`,
-    icon: 'icon-check'
+    icon: 'icon-calendar'
   },
   {
     name: 'Requests',
@@ -193,14 +194,14 @@ const student: NavData[] = [
       {
         name: 'Sent',
         url: `${studentPrefix}/requests/sent`,
-        icon: 'icon-puzzle'
+        icon: 'icon-cursor'
       }
     ]
   },
   {
     name: 'Live Class',
     url: `${studentPrefix}/liveclass`,
-    icon: 'icon-puzzle'
+    icon: 'icon-earphones'
   }
   // {
   //   name: 'Time Table',
