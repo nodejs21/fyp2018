@@ -28,6 +28,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ClassroomsComponent } from './classrooms/classrooms.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { AssignmentpopupComponent } from '../../shared/assignmentpopup/assignmentpopup.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -67,9 +69,10 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     ButtonsModule.forRoot(),
     FormsModule,
     AngularEditorModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
-  entryComponents: [SearchacademyComponent],
+  entryComponents: [SearchacademyComponent, AssignmentpopupComponent],
   exports: [StudentdashboardComponent],
   providers: [AngularFireDatabase]
 })

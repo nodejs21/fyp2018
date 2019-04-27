@@ -1,142 +1,144 @@
 <mat-card>
-<div class="container">
-  <div class="row">
-    <div class="col-md-2">
-      <mat-form-field>
-        <mat-label>Choose Academy</mat-label>
-        <mat-select
-          aria-disabled="!approvedRequests"
-          [(ngModel)]="academy"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <mat-option
-            *ngFor="let academy of approvedRequests; index as i"
-            [value]="academy[i].data.academyId"
-            (click)="getAcademyData(academy[i].data.academyId, academy[i])"
-            >{{ academy[i].data.academyName | titlecase }}</mat-option
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <mat-form-field>
+          <mat-label>Choose Academy</mat-label>
+          <mat-select
+            aria-disabled="!approvedRequests"
+            [(ngModel)]="academy"
+            [ngModelOptions]="{ standalone: true }"
           >
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-md-2">
-      <mat-form-field>
-        <mat-label>Choose Classroom</mat-label>
-        <mat-select
-          [(ngModel)]="classroom"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <!-- (click)="getSubjects(classroom.data.class.classId)" -->
-          <mat-option>None</mat-option>
-          <mat-option
-            *ngFor="let classroom of classrooms; index as i"
-            [value]="classroom.id"
-            (click)="selectClassroom(classroom)"
+            <mat-option
+              *ngFor="let academy of approvedRequests; index as i"
+              [value]="academy[i].data.academyId"
+              (click)="getAcademyData(academy[i].data.academyId, academy[i])"
+              >{{ academy[i].data.academyName | titlecase }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <mat-label>Choose Classroom</mat-label>
+          <mat-select
+            [(ngModel)]="classroom"
+            [ngModelOptions]="{ standalone: true }"
           >
-            {{ classroom.data.class.className }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-md-2">
-      <mat-form-field class="p-0">
-        <mat-label>Subject</mat-label>
-        <input matInput type="text" [(ngModel)]="subject" disabled />
-      </mat-form-field>
-    </div>
-    <div class="col-md-2">
-      <mat-form-field class="p-0">
-        <mat-label>Title</mat-label>
-        <input matInput type="text" [(ngModel)]="title" />
-      </mat-form-field>
-    </div>
-    <!-- DUE DATE -->
-    <!-- DUE DATE -->
-    <!-- DUE DATE -->
-    <div class="col-md-2">
-      <mat-form-field>
-        <mat-label>Total Marks</mat-label>
-        <input type="number" min="0" matInput [(ngModel)]="totalMarks" />
-      </mat-form-field>
-    </div>
-    <div class="col-md-2">
-      <mat-form-field>
-        <mat-label>Due Date</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          [(ngModel)]="dueDate"
-          placeholder="Choose a date"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <!-- DUE DATE -->
-    <!-- DUE DATE -->
-    <!-- DUE DATE -->
-    <div class="col-md-6">
-      <button
-        mat-button
-        class="btn btn-outline-info btn-block"
-        (click)="fileInput.click()"
-        [disabled]="
-          disableUploadButton ||
-          (classrooms
-            ? classrooms.length == 0
-              ? true
-              : classroom
-              ? false
-              : true
-            : true)
-        "
-      >
-        Upload File
-      </button>
-      <input hidden type="file" #fileInput (change)="handler($event)" />
-    </div>
-    <div class="col-md-6">
-      <button
-        mat-button
-        class="btn btn-success btn-block"
-        (click)="postAssignment()"
-        [disabled]="
-          disableUploadButton ||
-          (classrooms
-            ? classrooms.length == 0
-              ? true
-              : classroom
-              ? false
-              : true
-            : true)
-        "
-      >
-        {{ isEditMode ? "Update Assignment" : "Post Assignment" }}
-      </button>
-    </div>
-    <br />
-    <div class="col-12">
-      <div class="invalid-feedback d-block" *ngIf="disableUploadButton">
-        <h6>*File is being uploaded... {{ uploadPercent }}</h6>
+            <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+            <mat-option>None</mat-option>
+            <mat-option
+              *ngFor="let classroom of classrooms; index as i"
+              [value]="classroom.id"
+              (click)="selectClassroom(classroom)"
+            >
+              {{ classroom.data.class.className }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-    </div>
-    <div class="col-12">
-      <div
-        class="invalid-feedback d-block"
-        *ngIf="classrooms ? (classrooms.length == 0 ? true : false) : false"
-      >
-        <h6>
-          *You can not upload any assignment because there is no classroom
-          associated to you.
-        </h6>
+      <div class="col-md-2">
+        <mat-form-field class="p-0">
+          <mat-label>Subject</mat-label>
+          <input matInput type="text" [(ngModel)]="subject" disabled />
+        </mat-form-field>
       </div>
+      <div class="col-md-2">
+        <mat-form-field class="p-0">
+          <mat-label>Title</mat-label>
+          <input matInput type="text" [(ngModel)]="title" />
+        </mat-form-field>
+      </div>
+      <!-- DUE DATE -->
+      <!-- DUE DATE -->
+      <!-- DUE DATE -->
+      <div class="col-md-2">
+        <mat-form-field>
+          <mat-label>Total Marks</mat-label>
+          <input type="number" min="0" matInput [(ngModel)]="totalMarks" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <mat-label>Due Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="dueDate"
+            placeholder="Choose a date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <!-- DUE DATE -->
+      <!-- DUE DATE -->
+      <!-- DUE DATE -->
+      <div class="col-md-6">
+        <button
+          mat-button
+          class="btn btn-outline-info btn-block"
+          (click)="fileInput.click()"
+          [disabled]="
+            disableUploadButton ||
+            (classrooms
+              ? classrooms.length == 0
+                ? true
+                : classroom
+                ? false
+                : true
+              : true)
+          "
+        >
+          Upload File
+        </button>
+        <input hidden type="file" #fileInput (change)="handler($event)" />
+      </div>
+      <div class="col-md-6">
+        <button
+          mat-button
+          class="btn btn-success btn-block"
+          (click)="postAssignment()"
+          [disabled]="
+            disableUploadButton ||
+            (classrooms
+              ? classrooms.length == 0
+                ? true
+                : classroom
+                ? false
+                : true
+              : true)
+          "
+        >
+          {{ isEditMode ? 'Update Assignment' : 'Post Assignment' }}
+        </button>
+      </div>
+      <br />
+      <div class="col-12">
+        <div class="invalid-feedback d-block" *ngIf="disableUploadButton">
+          <h6>*File is being uploaded... {{ uploadPercent }}</h6>
+        </div>
+      </div>
+      <div class="col-12">
+        <div
+          class="invalid-feedback d-block"
+          *ngIf="classrooms ? (classrooms.length == 0 ? true : false) : false"
+        >
+          <h6>
+            *You can not upload any assignment because there is no classroom
+            associated to you.
+          </h6>
+        </div>
+      </div>
+      <br />
     </div>
-    <br />
   </div>
-</div>
 </mat-card>
 
-<hr>
+<hr />
 <mat-card>
-
   <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
 </mat-card>

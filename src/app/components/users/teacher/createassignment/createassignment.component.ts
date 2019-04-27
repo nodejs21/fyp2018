@@ -35,7 +35,7 @@ export class CreateassignmentComponent implements OnInit {
     minHeight: "5rem",
     placeholder: "Enter text here...",
     translate: "no",
-    // uploadUrl: 'v1/images', // if needed
+    uploadUrl: 'v1/images', // if needed
     customClasses: [
       // optional
       {

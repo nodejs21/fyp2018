@@ -4,6 +4,7 @@ import { SharedService } from '../../../../../utils/services/firestore/shared/sh
 import { AuthService } from '../../../../../utils/services/auth/auth.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
+import { AssignmentpopupComponent } from '../../../../shared/assignmentpopup/assignmentpopup.component';
 
 export interface Assignment {
   assignmentTitle: string;
@@ -146,6 +147,14 @@ export class AssignmentsComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  viewDetails(assignment) {
+    console.log(assignment);
+    this._dialog.open(AssignmentpopupComponent, {
+      data: assignment,
+      width: '50%'
+    });
   }
 
   postAssignment() {
