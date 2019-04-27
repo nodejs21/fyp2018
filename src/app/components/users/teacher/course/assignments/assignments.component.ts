@@ -45,6 +45,8 @@ export class AssignmentsComponent implements OnInit {
   subjects;
   academyId;
   classroomId;
+  assignments;
+  subject;
 
   constructor(
     private _dialog: MatDialog,
@@ -86,22 +88,25 @@ export class AssignmentsComponent implements OnInit {
     });
   }
 
-  getAssignments(classroomId, academyId?) {
-    console.log(classroomId, this.academyId);
+  getAssignments(classroom, academyId?) {
+    console.log(classroom.id, this.academyId);
+    this.subject = classroom.data.subject.subjectName;
     this._shared
-      .getAssignments(this.academyId, classroomId)
+      .getAssignments(this.academyId, classroom.id)
       .subscribe(assignments => {
-        console.log(assignments);
-        assignments.forEach((assignment, index) => {
-          ELEMENT_DATA.push({
-            assignmentTitle: assignment.data.title,
-            assignmentNumber: index,
-            addedDate: assignment.data.uploadedOn,
-            dueDate: assignment.data.dueDate,
-            totalMarks: assignment.data.totalMarks,
-            fileURL: assignment.data.uploadedFile
-          });
-        });
+        this.assignments = assignments;
+        console.log(this.assignments);
+
+        // assignments.forEach((assignment, index) => {
+        //   ELEMENT_DATA.push({
+        //     assignmentTitle: assignment.data.title,
+        //     assignmentNumber: index,
+        //     addedDate: assignment.data.uploadedOn,
+        //     dueDate: assignment.data.dueDate,
+        //     totalMarks: assignment.data.totalMarks,
+        //     fileURL: assignment.data.uploadedFile
+        //   });
+        // });
       });
   }
 

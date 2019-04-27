@@ -3,6 +3,9 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
+import { MatSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-createassignment',
@@ -16,6 +19,10 @@ export class CreateassignmentComponent implements OnInit {
   classroom;
   classrooms: any;
   selectedClassroom;
+  title;
+  dueDate;
+  subject;
+  totalMarks;
 
   htmlContent = 'Create your assignment';
   config: AngularEditorConfig = {
@@ -43,10 +50,15 @@ export class CreateassignmentComponent implements OnInit {
       }
     ]
   };
+  disableUploadButton: boolean = false;
+  uploadedFile: any;
+  uploadPercent: any;
   constructor(
     private _shared: SharedService,
     private _auth: AuthService,
-    private _teacher: TeacherService
+    private _teacher: TeacherService,
+    private _snackBar: MatSnackBar,
+    private storage: AngularFireStorage
   ) {}
 
   ngOnInit() {
@@ -82,6 +94,7 @@ export class CreateassignmentComponent implements OnInit {
 
   selectClassroom(classroom) {
     this.selectedClassroom = classroom;
+    this.subject = classroom.data.subject.subjectName;
   }
 
   postAssignment() {
@@ -89,6 +102,11 @@ export class CreateassignmentComponent implements OnInit {
 
     const assignment = {
       assignment: this.htmlContent,
+      title: this.title,
+      dueDate: this.dueDate,
+      totalMarks: this.totalMarks,
+      subject: this.subject,
+      filePath: this.uploadedFile,
       academy: {
         academyName: this.academy.data.academyName,
         academyId: this.academy.data.academyId
@@ -104,7 +122,52 @@ export class CreateassignmentComponent implements OnInit {
       .createAssignment(assignment)
       .then(res => {
         console.log(res);
+        this.showSnackBar(`Assignemt has been posted!`);
       })
       .catch(error => console.error(error));
+  }
+
+  handler(e) {
+    console.log('started uploading file');
+
+    this.disableUploadButton = true;
+    const file = e.target.files[0];
+
+    const filePath = `assignments/${Date.now()}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+
+    // observe percentage changes
+    task.percentageChanges().subscribe(res => {
+      this.uploadPercent = res;
+      console.log(res.toExponential());
+      console.log(res.toFixed());
+      console.log(res.toLocaleString());
+      console.log(res.toPrecision());
+      console.log(res.toString());
+      console.log(res.valueOf());
+    });
+
+    // get notified when the download URL is available
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(dl => {
+            console.log('file uploaded');
+            this.uploadedFile = dl;
+            console.log(this.uploadedFile);
+            this.disableUploadButton = false;
+          });
+        })
+      )
+      .subscribe();
+  }
+
+  showSnackBar(message) {
+    this._snackBar.open(message, 'X', {
+      duration: 4000,
+      panelClass: 'bg-success'
+    });
   }
 }

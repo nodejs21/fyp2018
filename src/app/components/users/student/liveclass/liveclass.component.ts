@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
 
 // const SERVERS: any = {
@@ -18,8 +18,8 @@ import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
 @Component({
   selector: 'app-liveclass',
   template: `
-    <input class="form-control" type="text" [(ngModel)]="classRoomToJoin" />
-    <div id="agora_local"></div>
+    <input class="form-control" type="text" placeholder="Class name to join" [(ngModel)]="classRoomToJoin" />
+    <div id="agora_local" #myVideo></div>
     <div class="remote-containers">
       <div
         class="remote_calls"
@@ -27,7 +27,12 @@ import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
         [id]="remote"
       ></div>
     </div>
-    <button (click)="startCall()">Start Call</button>
+    <button class="btn btn-outline-info" (click)="joinClass()">
+      Join Class
+    </button>
+    <button class="btn btn-outline-info" (click)="leaveClass()">
+      Leave Class
+    </button>
   `,
   // templateUrl: './liveclass.component.html',
   styleUrls: ['./liveclass.component.css']
@@ -41,6 +46,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
   localStream: Stream;
   remoteCalls: any = []; // Add
   classRoomToJoin;
+  @ViewChild('myVideo') myVideo: HTMLElement;
 
   constructor(private agoraService: AngularAgoraRtcService) {}
 
@@ -50,7 +56,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  startCall() {
+  joinClass() {
     this.agoraService.client.join(null, this.classRoomToJoin, null, uid => {
       console.log(uid);
       console.log(this.classRoomToJoin);
@@ -85,6 +91,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
           console.log('Publish local stream error: ' + err);
         });
         this.agoraService.client.on('stream-published', function() {
+          this.myVideo.outerHTML = null;
           console.log('Publish local stream successfully');
         });
       },
@@ -147,6 +154,19 @@ export class LiveclassComponent implements OnInit, OnDestroy {
         console.log(`${evt.uid} left from this channel`);
       }
     });
+  }
+
+  leaveClass() {
+    console.log('Going to leave class');
+
+    this.agoraService.client.leave(
+      () => {
+        console.log('Leavel channel successfully');
+      },
+      err => {
+        console.log('Leave channel failed');
+      }
+    );
   }
 
   //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA

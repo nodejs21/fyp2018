@@ -4,7 +4,12 @@ import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
 @Component({
   selector: 'app-liveclass',
   template: `
-    <input class="form-control" type="text" placeholder="Classroom name" [(ngModel)]="classRoomToCreate" />
+    <input
+      class="form-control"
+      type="text"
+      placeholder="Classroom name"
+      [(ngModel)]="classRoomToCreate"
+    />
     <div id="agora_local"></div>
     <div class="remote-containers">
       <div
@@ -13,7 +18,8 @@ import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
         [id]="remote"
       ></div>
     </div>
-    <button (click)="startCall()">Start Call</button>
+    <button class="btn btn-outline-info" (click)="startClass()">Start Class</button>
+    <button class="btn btn-outline-info" (click)="endClass()">End Class</button>
   `,
   // templateUrl: './liveclass.component.html',
   styleUrls: ['./liveclass.component.css']
@@ -36,18 +42,18 @@ export class LiveclassComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  startCall() {
+  startClass() {
     this.agoraService.client.join(null, this.classRoomToCreate, null, uid => {
       console.log(uid);
       console.log(this.classRoomToCreate);
 
       this.localStream = this.agoraService.createStream(
-        this.classRoomToCreate,
-        true,
-        null,
-        null,
-        true,
-        false
+        this.classRoomToCreate, //streamId
+        true, //audio
+        null, //cameraId
+        null, //microphoneId
+        true, //video
+        false //screen
       );
       this.localStream.setVideoProfile('720p_3');
       this.subscribeToStreams();
@@ -135,6 +141,21 @@ export class LiveclassComponent implements OnInit, OnDestroy {
     });
   }
 
+  shareScreen(){
+    this.agoraService.client
+  }
+
+  endClass() {
+    this.agoraService.client.leave(
+      () => {
+        console.log('Leavel channel successfully');
+      },
+      err => {
+        console.log('Leave channel failed');
+      }
+    );
+  }
+
   //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
   //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
   //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
@@ -151,7 +172,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
   // ngOnDestroy() {}
 
   // // Add
-  // startCall() {
+  // startClass() {
   //   this.agoraService.client.join(null, '1000', null, uid => {
   //     this.localStream = this.agoraService.createStream(
   //       uid,

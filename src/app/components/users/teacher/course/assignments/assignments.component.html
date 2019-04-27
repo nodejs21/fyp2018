@@ -23,18 +23,32 @@
         <mat-form-field>
           <mat-label>Choose Classroom</mat-label>
           <mat-select [(ngModel)]="classroomId">
-            <!-- (click)="getSubjects(classroom.data.class.classId)" -->
             <mat-option>None</mat-option>
             <mat-option
               *ngFor="let classroom of classrooms"
               [value]="classroom.id"
-              (click)="getAssignments(classroom.id)"
+              (click)="getAssignments(classroom)"
             >
               {{ classroom.data.class.className }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="col-sm-4">
+        <mat-form-field class="p-0">
+          <mat-label>Subject</mat-label>
+          <input matInput type="text" [(ngModel)]="subject" disabled />
+        </mat-form-field>
+      </div>
+      <!-- <div class="col-sm-4">
+        <button
+          mat-button
+          class="float-right btn btn-success"
+          (click)="openDialog()"
+        >
+          Post Assignment
+        </button>
+      </div> -->
       <!-- <div class="col-sm-3">
         <mat-form-field>
           <mat-label>Choose Subject</mat-label>
@@ -60,23 +74,12 @@
     </div>
   </mat-card>
 
-  <hr />
-
-  <mat-card>
+  <!-- <mat-card>
     <div class="row">
       <div class="col-11">
         <mat-card-title>
           Posted Assignments
         </mat-card-title>
-      </div>
-      <div class="col-1">
-        <button
-          mat-button
-          class="float-right btn btn-success"
-          (click)="openDialog()"
-        >
-          Post Assignment
-        </button>
       </div>
 
       <mat-form-field class="px-3">
@@ -88,7 +91,6 @@
       </mat-form-field>
       <div class="container">
         <table mat-table [dataSource]="dataSource">
-          <!-- Position Column -->
           <ng-container matColumnDef="assignmentNumber">
             <th mat-header-cell *matHeaderCellDef><strong>No.</strong></th>
             <td mat-cell *matCellDef="let element">
@@ -96,7 +98,6 @@
             </td>
           </ng-container>
 
-          <!-- Name Column -->
           <ng-container matColumnDef="assignmentTitle">
             <th mat-header-cell *matHeaderCellDef><strong>Title</strong></th>
             <td mat-cell *matCellDef="let element">
@@ -104,7 +105,6 @@
             </td>
           </ng-container>
 
-          <!-- Weight Column -->
           <ng-container matColumnDef="addedDate">
             <th mat-header-cell *matHeaderCellDef><strong>Added On</strong></th>
             <td mat-cell *matCellDef="let element">
@@ -112,7 +112,6 @@
             </td>
           </ng-container>
 
-          <!-- Symbol Column -->
           <ng-container matColumnDef="dueDate">
             <th mat-header-cell *matHeaderCellDef><strong>Due Date</strong></th>
             <td mat-cell *matCellDef="let element">
@@ -135,15 +134,9 @@
                   <i class="text-success fa fa-download"> </i>
                 </span>
               </a>
-              <!-- {{ element.fileURL }} -->
             </td>
           </ng-container>
-
-          <!-- <ng-container matColumnDef="controls">
-            <th mat-header-cell *matHeaderCellDef><strong>Controls</strong></th>
-            <td mat-cell *matCellDef="let element">{{ element.controls }}</td>
-          </ng-container> -->
-
+          
           <tr
             mat-header-row
             *matHeaderRowDef="displayedColumns; sticky: true"
@@ -152,7 +145,7 @@
         </table>
       </div>
     </div>
-  </mat-card>
+  </mat-card> -->
 </div>
 
 <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
@@ -160,23 +153,20 @@
 <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
 <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
 
+<br />
 <hr />
-<div class="row">
+<br />
+<div class="row" *ngIf="assignments">
   <div class="col-sm-12">
-    <div class="card">
+    <!-- <div class="card">
       <div class="card-header">
         <h3 class="d-inline">Submitted Assignments Page TEACHER</h3>
       </div>
-    </div>
+    </div> -->
     <div class="animated fadeIn">
       <div class="card">
-        <div class="card-header">
-          <label
-            for="className"
-            class="font-weight-bold"
-            (click)="isCollapsed = !isCollapsed"
-            >Subject Name Here</label
-          >
+        <!-- <div class="card-header">
+          <label for="className" class="font-weight-bold">{{}}</label>
 
           <div class="btn-group float-right" dropdown>
             <button
@@ -211,32 +201,42 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
         <div>
           <table
             class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
           >
             <thead>
               <tr>
-                <th>Student Name</th>
+                <!-- <th>Student Name</th> -->
                 <th>Title</th>
                 <th>Due Date</th>
-                <th>Submitted On</th>
-                <th>Obtained Marks</th>
+                <th>Posted On</th>
+                <!-- <th>Obtained Marks</th> -->
                 <th>Total Marks</th>
                 <th>Status</th>
-                <!-- <th class="text-center">Controls</th> -->
+                <th class="text-center">Controls</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Name</td>
-                <td>Project Charter</td>
-                <td>2012/01/01</td>
-                <td>2012/01/01</td>
-                <td>8</td>
-                <td>10</td>
-                <td><span class="badge badge-success">Submitted</span></td>
+              <tr *ngFor="let assignment of assignments">
+                <!-- <td>{{}}</td> -->
+                <td>
+                  {{
+                    assignment.data.title ? assignment.data.title : 'No Title'
+                  }}
+                </td>
+                <td>
+                  {{ assignment.data.dueDate.toDate() | date }}
+                </td>
+                <td>{{ assignment.data.createdOn.toDate() | date }}</td>
+                <!-- <td>{{}}</td> -->
+                <td>
+                  {{
+                    assignment.data.totalMarks ? assignment.data.totalMarks : 0
+                  }}
+                </td>
+                <td><span class="badge badge-success">Posted</span></td>
                 <td>
                   <div class="pl-2 pr-2 text-center">
                     <button
@@ -244,7 +244,11 @@
                       popover="Download"
                       triggers="mouseenter:mouseleave"
                     >
-                      <span> <i class="text-success fa fa-download"></i> </span>
+                      <a [href]="assignment.data.filePath" download>
+                        <span>
+                          <i class="text-success fa fa-download"> </i>
+                        </span>
+                      </a>
                     </button>
                   </div>
                 </td>
