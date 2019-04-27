@@ -1,9 +1,5 @@
-<!-- <p>
-  quizzes works!
-</p> -->
-
 <div class="col-sm-12">
-    <mat-card>
+    
       <div class="row">
         <div class="col-sm-3">
           <mat-form-field>
@@ -15,30 +11,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-sm-3">
-          <mat-form-field>
-            <mat-label>Choose Class</mat-label>
-            <mat-select [(value)]="selected">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">9</mat-option>
-              <mat-option value="option2">10</mat-option>
-              <mat-option value="option3">11</mat-option>
-              <mat-option value="option3">12</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-sm-3">
-          <mat-form-field>
-            <mat-label>Choose Subject</mat-label>
-            <mat-select [(value)]="selected">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Maths</mat-option>
-              <mat-option value="option2">Chemistry</mat-option>
-              <mat-option value="option3">Physics</mat-option>
-              <mat-option value="option3">Biology</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+        
         <div class="col-sm-3">
           <mat-form-field>
             <mat-label>Quiz No</mat-label>
@@ -51,17 +24,18 @@
           </mat-form-field>
         </div>
       </div>
-    </mat-card>
+    
+    
   
-    <hr />
+    
   
-    <mat-card>
+    <!-- <mat-card>
       <div class="row">
         <div class="col-12">
           <mat-card-title>
             Posted Quizzes
           </mat-card-title>
-        </div>
+        </div>  
         
   
         <mat-form-field class="px-3">
@@ -73,25 +47,25 @@
         </mat-form-field>
         <div class="example-container">
         <table mat-table [dataSource]="dataSource">
-          <!-- Position Column -->
+          
           <ng-container matColumnDef="quizNumber">
             <th mat-header-cell *matHeaderCellDef><strong>No.</strong></th>
             <td mat-cell *matCellDef="let element">{{ element.quizNumber }}</td>
           </ng-container>
   
-          <!-- Name Column -->
+         
           <ng-container matColumnDef="quizTitle">
             <th mat-header-cell *matHeaderCellDef><strong>Title</strong></th>
             <td mat-cell *matCellDef="let element">{{ element.quizTitle }}</td>
           </ng-container>
   
-          <!-- Weight Column -->
+          
           <ng-container matColumnDef="quizAddedDate">
             <th mat-header-cell *matHeaderCellDef><strong>Added On</strong></th>
             <td mat-cell *matCellDef="let element">{{ element.quizAddedDate }}</td>
           </ng-container>
   
-          <!-- Symbol Column -->
+          
           <ng-container matColumnDef="quizDueDate">
             <th mat-header-cell *matHeaderCellDef><strong>Due Date</strong></th>
             <td mat-cell *matCellDef="let element">{{ element.quizDueDate }}</td>
@@ -121,10 +95,9 @@
       </div>
     </div>
       
-    </mat-card>
+    </mat-card> -->
   </div>
 
-  <hr>
   
 
 <div class="row">
@@ -234,3 +207,4 @@
     </div>
   </div>
 </div>
+

@@ -3,6 +3,7 @@ import { SearchacademyComponent } from '../../../shared/searchacademy/searchacad
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
+import { ProfilepopupComponent } from '../../../shared/profilepopup/profilepopup.component';
 
 @Component({
   selector: 'app-teacherdashboard',
@@ -68,6 +69,7 @@ export class TeacherdashboardComponent implements OnInit {
       }
     });
   }
+
 
   showSnackBar(message) {
     this._snackBar.open(message, 'X', { duration: 4000 });

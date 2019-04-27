@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthService } from '../../auth/auth.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { AngularFirestore } from "@angular/fire/firestore";
+import { AuthService } from "../../auth/auth.service";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TeacherService {
   academies: Observable<any>;
@@ -17,14 +17,14 @@ export class TeacherService {
   }
 
   getAcademies() {
-    return this.afs.collection('academies').get();
+    return this.afs.collection("academies").get();
   }
 
   getClassesDetails(academyId) {
     return this.afs
-      .collection('academies')
+      .collection("academies")
       .doc(academyId)
-      .collection('classes')
+      .collection("classes")
       .snapshotChanges()
       .pipe(
         map(res => {
@@ -39,9 +39,9 @@ export class TeacherService {
   }
   getSubjectsDetails(academyId) {
     return this.afs
-      .collection('academies')
+      .collection("academies")
       .doc(academyId)
-      .collection('subjects')
+      .collection("subjects")
       .snapshotChanges()
       .pipe(
         map(res => {
@@ -68,30 +68,53 @@ export class TeacherService {
   // }
 
   getSubjects(academyId) {
-    return this.afs.collection('academies').doc(academyId);
+    return this.afs.collection("academies").doc(academyId);
   }
 
   createQuiz(academyId, classroomId, quiz: any) {
     return this.afs
-      .collection('academies')
+      .collection("academies")
       .doc(academyId)
-      .collection('classrooms')
+      .collection("classrooms")
       .doc(classroomId)
-      .collection('quizzes')
+      .collection("quizzes")
       .add(quiz);
   }
 
   createAssignment(assignment: any) {
-    console.log(assignment);
-    
     return this.afs
-      .collection('academies')
+      .collection("academies")
       .doc(assignment.academy.academyId)
-      .collection('classrooms')
+      .collection("classrooms")
       .doc(assignment.classRoom.classRoomId)
-      .collection('assignments')
+      .collection("assignments")
       .add(assignment);
   }
+
+  updateAssignment(assignment: any, assignmentId) {
+    console.log(assignment);
+    console.log(assignmentId);
+    return this.afs
+      .collection("academies")
+      .doc(assignment.academy.academyId)
+      .collection("classrooms")
+      .doc(assignment.classRoom.classRoomId)
+      .collection("assignments")
+      .doc(assignmentId)
+      .update({ assignment });
+  }
+
+  deleteAssignment(academyId, classroomId, assignmentId) {
+    return this.afs
+      .collection("academies")
+      .doc(academyId)
+      .collection("classrooms")
+      .doc(classroomId)
+      .collection("assignments")
+      .doc(assignmentId)
+      .delete();
+  }
+
   // applyForSubjects(payload) {
   //   return new Promise(async (resolve, reject) => {
   //     try {

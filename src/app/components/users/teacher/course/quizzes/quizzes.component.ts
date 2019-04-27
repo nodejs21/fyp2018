@@ -1,5 +1,6 @@
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../../../../utils/services/firestore/shared/shared.service';
 
 @Component({
   selector: 'app-quizzes',
@@ -10,10 +11,23 @@ export class QuizzesComponent implements OnInit {
   displayedColumns: string[] = ['quizNumber', 'quizTitle', 'quizAddedDate', 'quizDueDate', 'quizDuration', 'quizTotalMarks', 'quizControls'];
   // tslint:disable-next-line: no-use-before-declare
     dataSource = new MatTableDataSource(ELEMENT_DATA);
+    academy;
+    classrooms: any;
 
-  constructor() { }
+  constructor(
+    private _shared: SharedService,
+  ) { }
 
   ngOnInit() {
+  }
+
+  getAcademyData(academy, academyObj) {
+    console.log(academy);
+    this.academy = academyObj;
+    this._shared.getTeacherClassrooms(academy).subscribe(classrooms => {
+      this.classrooms = classrooms;
+      console.log(this.classrooms);
+    });
   }
 
   applyFilter(filterValue: string) {

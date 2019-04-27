@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
-import { AuthService } from '../../../../utils/services/auth/auth.service';
-import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
-import { MatSnackBar } from '@angular/material';
-import { finalize } from 'rxjs/operators';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { Component, OnInit } from "@angular/core";
+import { AngularEditorConfig } from "@kolkov/angular-editor";
+import { SharedService } from "../../../../utils/services/firestore/shared/shared.service";
+import { AuthService } from "../../../../utils/services/auth/auth.service";
+import { TeacherService } from "../../../../utils/services/firestore/teacher/teacher.service";
+import { MatSnackBar } from "@angular/material";
+import { finalize, isEmpty } from "rxjs/operators";
+import { AngularFireStorage } from "@angular/fire/storage";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-createassignment',
-  templateUrl: './createassignment.component.html',
-  styleUrls: ['./createassignment.component.css']
+  selector: "app-createassignment",
+  templateUrl: "./createassignment.component.html",
+  styleUrls: ["./createassignment.component.css"]
 })
 export class CreateassignmentComponent implements OnInit {
   approvedRequests = [];
@@ -23,49 +24,73 @@ export class CreateassignmentComponent implements OnInit {
   dueDate;
   subject;
   totalMarks;
+  isEditMode: boolean = false;
+  assignmentId;
 
-  htmlContent = 'Create your assignment';
+  htmlContent = "Create your assignment";
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
-    height: '25rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
+    height: "25rem",
+    minHeight: "5rem",
+    placeholder: "Enter text here...",
+    translate: "no",
     // uploadUrl: 'v1/images', // if needed
     customClasses: [
       // optional
       {
-        name: 'quote',
-        class: 'quote'
+        name: "quote",
+        class: "quote"
       },
       {
-        name: 'redText',
-        class: 'redText'
+        name: "redText",
+        class: "redText"
       },
       {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1'
+        name: "titleText",
+        class: "titleText",
+        tag: "h1"
       }
     ]
   };
   disableUploadButton: boolean = false;
-  uploadedFile: any;
+  uploadedFile: any = '';
   uploadPercent: any;
   constructor(
     private _shared: SharedService,
     private _auth: AuthService,
     private _teacher: TeacherService,
     private _snackBar: MatSnackBar,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this._auth.user.subscribe(user => {
+    this._auth.user.subscribe(async user => {
+      this._route.queryParams.subscribe(params => {
+        if (!Object.keys(params).length) return;
+        this.isEditMode = true;
+        const data = JSON.parse(params.data);
+        console.log(data);
+        
+        this.assignmentId = params.id;
+
+        console.log(this.isEditMode);
+        console.log(this.assignmentId);
+
+        this.htmlContent = data.assignment;
+        this.title = data.title;
+        this.dueDate = data.dueDate;
+        this.totalMarks = data.totalMarks;
+        this.subject = data.subject;
+        this.uploadedFile = data.filePath;
+        this.academy = data.academy.academyId;
+        this.classroom = data.classRoom.classRoomId;
+      });
+
       this._shared.getUserRequests().subscribe(user => {
-        if (!user['requests']) return;
-        user['requests'].forEach(academy => {
+        if (!user["requests"]) return;
+        user["requests"].forEach(academy => {
           console.log(academy);
 
           this._shared
@@ -84,8 +109,9 @@ export class CreateassignmentComponent implements OnInit {
     });
   }
 
-  getAcademyData(academy) {
+  getAcademyData(academy, academyObj) {
     console.log(academy);
+    this.academy = academyObj;
     this._shared.getTeacherClassrooms(academy).subscribe(classrooms => {
       this.classrooms = classrooms;
       console.log(this.classrooms);
@@ -93,6 +119,9 @@ export class CreateassignmentComponent implements OnInit {
   }
 
   selectClassroom(classroom) {
+    console.log(this.classroom);
+    console.log(classroom);
+    this.classroom = classroom;
     this.selectedClassroom = classroom;
     this.subject = classroom.data.subject.subjectName;
   }
@@ -118,17 +147,27 @@ export class CreateassignmentComponent implements OnInit {
       class: this.classroom.data.class,
       createdOn: new Date()
     };
-    this._teacher
-      .createAssignment(assignment)
-      .then(res => {
-        console.log(res);
-        this.showSnackBar(`Assignemt has been posted!`);
-      })
-      .catch(error => console.error(error));
+    if (this.isEditMode) {
+      this._teacher
+        .updateAssignment(assignment, this.assignmentId)
+        .then(res => {
+          console.log(res);
+          this.showSnackBar(`Assignment has been updated!`, "bg-info");
+        })
+        .catch(error => console.error(error));
+      } else {
+        this._teacher
+        .createAssignment(assignment)
+        .then(res => {
+          console.log(res);
+          this.showSnackBar(`Assignment has been posted!`, "bg-success");
+        })
+        .catch(error => console.error(error));
+    }
   }
 
   handler(e) {
-    console.log('started uploading file');
+    console.log("started uploading file");
 
     this.disableUploadButton = true;
     const file = e.target.files[0];
@@ -154,7 +193,7 @@ export class CreateassignmentComponent implements OnInit {
       .pipe(
         finalize(() => {
           fileRef.getDownloadURL().subscribe(dl => {
-            console.log('file uploaded');
+            console.log("file uploaded");
             this.uploadedFile = dl;
             console.log(this.uploadedFile);
             this.disableUploadButton = false;
@@ -164,10 +203,10 @@ export class CreateassignmentComponent implements OnInit {
       .subscribe();
   }
 
-  showSnackBar(message) {
-    this._snackBar.open(message, 'X', {
+  showSnackBar(message, style) {
+    this._snackBar.open(message, "X", {
       duration: 4000,
-      panelClass: 'bg-success'
+      panelClass: style
     });
   }
 }

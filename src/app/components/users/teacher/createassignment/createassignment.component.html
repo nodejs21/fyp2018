@@ -1,3 +1,4 @@
+<mat-card>
 <div class="container">
   <div class="row">
     <div class="col-md-2">
@@ -10,8 +11,8 @@
         >
           <mat-option
             *ngFor="let academy of approvedRequests; index as i"
-            [value]="academy[i]"
-            (click)="getAcademyData(academy[i].data.academyId)"
+            [value]="academy[i].data.academyId"
+            (click)="getAcademyData(academy[i].data.academyId, academy[i])"
             >{{ academy[i].data.academyName | titlecase }}</mat-option
           >
         </mat-select>
@@ -28,7 +29,7 @@
           <mat-option>None</mat-option>
           <mat-option
             *ngFor="let classroom of classrooms; index as i"
-            [value]="classroom"
+            [value]="classroom.id"
             (click)="selectClassroom(classroom)"
           >
             {{ classroom.data.class.className }}
@@ -109,7 +110,7 @@
             : true)
         "
       >
-        Post Assignment
+        {{ isEditMode ? "Update Assignment" : "Post Assignment" }}
       </button>
     </div>
     <br />
@@ -132,4 +133,10 @@
     <br />
   </div>
 </div>
-<angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+</mat-card>
+
+<hr>
+<mat-card>
+
+  <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+</mat-card>

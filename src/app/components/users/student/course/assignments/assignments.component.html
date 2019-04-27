@@ -1,52 +1,106 @@
-<!-- <p>
-  assignments works!
-  * Assignment page
-  * Filters Optional
-</p> -->
-
 <!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
 <!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
 <!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
 <!-- ******************************** ADD ASSIGNMENTS PAGE TEACHER *****************************-->
 
 <div class="col-sm-12">
-  <mat-card>
-    <div class="row">
-      <div class="col-sm-4">
-        <mat-form-field>
-          <mat-label>Choose Academy</mat-label>
-          <mat-select aria-disabled="!approvedRequests" [(ngModel)]="academyId">
-            <mat-option
-              *ngFor="let academy of approvedRequests; index as i"
-              [value]="academy[i].data.academyId"
-              (click)="getAcademyData(academy[i].data.academyId)"
-              >{{ academy[i].data.academyName | titlecase }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-sm-4">
-        <mat-form-field>
-          <mat-label>Choose Classroom</mat-label>
-          <mat-select [(ngModel)]="classroomId">
-            <!-- (click)="getSubjects(classroom.data.class.classId)" -->
-            <mat-option>None</mat-option>
-            <mat-option
-              *ngFor="let classroom of classrooms"
-              [value]="classroom.id"
-              (click)="getAssignments(classroom.id)"
-            >
-              {{ classroom.data.class.className }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <mat-form-field>
+        <mat-label>Choose Academy</mat-label>
+        <mat-select aria-disabled="!approvedRequests" [(ngModel)]="academyId">
+          <mat-option
+            *ngFor="let academy of approvedRequests; index as i"
+            [value]="academy[i].data.academyId"
+            (click)="getAcademyData(academy[i].data.academyId)"
+            >{{ academy[i].data.academyName | titlecase }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
     </div>
-  </mat-card>
+    <div class="col-sm-4">
+      <mat-form-field>
+        <mat-label>Choose Classroom</mat-label>
+        <mat-select [(ngModel)]="classroomId">
+          <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+          <mat-option>None</mat-option>
+          <mat-option
+            *ngFor="let classroom of classrooms"
+            [value]="classroom.id"
+            (click)="getAssignments(classroom.id)"
+          >
+            {{ classroom.data.class.className }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 
-  <hr />
+  <div>
+    <table
+      class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
+    >
+      <thead>
+        <tr>
+          <!-- <th>Student Name</th> -->
+          <th>No</th>
+          <th>Title</th>
+          <th>Posted On</th>
+          <th>Due Date</th>
+          <!-- <th>Obtained Marks</th> -->
+          <th>Total Marks</th>
+          <th>Status</th>
+          <th class="text-center">Controls</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let assignment of assignments; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>
+            {{ assignment.data.title ? assignment.data.title : "No Title" }}
+          </td>
+          <td>{{ assignment.data.createdOn.toDate() | date }}</td>
+          <td>
+            {{ assignment.data.dueDate.toDate() | date }}
+          </td>
+          <!-- <td>{{}}</td> -->
+          <td>
+            {{ assignment.data.totalMarks ? assignment.data.totalMarks : 0 }}
+          </td>
+          <td><span class="badge badge-success">Posted</span></td>
+          <td>
+            <div class="pl-2 pr-2 text-center">
+              <button
+                class="btn p-0"
+                popover="View"
+                triggers="mouseenter:mouseleave"
+                (click)="viewDetails(assignment)"
+              >
+                <span>
+                  <i class="text-info fa fa-eye "> </i>
+                </span>
+              </button>
 
-  <mat-card
+              <!-- *ngIf="assignment.data.filePath" -->
+              <button
+                class="btn p-0"
+                popover="Download"
+                triggers="mouseenter:mouseleave"
+              >
+                <a [href]="assignment.data.filePath" download>
+                  <span>
+                    <i class="text-success fa fa-download"> </i>
+                  </span>
+                </a>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- <mat-card
     *ngIf="
       academyId && classroomId && assignments ? assignments.length == 0 : false
     "
@@ -75,34 +129,34 @@
         />
       </mat-form-field>
       <div class="container">
-        <table mat-table [dataSource]="dataSource">
-          <!-- Position Column -->
+        <table mat-table [dataSource]="dataSource"> -->
+  <!-- Position Column -->
 
-          <ng-container matColumnDef="assignmentNumber">
+  <!-- <ng-container matColumnDef="assignmentNumber">
             <th mat-header-cell *matHeaderCellDef><strong>No.</strong></th>
             <td mat-cell *matCellDef="let element">
               {{ element.assignmentNumber + 1 }}
             </td>
-          </ng-container>
+          </ng-container> -->
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="assignmentTitle">
+  <!-- Name Column -->
+  <!-- <ng-container matColumnDef="assignmentTitle">
             <th mat-header-cell *matHeaderCellDef><strong>Title</strong></th>
             <td mat-cell *matCellDef="let element">
               {{ element.assignmentTitle }}
             </td>
-          </ng-container>
+          </ng-container> -->
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="addedDate">
+  <!-- Weight Column -->
+  <!-- <ng-container matColumnDef="addedDate">
             <th mat-header-cell *matHeaderCellDef><strong>Added On</strong></th>
             <td mat-cell *matCellDef="let element">
               {{ element.addedDate.toDate() | date: 'medium' }}
             </td>
-          </ng-container>
+          </ng-container> -->
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="dueDate">
+  <!-- Symbol Column -->
+  <!-- <ng-container matColumnDef="dueDate">
             <th mat-header-cell *matHeaderCellDef><strong>Due Date</strong></th>
             <td mat-cell *matCellDef="let element">
               {{ element.dueDate.toDate() | date: 'medium' }}
@@ -144,9 +198,9 @@
                     <i class="text-success fa fa-download"> </i>
                   </span>
                 </a>
-              </div>
-              <!-- {{ element.fileURL }} -->
-            </td>
+              </div> -->
+  <!-- {{ element.fileURL }} -->
+  <!-- </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -158,14 +212,14 @@
                 element.status ? element.status : 'Pending'
               }}</span>
             </td>
-          </ng-container>
+          </ng-container> -->
 
-          <!-- <ng-container matColumnDef="controls">
+  <!-- <ng-container matColumnDef="controls">
             <th mat-header-cell *matHeaderCellDef><strong>Controls</strong></th>
               <td mat-cell *matCellDef="let element">{{ element.controls }}</td>
             </ng-container> -->
 
-          <tr
+  <!-- <tr
             mat-header-row
             *matHeaderRowDef="displayedColumns; sticky: true"
           ></tr>
@@ -174,14 +228,14 @@
       </div>
     </div>
   </mat-card>
-</div>
+</div> -->
 
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
+  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
 
-<!-- <div class="row">
+  <!-- <div class="row">
     <div class="col-sm-12">
       <div class="card">
         <div class="card-header">
@@ -250,3 +304,4 @@
       </div>
     </div>
   </div> -->
+</div>
