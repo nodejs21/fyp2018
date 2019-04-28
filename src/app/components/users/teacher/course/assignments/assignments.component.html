@@ -53,168 +53,107 @@
           <input matInput type="text" [(ngModel)]="subject" disabled />
         </mat-form-field>
       </div>
-      <!-- <div class="col-sm-4">
-        <button
-          mat-button
-          class="float-right btn btn-success"
-          (click)="openDialog()"
-        >
-          Post Assignment
-        </button>
-      </div> -->
-      <!-- <div class="col-sm-3">
-        <mat-form-field>
-          <mat-label>Choose Subject</mat-label>
-          <mat-select>
-            <mat-option>None</mat-option>
-            <mat-option *ngFor="let classroom of classrooms">
-              {{ classroom.data.subject.subjectName }}
+      <div class="col-sm-12" *ngIf="assignmentsType == 'Submitted'">
+        <mat-form-field class="p-0">
+          <mat-label>Assignment Title</mat-label>
+          <mat-select [(ngModel)]="assignmentId">
+            <!-- <mat-option>None</mat-option> -->
+            <mat-option
+              *ngFor="let assignment of submittedAssignments"
+              [value]="assignment.assignmentId"
+              (click)="filterAssignmentsForDetails(assignment.assignmentId)"
+            >
+              <span *ngIf="assignment.title">{{ assignment.title }}</span>
             </mat-option>
           </mat-select>
         </mat-form-field>
-      </div> -->
-      <!-- <div class="col-sm-3">
-        <mat-form-field>
-          <mat-label>Assignment Title</mat-label>
-          <mat-select>
-            <mat-option>None</mat-option>
-            <mat-option value="option1">Option 1</mat-option>
-            <mat-option value="option2">Option 2</mat-option>
-            <mat-option value="option3">Option 3</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div> -->
+      </div>
     </div>
   </mat-card>
-
-  <!-- <mat-card>
-    <div class="row">
-      <div class="col-11">
-        <mat-card-title>
-          Posted Assignments
-        </mat-card-title>
-      </div>
-
-      <mat-form-field class="px-3">
-        <input
-          matInput
-          (keyup)="applyFilter($event.target.value)"
-          placeholder="Assignment title"
-        />
-      </mat-form-field>
-      <div class="container">
-        <table mat-table [dataSource]="dataSource">
-          <ng-container matColumnDef="assignmentNumber">
-            <th mat-header-cell *matHeaderCellDef><strong>No.</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.assignmentNumber + 1 }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="assignmentTitle">
-            <th mat-header-cell *matHeaderCellDef><strong>Title</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.assignmentTitle }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="addedDate">
-            <th mat-header-cell *matHeaderCellDef><strong>Added On</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.addedDate.toDate() | date: 'medium' }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="dueDate">
-            <th mat-header-cell *matHeaderCellDef><strong>Due Date</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.dueDate.toDate() | date: 'medium' }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="totalMarks">
-            <th mat-header-cell *matHeaderCellDef>
-              <strong>Total Marks</strong>
-            </th>
-            <td mat-cell *matCellDef="let element">{{ element.totalMarks }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="fileURL">
-            <th mat-header-cell *matHeaderCellDef><strong>File URL</strong></th>
-            <td mat-cell *matCellDef="let element">
-              <a [href]="element.fileURL" download>
-                <span>
-                  <i class="text-success fa fa-download"> </i>
-                </span>
-              </a>
-            </td>
-          </ng-container>
-          
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"
-          ></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
-    </div>
-  </mat-card> -->
 </div>
-
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-<!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
 
 <br />
 <hr />
 <br />
-<div class="row" *ngIf="assignments">
-  <div class="col-sm-12">
-    <!-- <div class="card">
-      <div class="card-header">
-        <h3 class="d-inline">Submitted Assignments Page TEACHER</h3>
-      </div>
-    </div> -->
+
+<div class="row" *ngIf="assignmentsType == 'Submitted'">
+  <div class="col-sm-12" *ngIf="submittedAssignmentsWithTitle">
     <div class="animated fadeIn">
       <div class="card">
-        <!-- <div class="card-header">
-          <label for="className" class="font-weight-bold">{{}}</label>
-
-          <div class="btn-group float-right" dropdown>
-            <button
-              id="button-basic"
-              dropdownToggle
-              type="button"
-              class="btn btn-primary btn-sm"
-            >
-              Download All <span class="caret"></span>
-            </button>
-            <ul
-              id="dropdown-basic"
-              *dropdownMenu
-              class="dropdown-menu"
-              role="menu"
-              aria-labelledby="button-basic"
-            >
-              <li role="menuitem">
-                <a class="dropdown-item p-1 pl-2" href="#">Action</a>
-              </li>
-              <li role="menuitem">
-                <a class="dropdown-item p-1 pl-2" href="#">Another action</a>
-              </li>
-              <li role="menuitem">
-                <a class="dropdown-item p-1 pl-2" href="#"
-                  >Something else here</a
-                >
-              </li>
-              <li class="divider dropdown-divider"></li>
-              <li role="menuitem">
-                <a class="dropdown-item p-1 pl-2" href="#">Separated link</a>
-              </li>
-            </ul>
-          </div>
-        </div> -->
+        <div class="card-header">
+          <button
+            class="btn btn-info btn-block"
+            (click)="uploadMarks(); inEditMarksMode = !inEditMarksMode"
+          >
+            {{ inEditMarksMode ? 'Upload Marks' : 'Edit Marks' }}
+          </button>
+        </div>
+        <div>
+          <table
+            class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
+          >
+            <thead>
+              <tr>
+                <!-- <th>Student Name</th> -->
+                <th>No</th>
+                <th>Image</th>
+                <th>Student Name</th>
+                <th>Submitted On</th>
+                <th>File</th>
+                <th>Marks</th>
+                <!-- <th>Status</th> -->
+                <!-- <th class="text-center">Controls</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let assignment of submittedAssignmentsWithTitle;
+                  index as i
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <img
+                    [src]="assignment.studentImageUrl"
+                    alt=""
+                    height="100"
+                    width="100"
+                  />
+                </td>
+                <td>
+                  {{ assignment.studentName }}
+                </td>
+                <td>{{ assignment.submittedOn.toDate() | date }}</td>
+                <td>
+                  <button
+                    *ngIf="assignment.filePath"
+                    class="btn p-0"
+                    matTooltip="Download Assignment"
+                    triggers="mouseenter:mouseleave"
+                  >
+                    <a [href]="assignment.filePath" download>
+                      <span>
+                        <i class="text-success fa fa-download"> </i>
+                      </span>
+                    </a>
+                  </button>
+                </td>
+                <td class="text-center">
+                  {{ assignment.marks ? assignment.marks : '--' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="assignmentsType == 'Posted'">
+  <div class="col-sm-12" *ngIf="assignments">
+    <div class="animated fadeIn">
+      <div class="card">
         <div>
           <table
             class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
@@ -237,7 +176,7 @@
                 <td>{{ i + 1 }}</td>
                 <td>
                   {{
-                    assignment.data.title ? assignment.data.title : "No Title"
+                    assignment.data.title ? assignment.data.title : 'No Title'
                   }}
                 </td>
                 <td>

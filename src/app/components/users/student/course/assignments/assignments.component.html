@@ -47,8 +47,7 @@
           <th>Title</th>
           <th>Posted On</th>
           <th>Due Date</th>
-          <th>Submitted On</th>
-          <th>Obtained Marks</th>
+          <!-- <th>Obtained Marks</th> -->
           <th>Total Marks</th>
           <th>Status</th>
           <th class="text-center">Controls</th>
@@ -64,35 +63,11 @@
           <td>
             {{ assignment.data.dueDate.toDate() | date }}
           </td>
-          <td>
-            {{
-              submittedAssignmentDates[
-                submittedAssignmentIds.indexOf(assignment.id)
-              ].toDate() | date
-            }}
-          </td>
-          <td>
-            {{
-              submittedAssignmentMarks[
-                submittedAssignmentIds.indexOf(assignment.id)
-              ]
-            }}
-          </td>
+          <!-- <td>{{}}</td> -->
           <td>
             {{ assignment.data.totalMarks ? assignment.data.totalMarks : 0 }}
           </td>
-          <td>
-            <span
-              class="badge badge-warning"
-              [hidden]="submittedAssignmentIds.includes(assignment.id)"
-              >Pending</span
-            >
-            <span
-              class="badge badge-success"
-              [hidden]="!submittedAssignmentIds.includes(assignment.id)"
-              >Submitted</span
-            >
-          </td>
+          <td><span class="badge badge-success">Posted</span></td>
           <td>
             <div class="pl-2 pr-2 text-center">
               <!-- *ngIf="assignment.data.assignment" -->
@@ -106,14 +81,8 @@
                   <i class="text-info fa fa-eye "> </i>
                 </span>
               </button>
-              <button
-                class="btn p-1"
-                [hidden]="submittedAssignmentIds.includes(assignment.id)"
-              >
-                <a
-                  href="javascript:void()"
-                  (click)="fileInput.click(); assignmentId = assignment.id"
-                >
+              <button class="btn p-1">
+                <a href="javascript:void()" (click)="fileInput.click()">
                   <span
                     popover="Submit Assignment"
                     triggers="mouseenter:mouseleave"
