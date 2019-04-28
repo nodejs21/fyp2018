@@ -11,12 +11,13 @@
           {{ teacher.data.teacherName }}
           <button
             class="btn btn-sm btn-outline-danger  float-right ml-2"
-            matTooltip="Delete - I think this option is not justifiable!! - DISCUSS"
+            matTooltip="Delete"
             triggers="mouseenter:mouseleave"
             (click)="deleteTeacher(teacher)"
           >
             <span><i class="fa fa-trash"></i> </span>
           </button>
+          
           <!-- (onHover)="hoveringOver($event)"
             (onLeave)="resetStar()" -->
           
