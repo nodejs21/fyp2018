@@ -57,7 +57,7 @@
         <tr *ngFor="let assignment of assignments; index as i">
           <td>{{ i + 1 }}</td>
           <td>
-            {{ assignment.data.title ? assignment.data.title : 'No Title' }}
+            {{ assignment.data.title ? assignment.data.title : "No Title" }}
           </td>
           <td>{{ assignment.data.createdOn.toDate() | date }}</td>
           <td>
@@ -67,7 +67,11 @@
           <td>
             {{ assignment.data.totalMarks ? assignment.data.totalMarks : 0 }}
           </td>
-          <td><span class="badge badge-success">Posted</span></td>
+          <td>
+            <span class="badge badge-success">
+              {{ assignment.data.status ? assignment.data.status : "Pending" }}
+            </span>
+          </td>
           <td>
             <div class="pl-2 pr-2 text-center">
               <!-- *ngIf="assignment.data.assignment" -->
@@ -81,7 +85,16 @@
                   <i class="text-info fa fa-eye "> </i>
                 </span>
               </button>
-              <button class="btn p-1">
+              <button
+                class="btn p-1"
+                [hidden]="
+                  assignment.data.status
+                    ? assignment.data.status == 'submitted'
+                      ? true
+                      : false
+                    : false
+                "
+              >
                 <a href="javascript:void()" (click)="fileInput.click()">
                   <span
                     popover="Submit Assignment"
@@ -94,7 +107,7 @@
                   type="file"
                   hidden
                   #fileInput
-                  (change)="handler($event)"
+                  (change)="handler($event, assignment)"
                 />
               </button>
               <!-- *ngIf="assignment.data.filePath" -->
