@@ -27,17 +27,17 @@
     <pre>value: {{ quizForm.value | json }}</pre>
     <hr /> -->
   <div class="form-row">
-    <div class="col-md-2">
+    <div class="col-md-3">
       <mat-form-field>
         <mat-label>Choose Academy</mat-label>
         <mat-select
           aria-disabled="!approvedRequests"
-          [(ngModel)]="academyId"
+          [(ngModel)]="academy"
           [ngModelOptions]="{ standalone: true }"
         >
           <mat-option
             *ngFor="let academy of approvedRequests; index as i"
-            [value]="academy[i].data.academyId"
+            [value]="academy[i]"
             (click)="getAcademyData(academy[i].data.academyId)"
             >{{ academy[i].data.academyName | titlecase }}</mat-option
           >
@@ -48,7 +48,7 @@
       <mat-form-field>
         <mat-label>Choose Classroom</mat-label>
         <mat-select
-          [(ngModel)]="classroomId"
+          [(ngModel)]="classroom"
           [ngModelOptions]="{ standalone: true }"
         >
           <!-- (click)="getSubjects(classroom.data.class.classId)" -->
@@ -56,11 +56,17 @@
           <mat-option
             *ngFor="let classroom of classrooms; index as i"
             [value]="classroom"
-            (click)="getQuizzes(classroom)"
+            (click)="selectClassroom(classroom)"
           >
             {{ classroom.data.class.className }}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field class="p-0">
+        <mat-label>Subject</mat-label>
+        <input matInput type="text" formControlName="subject" />
       </mat-form-field>
     </div>
     <div class="col-md-3">
@@ -77,7 +83,7 @@
             </mat-form-field>
           </div>
     </div> -->
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="form-group">
         <mat-form-field>
           <mat-label>Total Marks</mat-label>
@@ -92,35 +98,35 @@
         formControlName="totalMarks"
       /> -->
     </div>
-
-    <div class="col-md-2">
+    
+    <div class="col-md-4">
       <mat-form-field>
         <mat-label>Due Date</mat-label>
         <input
           matInput
           [matDatepicker]="picker"
-          [(ngModel)]="dueDate"
+          formControlName="dueDate"
           placeholder="Choose a date"
         />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-4">
       <mat-form-field class="p-0">
         <mat-label>Duration</mat-label>
         <input
           matInput
           type="number"
           minlength="1"
-          [(ngModel)]="subject"
+          formControlName="duration"
           disabled
         />
       </mat-form-field>
     </div>
 
-    <div class="col-md-6">
-      <button mat-button class="btn btn-success btn-block">
+    <div class="col-md-12">
+      <button mat-button class="btn btn-success btn-block" (click)="saveQuiz()">
         Post Quiz
       </button>
     </div>
@@ -131,7 +137,7 @@
         <div class="card">
           <div class="card-header">
             <label class="font-weight-bold">
-              {{ classroomId ? classroomId.data.subject.subjectName : "" }}
+              {{ classroom ? classroom.data.subject.subjectName : "" }}
             </label>
           </div>
           <div class="card-body" formArrayName="questions">
@@ -206,7 +212,6 @@
                       >
                         <div class="input-group">
                           <input
-                          
                             #option
                             value="{{ optionNumber }}"
                             name="{{ questionNumber }}"
@@ -281,12 +286,19 @@
                       class="btn-group btn-group-sm "
                       btnRadioGroup
                       formControlName="tfCorrectOption"
-                      
                     >
-                      <label btnRadio="true" class="btn btn-outline-primary" matTooltip="✔">
+                      <label
+                        btnRadio="true"
+                        class="btn btn-outline-primary"
+                        matTooltip="✔"
+                      >
                         True
                       </label>
-                      <label btnRadio="false" class="btn btn-outline-primary" matTooltip="❌">
+                      <label
+                        btnRadio="false"
+                        class="btn btn-outline-primary"
+                        matTooltip="❌"
+                      >
                         False
                       </label>
                     </div>
