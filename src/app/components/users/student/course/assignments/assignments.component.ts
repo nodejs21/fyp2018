@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { SharedService } from '../../../../../utils/services/firestore/shared/shared.service';
-import { AuthService } from '../../../../../utils/services/auth/auth.service';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
-import { AssignmentpopupComponent } from '../../../../shared/assignmentpopup/assignmentpopup.component';
-import { StudentService } from '../../../../../utils/services/firestore/student/student.service';
+import { Component, OnInit } from "@angular/core";
+import { MatTableDataSource, MatDialog } from "@angular/material";
+import { SharedService } from "../../../../../utils/services/firestore/shared/shared.service";
+import { AuthService } from "../../../../../utils/services/auth/auth.service";
+import { AngularFireStorage } from "@angular/fire/storage";
+import { finalize } from "rxjs/operators";
+import { AssignmentpopupComponent } from "../../../../shared/assignmentpopup/assignmentpopup.component";
+import { StudentService } from "../../../../../utils/services/firestore/student/student.service";
 
 export interface Assignment {
   assignmentTitle: string;
@@ -28,19 +28,19 @@ const ELEMENT_DATA: Assignment[] = [
 ];
 
 @Component({
-  selector: 'app-assignments',
-  templateUrl: './assignments.component.html',
-  styleUrls: ['./assignments.component.css']
+  selector: "app-assignments",
+  templateUrl: "./assignments.component.html",
+  styleUrls: ["./assignments.component.css"]
 })
 export class AssignmentsComponent implements OnInit {
   displayedColumns: string[] = [
-    'assignmentNumber',
-    'assignmentTitle',
-    'addedDate',
-    'dueDate',
-    'totalMarks',
-    'fileURL',
-    'status'
+    "assignmentNumber",
+    "assignmentTitle",
+    "addedDate",
+    "dueDate",
+    "totalMarks",
+    "fileURL",
+    "status"
   ];
   // tslint:disable-next-line: no-use-before-declare
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -60,6 +60,7 @@ export class AssignmentsComponent implements OnInit {
   submittedAssignmentIds;
   submittedAssignmentMarks: any[];
   submittedAssignmentDates: any[];
+  assignmentTitle: any;
 
   constructor(
     private _dialog: MatDialog,
@@ -73,8 +74,8 @@ export class AssignmentsComponent implements OnInit {
     this._auth.user.subscribe(user => {
       this.user = user;
       this._shared.getUserRequests().subscribe(user => {
-        if (!user['requests']) return;
-        user['requests'].forEach(academy => {
+        if (!user["requests"]) return;
+        user["requests"].forEach(academy => {
           this._shared
             .getApprovedRequests(academy.academyId)
             .subscribe(request => {
@@ -142,10 +143,10 @@ export class AssignmentsComponent implements OnInit {
         this.submittedAssignments.map(assignment => {
           this.submittedAssignmentIds.push(assignment.assignmentId);
           this.submittedAssignmentMarks.push(
-            assignment.marks ? assignment.marks : '--'
+            assignment.marks ? assignment.marks : "--"
           );
           this.submittedAssignmentDates.push(
-            assignment.submittedOn ? assignment.submittedOn : '--'
+            assignment.submittedOn ? assignment.submittedOn : "--"
           );
           console.log(assignment);
         });
@@ -156,8 +157,10 @@ export class AssignmentsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  handler(e) {
+  handler(e, assignment) {
     this.isUploading = true;
+    this.assignmentId = assignment.id;
+    this.assignmentTitle = assignment.data.title;
     let file = e.target.files[0];
     console.log(file);
 
@@ -187,19 +190,23 @@ export class AssignmentsComponent implements OnInit {
     console.log(assignment);
     this._dialog.open(AssignmentpopupComponent, {
       data: assignment,
-      width: '50%'
+      width: "50%"
     });
   }
 
   postAssignment() {
     const assignment = {
       studentId: this.user.uid,
-      studentName: this.user.firstName + ' ' + this.user.lastName,
+      studentName: this.user.firstName + " " + this.user.lastName,
       studentImageUrl: this.user.photoURL,
       filePath: this.assignmentUrl,
       assignmentId: this.assignmentId,
-      submittedOn: new Date()
+      submittedOn: new Date(),
+      status: "submitted",
+      title: this.assignmentTitle
     };
+    console.log(assignment);
+
     this._student
       .submitAssignment(this.academyId, this.classroomId, assignment)
       .then(res => {
