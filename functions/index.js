@@ -120,6 +120,26 @@ exports.classNotifications = functions.firestore
     });
   });
 
+exports.requestNotification = functions.firestore
+  .document('academies/{academyId}/requests/{requestId}')
+  .onCreate(async (snapshot, context) => {
+    const userRef = await admin
+      .firestore()
+      .collection('users')
+      .doc(context.params.academyId)
+      .get();
+    const userData = userRef.data();
+
+    admin
+      .firestore()
+      .collection('notifications')
+      .add({
+        body: `You have new join request`,
+        title: `Join Request`,
+        token: userData.token[0]
+      });
+  });
+
 exports.helloWorld = functions.https.onRequest((request, response) => {
   response.send('Hello from Firebase!');
 });
