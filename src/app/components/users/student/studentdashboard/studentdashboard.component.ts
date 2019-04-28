@@ -43,6 +43,7 @@ export class StudentdashboardComponent implements OnInit {
     return new Promise((resolve, reject) => {
       {
         this._shared.getUserRequests().subscribe(userInfo => {
+          if (!userInfo['requests']) return;
           userInfo['requests'].forEach(async request => {
             await this._shared
               .getApprovedRequests(request.academyId)

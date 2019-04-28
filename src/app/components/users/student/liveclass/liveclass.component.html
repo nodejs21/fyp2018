@@ -1,59 +1,96 @@
-<div class="container">
-  <div class="row">
-    <div class="col-3">
-      <input class="form-control" type="text" [(ngModel)]="roomToJoin" />
-    </div>
-    <!-- <div class="col-2">
-      <button
-        class="btn btn-outline-primary"
-        (click)="sendMessage('Bismillah...')"
+<div class="form-row">
+  <div class="col-md-2">
+    <mat-form-field>
+      <mat-label>Choose Academy</mat-label>
+      <mat-select
+        aria-disabled="!approvedRequests"
+        [(ngModel)]="academyId"
+        [ngModelOptions]="{ standalone: true }"
       >
-        Send Message
-      </button>
-    </div> -->
-    <!-- (click)="joinClass(); initConnection(approvedRequests[0][0])" -->
-    <div class="col-2">
-      <button
-        class="btn btn-outline-primary"
-        (click)="joinClass(); initConnection();"
-      >
-        Join Class
-      </button>
-    </div>
-    <div class="col-4" *ngIf="!btnPermissionDisabled">
-      <button
-        class="btn btn-info"
-        (click)="askForPermission()"
-        [disabled]="btnPermissionDisabled"
-      >
-        Request Permission For Question
-      </button>
-    </div>
-    <!-- <div class="col-12">
-      <div class="col-6">
-        <angular-editor
-          [(ngModel)]="htmlContent"
-          [config]="config"
-        ></angular-editor>
-      </div>
-      <div class="col-6">
-        <button class="btn btn-info" (click)="sendQuestion()">
-          Ask Question
-        </button>
-      </div>
-    </div> -->
+        <mat-option
+          *ngFor="let academy of approvedRequests; index as i"
+          [value]="academy[i].data.academyId"
+          (click)="getAcademyData(academy[i].data.academyId)"
+          >{{ academy[i].data.academyName | titlecase }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
   </div>
-  <br /><br />
-  <div class="row">
-    <div class="colr-6">
-      <video [src]="myVideo" controls autoplay #myVideo></video>
-    </div>
-    <div class="colr-6">
-      <video [src]="teacherVideo" controls autoplay #teacherVideo></video>
+  <div class="col-md-3">
+    <mat-form-field>
+      <mat-label>Choose Classroom</mat-label>
+      <mat-select
+        [(ngModel)]="classroomId"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+        <mat-option>None</mat-option>
+        <mat-option
+          *ngFor="let classroom of classrooms; index as i"
+          [value]="classroom.id"
+          (click)="selectClassroom(classroom)"
+        >
+          {{ classroom.data.class.className }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field class="p-0">
+      <mat-label>Subject</mat-label>
+      <input matInput type="text" [(ngModel)]="subject" disabled />
+    </mat-form-field>
+  </div>
+  <div class="col-md-3" *ngIf="ongoingClasses && ongoingClasses.startedAt">
+    <label for="time"
+      >Strted At:
+      {{ ongoingClasses.startedAt.toDate() | date: 'shortTime' }}</label
+    >
+  </div>
+  <div class="col-12" *ngIf="!ongoingClasses">
+    <div class="invalid-feedback d-block align-bottom">
+      <h5>*You have no ongoing classroom in the selected academy.</h5>
     </div>
   </div>
 </div>
 
-<!-- <iframe src="https://rtcmulticonnection.herokuapp.com/demos/Video-Broadcasting.html" width="100%" height="500px" allow="geolocation; microphone; camera">
-  <p>Your browser does not support iframes.</p>
-</iframe> -->
+<input
+  class="form-control"
+  type="text"
+  placeholder="Class name to join"
+  [(ngModel)]="classRoomToJoin"
+/>
+<div id="agora_local" #myVideo></div>
+<div>
+  <ul *ngFor="let remote of remoteCalls">
+    <li>Remote: {{ remote }}</li>
+  </ul>
+</div>
+<div class="remote-containers">
+  <div
+    class="remote_calls"
+    *ngFor="let remote of remoteCalls"
+    [id]="remote"
+  ></div>
+</div>
+<button
+  [disabled]="!subject || !ongoingClasses"
+  class="btn btn-outline-info"
+  (click)="joinClass()"
+>
+  Join Class
+</button>
+<button
+  [disabled]="!subject || !ongoingClasses"
+  class="btn btn-outline-info"
+  (click)="requestPermission()"
+>
+  Request Permission
+</button>
+<button
+  [disabled]="!subject || !ongoingClasses"
+  class="btn btn-outline-info"
+  (click)="leaveClass()"
+>
+  Leave Class
+</button>

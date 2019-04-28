@@ -6,7 +6,20 @@
 <div class="col-sm-12">
   <mat-card>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-3">
+        <mat-form-field *ngIf="subject">
+          <mat-label>Type</mat-label>
+          <mat-select [(ngModel)]="assignmentsType">
+            <mat-option (click)="getPostedAssignments()" value="Posted"
+              >Posted</mat-option
+            >
+            <mat-option (click)="getSubmittedAssignments()" value="Submitted"
+              >Submitted</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-3">
         <mat-form-field>
           <mat-label>Choose Academy</mat-label>
           <mat-select aria-disabled="!approvedRequests" [(ngModel)]="academyId">
@@ -19,7 +32,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <mat-form-field>
           <mat-label>Choose Classroom</mat-label>
           <mat-select [(ngModel)]="classroomId">
@@ -34,7 +47,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <mat-form-field class="p-0">
           <mat-label>Subject</mat-label>
           <input matInput type="text" [(ngModel)]="subject" disabled />

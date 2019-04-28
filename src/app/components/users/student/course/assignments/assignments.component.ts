@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../utils/services/auth/auth.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import { AssignmentpopupComponent } from '../../../../shared/assignmentpopup/assignmentpopup.component';
+import { StudentService } from '../../../../../utils/services/firestore/student/student.service';
 
 export interface Assignment {
   assignmentTitle: string;
@@ -54,11 +55,17 @@ export class AssignmentsComponent implements OnInit {
   assignmentUrl: any;
   user;
   assignments;
+  assignmentId;
+  submittedAssignments;
+  submittedAssignmentIds;
+  submittedAssignmentMarks: any[];
+  submittedAssignmentDates: any[];
 
   constructor(
     private _dialog: MatDialog,
     private _shared: SharedService,
     private _auth: AuthService,
+    private _student: StudentService,
     private storage: AngularFireStorage
   ) {}
 
@@ -100,20 +107,47 @@ export class AssignmentsComponent implements OnInit {
   getAssignments(classroomId, academyId?) {
     console.log(classroomId, this.academyId);
     this._shared
-      .getAssignments(this.academyId, classroomId)
+      .getPostedAssignments(this.academyId, classroomId)
       .subscribe(assignments => {
         console.log(assignments);
         this.assignments = assignments;
-        assignments.forEach((assignment, index) => {
-          ELEMENT_DATA.push({
-            assignmentTitle: assignment.data.title,
-            assignmentNumber: index,
-            addedDate: assignment.data.uploadedOn,
-            dueDate: assignment.data.dueDate,
-            totalMarks: assignment.data.totalMarks,
-            fileURL: assignment.data.uploadedFile,
-            status: assignment.data.status
-          });
+        this.getSubmittedAssignments();
+        // assignments.forEach((assignment, index) => {
+        //   ELEMENT_DATA.push({
+        //     assignmentTitle: assignment.data.title,
+        //     assignmentNumber: index,
+        //     addedDate: assignment.data.uploadedOn,
+        //     dueDate: assignment.data.dueDate,
+        //     totalMarks: assignment.data.totalMarks,
+        //     fileURL: assignment.data.uploadedFile,
+        //     status: assignment.data.status
+        //   });
+        // });
+      });
+  }
+
+  getSubmittedAssignments() {
+    this.submittedAssignmentIds = [];
+    this.submittedAssignmentMarks = [];
+    this.submittedAssignmentDates = [];
+    this._student
+      .getSubmittedAssignmentsDetails(
+        this.academyId,
+        this.classroomId,
+        this.user.uid
+      )
+      .subscribe(assignments => {
+        this.submittedAssignments = assignments;
+        console.log(this.submittedAssignments);
+        this.submittedAssignments.map(assignment => {
+          this.submittedAssignmentIds.push(assignment.assignmentId);
+          this.submittedAssignmentMarks.push(
+            assignment.marks ? assignment.marks : '--'
+          );
+          this.submittedAssignmentDates.push(
+            assignment.submittedOn ? assignment.submittedOn : '--'
+          );
+          console.log(assignment);
         });
       });
   }
@@ -158,9 +192,20 @@ export class AssignmentsComponent implements OnInit {
   }
 
   postAssignment() {
-    console.log(this.assignmentUrl);
-    console.log(this.classroomId);
-    console.log(this.user);
-    console.log(this.academyId);
+    const assignment = {
+      studentId: this.user.uid,
+      studentName: this.user.firstName + ' ' + this.user.lastName,
+      studentImageUrl: this.user.photoURL,
+      filePath: this.assignmentUrl,
+      assignmentId: this.assignmentId,
+      submittedOn: new Date()
+    };
+    this._student
+      .submitAssignment(this.academyId, this.classroomId, assignment)
+      .then(res => {
+        console.log(res);
+        //! TALHA MAT DIALOG
+      })
+      .catch(error => console.error(error));
   }
 }

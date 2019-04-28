@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -21,20 +22,30 @@ export class StudentService {
       );
   }
 
-  submitAssignment(academyId, classroomId, student) {
+  submitAssignment(academyId, classroomId, assignment) {
     return this._afs
       .collection('academies')
       .doc(academyId)
       .collection('classrooms')
       .doc(classroomId)
-      .collection('assignments')
-      .doc(student.studentId)
-      .set(
-        {
-          student
-        },
-        { merge: true }
-      );
+      .collection('submittedassignments')
+      .add(assignment);
+  }
+
+  getSubmittedAssignmentsDetails(academyId, classroomId, studentId) {
+    console.log(academyId);
+    console.log(classroomId);
+    console.log(studentId);
+
+    return this._afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('submittedassignments', ref =>
+        ref.where('studentId', '==', studentId)
+      )
+      .valueChanges();
   }
 
   getQuizzes(academyId, classroomId) {

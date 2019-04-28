@@ -37,6 +37,14 @@ export class ClassroomsComponent implements OnInit {
     });
   }
 
+  // editClassRoom(classroom) {
+  //   console.log(classroom);
+
+  //   this._dialog.open(CreateclassroomComponent, {
+  //     data: classroom
+  //   });
+  // }
+
   deleteClassroom(id: string) {
     this._admin.deleteClassroom(id);
   }

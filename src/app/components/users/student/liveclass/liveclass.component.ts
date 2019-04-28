@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
+import { AuthService } from '../../../../utils/services/auth/auth.service';
+import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
 
 // const SERVERS: any = {
 //   iceServers: [
@@ -17,57 +19,114 @@ import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc';
 // declare let RTCPeerConnection: any;
 @Component({
   selector: 'app-liveclass',
-  template: `
-    <input class="form-control" type="text" placeholder="Class name to join" [(ngModel)]="classRoomToJoin" />
-    <div id="agora_local" #myVideo></div>
-    <div class="remote-containers">
-      <div
-        class="remote_calls"
-        *ngFor="let remote of remoteCalls"
-        [id]="remote"
-      ></div>
-    </div>
-    <button class="btn btn-outline-info" (click)="joinClass()">
-      Join Class
-    </button>
-    <button class="btn btn-outline-info" (click)="leaveClass()">
-      Leave Class
-    </button>
-  `,
-  // templateUrl: './liveclass.component.html',
+  templateUrl: './liveclass.component.html',
   styleUrls: ['./liveclass.component.css']
 })
 export class LiveclassComponent implements OnInit, OnDestroy {
-  //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
-  //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
-  //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
-
   title = 'AgoraDemo';
   localStream: Stream;
   remoteCalls: any = []; // Add
   classRoomToJoin;
   @ViewChild('myVideo') myVideo: HTMLElement;
-
-  constructor(private agoraService: AngularAgoraRtcService) {}
+  user;
+  approvedRequests: any = [];
+  classrooms: any;
+  subject: any;
+  academyId;
+  classroom: any;
+  ongoingClasses: any = [];
+  durationInClass;
+  constructor(
+    private agoraService: AngularAgoraRtcService,
+    private _auth: AuthService,
+    private _shared: SharedService
+  ) {}
 
   ngOnInit() {
-    this.agoraService.createClient();
+    this._auth.user.subscribe(user => {
+      this.user = user;
+
+      this._shared.getUserRequests().subscribe(user => {
+        if (!user['requests']) return;
+        user['requests'].forEach(academy => {
+          this._shared
+            .getApprovedRequests(academy.academyId)
+            .subscribe(request => {
+              if (!request) return;
+              if (request.length > 0) {
+                this.approvedRequests.push(request);
+              }
+            });
+        });
+      });
+
+      this.agoraService.createClient();
+    });
   }
 
-  ngOnDestroy() {}
+  getAcademyData(academyId) {
+    console.log(academyId);
+    this._shared.getStudentClassrooms(academyId).subscribe(classrooms => {
+      this.classrooms = classrooms;
+      console.log(classrooms);
+
+      this.classrooms.forEach(classroom => {
+        this.checkOnGoingClassroom(classroom.id);
+      });
+    });
+  }
+
+  selectClassroom(classroom) {
+    this.classRoomToJoin = classroom.id;
+    this.classroom = classroom;
+    this.subject = classroom.data.subject.subjectName;
+  }
+
+  checkOnGoingClassroom(classroomId) {
+    this.ongoingClasses = [];
+    this._shared
+      .checkOnGoingClassroom(this.academyId, classroomId)
+      .subscribe(classroom => {
+        console.log(classroom);
+        this.ongoingClasses = classroom;
+      });
+  }
+
+  ngOnDestroy() {
+    this.leaveClass();
+  }
+
+  requestPermission() {
+    console.log(this.localStream.getId);
+    console.log(this.remoteCalls);
+    console.log(this.remoteCalls.length);
+  }
 
   joinClass() {
     this.agoraService.client.join(null, this.classRoomToJoin, null, uid => {
       console.log(uid);
       console.log(this.classRoomToJoin);
 
+      this._shared
+        .getPreviousAttendance(this.academyId, this.classroom.id)
+        .subscribe(
+          res => {
+            console.log(res);
+          },
+          error => {
+            console.error(error);
+          }
+        );
+
+      // this._shared.updateAttendance(this.academyId, this.classroom.id);
+
       this.localStream = this.agoraService.createStream(
-        this.classRoomToJoin,
-        true,
-        null,
-        null,
-        true,
-        false
+        this.user.uid, //streamId
+        true, //audio
+        null, //cameraId
+        null, //microphoneId
+        true, //video
+        false //screen
       );
       this.localStream.setVideoProfile('720p_3');
       this.subscribeToStreams();
@@ -91,7 +150,6 @@ export class LiveclassComponent implements OnInit, OnDestroy {
           console.log('Publish local stream error: ' + err);
         });
         this.agoraService.client.on('stream-published', function() {
-          this.myVideo.outerHTML = null;
           console.log('Publish local stream successfully');
         });
       },
@@ -118,6 +176,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
 
     // Add
     this.agoraService.client.on('stream-added', evt => {
+      console.log('stream-added', evt.uid);
       const stream = evt.stream;
       this.agoraService.client.subscribe(stream, err => {
         console.log('Subscribe stream failed', err);
@@ -127,10 +186,11 @@ export class LiveclassComponent implements OnInit, OnDestroy {
     // Add
     this.agoraService.client.on('stream-subscribed', evt => {
       const stream = evt.stream;
-      if (!this.remoteCalls.includes(`agora_remote${stream.getId()}`))
-        this.remoteCalls.push(`agora_remote${stream.getId()}`);
+      console.log('stream-subscribed', stream.getId());
+      if (!this.remoteCalls.includes(`${this.user.uid}`))
+        this.remoteCalls.push(`${this.user.uid}`);
       console.log(this.remoteCalls);
-      setTimeout(() => stream.play(`agora_remote${stream.getId()}`), 2000);
+      setTimeout(() => stream.play(`${this.user.uid}`), 2000);
     });
 
     // Add
@@ -138,9 +198,9 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       const stream = evt.stream;
       stream.stop();
       this.remoteCalls = this.remoteCalls.filter(
-        call => call !== `#agora_remote${stream.getId()}`
+        call => call !== `#${this.user.uid}`
       );
-      console.log(`Remote stream is removed ${stream.getId()}`);
+      console.log(`Remote stream is removed ${this.user.uid}`);
     });
 
     // Add
@@ -149,7 +209,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       if (stream) {
         stream.stop();
         this.remoteCalls = this.remoteCalls.filter(
-          call => call === `#agora_remote${stream.getId()}`
+          call => call === `#${this.user.uid}`
         );
         console.log(`${evt.uid} left from this channel`);
       }
@@ -158,7 +218,6 @@ export class LiveclassComponent implements OnInit, OnDestroy {
 
   leaveClass() {
     console.log('Going to leave class');
-
     this.agoraService.client.leave(
       () => {
         console.log('Leavel channel successfully');
@@ -168,342 +227,4 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
-  //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
-  //! AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA AGORA
 }
-
-// export class LiveclassComponent implements OnInit {
-//   htmlContent = 'Create your assignment';
-//   config: AngularEditorConfig = {
-//     editable: true,
-//     spellcheck: true,
-//     height: '25rem',
-//     minHeight: '5rem',
-//     placeholder: 'Enter text here...',
-//     translate: 'no',
-//     // uploadUrl: 'v1/images', // if needed
-//     customClasses: [
-//       // optional
-//       {
-//         name: 'quote',
-//         class: 'quote'
-//       },
-//       {
-//         name: 'redText',
-//         class: 'redText'
-//       },
-//       {
-//         name: 'titleText',
-//         class: 'titleText',
-//         tag: 'h1'
-//       }
-//     ]
-//   };
-
-//   targetpeer: any;
-//   dataChannel: any;
-//   peer: any;
-//   server: any = null;
-//   n = <any>navigator;
-//   initiatorOffer: any;
-//   clientanswer: any;
-//   recieveanswer: any;
-//   expectanswer: boolean = false;
-//   @ViewChild('teacherVideo') teacherVideo: any;
-//   @ViewChild('myVideo') myVideo: any;
-//   turnReady: boolean;
-//   localvideostream: any;
-//   teacherVideostream: any;
-//   pcConfig = {
-//     iceServers: [
-//       {
-//         urls: 'stun:stun.l.google.com:19302',
-//         credential: ''
-//       }
-//     ]
-//   };
-//   roomToJoin = '92';
-//   channel;
-//   currentClass;
-//   approvedRequests: {};
-//   btnPermissionDisabled = true;
-//   durationInClass = 0;
-//   academyId;
-//   classroomId;
-//   permission;
-
-//   constructor(
-//     private _shared: SharedService,
-//     private _auth: AuthService
-//   ) {}
-
-//   joinClass() {
-//     // recieve teacher offer
-//     this._shared.getOffer(this.roomToJoin).subscribe(data => {
-//       console.log(data);
-//       var msg = JSON.parse(data[0]['data']['offer']);
-//       console.log(msg);
-//       this.peer.setRemoteDescription(new RTCSessionDescription(msg), () => {
-//         this.peer.createAnswer().then(this.localDescCreated);
-//         this._shared.joinClass().subscribe();
-//       });
-//     });
-//   }
-
-//   ngOnInit() {
-//     this._auth.user.subscribe(async () => {
-//       await this.getApprovedRequests().then(requests => {
-//         this.approvedRequests = requests;
-//         console.log(this.approvedRequests);
-//       });
-//       this._shared.getUpdatesOfLiveclass().subscribe(res => {
-//         const academyId = res['academyId'];
-//         const classroomId = res['classroomId'];
-//         if (academyId && classroomId) {
-//           this.academyId = academyId;
-//           this.classroomId = classroomId;
-//           this._shared
-//             .attendLiveClass(academyId, classroomId)
-//             .subscribe(liveclass => {
-//               this.btnPermissionDisabled = false;
-//               console.log(liveclass);
-//               this._shared
-//                 .getPreviousAttendance(academyId, classroomId)
-//                 .subscribe(attendance => {
-//                   console.log(attendance);
-//                   this.durationInClass += attendance
-//                     ? attendance['durationInClass']
-//                       ? attendance['durationInClass']
-//                       : 0
-//                     : 0;
-//                   this.startCountingAttendance();
-//                   // this.updateAttendance();
-//                 });
-//             });
-//         } else {
-//           this.btnPermissionDisabled = true;
-//         }
-//       });
-//       // this.approvedRequests.forEach(requests => {
-//       //   requests.forEach(request => {
-//       //     console.log(request);
-//       //     // this.getAcademyData(request);
-//       //   });
-//       // });
-//     });
-//   }
-
-//   startCountingAttendance() {
-//     setInterval(() => this.durationInClass++, 1000);
-//   }
-
-//   updateAttendance() {
-//     this._shared.updateAttendance(
-//       this.academyId,
-//       this.classroomId,
-//       this.durationInClass
-//     );
-//   }
-
-//   ngOnDestroy(): void {
-//     this.peer = undefined;
-//     // this.updateAttendance();
-//   }
-
-//   getAcademyData(academyId) {
-//     console.log(academyId);
-//     return new Promise((resolve) => {
-//       this._shared.getStudentClassrooms(academyId).subscribe(classrooms => {
-//         resolve(classrooms);
-//         // this.classrooms.push(classrooms);
-//         // console.log(this.classrooms);
-//       });
-//     });
-//   }
-
-//   getApprovedRequests() {
-//     var temp = [];
-//     return new Promise((resolve) => {
-//       {
-//         this._shared.getUserRequests().subscribe(userInfo => {
-//           if (!userInfo['requests']) return;
-//           userInfo['requests'].forEach(async request => {
-//             await this._shared
-//               .getApprovedRequests(request.academyId)
-//               .subscribe(request => {
-//                 temp.push(request);
-//               });
-//           });
-//           resolve(temp);
-//         });
-//       }
-//     });
-//   }
-
-//   initConnection() {
-//     this.n.getUserMedia =
-//       this.n.getUserMedia ||
-//       this.n.webkitGetUserMedia ||
-//       this.n.mozGetUserMedia ||
-//       this.n.msGetUserMedia;
-//     this.n.getUserMedia(
-//       { video: true, audio: true },
-//       stream => {
-//         this.localstream(stream);
-//       },
-//       () => {}
-//     );
-//     if (location.hostname !== 'localhost') {
-//       this.requestTurn(
-//         'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
-//       );
-//     }
-//     //////////////////////////////////////
-//     this.peer = new RTCPeerConnection(this.pcConfig);
-//     this.channel = this.peer.createDataChannel(this.roomToJoin);
-//     // this.peer.ontrack = e => {
-//     //   console.log('got track', e.track, e.streams);
-//     //   this.teacherVideo.nativeElement.srcObject = e.streams[0];
-//     // };
-//     this.peer.onaddstream = this.handleRemoteStreamAdded;
-//     this.peer.onicecandidate = this.sendIcecandidates;
-//     setTimeout(() => {
-//       console.log(this.localvideostream);
-//       this.peer.addStream(this.localvideostream);
-//       console.log('local stream added');
-//     }, 1000);
-
-//     // for video chat and voice chat
-//     // // recieve teacher offer
-//     // this._shared.getOffer(this.roomToJoin).subscribe(data => {
-//     //   console.log(data);
-//     //   var msg = JSON.parse(data[0]['data']['offer']);
-//     //   console.log(msg);
-//     //   this.peer.setRemoteDescription(new RTCSessionDescription(msg), () => {
-//     //     this.peer.createAnswer().then(this.localDescCreated);
-//     //   });
-//     // });
-//     // // recieve answer  from student
-//     // this._shared.getAnswer(this.roomToJoin).subscribe(data => {
-//     //   console.log(data);
-//     //   // this.peer.setRemoteDescription(new RTCSessionDescription(data), () => {});
-//     // });
-//     this._shared.getOfferCandidate(this.roomToJoin).subscribe(data => {
-//       console.log('Recieved candidate');
-//       console.log(data);
-//       if (data.data().candidates) {
-//         data.data().candidates.forEach(candidate => {
-//           this.peer.addIceCandidate(
-//             new RTCIceCandidate({
-//               candidate: candidate.candidate
-//             })
-//           );
-//         });
-//       }
-//       // if (location.hash != '#init') {
-//       this.peer.ondatachannel = function(event) {
-//         console.log(event);
-//         var channel = event.channel;
-//         channel.onopen = function() {
-//           console.log('channelopened');
-//           channel.send('Hi back!');
-//         };
-//         channel.onmessage = function(event) {
-//           console.log('messege arrived');
-//           console.log(event.data);
-//         };
-//       };
-//       // }
-//     });
-//   }
-
-//   // sendMessage(msg) {
-
-//   // }
-
-//   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//   requestTurn(turnURL) {
-//     var turnExists = false;
-//     for (var i in this.pcConfig.iceServers) {
-//       if (this.pcConfig.iceServers[i].urls.substr(0, 5) === 'turn:') {
-//         turnExists = true;
-//         this.turnReady = true;
-//         break;
-//       }
-//     }
-//     if (!turnExists) {
-//       console.log('Getting TURN server from ', turnURL);
-//       // No TURN server. Get one from computeengineondemand.appspot.com:
-//       var xhr = new XMLHttpRequest();
-//       xhr.onreadystatechange = () => {
-//         if (xhr.readyState === 4 && xhr.status === 200) {
-//           var turnServer = JSON.parse(xhr.responseText);
-//           console.log('Got TURN server: ', turnServer);
-//           this.pcConfig.iceServers.push({
-//             urls: 'turn:' + turnServer.username + '@' + turnServer.turn,
-//             credential: turnServer.password
-//           });
-//           this.turnReady = true;
-//         }
-//       };
-//       xhr.open('GET', turnURL, true);
-//       xhr.send();
-//     }
-//   }
-
-//   localstream(stream) {
-//     console.log('got local stream');
-
-//     this.localvideostream = stream;
-//     let video = this.myVideo.nativeElement;
-
-//     video.srcObject = stream;
-//   }
-
-//   sendIcecandidates = event => {
-//     console.log(event);
-//     if (event.candidate) {
-//       console.log('Sending Ice candidate');
-//       this.peer.addIceCandidate(new RTCIceCandidate(event.candidate));
-//       this._shared.sendAnswerCandidate(this.roomToJoin, {
-//         type: 'candidate',
-//         label: event.candidate.sdpMLineIndex,
-//         id: event.candidate.sdpMid,
-//         candidate: event.candidate.candidate
-//       });
-//     } else {
-//       console.log('End of candidates.');
-//     }
-//   };
-//   handleRemoteStreamAdded = event => {
-//     console.log('got remort stream');
-//     console.log(event.stream);
-//     this.teacherVideo.nativeElement.srcObject = event.stream;
-//     // let video1 = this.teacherVideo.nativeElement;
-//     // var str = event.stream;
-//     // video1.srcObject = str;
-//   };
-//   localDescCreated = desc => {
-//     console.log(desc);
-//     this.peer.setLocalDescription(desc, () => {
-//       this._shared.sendAnswer(this.roomToJoin, desc);
-//       if (desc.type === 'offer') {
-//       }
-//       if (desc.type === 'answer') {
-//       }
-//     });
-//   };
-
-//   askForPermission() {
-//     this._shared.askPermission(this.academyId, this.classroomId).then(() => {
-//       this._shared
-//         .checkPermission(this.academyId, this.classroomId)
-//         .subscribe(res => {
-//           this.permission = res;
-//           console.log(this.permission);
-//         });
-//     });
-//   }
-// }

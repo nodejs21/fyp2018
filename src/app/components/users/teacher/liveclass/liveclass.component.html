@@ -1,87 +1,71 @@
-<div class="container">
-  <div class="row">
-    <input class="form-control" type="text" [(ngModel)]="roomToCreate" />
-    <!-- (click)="initConnection(approvedRequests[1][0])" -->
-    <!-- (click)="initConnection(approvedRequests[1][0])" -->
-    <div>
-      <button class="btn btn-outline-info" (click)="initConnection()">
-        Start Class
-      </button>
-      <!-- <button class="btn btn-outline-info" (click)="creatingWebRtcConnection()">
-        Send Answer
-      </button> -->
-      <button class="btn btn-outline-info" (click)="endClass()">
-        End Class
-      </button>
-    </div>
-    <div>
-      <button class="btn btn-outline-info" (click)="sendOffer()">
-        Send Offer
-      </button>
-      <!-- <button class="btn btn-success" (click)="receiveOffer()">
-        Receive Offer
-      </button> -->
-      <button class="btn btn-outline-info" (click)="sendCandidate()">
-        Send ICE Candidate
-      </button>
-      <!-- <button class="btn btn-success" (click)="receiveCandidate()">
-        Receive ICE Candidate
-      </button> -->
-      <button class="btn btn-outline-info" (click)="sendMediaStreamObject()">
-        Send Media Stream Object
-      </button>
-      <!-- <button class="btn btn-success" (click)="receiveMediaStreamObject()">
-        Receive Media Stream Object
-      </button> -->
-    </div>
-    <div *ngIf="studentsCount">
-      Students taking class: <strong>{{ studentsCount }}</strong> .
-      <!-- <div class="btn-group"> -->
-
-      <!-- </div> -->
-      <br />
-    </div>
-    <!-- <div class="row" *ngIf="newRequest">
-    <button class="btn btn-outline-info" (click)="givePermission(true)">
-      Accept
-    </button>
-    <button class="btn btn-outline-info" (click)="givePermission(false)">
-      Reject
-    </button>
-  </div> -->
-    <br />
-    <div class="row">
-      <ul *ngFor="let request of questions">
-        <li>
-          Status: {{ request.permission }} | Student:
-          {{ request.studentName }} |
-          <button
-            *ngIf="newRequest"
-            class="btn btn-outline-info"
-            (click)="givePermission(true)"
-          >
-            Accept
-          </button>
-          |
-          <button
-            *ngIf="newRequest"
-            class="btn btn-outline-info"
-            (click)="givePermission(false)"
-          >
-            Reject
-          </button>
-        </li>
-      </ul>
-    </div>
-    <br /><br />
-    <div class="row">
-      <div class="col-6">
-        <video [src]="myVideo" controls autoplay muted #myVideo></video>
-        <!-- *ngIf="displayMyVideo" -->
-      </div>
-      <div class="col-6">
-        <video [src]="friendsVideo" controls autoplay #friendsVideo></video>
-      </div>
-    </div>
+<div class="form-row">
+  <div class="col-md-2">
+    <mat-form-field>
+      <mat-label>Choose Academy</mat-label>
+      <mat-select
+        aria-disabled="!approvedRequests"
+        [(ngModel)]="academyId"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <mat-option
+          *ngFor="let academy of approvedRequests; index as i"
+          [value]="academy[i].data.academyId"
+          (click)="getAcademyData(academy[i].data.academyId)"
+          >{{ academy[i].data.academyName | titlecase }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field>
+      <mat-label>Choose Classroom</mat-label>
+      <mat-select
+        [(ngModel)]="classroomId"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+        <mat-option>None</mat-option>
+        <mat-option
+          *ngFor="let classroom of classrooms; index as i"
+          [value]="classroom.id"
+          (click)="selectClassroom(classroom)"
+        >
+          {{ classroom.data.class.className }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field class="p-0">
+      <mat-label>Subject</mat-label>
+      <input matInput type="text" [(ngModel)]="subject" disabled />
+    </mat-form-field>
   </div>
 </div>
+
+<div id="agora_local"></div>
+<!-- <div class="remote-containers"> -->
+  <!-- <div class="remote_calls" [id]="remoteCalls[0]"></div> -->
+  <!-- <div
+    class="remote_calls"
+    *ngFor="let remote of remoteCalls"
+    [id]="remote"
+  ></div> -->
+<!-- </div> -->
+<button
+  [disabled]="!subject"
+  class="btn btn-outline-info"
+  (click)="startClass()"
+>
+  Start Class
+</button>
+<button
+  [disabled]="!subject"
+  class="btn btn-outline-info"
+  (click)="shareScreen()"
+>
+  Share Screen
+</button>
+<button [disabled]="!subject" class="btn btn-outline-info" (click)="endClass()">
+  End Class
+</button>

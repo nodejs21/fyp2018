@@ -16,7 +16,7 @@ import { P500Component } from './views/error/500.component';
 
 const APP_CONTAINERS = [DefaultLayoutComponent];
 const agoraConfig: AgoraConfig = {
-  AppID: 'b2dcf826f45d49199067e3e9b101be32'
+  AppID: environment.agoraAppID
 };
 
 import {

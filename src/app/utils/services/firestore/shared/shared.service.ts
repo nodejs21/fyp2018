@@ -163,7 +163,7 @@ export class SharedService {
       .valueChanges();
   }
 
-  getAssignments(academyId, classroomId) {
+  getPostedAssignments(academyId, classroomId) {
     return this.afs
       .collection('academies')
       .doc(academyId)
@@ -178,6 +178,17 @@ export class SharedService {
           });
         })
       );
+  }
+
+  checkOnGoingClassroom(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .valueChanges();
   }
 
   startLiveClass(academyId, classroomId) {
@@ -363,12 +374,9 @@ export class SharedService {
       .doc(`${academyId}|${classroomId}`)
       .collection('questions')
       .doc(studentId)
-      .set(
-        {
-          permission: permit ? 'granted' : 'rejected'
-        },
-        { merge: true }
-      );
+      .update({
+        permission: permit ? 'granted' : 'rejected'
+      });
   }
   // getAssignmentDetails(assignmentId) {
   //   return this.afs.collection('academies').doc()

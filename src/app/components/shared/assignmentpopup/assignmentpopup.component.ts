@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-assignmentpopup',
