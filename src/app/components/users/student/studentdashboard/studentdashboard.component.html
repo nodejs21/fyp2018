@@ -1,4 +1,10 @@
 <div class="animated fadeIn">
+  <mat-card>
+    <h2>
+      Registered Academies
+    </h2>
+  </mat-card>
+  <hr>
   <div class="row">
     <div class="col-3 col-sm-6 col-md-4 col-lg-2 pb-4">
       <button
@@ -23,11 +29,11 @@
         <div class="card-body">
           <div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item bg-dark p-1">
-                Class : {{ request.data.className }}
+              <li class="list-group-item bg-dark p-1 icon-badge">
+               <strong> Class : {{ request.data.className }} </strong>
               </li>
-              <li class="list-group-item bg-dark p-1">
-                Subject : {{ request.data.subjectName }}
+              <li class="list-group-item bg-dark p-1 icon-notebook">
+                <strong> Subject : {{ request.data.subjectName }} </strong>
               </li>
             </ul>
           </div>

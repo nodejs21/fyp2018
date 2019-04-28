@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { SharedService } from '../../../../utils/services/firestore/shared/shared.service';
-import { AuthService } from '../../../../utils/services/auth/auth.service';
-import { TeacherService } from '../../../../utils/services/firestore/teacher/teacher.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
+import { SharedService } from "../../../../utils/services/firestore/shared/shared.service";
+import { AuthService } from "../../../../utils/services/auth/auth.service";
+import { TeacherService } from "../../../../utils/services/firestore/teacher/teacher.service";
+import { MatSnackBar } from '@angular/material';
 @Component({
-  selector: 'app-makequiz',
-  templateUrl: './makequiz.component.html',
-  styleUrls: ['./makequiz.component.css']
+  selector: "app-makequiz",
+  templateUrl: "./makequiz.component.html",
+  styleUrls: ["./makequiz.component.css"]
 })
 export class MakequizComponent implements OnInit {
   classes;
@@ -15,14 +16,15 @@ export class MakequizComponent implements OnInit {
   classrooms: any;
   approvedRequests = [];
   allAssignments;
-  academyId;
-  classroomId;
+  academy;
+  classroom;
 
   constructor(
     private formBuilder: FormBuilder,
     private _shared: SharedService,
     private _auth: AuthService,
-    private _teacher: TeacherService
+    private _teacher: TeacherService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -47,8 +49,8 @@ export class MakequizComponent implements OnInit {
     // });
     this._auth.user.subscribe(user => {
       this._shared.getUserRequests().subscribe(user => {
-        if (!user['requests']) return;
-        user['requests'].forEach(academy => {
+        if (!user["requests"]) return;
+        user["requests"].forEach(academy => {
           console.log(academy);
 
           this._shared
@@ -67,30 +69,41 @@ export class MakequizComponent implements OnInit {
     });
     this.quizForm = this.formBuilder.group({
       className: 0,
-      subject: ['Subject Name', Validators.required],
-      title: ['', Validators.required],
+      subject: [""],
+      title: ["", Validators.required],
       duration: [10, Validators.required],
       totalMarks: [0, Validators.required],
-      status: ['saved', Validators.required],
-      academyName: ['', Validators.required],
-      qacademyId: '',
-      qclassroomId: '',
-      postedOn: '',
+      status: ["saved", Validators.required],
+      academyName: ["", Validators.required],
+      academyId: "",
+      classroomId: "",
+      postedOn: "",
+      dueDate: "",
       questions: this.formBuilder.array([this.initQuestion()])
     });
+    this.subject.disable();
   }
 
+  get subject() {
+    return this.quizForm.get("subject");
+  }
   get academyName() {
-    return this.quizForm.get('academyName');
+    return this.quizForm.get("academyName");
   }
-  get qacademyId() {
-    return this.quizForm.get('qacademyId');
+  get academyId() {
+    return this.quizForm.get("academyId");
   }
-  get qclassroomId() {
-    return this.quizForm.get('qclassroomId');
+  get classroomId() {
+    return this.quizForm.get("classroomId");
   }
   get postedOn() {
-    return this.quizForm.get('postedOn');
+    return this.quizForm.get("postedOn");
+  }
+  get duration() {
+    return this.quizForm.get("duration");
+  }
+  get dueDate() {
+    return this.quizForm.get("dueDate");
   }
 
   getAcademyData(academyId) {
@@ -101,18 +114,22 @@ export class MakequizComponent implements OnInit {
     });
   }
 
+  selectClassroom(classroom) {
+    this.subject.setValue(classroom.data.subject.subjectName);
+  }
+
   getQuizzes(classroomId) {
     console.log(classroomId);
   }
 
   get className() {
-    return this.quizForm.get('className');
+    return this.quizForm.get("className");
   }
 
   initQuestion() {
     return this.formBuilder.group({
-      text: ['', Validators.required],
-      type: ['mcq', Validators.required],
+      text: ["", Validators.required],
+      type: ["mcq", Validators.required],
       mcqOptions: this.formBuilder.array([
         this.initMcqOption(),
         this.initMcqOption()
@@ -124,7 +141,7 @@ export class MakequizComponent implements OnInit {
 
   initMcqOption() {
     const group = this.formBuilder.group({
-      option: ['']
+      option: [""]
     });
     return group;
   }
@@ -137,37 +154,37 @@ export class MakequizComponent implements OnInit {
   }
 
   addQuestion() {
-    const control = <FormArray>this.quizForm.get('questions');
+    const control = <FormArray>this.quizForm.get("questions");
     control.push(this.initQuestion());
   }
 
   updateCorrectMcqOption(questionNumber, correctOptionNumber) {
     const question = this.quizForm.get([
-      'questions',
+      "questions",
       questionNumber
     ]) as FormArray;
-    question.controls['mcqCorrectOption'].setValue(correctOptionNumber);
+    question.controls["mcqCorrectOption"].setValue(correctOptionNumber);
   }
 
   addMcqOption(questionNumber) {
     const control = this.quizForm.get([
-      'questions',
+      "questions",
       questionNumber,
-      'mcqOptions'
+      "mcqOptions"
     ]) as FormArray;
     control.push(this.initMcqOption());
   }
 
   deleteQuestion(questionNumber) {
-    const control = this.quizForm.get(['questions']) as FormArray;
+    const control = this.quizForm.get(["questions"]) as FormArray;
     control.removeAt(questionNumber);
   }
 
   deleteOption(questionNumber, optionNumber) {
     const control = this.quizForm.get([
-      'questions',
+      "questions",
       questionNumber,
-      'mcqOptions'
+      "mcqOptions"
     ]) as FormArray;
     control.removeAt(optionNumber);
   }
@@ -179,27 +196,35 @@ export class MakequizComponent implements OnInit {
     // if (!this.classroomId) {
     //   return alert('Choose a subject first!');
     // }
-    this.academyName.setValue(this.academyId.data.academyName);
-    this.qacademyId.setValue(this.academyId.data.academyId);
-    this.qclassroomId.setValue(this.classroomId.id);
+    this.className.setValue(this.classroom.data.class.className);
+    this.academyName.setValue(this.academy.data.academyName);
+    this.academyId.setValue(this.academy.data.academyId);
+    this.classroomId.setValue(this.classroom.id);
     this.postedOn.setValue(new Date());
     // console.log(this.academyId);
     // console.log(this.classroomId);
     console.log(this.quizForm.value);
 
-    this._teacher.createQuiz(
-      this.quizForm.value,
-      this.qacademyId,
-      this.qclassroomId
-    );
-    // this._teacher
-    //   .createQuiz(
-    //     this.academyId.data.academyId,
-    //     this.classroomId.id,
-    //     this.quizForm.value
-    //   )
-    //   .then(res => {
-    //     alert('Quiz has been uploaded successfully!');
-    //   });
+    // this._teacher.createQuiz(
+    //   this.quizForm.value,
+    //   this.qacademyId,
+    //   this.qclassroomId
+    // );
+    this._teacher
+      .createQuiz(
+        this.academyId.value,
+        this.classroomId.value,
+        this.quizForm.value
+      )
+      .then(res => {
+        this.showSnackBar(`Quiz has been posted!`, "bg-success");
+      });
+  }
+
+  showSnackBar(message, style) {
+    this._snackBar.open(message, "X", {
+      duration: 4000,
+      panelClass: style
+    });
   }
 }

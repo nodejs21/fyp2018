@@ -70,10 +70,10 @@
           <td><span class="badge badge-success">Posted</span></td>
           <td>
             <div class="pl-2 pr-2 text-center">
+              <!-- *ngIf="assignment.data.assignment" -->
               <button
-                *ngIf="assignment.data.assignment"
                 class="btn p-1"
-                popover="View"
+                matTooltip="View Assignment"
                 triggers="mouseenter:mouseleave"
                 (click)="viewDetails(assignment)"
               >
@@ -99,8 +99,8 @@
               </button>
               <!-- *ngIf="assignment.data.filePath" -->
               <button
-                class="btn p-1"
-                popover="Download"
+                class="btn p-0"
+                matTooltip="Download Assignment"
                 triggers="mouseenter:mouseleave"
               >
                 <a [href]="assignment.data.filePath" download>
