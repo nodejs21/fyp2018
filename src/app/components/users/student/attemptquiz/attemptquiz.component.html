@@ -1,320 +1,114 @@
-<!-- <div class="btn-group" dropdown>
-  <button type="button" class="btn btn-danger">Islamiyat</button>
-  <button
-    type="button"
-    dropdownToggle
-    class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-    aria-controls="dropdown-split"
-  >
-    <span class="caret"></span> <span class="sr-only">Split button!</span>
-  </button>
-  <ul
-    *dropdownMenu
-    class="dropdown-menu"
-    role="menu"
-    aria-labelledby="button-split"
-  >
-    <li role="menuitem"><a class="dropdown-item" href="">Islamiyat</a></li>
-    <li role="menuitem"><a class="dropdown-item" href="">Maths</a></li>
-    <li role="menuitem"><a class="dropdown-item" href="">Chemistry</a></li>
-    <li class="divider dropdown-divider"></li>
-    <li role="menuitem"><a class="dropdown-item" href="">Physics</a></li>
-  </ul>
-</div> -->
-
-<form [formGroup]="quizForm">
+<form>
   <!-- <hr />
-      <pre>value: {{ quizForm.value | json }}</pre>
-      <hr /> -->
+    <pre>value: {{ quizForm.value | json }}</pre>
+    <hr /> -->
   <div class="form-row">
-    <div class="col-md-2">
-      <mat-form-field>
-        <mat-label>Choose Academy</mat-label>
-        <mat-select
-          aria-disabled="!approvedRequests"
-          [(ngModel)]="academyId"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <mat-option
-            *ngFor="let academy of approvedRequests; index as i"
-            [value]="academy[i].data.academyId"
-            (click)="getAcademyData(academy[i].data.academyId)"
-            >{{ academy[i].data.academyName | titlecase }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-md-3">
-      <mat-form-field>
-        <mat-label>Choose Classroom</mat-label>
-        <mat-select
-          [(ngModel)]="classroomId"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <!-- (click)="getSubjects(classroom.data.class.classId)" -->
-          <mat-option>None</mat-option>
-          <mat-option
-            *ngFor="let classroom of classrooms; index as i"
-            [value]="classroom"
-            (click)="getQuizzes(classroom)"
-          >
-            {{ classroom.data.class.className }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-md-3">
-      <mat-form-field class="p-0">
-        <mat-label>Title</mat-label>
-        <input matInput type="text" formControlName="title" disabled="true" />
-      </mat-form-field>
-    </div>
-    <!-- <div class="col-md-3">
-        <div class="form-group">
-              <mat-form-field>
-                <mat-label>Quiz duration (min)</mat-label>
-                <input type="number" min="0" matInput formControlName="totalMarks" />
-              </mat-form-field>
-            </div>
-      </div> -->
-    <div class="col-md-3">
-      <div class="form-group">
-        <mat-form-field>
-          <mat-label>Total Marks</mat-label>
-          <input
-            type="number"
-            min="0"
-            matInput
-            formControlName="totalMarks"
-            disabled="true"
-          />
-        </mat-form-field>
-      </div>
-      <!-- <label class="font-weight-bold">Total Marks</label>
-        <input
-          type="number"
-          class="form-control"
-          placeholder="Total Marks"
-          formControlName="totalMarks"
-        /> -->
+    <div class="col-md-12" *ngIf="showMarks">
+      <span class="text-center text-success h2 bold">
+        Your Marks {{ marks }}</span
+      >
     </div>
   </div>
-  <div class="row mt-4">
+  <div class="row mt-4" *ngIf="quiz" [hidden]="showMarks">
     <div class="col-sm-12">
       <div class="animated fadeIn">
         <div class="card">
           <div class="card-header">
             <label class="font-weight-bold">
-              {{ classroomId ? classroomId.data.subject.subjectName : '' }}
+              {{ quiz ? quiz.title : '' }}
             </label>
-            
           </div>
-          <div class="card-body" formArrayName="questions">
+          <div class="card-body">
             <ol class="p-0">
               <li
                 class="mb-4"
                 *ngFor="
-                  let question of getQuestions(quizForm);
+                  let question of quiz.questions;
                   let questionNumber = index
                 "
-                [formGroupName]="questionNumber"
               >
                 <div>
                   <div class="form-group mb-1 input-group">
-                    <input
-                      type="text"
-                      class="form-control-plaintext border border-secondary rounded p-1"
-                      placeholder="Type your question here..."
-                      formControlName="text"
-                    />
-                    <div class="input-group-append">
-                      <button
-                        class="btn border border-danger rounded"
-                        popover="Delete Question"
-                        triggers="mouseenter:mouseleave"
-                        (click)="deleteQuestion(questionNumber)"
-                      >
-                        <span><i class="text-danger fa fa-trash"></i> </span>
-                      </button>
-                    </div>
+                    <p>{{ question.text }}</p>
                   </div>
                   <!-- <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          formControlName="type"
-                          value="mcq"
-                        />
-                        <label class="form-check-label">MCQ</label>
-                      </div> -->
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        formControlName="type"
+                        value="mcq"
+                      />
+                      <label class="form-check-label">MCQ</label>
+                    </div> -->
                   <!-- <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          formControlName="type"
-                          value="tf"
-                        />
-                        <label class="form-check-label">True/False</label>
-                      </div> -->
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        formControlName="type"
+                        value="tf"
+                      />
+                      <label class="form-check-label">True/False</label>
+                    </div> -->
+                </div>
+
+                <div class="div" *ngIf="question.type == 'mcq'">
                   <div
-                    class="btn-group btn-group-sm d-flex"
-                    btnRadioGroup
-                    formControlName="type"
-                    tooltip="Question Type"
+                    class="div"
+                    *ngFor="let option of question.mcqOptions; let i = index"
                   >
-                    <label btnRadio="mcq" class="btn btn-outline-dark">
-                      MCQ
-                    </label>
-                    <label btnRadio="tf" class="btn btn-outline-dark">
-                      T/F
-                    </label>
-                  </div>
-                  <div *ngIf="question.value.type == 'mcq'">
-                    <ol class="list-inline" formArrayName="mcqOptions">
-                      <li
-                        class="list-inline-item ml-4 mt-2"
-                        *ngFor="
-                          let mcqOption of getMcqOptions(question);
-                          let optionNumber = index
-                        "
-                        [formGroupName]="optionNumber"
-                      >
-                        <div class="input-group">
-                          <input
-                            #option
-                            value="{{ optionNumber }}"
-                            name="{{ questionNumber }}"
-                            class="form-check-input"
-                            type="radio"
-                            [checked]="
-                              optionNumber == question.value.mcqCorrectOption
-                            "
-                            (click)="
-                              updateCorrectMcqOption(
-                                questionNumber,
-                                option.value
-                              )
-                            "
-                          />
-                          <input
-                            class="form-control-plaintext input-sm border border-secondary rounded p-0 pl-1"
-                            type="text"
-                            formControlName="option"
-                            placeholder="Option {{ optionNumber + 1 }}"
-                          />
-                          <button
-                            class="btn btn-sm border border-danger rounded py-0"
-                            popover="Delete Option"
-                            triggers="mouseenter:mouseleave"
-                            (click)="deleteOption(questionNumber, optionNumber)"
-                          >
-                            <span
-                              ><i class="text-danger fa fa-trash"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </li>
-                      <div class="d-inline">
-                        <button
-                          class="btn btn-sm btn-secondary border border-secondary py-0 mb-1 ml-4"
-                          popover="Add Option"
-                          triggers="mouseenter:mouseleave"
-                          (click)="addMcqOption(questionNumber)"
-                        >
-                          <span><i class="text-dark fa fa-plus"></i></span>
-                        </button>
-                      </div>
-                    </ol>
-                  </div>
-                  <div *ngIf="question.value.type == 'tf'">
-                    <!-- <ol class="list-inline mt-2">
-                          <li class="list-inline-item ml-4 mt-2">
-                            <div class="input-group">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                value="true"
-                                formControlName="tfCorrectOption"
-                              />
-                              <label class="form-check-label">True</label>
-                            </div>
-                          </li>
-                          <li class="list-inline-item ml-4 mt-2">
-                            <div class="input-group">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                value="false"
-                                formControlName="tfCorrectOption"
-                              />
-                              <label class="form-check-label">False</label>
-                            </div>
-                          </li>
-                        </ol> -->
-                    <div
-                      class="btn-group btn-group-sm "
-                      btnRadioGroup
-                      formControlName="tfCorrectOption"
-                      tooltip="Correct Option"
-                    >
-                      <label btnRadio="true" class="btn btn-outline-primary">
-                        True
-                      </label>
-                      <label btnRadio="false" class="btn btn-outline-primary">
-                        False
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          class="form-check-input"
+                          [id]="questionNumber"
+                          [name]="questionNumber"
+                          (click)="answerBoolean(questionNumber, i)"
+                        />
+                        <span class="mt-2">{{ option.option }}</span>
                       </label>
                     </div>
                   </div>
                 </div>
+
+                <div class="div" *ngIf="question.type == 'tf'">
+                  <div class="form-check mr-4">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        [id]="questionNumber"
+                        [name]="questionNumber"
+                        (click)="answerBoolean(questionNumber, true)"
+                      />
+                      <span class="mt-2">True</span>
+                    </label>
+                  </div>
+                  <div class="form-check mr-4">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        [id]="questionNumber"
+                        [name]="questionNumber"
+                        class="form-check-input"
+                        (click)="answerBoolean(questionNumber, false)"
+                      />
+                      <span class="mt-2">False</span>
+                    </label>
+                  </div>
+                </div>
               </li>
             </ol>
-            <div class="row mt-4">
-              <div class="col-sm-12">
-                <button
-                  class="btn btn-secondary btn-lg btn-block pt-0 pb-0"
-                  popover="Add Question"
-                  triggers="mouseenter:mouseleave"
-                  (click)="addQuestion()"
-                >
-                  <span><i class="text-dark fa fa-plus"></i> </span>
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</form>
-
-<!-- <div
-    class="modal fade"
-    bsModal
-    #staticModal="bs-modal"
-    [config]="{ backdrop: 'static' }"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="dialog-static-name"
-  >
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 id="dialog-static-name" class="modal-title pull-left">
-            Static modal
-          </h4>
-          <button
-            type="button"
-            class="close pull-right"
-            aria-label="Close"
-            (click)="staticModal.hide()"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          This is static modal, backdrop click will not close it. Click
-          <b>&times;</b> to close modal.
-        </div>
-      </div>
+  <div class="form-row" [hidden]="showMarks">
+    <div class="col-md-12">
+      <button mat-button class="btn btn-success btn-block" (click)="saveQuiz()">
+        Post Quiz
+      </button>
     </div>
-  </div> -->
+  </div>
+</form>
