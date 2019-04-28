@@ -66,6 +66,9 @@
                           }"
                           >{{ option.option }}</span
                         >
+                        <span *ngIf="answers[questionNumber] == i">
+                          - Your Answer
+                        </span>
                       </label>
                     </div>
                   </div>
@@ -81,6 +84,9 @@
                         }"
                         >True</span
                       >
+                      <span *ngIf="answers[questionNumber] == true">
+                        - Your Answer</span
+                      >
                     </label>
                   </div>
                   <div class="form-check mr-4">
@@ -91,6 +97,8 @@
                           'text-success': question.tfCorrectOption == 'false'
                         }"
                         >False</span
+                      ><span *ngIf="answers[questionNumber] == false">
+                        - Your Answer</span
                       >
                     </label>
                   </div>
