@@ -111,7 +111,7 @@ export class TeacherService {
       .doc(assignmentId)
       .set({ marks: marks }, { merge: true });
   }
-
+  
   updateAssignment(assignment: any, assignmentId) {
     return this.afs
       .collection('academies')

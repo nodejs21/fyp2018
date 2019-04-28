@@ -4,6 +4,7 @@ import { SharedService } from '../../../../../utils/services/firestore/shared/sh
 import { AuthService } from '../../../../../utils/services/auth/auth.service';
 import { StudentService } from '../../../../../utils/services/firestore/student/student.service';
 import { Router } from '@angular/router';
+import { QuizService } from '../../services/quiz.service';
 
 @Component({
   selector: 'app-quizzes',
@@ -23,7 +24,8 @@ export class QuizzesComponent implements OnInit {
     private _shared: SharedService,
     private _auth: AuthService,
     private _student: StudentService,
-    private _router: Router
+    private _router: Router,
+    private _data: QuizService
   ) {}
 
   ngOnInit() {
@@ -78,7 +80,7 @@ export class QuizzesComponent implements OnInit {
   }
 
   showQuiz(quiz) {
-    console.log(quiz);
-    this._router.navigate(['student/attemptquiz', { quiz }]);
+    this._data.updateQuiz(quiz);
+    this._router.navigate(['student/attemptquiz']);
   }
 }

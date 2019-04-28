@@ -29,6 +29,11 @@ export class AssignmentsComponent implements OnInit {
   assignments;
   subject;
   assignmentsType = 'Posted';
+  submittedAssignments: any;
+  submittedAssignmentsWithTitle: any;
+  inEditMarksMode: boolean = false;
+  assignmentId: any;
+  selectedAssignmentDetails;
 
   constructor(
     private _dialog: MatDialog,
@@ -41,18 +46,22 @@ export class AssignmentsComponent implements OnInit {
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
-      this._shared.getUserRequests().subscribe(user => {
-        if (!user['requests']) return;
-        user['requests'].forEach(academy => {
-          this._shared
-            .getApprovedRequests(academy.academyId)
-            .subscribe(request => {
-              if (!request) return;
-              if (request.length > 0) {
-                this.approvedRequests.push(request);
-              }
-            });
-        });
+      this.init();
+    });
+  }
+
+  init() {
+    this._shared.getUserRequests().subscribe(user => {
+      if (!user['requests']) return;
+      user['requests'].forEach(academy => {
+        this._shared
+          .getApprovedRequests(academy.academyId)
+          .subscribe(request => {
+            if (!request) return;
+            if (request.length > 0) {
+              this.approvedRequests.push(request);
+            }
+          });
       });
     });
   }
@@ -85,15 +94,40 @@ export class AssignmentsComponent implements OnInit {
   }
 
   getPostedAssignments() {
-    this.ngOnInit();
+    this.init();
   }
   getSubmittedAssignments() {
     this._teacher
       .getSubmittedAssignments(this.academyId, this.classroomId)
       .subscribe(assignments => {
-        this.assignments = assignments;
-        console.log(this.assignments);
+        this.submittedAssignments = assignments;
+        console.log(this.submittedAssignments);
       });
+  }
+
+  filterAssignmentsForDetails(assignmentId) {
+    console.log(this.assignmentId);
+    this.submittedAssignmentsWithTitle = this.submittedAssignments.filter(
+      assignment => {
+        return assignment.assignmentId == assignmentId;
+      }
+    );
+    this.selectedAssignmentDetails = this.assignments.filter(assignment => {
+      return assignment.id == assignmentId;
+    })[0];
+  }
+
+  uploadMarks() {
+    // this._teacher
+    //   .uploadAssignmentMarks(
+    //     this.academyId,
+    //     this.classroomId,
+    //     this.assignmentId,
+    //     ''
+    //   )
+    //   .then(res => {
+    //     console.log(res);
+    //   });
   }
 
   viewDetails(assignment) {
