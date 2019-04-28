@@ -59,11 +59,7 @@ exports.oneToOneNotificatioin = functions.firestore
   .document('notifications/{notificationId}')
   .onCreate(async (snapshot, context) => {
     const notification = snapshot.data();
-    // const adminRef = db.doc('admins/McTypcvnLIUUXBdQbd6Sryjjnw22').get();
-    // const adminSnap = await adminRef;
-    // const adminData = adminSnap.data();
-    // const token = adminData.token;
-    console.log(notification.token);
+    console.log(notification);
 
     const payload = {
       notification: {
@@ -122,6 +118,26 @@ exports.classNotifications = functions.firestore
           token: tok
         });
     });
+  });
+
+exports.requestNotification = functions.firestore
+  .document('academies/{academyId}/requests/{requestId}')
+  .onCreate(async (snapshot, context) => {
+    const userRef = await admin
+      .firestore()
+      .collection('users')
+      .doc(context.params.academyId)
+      .get();
+    const userData = userRef.data();
+
+    admin
+      .firestore()
+      .collection('notifications')
+      .add({
+        body: `You have new join request`,
+        title: `Join Request`,
+        token: userData.token[0]
+      });
   });
 
 exports.helloWorld = functions.https.onRequest((request, response) => {

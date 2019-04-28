@@ -9,38 +9,38 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
-const permission = await requestNotificationPermission();
+// const permission = await requestNotificationPermission();
 
-messaging
-  .requestPermission()
-  .then(function() {
-    MsgElem.innerHTML = 'Notification permission granted.';
-    console.log('Notification permission granted.');
+// messaging
+//   .requestPermission()
+//   .then(function() {
+//     MsgElem.innerHTML = 'Notification permission granted.';
+//     console.log('Notification permission granted.');
 
-    // get the token in the form of promise
-    return messaging.getToken();
-  })
-  .then(function(token) {
-    TokenElem.innerHTML = 'token is : ' + token;
-  })
-  .catch(function(err) {
-    ErrElem.innerHTML = ErrElem.innerHTML + '; ' + err;
-    console.log('Unable to get permission to notify.', err);
-  });
+//     // get the token in the form of promise
+//     return messaging.getToken();
+//   })
+//   .then(function(token) {
+//     TokenElem.innerHTML = 'token is : ' + token;
+//   })
+//   .catch(function(err) {
+//     ErrElem.innerHTML = ErrElem.innerHTML + '; ' + err;
+//     console.log('Unable to get permission to notify.', err);
+//   });
 
-messaging.setBackgroundMessageHandler(function(payload) {
-  console.log(
-    '[firebase-messaging-sw.js] Received background message ',
-    payload
-  );
-  // Customize notification here
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body
-  };
+// messaging.setBackgroundMessageHandler(function(payload) {
+//   console.log(
+//     '[firebase-messaging-sw.js] Received background message ',
+//     payload
+//   );
+//   // Customize notification here
+//   const notificationTitle = payload.notification.title;
+//   const notificationOptions = {
+//     body: payload.notification.body
+//   };
 
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  );
-});
+//   return self.registration.showNotification(
+//     notificationTitle,
+//     notificationOptions
+//   );
+// });
