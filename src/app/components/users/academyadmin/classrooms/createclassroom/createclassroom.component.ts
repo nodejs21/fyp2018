@@ -69,7 +69,7 @@ export class CreateclassroomComponent implements OnInit {
     private _auth: AuthService,
     private _fb: FormBuilder,
     private _snackbar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data = []
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   ngOnInit() {
     this.classroomForm = this._fb.group({
@@ -83,7 +83,17 @@ export class CreateclassroomComponent implements OnInit {
       createdOn: ['']
     });
     this._auth.user.subscribe(user => {
-      console.log(this.data);
+      if (this.data) {
+        console.log(this.data.data);
+        console.log(this.data.data['class']);
+        console.log(this.data.data['subject']);
+        console.log(this.data.data['teacher']);
+        console.log(this.data.data['students']);
+        this.class.setValue(this.data.data['class']);
+        this.subject.setValue(this.data.data['subject']);
+        this.teacher.setValue(this.data.data['teacher']);
+        this.students.setValue(this.data.data['students']);
+      }
 
       this._admin.getClasses().subscribe(res => {
         this.classes = res;

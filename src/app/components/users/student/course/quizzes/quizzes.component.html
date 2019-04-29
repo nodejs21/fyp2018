@@ -90,7 +90,7 @@
         <h3 class="d-inline">Quizzes</h3>
       </div>
     </div>
-    <div class="animated fadeIn">
+    <div class="animated fadeIn" *ngIf="quizzes">
       <div class="card">
         <div class="card-header" (click)="isCollapsed = !isCollapsed">
           <label for="className" class="font-weight-bold">
@@ -112,10 +112,12 @@
                 <!-- <th>Due Date</th> -->
                 <!-- <th>Attempted On</th> -->
                 <!-- <th>Time (min)</th> -->
-                <!-- <th>Obtained Marks</th> -->
+                <th>Obtained Marks</th>
                 <th>Total Marks</th>
                 <th>Status</th>
-                <th class="text-center">Controls</th>
+                <th class="text-center">
+                  Controls
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -126,14 +128,28 @@
                 <!-- <td>2012/01/01</td> -->
                 <!-- <td>{{}}</td> -->
                 <!-- <td>{{}}</td> -->
-                <!-- <td>{{}}</td> -->
+                <td>
+                  {{
+                    submittedQuizzes[submittedQuizzesIds.indexOf(quiz.id)].marks
+                  }}
+                </td>
                 <td>{{ quiz.totalMarks }}</td>
                 <td>
-                  <span class="badge badge-success">{{ quiz.status }}</span>
+                  <span
+                    [ngClass]="{
+                      badge: true,
+                      'badge-success': quizAlreadyDone(quiz.id),
+                      'badge-warning': !quizAlreadyDone(quiz.id)
+                    }"
+                    >{{
+                      quizAlreadyDone(quiz.id) ? 'Attepmted' : 'Pending'
+                    }}</span
+                  >
                 </td>
                 <td>
                   <div class="pl-2 pr-2 text-center">
                     <button
+                      [hidden]="quizAlreadyDone(quiz.id)"
                       class="btn p-0"
                       matTooltip="Attempt Quiz"
                       triggers="mouseenter:mouseleave"

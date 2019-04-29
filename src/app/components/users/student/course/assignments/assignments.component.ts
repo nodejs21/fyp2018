@@ -124,7 +124,7 @@ export class AssignmentsComponent implements OnInit {
     this.submittedAssignmentMarks = [];
     this.submittedAssignmentDates = [];
     this._student
-      .getSubmittedAssignmentsDetails(
+      .getSubmittedAssignments(
         this.academyId,
         this.classroomId,
         this.user.uid

@@ -5,6 +5,7 @@ import { AuthService } from '../../../../utils/services/auth/auth.service';
 import { StudentService } from '../../../../utils/services/firestore/student/student.service';
 import { ActivatedRoute } from '@angular/router';
 import { QuizService } from '../services/quiz.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-attemptquiz',
@@ -24,14 +25,30 @@ export class AttemptquizComponent implements OnInit {
   marks: number = 0;
   answers = [];
   showMarks = false;
+  date: any;
+  user;
 
-  constructor(private formBuilder: FormBuilder, private _data: QuizService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private _data: QuizService,
+    private _student: StudentService,
+    private _snackBar: MatSnackBar,
+    private _auth: AuthService
+  ) {}
 
   ngOnInit() {
-    this._data.quiz.subscribe(quiz => {
-      console.log(quiz);
-
-      this.quiz = quiz;
+    this._auth.user.subscribe(user => {
+      this.user = user;
+      this._data.quiz.subscribe(quiz => {
+        console.log(quiz);
+        this.quiz = quiz;
+        if (this.quiz) {
+          this.date = `${new Date().toISOString().split('T')[0]}T00:${
+            quiz.duration
+          }:00Z`;
+          console.log(this.date);
+        }
+      });
     });
     // console.log(JSON.parse(this._route.snapshot.paramMap.get('quiz')));
     // this._auth.user.subscribe(user => {
@@ -191,5 +208,16 @@ export class AttemptquizComponent implements OnInit {
       }
     }
     this.showMarks = true;
+    this.quiz.marks = this.marks;
+    this.quiz.studentAnswers = this.answers;
+    this.quiz.studentId = this.user.uid;
+    this.quiz.studentName = `${this.user.firstName} ${this.user.lastName}`;
+    this._student.uploadQuizMarks(this.quiz).then(res => {
+      console.log('Quiz posted!');
+      this.showSnackBar(`Quiz has been posted!`, 'bg-success');
+    });
+  }
+  showSnackBar(message, styles) {
+    this._snackBar.open(message, 'X', { duration: 5000, panelClass: styles });
   }
 }

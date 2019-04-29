@@ -1,35 +1,59 @@
 <div class="col-sm-12">
-    
-      <div class="row">
-        <div class="col-sm-3">
-          <mat-form-field>
-            <mat-label>Posted/Submitted</mat-label>
-            <mat-select [(value)]="selected">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Posted</mat-option>
-              <mat-option value="option2">Submitted By Students</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        
-        <div class="col-sm-3">
-          <mat-form-field>
-            <mat-label>Quiz No</mat-label>
-            <mat-select [(value)]="selected">
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-    
-    
-  
-    
-  
-    <!-- <mat-card>
+  <div class="row">
+    <div class="col-sm-3">
+      <mat-form-field *ngIf="subject">
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="assignmentsType">
+          <mat-option value="Posted">Posted</mat-option>
+          <mat-option value="Submitted">Submitted</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-label>Choose Academy</mat-label>
+        <mat-select
+          aria-disabled="!approvedRequests"
+          [(ngModel)]="academy"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <mat-option
+            *ngFor="let academy of approvedRequests; index as i"
+            [value]="academy[i]"
+            (click)="getAcademyData(academy[i].data.academyId)"
+            >{{ academy[i].data.academyName | titlecase }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field>
+        <mat-label>Choose Classroom</mat-label>
+        <mat-select
+          [(ngModel)]="classroom"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <!-- (click)="getSubjects(classroom.data.class.classId)" -->
+          <mat-option>None</mat-option>
+          <mat-option
+            *ngFor="let classroom of classrooms; index as i"
+            [value]="classroom"
+            (click)="selectClassroom(classroom); getQuizzes(classroom)"
+          >
+            {{ classroom.data.class.className }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3">
+      <mat-form-field class="p-0">
+        <mat-label>Subject</mat-label>
+        <input matInput type="text" [(ngModel)]="subject" disabled />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- <mat-card>
       <div class="row">
         <div class="col-12">
           <mat-card-title>
@@ -96,62 +120,80 @@
     </div>
       
     </mat-card> -->
-  </div>
+</div>
 
-  
-
-<div class="row">
-  <div class="col-sm-12">
+<div class="row" *ngIf="assignmentsType == 'Posted'">
+  <div class="col-sm-12" *ngIf="allQuizzes">
     <div class="animated fadeIn">
       <div class="card">
         <div class="card-header">
-          <label for="className" class="font-weight-bold"
-            >Submitted Quizzes</label
-          >
-          
+          <label for="className" class="font-weight-bold">Posted Quizzes</label>
         </div>
         <div>
-          <table class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg">
+          <table
+            class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
+          >
             <thead>
               <tr>
                 <th>#</th>
                 <th>Title</th>
-                <th>Made On</th>
+                <!-- <th>Made On</th> -->
                 <th>Added On</th>
                 <th>Due Date</th>
-                <th>Time (min)</th>
-                <th>Average Marks</th>
+                <!-- <th>Time (min)</th> -->
+                <!-- <th>Average Marks</th> -->
                 <th>Total Marks</th>
                 <th>Status</th>
-                <th>Attemped By</th>
+                <!-- <th>Attemped By</th> -->
                 <th class="text-center">Controls</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Project Charter</td>
-                <td>2012/01/01</td>
-                <td>2012/01/01</td>
-                <td>2012/01/01</td>
-                <td>15</td>
-                <td>8.5</td>
-                <td>10</td>
-                <td><span class="badge badge-warning">Not Uploaded</span></td>
-                <td>N/A</td>
+              <tr *ngFor="let quiz of allQuizzes; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ quiz.title }}</td>
+                <!-- <td>2012/01/01</td> -->
+                <td>{{ quiz.postedOn.toDate() | date }}</td>
+                <td>{{ quiz.dueDate.toDate() | date }}</td>
+                <!-- <td>15</td> -->
+                <!-- <td>8.5</td> -->
+                <td>{{ quiz.totalMarks }}</td>
                 <td>
-                  <div class="pl-2 pr-2 text-center">
-                    <button class="btn p-0">
+                  <span
+                    *ngIf="attemptedQuizzesIds"
+                    [ngClass]="{
+                      badge: true,
+                      'badge-success': attemptedQuizzesIds.includes(quiz.id),
+                      'badge-warning': !attemptedQuizzesIds.includes(quiz.id)
+                    }"
+                    >{{
+                      attemptedQuizzesIds.includes(quiz.id)
+                        ? 'Attemped'
+                        : 'Not Attempted'
+                    }}</span
+                  >
+                </td>
+                <!-- <td>N/A</td> -->
+                <td>
+                  <div
+                    class="pl-2 pr-2 text-center"
+                    [hidden]="
+                      attemptedQuizzesIds
+                        ? attemptedQuizzesIds.includes(quiz.id)
+                        : false
+                    "
+                  >
+                    <!-- <button class="btn p-0">
                       <span popover="Edit" triggers="mouseenter:mouseleave">
                         <i class="text-info fa fa-edit"></i
                       ></span>
-                    </button>
+                    </button> -->
                     <button class="btn p-0 ml-2">
                       <span popover="Delete" triggers="mouseenter:mouseleave">
                         <i class="text-danger fa fa-trash"></i>
                       </span>
                     </button>
-                    <button class="btn p-0 ml-2">
+                    <!-- <button class="btn p-0 ml-2">
                       <span popover="Upload" triggers="mouseenter:mouseleave">
                         <i class="text-warning fa fa-upload"></i>
                       </span>
@@ -160,43 +202,7 @@
                       <span popover="View" triggers="mouseenter:mouseleave">
                         <i class="text-success fa fa-eye"></i>
                       </span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Project Charter</td>
-                <td>2012/01/01</td>
-                <td>2012/01/01</td>
-                <td>2012/01/01</td>
-                <td>15</td>
-                <td>8.5</td>
-                <td>10</td>
-                <td><span class="badge badge-success">Uploaded</span></td>
-                <td>10/50</td>
-                <td>
-                  <div class="pl-2 pr-2 text-center">
-                    <button class="btn p-0">
-                      <span popover="Edit" triggers="mouseenter:mouseleave">
-                        <i class="text-info fa fa-edit"></i
-                      ></span>
-                    </button>
-                    <button class="btn p-0 ml-2">
-                      <span popover="Delete" triggers="mouseenter:mouseleave">
-                        <i class="text-danger fa fa-trash"></i>
-                      </span>
-                    </button>
-                    <button class="btn p-0 ml-2" hidden="true">
-                      <span popover="Upload" triggers="mouseenter:mouseleave">
-                        <i class="text-info fa fa-upload"></i>
-                      </span>
-                    </button>
-                    <button class="btn p-0 ml-2">
-                      <span popover="View" triggers="mouseenter:mouseleave">
-                        <i class="text-success fa fa-eye"></i>
-                      </span>
-                    </button>
+                    </button> -->
                   </div>
                 </td>
               </tr>
@@ -208,3 +214,50 @@
   </div>
 </div>
 
+<div class="row" *ngIf="assignmentsType == 'Submitted'">
+  <div class="col-sm-12" *ngIf="quizzes">
+    <div class="animated fadeIn">
+      <div class="card">
+        <div class="card-header">
+          <label for="className" class="font-weight-bold"
+            >Submitted Quizzes</label
+          >
+        </div>
+        <div>
+          <table
+            class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Student Name</th>
+                <th>Added On</th>
+                <th>Due Date</th>
+                <!-- <th>Time (min)</th> -->
+                <th>Obtained Marks</th>
+                <th>Total Marks</th>
+                <!-- <th>Status</th> -->
+                <!-- <th>Attemped By</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let quiz of quizzes; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ quiz.title }}</td>
+                <td>{{ quiz.studentName }}</td>
+                <td>{{ quiz.postedOn.toDate() | date }}</td>
+                <td>{{ quiz.dueDate.toDate() | date }}</td>
+                <!-- <td>15</td> -->
+                <td>{{ quiz.marks }}</td>
+                <td>{{ quiz.totalMarks }}</td>
+                <!-- <td><span class="badge badge-warning">Not Uploaded</span></td> -->
+                <!-- <td>N/A</td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

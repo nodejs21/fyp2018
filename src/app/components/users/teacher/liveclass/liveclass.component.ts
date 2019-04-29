@@ -74,7 +74,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
         null, //cameraId
         null, //microphoneId
         true, //video
-        false //screen
+        true //screen
       );
       this.localStream.setVideoProfile('720p_3');
       this.subscribeToStreams();

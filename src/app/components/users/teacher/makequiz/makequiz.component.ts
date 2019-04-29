@@ -72,7 +72,7 @@ export class MakequizComponent implements OnInit {
       subject: [""],
       title: ["", Validators.required],
       duration: [10, Validators.required],
-      totalMarks: [0, Validators.required],
+      totalMarks: 0,
       status: ["saved", Validators.required],
       academyName: ["", Validators.required],
       academyId: "",
@@ -84,6 +84,9 @@ export class MakequizComponent implements OnInit {
     this.subject.disable();
   }
 
+  get totalMarks() {
+    return this.quizForm.get("totalMarks");
+  }
   get subject() {
     return this.quizForm.get("subject");
   }
@@ -104,6 +107,9 @@ export class MakequizComponent implements OnInit {
   }
   get dueDate() {
     return this.quizForm.get("dueDate");
+  }
+  get questions() {
+    return this.quizForm.get("questions");
   }
 
   getAcademyData(academyId) {
@@ -201,6 +207,7 @@ export class MakequizComponent implements OnInit {
     this.academyId.setValue(this.academy.data.academyId);
     this.classroomId.setValue(this.classroom.id);
     this.postedOn.setValue(new Date());
+    this.totalMarks.setValue(this.questions['length']);
     // console.log(this.academyId);
     // console.log(this.classroomId);
     console.log(this.quizForm.value);

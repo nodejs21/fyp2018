@@ -111,7 +111,7 @@ const teacher: NavData[] = [
     url: `${teacherPrefix}/makequiz`,
     icon: 'icon-settings'
   },
-  
+
   // {
   //   name: 'Results',
   //   url: `${teacherPrefix}/course/result`,
@@ -171,11 +171,11 @@ const student: NavData[] = [
     url: `${studentPrefix}/quizzes`,
     icon: 'icon-clock'
   },
-  {
-    name: 'Attemp Quiz',
-    url: `${studentPrefix}/attemptquiz`,
-    icon: 'icon-pencil'
-  },
+  // {
+  //   name: 'Attemp Quiz',
+  //   url: `${studentPrefix}/attemptquiz`,
+  //   icon: 'icon-pencil'
+  // },
   // {
   //   name: 'Results',
   //   url: `${studentPrefix}/results`,

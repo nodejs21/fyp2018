@@ -30,6 +30,7 @@ import { ClassroomsComponent } from './classrooms/classrooms.component';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { AssignmentpopupComponent } from '../../shared/assignmentpopup/assignmentpopup.component';
 import { SharedModule } from '../../shared/shared.module';
+import { CountDownModule } from 'ng6-countdown/dist/ng6-countdown-lib';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { SharedModule } from '../../shared/shared.module';
     FormsModule,
     AngularEditorModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    CountDownModule
   ],
   entryComponents: [SearchacademyComponent, AssignmentpopupComponent],
   exports: [StudentdashboardComponent],

@@ -32,7 +32,7 @@ export class StudentService {
       .add(assignment);
   }
 
-  getSubmittedAssignmentsDetails(academyId, classroomId, studentId) {
+  getSubmittedAssignments(academyId, classroomId, studentId) {
     return this._afs
       .collection('academies')
       .doc(academyId)
@@ -51,6 +51,42 @@ export class StudentService {
       .collection('classrooms')
       .doc(classroomId)
       .collection('quizzes')
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            return { id: a.payload.doc.id, ...a.payload.doc.data() };
+          })
+        )
+      );
+  }
+
+  getSubmittedQuizzes(academyId, classroomId, studentId) {
+    return this._afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('submittedquizzes', ref =>
+        ref.where('studentId', '==', studentId)
+      )
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            return { id: a.payload.doc.id, ...a.payload.doc.data() };
+          })
+        )
+      );
+  }
+
+  uploadQuizMarks(quiz) {
+    return this._afs
+      .collection('academies')
+      .doc(quiz.academyId)
+      .collection('classrooms')
+      .doc(quiz.classroomId)
+      .collection('submittedquizzes')
+      .add(quiz);
   }
 }

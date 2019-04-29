@@ -81,6 +81,40 @@ export class TeacherService {
       .add(quiz);
   }
 
+  getSubmittedQuizzes(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('submittedquizzes')
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, ...data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
+  getAllQuizzes(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('quizzes')
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, ...data.payload.doc.data() };
+          });
+        })
+      );
+  }
+
   createAssignment(assignment: any) {
     return this.afs
       .collection('academies')

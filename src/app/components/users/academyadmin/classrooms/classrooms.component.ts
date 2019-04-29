@@ -27,10 +27,11 @@ export class ClassroomsComponent implements OnInit {
       });
     });
   }
-  openDialog() {
+
+  openDialog(classroom?) {
     // if (!this._teacherService.academies) this.getAcademies();
     const dialogRef = this._dialog.open(CreateclassroomComponent, {
-      data: []
+      data: classroom
     });
     dialogRef.afterClosed().subscribe(res => {
       console.log(res);

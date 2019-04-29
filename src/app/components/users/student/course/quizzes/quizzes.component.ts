@@ -18,6 +18,9 @@ export class QuizzesComponent implements OnInit {
   classrooms: any;
   quizzes: any;
   classroom;
+  user: any;
+  submittedQuizzes: any;
+  submittedQuizzesIds: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +33,7 @@ export class QuizzesComponent implements OnInit {
 
   ngOnInit() {
     this._auth.user.subscribe(user => {
+      this.user = user;
       this._shared.getUserRequests().subscribe(user => {
         console.log(user);
         if (!user['requests']) return;
@@ -39,7 +43,6 @@ export class QuizzesComponent implements OnInit {
             .getApprovedRequests(academy.academyId)
             .subscribe(request => {
               console.log(request);
-
               if (!request) return;
               if (request.length > 0) {
                 this.approvedRequests.push(request);
@@ -72,11 +75,25 @@ export class QuizzesComponent implements OnInit {
     this.classroom = classroom;
     console.log(this.academyId);
     this._student
+      .getSubmittedQuizzes(this.academyId, classroom.id, this.user.uid)
+      .subscribe(quizzes => {
+        this.submittedQuizzes = quizzes;
+        console.log(this.submittedQuizzes);
+        this.submittedQuizzesIds = quizzes.map(quiz => {
+          return quiz.id;
+        });
+        console.log(this.submittedQuizzesIds);
+      });
+    this._student
       .getQuizzes(this.academyId, classroom.id)
       .subscribe(quizzes => {
         console.log(quizzes);
         this.quizzes = quizzes;
       });
+  }
+
+  quizAlreadyDone(quizId) {
+    return this.submittedQuizzesIds.includes(quizId);
   }
 
   showQuiz(quiz) {
