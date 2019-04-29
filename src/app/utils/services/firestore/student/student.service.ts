@@ -33,10 +33,6 @@ export class StudentService {
   }
 
   getSubmittedAssignmentsDetails(academyId, classroomId, studentId) {
-    console.log(academyId);
-    console.log(classroomId);
-    console.log(studentId);
-
     return this._afs
       .collection('academies')
       .doc(academyId)

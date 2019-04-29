@@ -100,7 +100,8 @@
                 <th>Student Name</th>
                 <th>Submitted On</th>
                 <th>File</th>
-                <th>Marks</th>
+                <th>Total Marks</th>
+                <th>Student Marks</th>
                 <!-- <th>Status</th> -->
                 <!-- <th class="text-center">Controls</th> -->
               </tr>
@@ -139,8 +140,23 @@
                     </a>
                   </button>
                 </td>
-                <td class="text-center">
-                  {{ assignment.marks ? assignment.marks : '--' }}
+                <td>{{ selectedAssignmentDetails.data.totalMarks }}</td>
+                <td>
+                  <input
+                    matInput
+                    type="number"
+                    [max]="selectedAssignmentDetails.data.totalMarks"
+                    (onkeydown)="checkMarks($event)"
+                    [(ngModel)]="assignment.marks"
+                    [ngClass]="{
+                      'btn border border-0 text-dark': true,
+                      'border bg-white border-danger': inEditMarksMode
+                    }"
+                    [disabled]="!inEditMarksMode"
+                    [value]="assignment.marks ? assignment.marks : 0"
+                    #marks
+                  />
+                  <!-- {{ assignment.marks ? assignment.marks : '--' }} -->
                 </td>
               </tr>
             </tbody>
@@ -156,7 +172,7 @@
       <div class="card">
         <div>
           <table
-            class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg"
+            class="table table-hover table-responsive-sm table-responsive-md table-responsive-lg"
           >
             <thead>
               <tr>

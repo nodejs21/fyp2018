@@ -27,11 +27,17 @@
           <mat-option
             *ngFor="let classroom of classrooms"
             [value]="classroom.id"
-            (click)="getAssignments(classroom.id)"
+            (click)="getAssignments(classroom)"
           >
             {{ classroom.data.class.className }}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field class="p-0">
+        <mat-label>Subject</mat-label>
+        <input matInput type="text" [(ngModel)]="subject" disabled />
       </mat-form-field>
     </div>
   </div>
@@ -47,7 +53,8 @@
           <th>Title</th>
           <th>Posted On</th>
           <th>Due Date</th>
-          <!-- <th>Obtained Marks</th> -->
+          <th>Submitted On</th>
+          <th>Obtained Marks</th>
           <th>Total Marks</th>
           <th>Status</th>
           <th class="text-center">Controls</th>
@@ -57,19 +64,46 @@
         <tr *ngFor="let assignment of assignments; index as i">
           <td>{{ i + 1 }}</td>
           <td>
-            {{ assignment.data.title ? assignment.data.title : "No Title" }}
+            {{ assignment.data.title ? assignment.data.title : 'No Title' }}
           </td>
           <td>{{ assignment.data.createdOn.toDate() | date }}</td>
           <td>
             {{ assignment.data.dueDate.toDate() | date }}
           </td>
-          <!-- <td>{{}}</td> -->
+          <td>
+            {{
+              submittedAssignmentIds.includes(assignment.id)
+                ? (submittedAssignmentDates[
+                    submittedAssignmentIds.indexOf(assignment.id)
+                  ].toDate() | date)
+                : '--'
+            }}
+          </td>
+          <td>
+            {{
+              submittedAssignmentIds.includes(assignment.id)
+                ? submittedAssignmentMarks[
+                    submittedAssignmentIds.indexOf(assignment.id)
+                  ]
+                : '--'
+            }}
+          </td>
           <td>
             {{ assignment.data.totalMarks ? assignment.data.totalMarks : 0 }}
           </td>
           <td>
-            <span class="badge badge-success">
-              {{ assignment.data.status ? assignment.data.status : "Pending" }}
+            <span
+              [ngClass]="{
+                badge: true,
+                'badge-success': submittedAssignmentIds.includes(assignment.id),
+                'badge-warning': !submittedAssignmentIds.includes(assignment.id)
+              }"
+            >
+              {{
+                submittedAssignmentIds.includes(assignment.id)
+                  ? 'Submitted'
+                  : 'Pending'
+              }}
             </span>
           </td>
           <td>
@@ -87,13 +121,7 @@
               </button>
               <button
                 class="btn p-1"
-                [hidden]="
-                  assignment.data.status
-                    ? assignment.data.status == 'submitted'
-                      ? true
-                      : false
-                    : false
-                "
+                [hidden]="submittedAssignmentIds.includes(assignment.id)"
               >
                 <a href="javascript:void()" (click)="fileInput.click()">
                   <span
@@ -128,209 +156,4 @@
       </tbody>
     </table>
   </div>
-
-  <!-- <mat-card
-    *ngIf="
-      academyId && classroomId && assignments ? assignments.length == 0 : false
-    "
-  >
-    <div class="row">
-      <div class="invalid-feedback d-block align-bottom">
-        <h5>
-          *There is no assignment for selected subject.
-        </h5>
-      </div>
-    </div>
-  </mat-card>
-  <mat-card *ngIf="assignments ? assignments.length != 0 : false">
-    <div class="row">
-      <div class="col-11">
-        <mat-card-title>
-          Posted Assignments
-        </mat-card-title>
-      </div>
-
-      <mat-form-field class="px-3">
-        <input
-          matInput
-          (keyup)="applyFilter($event.target.value)"
-          placeholder="You can also filter the assignment by its title"
-        />
-      </mat-form-field>
-      <div class="container">
-        <table mat-table [dataSource]="dataSource"> -->
-  <!-- Position Column -->
-
-  <!-- <ng-container matColumnDef="assignmentNumber">
-            <th mat-header-cell *matHeaderCellDef><strong>No.</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.assignmentNumber + 1 }}
-            </td>
-          </ng-container> -->
-
-  <!-- Name Column -->
-  <!-- <ng-container matColumnDef="assignmentTitle">
-            <th mat-header-cell *matHeaderCellDef><strong>Title</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.assignmentTitle }}
-            </td>
-          </ng-container> -->
-
-  <!-- Weight Column -->
-  <!-- <ng-container matColumnDef="addedDate">
-            <th mat-header-cell *matHeaderCellDef><strong>Added On</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.addedDate.toDate() | date: 'medium' }}
-            </td>
-          </ng-container> -->
-
-  <!-- Symbol Column -->
-  <!-- <ng-container matColumnDef="dueDate">
-            <th mat-header-cell *matHeaderCellDef><strong>Due Date</strong></th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.dueDate.toDate() | date: 'medium' }}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="totalMarks">
-            <th mat-header-cell *matHeaderCellDef>
-              <strong>Total Marks</strong>
-            </th>
-            <td mat-cell *matCellDef="let element">{{ element.totalMarks }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="fileURL">
-            <th mat-header-cell *matHeaderCellDef><strong>File URL</strong></th>
-            <td mat-cell *matCellDef="let element">
-              <div>
-                <a href="javascript:void()" (click)="fileInput.click()">
-                  <span
-                    popover="Submit Assignment"
-                    triggers="mouseenter:mouseleave"
-                  >
-                    <i class="text-info fa fa-upload"> </i>
-                  </span>
-                </a>
-                <input
-                  type="file"
-                  hidden
-                  #fileInput
-                  (change)="handler($event)"
-                />
-              </div>
-              <div>
-                <a [href]="element.fileURL" download>
-                  <span
-                    popover="Download Assignment"
-                    triggers="mouseenter:mouseleave"
-                  >
-                    <i class="text-success fa fa-download"> </i>
-                  </span>
-                </a>
-              </div> -->
-  <!-- {{ element.fileURL }} -->
-  <!-- </td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>
-              <strong>Status</strong>
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <span class="badge badge-success">{{
-                element.status ? element.status : 'Pending'
-              }}</span>
-            </td>
-          </ng-container> -->
-
-  <!-- <ng-container matColumnDef="controls">
-            <th mat-header-cell *matHeaderCellDef><strong>Controls</strong></th>
-              <td mat-cell *matCellDef="let element">{{ element.controls }}</td>
-            </ng-container> -->
-
-  <!-- <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"
-          ></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
-    </div>
-  </mat-card>
-</div> -->
-
-  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-  <!-- ******************************** SUBMITTED ASSIGNMENTS PAGE TEACHER *****************************-->
-
-  <!-- <div class="row">
-    <div class="col-sm-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="d-inline">Assignments</h3>
-        </div>
-      </div>
-      <div class="animated fadeIn">
-        <div class="card">
-          <div class="card-header" (click)="isCollapsed = !isCollapsed">
-            <label for="className" class="font-weight-bold"
-              >Subject Name</label
-            >
-          </div>
-          <div
-            (collapsed)="collapsed($event)"
-            (expanded)="expanded($event)"
-            [collapse]="isCollapsed"
-          >
-            <table class="table table-striped table-hover table-responsive-sm table-responsive-md table-responsive-lg">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Added On</th>
-                  <th>Due Date</th>
-                  <th>Submitted On</th>
-                  <th>Obtained Marks</th>
-                  <th>Total Marks</th>
-                  <th>Status</th>
-                  <th class="text-center">Controls</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Project Charter</td>
-                  <td>2012/01/01</td>
-                  <td>2012/01/01</td>
-                  <td>2012/01/01</td>
-                  <td>8</td>
-                  <td>10</td>
-                  <td><span class="badge badge-success">Submitted</span></td>
-                  <td>
-                    <div class="pl-2 pr-2 text-center">
-                      <button
-                        class="btn p-0"
-                        popover="Upload"
-                        triggers="mouseenter:mouseleave"
-                      >
-                        <span><i class="text-info fa fa-upload"></i> </span>
-                      </button>
-                      <button
-                        class="btn p-0 ml-2"
-                        popover="Download"
-                        triggers="mouseenter:mouseleave"
-                      >
-                        <span> <i class="text-success fa fa-download"></i> </span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>

@@ -188,8 +188,8 @@ exports.requestAcceptReject = functions.firestore
     const students = classroom.students;
     const subject = classroom.subject;
 
-    students.forEach(student => {
-      const userRef = await admin
+    await students.forEach(student => {
+      const userRef = admin
         .firestore()
         .collection("users")
         .doc(student.studentId)
@@ -216,8 +216,8 @@ exports.requestAcceptReject = functions.firestore
     const students = classroom.students;
     const subject = classroom.subject;
 
-    students.forEach(student => {
-      const userRef = await admin
+    await students.forEach(student => {
+      const userRef = admin
         .firestore()
         .collection("users")
         .doc(student.studentId)

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { AddassignmentComponent } from './addassignment/addassignment.component';
 import { SharedService } from '../../../../../utils/services/firestore/shared/shared.service';
@@ -34,6 +34,7 @@ export class AssignmentsComponent implements OnInit {
   inEditMarksMode: boolean = false;
   assignmentId: any;
   selectedAssignmentDetails;
+  @ViewChild('marks') marks: any;
 
   constructor(
     private _dialog: MatDialog,
@@ -117,7 +118,29 @@ export class AssignmentsComponent implements OnInit {
     })[0];
   }
 
-  uploadMarks() {
+  checkMarks(event) {
+    console.log(event);
+    this.marks.value =
+      this.marks.value > this.selectedAssignmentDetails.data.totalMarks
+        ? 0
+        : this.marks.value;
+  }
+
+  async uploadMarks() {
+    if (!this.inEditMarksMode) return;
+    console.log(this.submittedAssignmentsWithTitle);
+
+    await this.submittedAssignmentsWithTitle.forEach(assignment => {
+      this._teacher.uploadAssignmentMarks(
+        this.academyId,
+        this.classroomId,
+        assignment.assignmentId,
+        assignment
+      );
+    });
+
+    this.showSnackBar('Marks has been uploaded!', 'bg-success');
+
     // this._teacher
     //   .uploadAssignmentMarks(
     //     this.academyId,

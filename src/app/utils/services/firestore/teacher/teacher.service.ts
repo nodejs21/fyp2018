@@ -98,20 +98,27 @@ export class TeacherService {
       .collection('classrooms')
       .doc(classroomId)
       .collection('submittedassignments')
-      .valueChanges();
+      .snapshotChanges()
+      .pipe(
+        map(res => {
+          return res.map(data => {
+            return { id: data.payload.doc.id, ...data.payload.doc.data() };
+          });
+        })
+      );
   }
 
-  uploadAssignmentMarks(academyId, classroomId, assignmentId, marks) {
+  uploadAssignmentMarks(academyId, classroomId, assignmentId, assignment) {
     return this.afs
       .collection('academies')
       .doc(academyId)
       .collection('classrooms')
       .doc(classroomId)
       .collection('submittedassignments')
-      .doc(assignmentId)
-      .set({ marks: marks }, { merge: true });
+      .doc(assignment.id)
+      .update(assignment);
   }
-  
+
   updateAssignment(assignment: any, assignmentId) {
     return this.afs
       .collection('academies')
