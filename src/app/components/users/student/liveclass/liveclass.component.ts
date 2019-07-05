@@ -70,13 +70,16 @@ export class LiveclassComponent implements OnInit, OnDestroy {
       this.classrooms = classrooms;
       console.log(classrooms);
 
-      this.classrooms.forEach(classroom => {
-        this.checkOnGoingClassroom(classroom.id);
-      });
+      // this.classrooms.forEach(classroom => {
+      //   this.checkOnGoingClassroom(classroom.id);
+      // });
     });
   }
-
+  
   selectClassroom(classroom) {
+    console.log(classroom);
+    this.checkOnGoingClassroom(classroom.id);
+    
     this.classRoomToJoin = classroom.id;
     this.classroom = classroom;
     this.subject = classroom.data.subject.subjectName;
@@ -221,6 +224,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
     this.agoraService.client.leave(
       () => {
         console.log('Leavel channel successfully');
+        document.getElementById("agora_local").innerHTML = "";
       },
       err => {
         console.log('Leave channel failed');

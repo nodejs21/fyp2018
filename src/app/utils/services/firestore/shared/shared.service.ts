@@ -190,6 +190,17 @@ export class SharedService {
       .doc(academyId + '|' + classroomId)
       .valueChanges();
   }
+  
+  clearLiveClass(academyId, classroomId) {
+    return this.afs
+      .collection('academies')
+      .doc(academyId)
+      .collection('classrooms')
+      .doc(classroomId)
+      .collection('liveclass')
+      .doc(academyId + '|' + classroomId)
+      .delete();
+  }
 
   startLiveClass(academyId, classroomId) {
     console.log(academyId, classroomId);

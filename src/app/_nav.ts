@@ -181,11 +181,11 @@ const student: NavData[] = [
   //   url: `${studentPrefix}/results`,
   //   icon: 'icon-pencil'
   // },
-  {
-    name: 'Attendance',
-    url: `${studentPrefix}/attendance`,
-    icon: 'icon-calendar'
-  },
+  // {
+  //   name: 'Attendance',
+  //   url: `${studentPrefix}/attendance`,
+  //   icon: 'icon-calendar'
+  // },
   {
     name: 'Requests',
     url: `${studentPrefix}`,

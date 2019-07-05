@@ -41,11 +41,12 @@
       <input matInput type="text" [(ngModel)]="subject" disabled />
     </mat-form-field>
   </div>
-  <div class="col-md-3" *ngIf="ongoingClasses && ongoingClasses.startedAt">
-    <label for="time"
+  <!-- <div class="col-md-3" *ngIf="ongoingClasses && ongoingClasses.startedAt"> -->
+  <div class="col-md-3">
+    <!-- <label for="time"
       >Strted At:
       {{ ongoingClasses.startedAt.toDate() | date: 'shortTime' }}</label
-    >
+    > -->
   </div>
   <div class="col-12" *ngIf="!ongoingClasses">
     <div class="invalid-feedback d-block align-bottom">
@@ -73,24 +74,15 @@
     [id]="remote"
   ></div>
 </div>
-<button
-  [disabled]="!subject || !ongoingClasses"
-  class="btn btn-outline-info"
-  (click)="joinClass()"
->
+<!-- [disabled]="!subject || !ongoingClasses" -->
+<button class="btn btn-outline-info" (click)="joinClass()">
   Join Class
 </button>
-<button
-  [disabled]="!subject || !ongoingClasses"
-  class="btn btn-outline-info"
-  (click)="requestPermission()"
->
+<!-- [disabled]="!subject || !ongoingClasses" -->
+<!-- <button class="btn btn-outline-info" (click)="requestPermission()">
   Request Permission
-</button>
-<button
-  [disabled]="!subject || !ongoingClasses"
-  class="btn btn-outline-info"
-  (click)="leaveClass()"
->
+</button> -->
+<!-- [disabled]="!subject || !ongoingClasses" -->
+<button class="btn btn-outline-info" (click)="leaveClass()">
   Leave Class
 </button>

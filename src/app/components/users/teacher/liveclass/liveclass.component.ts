@@ -18,6 +18,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
   classrooms: any;
   subject: any;
   academyId: any;
+  classroomId: any;
 
   constructor(
     private agoraService: AngularAgoraRtcService,
@@ -56,6 +57,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
 
   selectClassroom(classroom) {
     this.classRoomToCreate = classroom.id;
+    this.classroomId = classroom.id;
     this.subject = classroom.data.subject.subjectName;
   }
 
@@ -181,7 +183,9 @@ export class LiveclassComponent implements OnInit, OnDestroy {
   endClass() {
     this.agoraService.client.leave(
       () => {
+        this._shared.clearLiveClass(this.academyId, this.classroomId);
         console.log('Leavel channel successfully');
+        document.getElementById("agora_local").innerHTML = "";
       },
       err => {
         console.log('Leave channel failed');
