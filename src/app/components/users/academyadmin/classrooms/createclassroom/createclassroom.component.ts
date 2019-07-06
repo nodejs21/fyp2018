@@ -83,7 +83,7 @@ export class CreateclassroomComponent implements OnInit {
       createdOn: ['']
     });
     this._auth.user.subscribe(user => {
-      if (this.data) {
+      if (this.data.data) {
         console.log(this.data.data);
         console.log(this.data.data['class']);
         console.log(this.data.data['subject']);

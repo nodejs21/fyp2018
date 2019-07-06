@@ -29,6 +29,7 @@ import { ConfirmdeletionModule } from '../../shared/confirmdeletion/confirmdelet
 import { CreateclassroomComponent } from './classrooms/createclassroom/createclassroom.component';
 import { ProfilepopupComponent } from '../../shared/profilepopup/profilepopup.component';
 import { SharedModule } from '../../shared/shared.module';
+import { MAT_DIALOG_DATA } from '@angular/material';
 @NgModule({
   declarations: [
     AddclassComponent,
@@ -73,6 +74,6 @@ import { SharedModule } from '../../shared/shared.module';
     CreateclassroomComponent,
     ProfilepopupComponent
   ],
-  providers: [FormBuilder]
+  providers: [FormBuilder, {provide: MAT_DIALOG_DATA, useValue: {}}]
 })
 export class AcademyadminModule {}
