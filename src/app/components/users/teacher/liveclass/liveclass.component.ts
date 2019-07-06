@@ -27,6 +27,7 @@ export class LiveclassComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    if (!this.user) return;
     this._auth.user.subscribe(user => {
       this.user = user;
       this._shared.getUserRequests().subscribe(user => {
@@ -181,11 +182,12 @@ export class LiveclassComponent implements OnInit, OnDestroy {
   }
 
   endClass() {
+    if (!this.agoraService.client) return;
     this.agoraService.client.leave(
       () => {
         this._shared.clearLiveClass(this.academyId, this.classroomId);
         console.log('Leavel channel successfully');
-        document.getElementById("agora_local").innerHTML = "";
+        document.getElementById('agora_local').innerHTML = '';
       },
       err => {
         console.log('Leave channel failed');
